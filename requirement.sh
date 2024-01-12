@@ -10,6 +10,9 @@ npm install --include=dev
 
 npm install tailwindcss postcss autoprefixer
 
+npm install react-router-dom
+
+
 
 # Install both development and production dependencies
 npm install

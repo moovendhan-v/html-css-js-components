@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+*{
+    font-family: 'Montserrat', sans-serif;
+    color: white !important;
+}
+
+:root {
+    --primary-color: #9461fb;
+    --secondary-color: rgb(0, 16, 255);
+  }
+.navbar{
+    background-color: black !important;
+}
+.hero_section h3{
+    font-size: 50px;
+}
+
