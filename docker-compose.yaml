@@ -1,10 +1,14 @@
 version: '3'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
+  node_app:
+    image: node:alpine
+    container_name: my_node_app
+    working_dir: /app
     volumes:
-      - ./src:/usr/src/app/src
+      - ./:/app  # Replace 'your-node-app' with the actual path to your Node.js app on the host
+    # command: sh -c "cd ui/ && npm run dev"
+    ports:
+      - "3000:3000"  # Adjust the port if needed
+    environment:
+      NODE_ENV: production  # Set the environment variable as needed
+    tty: true
