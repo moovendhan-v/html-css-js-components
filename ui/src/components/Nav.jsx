@@ -11,7 +11,7 @@ function Nav() {
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="collapse navbar-collapse justify-content-between " id="navbarNavDropdown">
               <ul class="navbar-nav">
                 <li class="nav-item">
                   <a class="nav-link active fw-semibold text-light" aria-current="page" href="#">Home</a>
@@ -31,8 +31,20 @@ function Nav() {
                   </ul>
                 </li> */}
 
+
               </ul>
+
+              <div className="d-flex align-items-center">
+                  <div>
+                        <span>Moovendhan v</span>
+                  </div>
+                  <div className="bg-light rounded mx-4" >
+                  <img className="brandlogo img-fluid float-end rounded-circle " src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFz1aoq0RnlkDHO6OqApeAWXICc9xFcyqUZndGSfTyzPPDPksfhsYK7s4vEoYZ_Xc2Imeh9yEXbg09WAwEpH41KXANe8wbLqaQFyhMqkVH9_KDvhZ-VkUxzB5ppvwyOh_vEUDkLbPBwrYOgyMC7x9-aN5kF-Q1HB3cOugW5PBtrjXfHQIN15w5cz09LPt6/s16000/T-G%20logos%20only.png" alt="logo" />
+                  </div>
+              </div>
+
             </div>
+            
           </div>
         </nav>
       </section>

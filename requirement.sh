@@ -12,6 +12,8 @@ npm install tailwindcss postcss autoprefixer
 
 npm install react-router-dom
 
+yarn add  @tabler/icons-react
+
 
 
 # Install both development and production dependencies

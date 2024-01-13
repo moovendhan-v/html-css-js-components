@@ -3,6 +3,11 @@ import TypingTextEffect from './TypingText';
 import SeachBar from './Search';
 import ScroolAnimation from './Scrool';
 import { ScrollAnimationForImage } from "./Scrool";
+import Button from "./Button";
+import Heading from './Heading';
+import PopularPosts from './PopularPosts';
+// import IframeCard from './iframe';
+import PostContent from './Shadow_content';
 
 function Hero(){
     return(
@@ -18,8 +23,18 @@ function Hero(){
             <div className="hero_search">
                 <SeachBar />
                 <ScroolAnimation />
-                <ScrollAnimationForImage />
+                <ScrollAnimationForImage direction={"Right"} />
+                <ScrollAnimationForImage direction={"Left"} />
+                <Button />
             </div>
+        </section>
+
+        <section>
+            <Heading />
+        </section>
+        <section>
+            <PopularPosts />
+            {/* <PostContent /> */}
         </section>
         </>
     )

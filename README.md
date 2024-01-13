@@ -8,3 +8,9 @@ Anyone can contribute your own creativity work to this repository <i> lets make 
 
 Join our telegram Community
 https://t.me/addlist/VOER0r-TgwQyMGY1
+
+## Technologies used
+
+Frontend - ```Rect js``` ```Bootstrap``` 
+Addon - ```Tabler icons``` https://tabler.io/docs/plugins/flags
+backend - ```Expressjs``` ```Mongodb```
