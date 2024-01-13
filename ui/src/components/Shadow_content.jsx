@@ -22,7 +22,7 @@ const PostContent = ({ pageUrls }) => {
 
   return (
     <div className="box ">
-      <div className='myBox' ref={shadowRef}></div>
+      <div className='myBox' ref={shadowRef}></div> 
       <div className='readCode d-flex  align-items-center'>
          <div>
          <img className='svg' src={code} alt="" />

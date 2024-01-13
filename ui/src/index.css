@@ -12,6 +12,9 @@
 body {
   background-color: black !important;
 }
+.bg-theme{
+  background-color: var(--sub-theme);
+}
 .cursor-pointer{
   cursor: pointer;
 }
@@ -126,7 +129,12 @@ body {
 .myBoxContainer{
   width: 100%;
   min-height: 300px;
+  /* max-height: 600px; */
   margin-bottom: 50px !important;
+  position: relative;
+  overflow: hidden;
+  height: calc(100% - 30px);
+  border-radius: 8px;
 }
 .gallery_containers .box {
   width: 100%;
@@ -155,6 +163,23 @@ body {
 .myBoxContainer:hover .readCode{
   opacity: 100%;
 }
+.contributer{
+  background-color: var(--sub-theme);
+}
+.community{
+  padding: 30px;
+}
+.community_heading{
+  font-size: 40px;
+}
+.community_para{
+  font-size: 20px;
+  padding: 10px;
+}
+.community_card_body{
+  padding: 100px;
+}
+
 
 @media (min-width: 576px) {
   .gallery_containers {

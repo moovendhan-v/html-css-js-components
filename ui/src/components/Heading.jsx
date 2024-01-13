@@ -1,14 +1,14 @@
 import react from "react";
 
-const Heading = ()=>{
+const Heading = ({main, sub})=>{
     return(
         <>
           <div className="d-flex justify-content-center align-items-center flex-column m-5">
             <div>
-                <h3>Popular Posts</h3>
+                <h3>{main}</h3>
             </div>
             <div>
-                <p className="text-primary"> Trending</p>
+                <p className="text-primary"> {sub}</p>
             </div>
           </div>
         </>

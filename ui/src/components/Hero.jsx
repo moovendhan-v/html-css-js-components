@@ -6,8 +6,8 @@ import { ScrollAnimationForImage } from "./Scrool";
 import Button from "./Button";
 import Heading from './Heading';
 import PopularPosts from './PopularPosts';
-// import IframeCard from './iframe';
-import PostContent from './Shadow_content';
+import Contributer from './Contributer';
+import Community from './Community'
 
 function Hero(){
     return(
@@ -25,16 +25,25 @@ function Hero(){
                 <ScroolAnimation />
                 <ScrollAnimationForImage direction={"Right"} />
                 <ScrollAnimationForImage direction={"Left"} />
-                <Button />
+                <Button icon={"code"} text={"Explore More Componenets"} />
             </div>
         </section>
 
         <section>
-            <Heading />
+            <Heading main={"Popular Components"}  sub={"trending"}/>
         </section>
         <section>
             <PopularPosts />
             {/* <PostContent /> */}
+        </section>
+        <section>
+            <Heading main={"Our Polular Contributer"}  sub={"Signup to contribute"}/>
+        </section>
+        <section>
+            <Contributer />
+        </section>
+        <section>
+            <Community />
         </section>
         </>
     )
