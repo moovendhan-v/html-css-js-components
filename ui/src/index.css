@@ -3,6 +3,9 @@
 *{
     font-family: 'Montserrat', sans-serif;
 }
+:root {
+      --app-theme : #9461fb; 
+}
 body{
     background-color: black !important;
 }
@@ -11,5 +14,35 @@ body{
 }
 .hero_forms{
     width: 40%;
-    padding: 20px;
+    padding: 12px;
 }
+
+#scroolcontainer {
+    width: 100vw;
+    mask: linear-gradient(90deg, transparent, white 40%, white 60%, transparent);
+    -webkit-mask: linear-gradient(90deg, transparent, white 40%, white 60%, transparent);
+  }
+  #scrool_list {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+  }
+  #scrool_list li {
+    padding: 10px 20px;
+    border-radius: 7px;
+    background-color: var(--app-theme);
+
+  }
+  #scroolcontainer[data-animated] {
+    overflow: hidden;
+  }
+  #scroolcontainer[data-animated] #scrool_list {
+    width: max-content;
+    animation: scroll 20s linear infinite;
+  }
+  @keyframes scroll {
+    to {
+      transform: translateX(calc(-50%));
+    }
+  }
