@@ -1,5 +1,6 @@
 import React from "react";
 import PostContent from './Shadow_content';
+import Button from './Button';
 
 const PopularPosts = () => {
     const pageUrls = [
@@ -15,7 +16,7 @@ const PopularPosts = () => {
     return (
         <>
             <div className="container-fluid">
-                <div className="gallery_containers">
+                <div className="gallery_containers shadow_fade">
                     {pageUrls.map((url, index) => (
                         <>
                             <div className="box myBoxContainer" key={index}>
@@ -33,6 +34,10 @@ const PopularPosts = () => {
                     ))}
                 </div>
             </div>
+<div className="align_button">
+<Button icon={"code"} text={"See All Posts"} />
+
+</div>
         </>
     )
 }

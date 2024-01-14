@@ -24,9 +24,19 @@ body {
 
 .hero_forms {
   width: 100%;
-  padding: 12px;
+  padding: 20px;
+  outline: #9461fb;
+  /* animation: input 2s linear infinite; */
 }
+.hero_forms:focus{
+  padding: 25px;
 
+}
+.hero_forms_button{
+  padding: 20px 100px !important;
+  background-color: white;
+  border-radius: 100px;
+}
 #scroolcontainerLeft,
 #scroolcontainerRight {
   width: 100vw;
@@ -81,6 +91,11 @@ body {
     transform: translateX(calc(+10%));
   }
 }
+/* @keyframes input {
+  to {
+   width: 100%;
+  }
+} */
 
 .sliderImg {
   width: 400px;
@@ -163,8 +178,9 @@ body {
 .myBoxContainer:hover .readCode{
   opacity: 100%;
 }
-.contributer{
+.contributer , .footer{
   background-color: var(--sub-theme);
+  border: transparent;
 }
 .community{
   padding: 30px;
@@ -179,7 +195,56 @@ body {
 .community_card_body{
   padding: 100px;
 }
+.w-80{
+  width: 80%;
+}
+.btn-telegram{
+  background-color: cornflowerblue;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+}
+.btn-telegram:hover{
+  background-color: rgb(52, 123, 255);
+  transition: 1s;
+}
+.brandlogos{
+  background-color: rgb(52, 123, 255);
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 1s;
+}
+.contributes:hover{
+  background-color: #0e1026;
+  transition: 1s;
+  cursor: pointer;
+}
+.btn a{
+  text-decoration: none;
+  cursor: pointer;
+}
+.align_button{
+  position: relative;
+  top: -70px;
+}
 
+.shadow_fade{
+  mask: linear-gradient(180deg, transparent, white 30%, white 100%, transparent);
+  -webkit-mask: linear-gradient(0deg, transparent, white 30%, white 100%, transparent);
+}
+/* .shadow_fade_theme{
+  background: linear-gradient(to right, #ff0000, #4338ca, #00ff00, #0000ff) !important;
+} */
+.footer_link a{
+  text-decoration: none;
+}
+.footer_link{
+  margin: 5px 0;
+}
+.footer_text{
+  font-size: 14px;
+}
 
 @media (min-width: 576px) {
   .gallery_containers {
@@ -187,14 +252,22 @@ body {
   }
 }
 
+@media (min-width: 992px) {
+  .gallery_containers {
+    columns: 3;
+  }
+ 
+} 
+
+/* //mobile  */
 @media (min-width: 768px) {
   .gallery_containers {
     columns: 2;
   }
 }
 
-@media (min-width: 992px) {
-  .gallery_containers {
-    columns: 3;
+@media (max-width : 768px) {
+  .hero_forms_button{
+    padding: 20px 50px !important;
   }
-} 
+}

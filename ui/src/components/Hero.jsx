@@ -1,20 +1,20 @@
 import React from "react";
-import TypingTextEffect from './TypingText';
-import SeachBar from './Search';
-import ScroolAnimation from './Scrool';
-import { ScrollAnimationForImage } from "./Scrool";
 import Button from "./Button";
+import Community from './Community';
+import Contributer from './Contributer';
 import Heading from './Heading';
 import PopularPosts from './PopularPosts';
-import Contributer from './Contributer';
-import Community from './Community'
+import ScroolAnimation, { ScrollAnimationForImage } from './Scrool';
+import SeachBar from './Search';
+import TypingTextEffect from './TypingText';
+import Footer from "./Footer";
 
 function Hero(){
     return(
         <>
         <section>
             <div className="hero_section text-center">
-                <h3 className="fw-bold lh-base">Open Source Ui-Componenets <br /> for your next projects</h3>
+                <h3 className="fw-bold lh-base">Open Source Awesome Ui-Componenets <br /> for your next projects</h3>
             </div>
             <div className="hero_info text-center my-3 fw-bolder ">
                 {/* <p>Save and share your creative designes to open source</p> */}
@@ -24,8 +24,12 @@ function Hero(){
                 <SeachBar />
                 <ScroolAnimation />
                 <ScrollAnimationForImage direction={"Right"} />
+                <div className="shadow_fade">
                 <ScrollAnimationForImage direction={"Left"} />
-                <Button icon={"code"} text={"Explore More Componenets"} />
+                </div>
+                <div className="align_button mt-2 ">
+                        <Button icon={"code"} text={"Explore More Componenets"} />
+                </div>
             </div>
         </section>
 
@@ -44,6 +48,9 @@ function Hero(){
         </section>
         <section>
             <Community />
+        </section>
+        <section>
+            <Footer />
         </section>
         </>
     )

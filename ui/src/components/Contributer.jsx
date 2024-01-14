@@ -3,16 +3,16 @@ import { Images } from '../konst/Images';
 
 const ContributerCard = () => {
     return (
-        <div class="col">
+        <div class="col ">
             <div class="card m-2  radius-10 contributer">
-                <div class="card-body">
+                <div class="card-body contributes">
                     <div class="d-flex align-items-center">
-                        <div>
+                        <div className="brandlogos">
                             <img src={Images.LOGO} className="brandlogo m-2" alt="" />
                         </div>
                        <div>
-                       <h3>Moovendhan</h3>
-                        <span>100 + contributes</span>
+                       <h3 className="h4">Moovendhan</h3>
+                        <span className="h6 fw-light ">100 + contributes</span>
                        </div>
                     </div>
                 </div>
