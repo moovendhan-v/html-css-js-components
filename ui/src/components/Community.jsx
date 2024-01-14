@@ -13,10 +13,10 @@ const Community = () => {
 
                           <div className="d-flex justify-content-center ">
                             <div className="btn btn-telegram">
-                                <span><SvgIcons icon={"telegram"} /></span>  <a href="#" class="mx-2">Telegram</a>
+                                <span><SvgIcons icon={"telegram"} /></span>  <a href="https://t.me/addlist/KRvYxzeeT9MyNzFl" class="mx-2">Telegram</a>
                             </div>
                                 <div  className="btn btn-telegram">
-                                <span><SvgIcons icon={"discord"} /></span>  <a href="#" class="mx-2">Discord</a>
+                                <span><SvgIcons icon={"discord"} /></span>  <a href="https://discord.gg/aNzRzK8M6Y" class="mx-2">Discord</a>
                                 </div>
                           </div>
 

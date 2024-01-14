@@ -1,23 +1,21 @@
-import './App.css'
-import Nav from './components/Nav'
-import Hero from './components/Hero'
+// app.js
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import './App.css';
+import HomePage from './screens/Home';
+import Componenets from './screens/Components';
 
 function App() {
   return (
     <div className="App">
-      <Nav />
-      <Hero />
-        {/* <Routes> */}
-          {/* <Route exact path="/" element={<Body />} /> */}
-          {/* <Route exact path="aboutus" element={<AboutUs />} />
-          <Route exact path="contactus" element={<ContactUs />} />
-          <Route exact path="agricreations" element={<VisitPost />} />
-          <Route exact path="hkragritechs" element={<HkrAgriTechs />} />
-          <Route exact path="bestappsintamil" element={<BestAppsInTamil />} /> */}
-        {/* </Routes> */}
-      {/* <Footer /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/components" element={<Componenets />} />
+        </Routes>
+      </Router>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

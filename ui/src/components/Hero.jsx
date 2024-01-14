@@ -7,7 +7,6 @@ import PopularPosts from './PopularPosts';
 import ScroolAnimation, { ScrollAnimationForImage } from './Scrool';
 import SeachBar from './Search';
 import TypingTextEffect from './TypingText';
-import Footer from "./Footer";
 
 function Hero(){
     return(
@@ -48,9 +47,6 @@ function Hero(){
         </section>
         <section>
             <Community />
-        </section>
-        <section>
-            <Footer />
         </section>
         </>
     )

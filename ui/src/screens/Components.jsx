@@ -1,16 +1,14 @@
-import Hero from "../components/Hero";
-import react from "react";
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 
-const HomePage = ()=>{
+const Components = ()=>{
     return(
         <>
         <Nav />
-            <Hero />
+            {/* <Hero /> */}
         <Footer />
         </>
     )
 }
 
-export default HomePage;
+export default Components;

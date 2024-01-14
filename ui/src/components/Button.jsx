@@ -2,6 +2,7 @@ import React from "react";
 import discordIcon from '../assets/myicons/discord.svg';
 import telegramIcon from '../assets/myicons/telegram.svg';
 import codeIcon from '../assets/myicons/code.svg';
+import Search from '../assets/myicons/search.svg'
 
 const Button = ({ icon, text }) => {
   return (
@@ -33,6 +34,8 @@ const getIconPath = (icon) => {
       return telegramIcon;
     case 'code':
       return codeIcon;
+    case 'search':
+      return Search;
     default:
       return ''; // You might want to provide a default icon or handle this case differently
   }
