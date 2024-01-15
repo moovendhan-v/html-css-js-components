@@ -4,29 +4,30 @@ const axios = require('axios');
 const fs = require('fs'); //file system
 const path = require('path'); //path
 
+//getting configeration file informations
+const { getJsonConfigDetails } = require('./operations/getConfigOperations'); 
+const confFile = getJsonConfigDetails();
+// const discordUriToSend = confFile.discord.alert;
+
 //import operations
 const { readFileContent } = require('./operations/fileOperations'); //file operations
 const { sendDiscordWebhookMessage } = require('./operations/webhookOperations');
 
+//importing express js
 const app = express();
-// app.use(bodyParser.json());
 const port = 4000;
 app.use(express.json());
+
+//importing router files
+const {homeRouter} = require('./routes/homepage.router')
+const {componentsRouter} = require('./routes/components.router')
 
 const baseFolderPath = '../'; //one step back
 const folderPath = path.join(baseFolderPath, 'project', 'project_datas', 'buttons');
 const indexPath = "style.css";
 
-app.get('/components', (req, res) => {
-  readFileContent(folderPath, indexPath, (err, content) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(`${err} Internal Server Error`);
-    }
-    res.send(content);
-    // sendDiscordWebhookMessage('Discord webhooks working properly');
-  });
-});
+app.use('/', homeRouter);
+app.use('/components', componentsRouter);
 
 
 app.listen(port, () => {
