@@ -243,9 +243,10 @@ body {
 /* .shadow_fade_theme{
   background: linear-gradient(to right, #ff0000, #4338ca, #00ff00, #0000ff) !important;
 } */
-.footer_link a{
+.footer_link a, .nav-link a{
   text-decoration: none;
 }
+
 .footer_link{
   margin: 5px 0;
 }

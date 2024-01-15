@@ -1,6 +1,7 @@
 
 # dependencies
 ui/node_modules
+backend/node_modules
 ui/.pnp
 ui/.pnp.js
 
@@ -21,3 +22,7 @@ ui/npm-debug.log*
 ui/yarn-debug.log*
 ui/yarn-error.log*
 node_modules
+
+#project
+
+project/config.env.json
