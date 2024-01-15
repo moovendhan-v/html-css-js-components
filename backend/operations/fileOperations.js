@@ -10,7 +10,6 @@ function readFileContent(folderPath, fileName, callback) {
     callback(null, content);
   });
 }
-
 module.exports = {
   readFileContent,
 };

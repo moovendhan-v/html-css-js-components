@@ -1,0 +1,11 @@
+{
+    "discord" :{
+        "alert" : "",
+        "message" : "",
+        "approval" : ""
+    },
+    "api" : {
+        "auth0" : "test",
+        "key" : "key"
+    }
+}   

@@ -5,12 +5,14 @@ const { getJsonConfigDetails } = require('../operations/getConfigOperations');
 
 // Function to send Discord webhook message
 function sendDiscordWebhookMessage(content) {
-  const webhookUrl = getJsonConfigDetails(config.discord.alert);
-  console.log(`Webhook url ${webhookUrl}`);
+  const webhookUrl = getJsonConfigDetails();
+  const discordUriToSend = webhookUrl.discord.alert;
+  console.log(discordUriToSend);
+  // return;
   const payload = {
     content: content,
   };
-  axios.post(webhookUrl, payload)
+  axios.post(discordUriToSend, payload)
     .then(response => {
       console.log('Webhook message sent successfully:', response.data);
     })
@@ -18,7 +20,7 @@ function sendDiscordWebhookMessage(content) {
       console.error('Error sending webhook message:', error.message);
     });
 }
-
+sendDiscordWebhookMessage("testing message");
 module.exports = {
     sendDiscordWebhookMessage,
   };
