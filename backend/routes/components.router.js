@@ -1,10 +1,10 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails, gethtmlContent, getCssContent, getJsContent} = require('../controller/components.controller')
+const {getComponentsDetails , readFilesInformations} = require('../controller/components.controller')
 
 
 componentsRouter.get('/', getComponentsDetails);
-// componentsRouter.get('/html', gethtmlContent);
+// componentsRouter.get('/file', (req, res) => readFilesInformations(req, res, "buttons", "moovendhan"));
 // componentsRouter.get('/css', getCssContent);
 // componentsRouter.get('/js', getJsContent);
 
