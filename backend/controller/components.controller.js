@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { readFileContent } = require('../operations/fileOperations');
-const baseFolderPath = '../../';
+const baseFolderPath = '../';
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
@@ -11,7 +11,7 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
     readFileContent(folderPath, filename, (err, content) => {
         if (err) {
             console.error(err);
-            return callback(`${err} Internal Server Error`);
+            return callback(`${err} Internal Server Errors`);
         }
         callback(null, content);
     });
@@ -49,10 +49,11 @@ function readFilesInformations(catogriesName, folderName, callback) {
 
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way
 function getLatestFiles(catogries, callback) {
-    const folderPaths = path.join("../../", 'project', 'project_datas', catogries);
+    const folderPaths = path.join("../", 'project', 'project_datas', catogries);
     fs.readdir(folderPaths, (err, files) => {
       if (err) {
         console.error(err);
+        console.trace(); 
         return callback(`Error reading directory: ${err}`);
       }
       const promises = files.slice(0, 10).map(file => {
@@ -76,6 +77,7 @@ function getLatestFiles(catogries, callback) {
         });
     });}
 
+// getting catogreis details informations 
   getLatestFiles("buttons",(err, files) => {
     if (err) {
       console.error(err);
@@ -85,35 +87,33 @@ function getLatestFiles(catogries, callback) {
     console.log(files);
   });
 
-
-
-const getComponentsDetails = (req, res) => {
-    readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {
-        if (htmlErr) {
-            return res.status(500).json({ error: `${htmlErr} Error reading HTML content` });
-        }
-        readContent('style.css', "buttons" , "moovendhan", (cssErr, cssContent) => {
-            if (cssErr) {
-                return res.status(500).json({ error: `${cssErr} Error reading CSS content` });
-            }
-            readContent('script.js', "buttons" , "moovendhan", (jsErr, jsContent) => {
-                if (jsErr) {
-                    return res.status(500).json({ error: `${jsErr} Error reading JavaScript content` });
-                }
-                const dataObject = {
-                    "post_details": {
-                        "html": htmlContent,
-                        "css": cssContent,
-                        "js": jsContent
-                    }
-                };
-                res.json(dataObject);
-            });
-        });
-    });
-};
+// const getComponentsDetails = (req, res) => {
+//     readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {
+//         if (htmlErr) {
+//             return res.status(500).json({ error: `${htmlErr} Error reading HTML content` });
+//         }
+//         readContent('style.css', "buttons" , "moovendhan", (cssErr, cssContent) => {
+//             if (cssErr) {
+//                 return res.status(500).json({ error: `${cssErr} Error reading CSS content` });
+//             }
+//             readContent('script.js', "buttons" , "moovendhan", (jsErr, jsContent) => {
+//                 if (jsErr) {
+//                     return res.status(500).json({ error: `${jsErr} Error reading JavaScript content` });
+//                 }
+//                 const dataObject = {
+//                     "post_details": {
+//                         "html": htmlContent,
+//                         "css": cssContent,
+//                         "js": jsContent
+//                     }
+//                 };
+//                 res.json(dataObject);
+//             });
+//         });
+//     });
+// };
 
 module.exports = {
-    getComponentsDetails,
-    readFilesInformations,
+    // getComponentsDetails,
+    getLatestFiles,
 };
