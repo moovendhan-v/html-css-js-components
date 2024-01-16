@@ -26,3 +26,4 @@ node_modules
 #project
 
 project/config.env.json
+project/mongodb-backup
