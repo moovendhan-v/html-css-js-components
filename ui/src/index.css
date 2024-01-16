@@ -7,6 +7,7 @@
 :root {
   --app-theme: #9461fb;
   --sub-theme: #121b2b;
+  --menu-theme: rgba(156, 156, 241, 0.1) !important;
 }
 
 body {
@@ -15,6 +16,9 @@ body {
 .bg-theme{
   background-color: var(--sub-theme);
   border: transparent;
+}
+.bg-menuslider{
+  background-color: var(--menu-theme);
 }
 .bg-fade{
   background-color: rgba(156, 156, 241, 0.399) !important;
@@ -253,6 +257,25 @@ body {
 .footer_text{
   font-size: 14px;
 }
+.left_div{
+    position: fixed;
+    width: 20%;
+    height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.right_div{
+  width: 80%;
+  margin-left: 20%;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+
+/* Add more styles as needed */
+
 
 @media (min-width: 576px) {
   .gallery_containers {

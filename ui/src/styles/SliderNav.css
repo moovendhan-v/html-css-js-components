@@ -1,0 +1,21 @@
+.slider-navbar {
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: -50px;
+    background-color: #333;
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .slider-navbar.active {
+    left: 0;
+  }
+  
+  .slider-content {
+    padding: 20px;
+    color: #fff;
+  }
+  
+  /* Add more styles as needed */
+  
