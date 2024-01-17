@@ -1,9 +1,11 @@
 // app.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import './App.css';
 import HomePage from './screens/Home';
 import Componenets from './screens/Components';
+
 
 function App() {
   return (
@@ -20,3 +22,4 @@ function App() {
 }
 
 export default App;
+
