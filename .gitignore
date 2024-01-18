@@ -2,6 +2,7 @@
 # dependencies
 ui/node_modules
 backend/node_modules
+backend/.env
 ui/.pnp
 ui/.pnp.js
 
