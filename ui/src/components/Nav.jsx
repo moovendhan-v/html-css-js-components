@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
+import GitHubLoginButton from '../components/Gitlogin';
 
 function Nav() {
 
@@ -20,32 +21,47 @@ function Nav() {
                 <li class="nav-item">
                   <a class="nav-link active fw-semibold text-light" aria-current="page"><Link to="/components">Components</Link></a>
                 </li>
-                
-                {/* <li class="nav-item dropdown">
+                <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown link
+                    More
                   </a>
-                  <ul class="dropdown-menu">
+                  {/* <ul class="dropdown-menu bg-theme">
                     <li><a class="dropdown-item" href="#">Action</a></li>
                     <li><a class="dropdown-item" href="#">Another action</a></li>
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
-                  </ul>
-                </li> */}
-
+                  </ul> */}
+                  <div className="dropdown-menu bg-theme">
+<div className="d-flex dropdown_menus">
+                  <div className="bg-theme p-3">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </div>
+                  <div className="bg-theme p-3">
+                    <div>
+                      {/* <h3 className="h5">Support UI-Components</h3>
+                      <p>Give Star On github</p>
+                      <a href="#">Signup to Contribute</a> */}
+                        <GitHubLoginButton />
+                    </div>
+                  </div>
+</div>
+                  </div>  
+                </li>
 
               </ul>
 
               <div className="d-flex align-items-center">
-                  <div>
-                        <span>Moovendhan v</span>
-                  </div>
-                  <div className="bg-light rounded mx-4" >
+                <div>
+                  <span>Moovendhan v</span>
+                </div>
+                <div className="bg-light rounded mx-4" >
                   <img className="brandlogo img-fluid float-end rounded-circle " src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFz1aoq0RnlkDHO6OqApeAWXICc9xFcyqUZndGSfTyzPPDPksfhsYK7s4vEoYZ_Xc2Imeh9yEXbg09WAwEpH41KXANe8wbLqaQFyhMqkVH9_KDvhZ-VkUxzB5ppvwyOh_vEUDkLbPBwrYOgyMC7x9-aN5kF-Q1HB3cOugW5PBtrjXfHQIN15w5cz09LPt6/s16000/T-G%20logos%20only.png" alt="logo" />
-                  </div>
+                </div>
               </div>
 
             </div>
-            
+
           </div>
         </nav>
       </section>

@@ -27,8 +27,25 @@ body {
 .cursor-pointer{
   cursor: pointer;
 }
+.dropdown_menus{
+  width: 50vw;
+}
 .navbar {
   background-color: black !important;
+}
+/* .dropdown-menu{
+  display: block;
+} */
+/* .dropdown-toggle:hover .dropdown-menu{
+  display: block !important;
+} */
+.dropdown-item{
+  padding: 10px;
+  background-color: rgba(87, 86, 86, 0.12);
+  /* margin: 10px; */
+}
+.dropdown-item:hover{
+  background-color: var(--app-theme);
 }
 
 .hero_forms {

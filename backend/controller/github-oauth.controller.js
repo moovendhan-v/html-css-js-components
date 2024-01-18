@@ -1,6 +1,7 @@
 // authRouter.js
 const express = require('express');
 const axios = require('axios');
+const GitHubUser = require('../models/user.model');
 require('dotenv').config();
 
 async function exchangeGitHubCodeForToken(code) {
@@ -32,20 +33,50 @@ async function exchangeGitHubCodeForToken(code) {
   }
 }
 
-  async function getUserAvatar(githubAccessToken) {
-    try {
-      const avatarResponse = await axios.get('https://api.github.com/user', {
-        headers: {
-          Authorization: `Bearer ${githubAccessToken}`,
-        },
-      });
-  
-      const avatarUrl = avatarResponse.data.avatar_url;
-      return avatarUrl;
-    } catch (error) {
-      console.error('Error fetching GitHub user avatar:', error);
-      throw error;
-    }
+async function getUserAvatar(githubAccessToken) {
+  try {
+    const avatarResponse = await axios.get('https://api.github.com/user', {
+      headers: {
+        Authorization: `Bearer ${githubAccessToken}`,
+      },
+    });
+    const avatarUrl = avatarResponse.data;
+    console.log(avatarUrl);
+    return avatarUrl;
+  } catch (error) {
+    console.error('Error fetching GitHub user avatar:', error);
+    throw error;
   }
+}
 
-module.exports = {exchangeGitHubCodeForToken};
+
+async function getUserInformationsFromGitApi(githubAccessToken) {
+  try {
+    const userData = await axios.get('https://api.github.com/user', {
+      headers: {
+        Authorization: `Bearer ${githubAccessToken}`,
+      },
+    });
+    const userDataInfo = userData;
+    console.log(userDataInfo);
+    // createUserByGitOauth();
+    return userDataInfo;
+  } catch (error) {
+    console.error('Error fetching GitHub user avatar:', error);
+    throw error;
+  }
+}
+
+async function createUserByGitOauth(userData) {
+  try {
+    const githubUser = new GitHubUser(userData);
+    await githubUser.save();
+    console.log('GitHub user information saved successfully');
+  } catch (error) {
+    console.error('Error saving GitHub user information:', error);
+  }
+}
+
+getUserAvatar("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");
+
+module.exports = { exchangeGitHubCodeForToken , createUserByGitOauth};

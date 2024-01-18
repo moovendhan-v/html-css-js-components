@@ -10,7 +10,7 @@ const GitHubLoginButton = () => {
       setIsLoggedIn(true);
     }
   }, []);
-
+  
   const handleLogin = () => {
     const clientId = '5871c78bb36c12b03eb3';
     const redirectUri = 'http://localhost:5173';
@@ -44,7 +44,7 @@ const GitHubLoginButton = () => {
       ) : (
         // If not logged in, show login button
         <button className='btn btn-primary' onClick={handleLogin}>
-          Login with GitHub {isLoggedIn}
+          Login / Signup  {isLoggedIn}
         </button>
       )}
     </div>

@@ -3,6 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs'); //file system
 const cors = require('cors');
+const connectDB = require('./config/db')
 // const bodyParser = require('body-parser');
 const path = require('path'); //path
 const session = require('express-session');
@@ -46,6 +47,7 @@ app.use(
 
 app.use('/components', componentsRouter);
 app.use('/auth', authRouter);
+connectDB();
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
