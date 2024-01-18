@@ -3,7 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const fs = require('fs'); //file system
 const cors = require('cors');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
@@ -20,9 +20,9 @@ const { sendDiscordWebhookMessage } = require('./operations/webhookOperations');
 //importing express js
 const app = express();
 const port = 4000;
-app.use(cors);
+app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 //importing router files
 const {homeRouter} = require('./routes/homepage.router')

@@ -10,7 +10,7 @@ const GitHubAuth = () => {
     const code = urlParams.get('code');
     // alert(code);
     if (code) {
-      fetch('http://localhost:4000/auth/github-auth', {
+      fetch('http://localhost:4000/auth/github-oauth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -19,8 +19,9 @@ const GitHubAuth = () => {
       })
         .then(response => response.json())
         .then(data => {
+          console.log(JSON.stringify(data, null, 2));
           // Assuming your server responds with an access token
-          const githubAccessToken = data.access_token;
+          const githubAccessToken = data.githubAccessToken;
           // Store the GitHub access token in localStorage or a secure storage method
           localStorage.setItem('githubAccessToken', githubAccessToken);
         })
