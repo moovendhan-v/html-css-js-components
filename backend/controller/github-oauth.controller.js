@@ -57,26 +57,27 @@ async function getUserInformationsFromGitApi(githubAccessToken) {
         Authorization: `Bearer ${githubAccessToken}`,
       },
     });
-    const userDataInfo = userData;
-    console.log(userDataInfo);
-    // createUserByGitOauth();
+    const userDataInfo = userData.data;
     return userDataInfo;
   } catch (error) {
-    console.error('Error fetching GitHub user avatar:', error);
+    console.error('Error fetching GitHub user data:', error);
     throw error;
   }
 }
 
-async function createUserByGitOauth(userData) {
+async function createUserByGitOauth(githubAccessToken) {
   try {
-    const githubUser = new GitHubUser(userData);
-    await githubUser.save();
-    console.log('GitHub user information saved successfully');
+    const userInfo = await getUserInformationsFromGitApi(githubAccessToken);
   } catch (error) {
-    console.error('Error saving GitHub user information:', error);
+    if (error.code === 11000 || error.code === 11001) {
+      console.error(error.message);
+    } else {
+      console.error('Error in createUserByGitOauth:', error.message);
+    }
   }
 }
 
-getUserAvatar("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");
 
-module.exports = { exchangeGitHubCodeForToken , createUserByGitOauth};
+// getUserInformationsFromGitApi("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");
+module.exports = { exchangeGitHubCodeForToken , createUserByGitOauth, getUserInformationsFromGitApi};
+
