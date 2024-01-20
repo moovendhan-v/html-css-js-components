@@ -4,7 +4,6 @@ const GitHubUser = require('../models/user.model');
 require('dotenv').config();
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
-
 async function exchangeGitHubCodeForToken(code) {
   console.log(code);
   const client_id = process.env.GITHUB_CLIENT_ID;
@@ -102,7 +101,6 @@ const getUserInfoFromGit = async (req, res) => {
 //     }
 //   }
 // }
-
 
 // getUserInformationsFromGitApi("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");
 module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit};

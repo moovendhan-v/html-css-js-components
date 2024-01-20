@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
+
 const root = createRoot(document.getElementById('root'));
 
 const GitHubAuth = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
-    // alert(code);
     if (code) {
       fetch('http://localhost:4000/auth/github-oauth', {
         method: 'POST',
@@ -20,10 +20,13 @@ const GitHubAuth = () => {
         .then(response => response.json())
         .then(data => {
           console.log(JSON.stringify(data, null, 2));
-          // Assuming your server responds with an access token
-          const githubAccessToken = data.githubAccessToken;
-          // Store the GitHub access token in localStorage or a secure storage method
-          localStorage.setItem('githubAccessToken', githubAccessToken);
+          const githubAccessToken = data && data.githubAccessToken;
+          if (githubAccessToken) {
+            // Store the GitHub access token in localStorage
+            localStorage.setItem('githubAccessToken', githubAccessToken);
+          } else {
+            console.error('GitHub authentication error: Invalid access token received');
+          }
         })
         .catch(error => {
           console.error('GitHub authentication error:', error);

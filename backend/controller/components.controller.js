@@ -16,6 +16,7 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
         callback(null, content);
     });
 };
+
 // reading file informations 
 function readFilesInformations(catogriesName, folderName, callback) {
     readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
@@ -51,8 +52,6 @@ function getLatestFiles(catogries, callback) {
     const folderPaths = path.join("../", 'project', 'project_datas', catogries);
     fs.readdir(folderPaths, (err, files) => {
       if (err) {
-        console.error(err);
-        console.trace(); 
         return callback(`Error reading directory: ${err}`);
       }
       const promises = files.slice(0, 10).map(file => {
@@ -75,16 +74,6 @@ function getLatestFiles(catogries, callback) {
           callback(error);
         });
     });}
-
-// getting catogreis details informations 
-//   getLatestFiles("buttons",(err, files) => {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     //array of objects
-//     console.log(files);
-//   });
 
 const getComponentsDetails = (req, res) => {
     readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {

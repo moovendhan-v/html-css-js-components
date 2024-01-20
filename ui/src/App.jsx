@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import HomePage from './screens/Home';
 import Componenets from './screens/Components';
+import Editor from './screens/Editor';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/components" element={<Componenets />} />
           <Route path="/buttons" element={<Componenets />} />
+          <Route path="/edit" element={<Editor />} />
         </Routes>
       </Router>
     </div>

@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles} = require('../controller/components.controller')
+const {getComponentsDetails , getLatestFiles} = require('../controller/components.controller');
+const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
 componentsRouter.get('/latest', (req, res) => {
@@ -10,7 +11,7 @@ componentsRouter.get('/latest', (req, res) => {
         console.error(err);
         return res.status(500).json({err: `${err}`, error: 'Internal Server Error' });
       }
-      res.json(files);
+      res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
     });
   });
 
