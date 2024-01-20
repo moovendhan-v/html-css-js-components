@@ -1,41 +1,43 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import GitHubLoginButton from '../components/Gitlogin';
+import Model from '../components/Model'
 
 function Nav() {
 
   return (
     <>
       <section>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
-          <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-light" href="#">Ui-Comp</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
+        <nav className="navbar navbar-expand-lg bg-body-tertiary py-3">
+          <div className="container-fluid">
+            <a className="navbar-brand fw-bold text-light" href="#">Ui-Comp</a>
+            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-between " id="navbarNavDropdown">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link active fw-semibold text-light" aria-current="page" ><Link to="/">Home</Link></a>
+
+            <div className="collapse navbar-collapse justify-content-between " id="navbarNavDropdown">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a className="nav-link active fw-semibold text-light" aria-current="page" ><Link to="/">Home</Link></a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active fw-semibold text-light" aria-current="page"><Link to="/components">Components</Link></a>
+                <li className="nav-item">
+                  <a className="nav-link active fw-semibold text-light" aria-current="page"><Link to="/components">Components</Link></a>
                 </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     More
                   </a>
-                  {/* <ul class="dropdown-menu bg-theme">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  {/* <ul className="dropdown-menu bg-theme">
+                    <li><a className="dropdown-item" href="#">Action</a></li>
+                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                    <li><a className="dropdown-item" href="#">Something else here</a></li>
                   </ul> */}
                   <div className="dropdown-menu bg-theme">
 <div className="d-flex dropdown_menus">
                   <div className="bg-theme p-3">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li><a className="dropdown-item" href="#">Action</a></li>
+                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                    <li><a className="dropdown-item" href="#">Something else here</a></li>
                   </div>
                   <div className="bg-theme p-3">
                     <div>
@@ -48,7 +50,8 @@ function Nav() {
 </div>
                   </div>  
                 </li>
-
+                <li className="nav-item"></li>
+                        <Model />
               </ul>
 
               <div className="d-flex align-items-center">

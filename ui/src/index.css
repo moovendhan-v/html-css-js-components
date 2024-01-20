@@ -33,6 +33,18 @@ body {
 .navbar {
   background-color: black !important;
 }
+.modal-header{
+  border-bottom: transparent !important;
+}
+.nav-tabss{
+  width: 50%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+.min-height-400{
+  min-height: 500px !important;
+}
 /* .dropdown-menu{
   display: block;
 } */
