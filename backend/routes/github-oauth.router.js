@@ -1,9 +1,8 @@
 // authRouter.js
 const express = require('express');
 const axios = require('axios');
-const { exchangeGitHubCodeForToken, getUserInformationsFromGitApi } = require('../controller/github-oauth.controller');
+const { exchangeGitHubCodeForToken,getUserInfoFromGit } = require('../controller/github-oauth.controller');
 const authRouter = express.Router();
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 require('dotenv').config();
 const GitHubUser = require('../models/user.model');
 
@@ -25,27 +24,7 @@ authRouter.get('/', (req, res) => {
 //   }
 // })
 
-authRouter.post('/getUserInfoFromGit', async (req, res) => {
-  const data = req.body;
-  if (data) {
-    try {
-      const authKey = data.authKey;
-      const userInfo = await getUserInformationsFromGitApi(authKey);
-      const existingUser = await GitHubUser.findOne({ id : userInfo.id });
-      if (existingUser) {
-        return res.json(jsonStatusSuccess({ message: `Welcome Back ${userInfo.name}`, response: userInfo }));
-      }
-      const githubUser = new GitHubUser(userInfo);
-      await githubUser.save();
-      res.json(jsonStatusSuccess({ message:`Hi ! ${userInfo.name}`, response: userInfo }));
-    } catch (error) {
-      res.json(jsonStatusError({ response: userInfo, errorStatus: true, statusCode: 11000, message: error.message }));
-    }
-  } else {
-    res.status(400).json({ error: 'Bad Request' });
-  }
-});
-
+authRouter.post('/getUserInfoFromGit', getUserInfoFromGit);
 
 
 authRouter.post('/github-oauth', async (req, res) => {
