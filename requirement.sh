@@ -8,7 +8,7 @@ npm install --save-dev vite
 
 npm install --include=dev
 
-npm install tailwindcss postcss autoprefixer
+# npm install tailwindcss postcss autoprefixer
 
 npm install react-router-dom
 

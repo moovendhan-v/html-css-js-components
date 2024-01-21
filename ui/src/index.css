@@ -17,6 +17,9 @@ body {
   background-color: var(--sub-theme);
   border: transparent;
 }
+.bg-grey{
+  background-color: #80808045;
+}
 .bg-menuslider{
   background-color: var(--menu-theme);
 }

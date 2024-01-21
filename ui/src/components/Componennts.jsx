@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PopularPosts from './PopularPosts';
 import { Link } from 'react-router-dom';
+import CodeEditor from '../components/CodeEditor';
+
 
 
 const LeftSliderNavbar = () => {
@@ -35,7 +37,8 @@ const App = () => {
         <div className='right_div'>
             <div>
                 <h3>Main div</h3>
-                <PopularPosts />
+                {/* <PopularPosts /> */}
+           <CodeEditor />
             </div>
         </div>
     </div>
