@@ -200,7 +200,12 @@ body {
   break-inside: avoid;
   border-radius: 5px;
 }
-
+.slider-navbar {
+  padding: 10px 0;
+}
+/* .slider-navbar:hover{
+  color: var(--app-theme);
+} */
 .gallery_containers .box img {
   width: 100%;
   border-radius: 20px;

@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MonacoEditor from "react-monaco-editor";
+import * as monaco from "monaco-editor";
 
 const CodeEditor = ({ language, value, onChange }) => {
   const editorOptions = {
@@ -8,7 +9,35 @@ const CodeEditor = ({ language, value, onChange }) => {
     readOnly: false,
     cursorStyle: "line",
     automaticLayout: true,
+    fontSize: 16,
   };
+
+  useEffect(() => {
+    // Load the Monaco Editor language dynamically
+    const loadMonacoLanguage = async () => {
+      // Use Monaco Editor's AMD loader
+      const loader = require("monaco-editor/esm/vs/loader");
+      const vsBaseUrl = "/node_modules/monaco-editor/min/vs"; // Adjust the path based on your project structure
+
+      loader.require.config({
+        paths: {
+          vs: vsBaseUrl,
+        },
+      });
+
+      await loader.require(["vs/editor/editor.main"], async () => {
+        // Load the language dynamically
+        await loader.require([`vs/language/${language}/${language}`], () => {
+          // Trigger a layout refresh after loading the language
+          monaco.editor.onDidCreateEditor(() => {
+            monaco.editor.layout();
+          });
+        });
+      });
+    };
+
+    loadMonacoLanguage();
+  }, [language]);
 
   const handleEditorDidMount = (editor) => {
     // Access the editor instance if needed
@@ -16,17 +45,13 @@ const CodeEditor = ({ language, value, onChange }) => {
   };
 
   return (
-<div className={`tab-pane fade ${language === 'html' ? 'active show' : ''}`} id={language} role="tabpanel">
-      {/* <h4 className="text-center">{language.toUpperCase()}</h4> */}
+    <div className={`tab-pane fade ${language === 'html' ? 'active show' : ''}`} id={language} role="tabpanel">
       <MonacoEditor
         height="40vh"
         language={language}
         theme="vs-dark"
         value={value}
-        options={{
-          ...editorOptions,
-          fontSize: 16,
-        }}
+        options={editorOptions}
         editorDidMount={handleEditorDidMount}
         onChange={onChange}
       />

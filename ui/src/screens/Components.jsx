@@ -8,7 +8,7 @@ const Components = ()=>{
     return(
         <>
         <Nav />
-        <GitHubLoginButton />
+        {/* <GitHubLoginButton /> */}
             <SliderNavbar />
         {/* <Footer /> */}
         </>

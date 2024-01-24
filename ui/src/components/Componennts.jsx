@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PopularPosts from './PopularPosts';
 import { Link } from 'react-router-dom';
 import CodeEditor from '../components/CodeEditor';
-
+import ComponentsCard from '../components/Comp_Card';
 
 
 const LeftSliderNavbar = () => {
@@ -31,14 +31,18 @@ const App = () => {
     <div className="container-fluid">
         <div className='left_div'>
             <div>
-            <a class="nav-link active fw-semibold text-light" aria-current="page" ><Link to="/allcomponents">All Components</Link></a>
+           <LeftSliderNavbar />
+           <LeftSliderNavbar />
             </div>
         </div>
         <div className='right_div'>
             <div>
-                <h3>Main div</h3>
+                {/* <h3>Main div</h3> */}
                 {/* <PopularPosts /> */}
-           <CodeEditor />
+           {/* <CodeEditor /> */}
+              <ComponentsCard />
+          
+
             </div>
         </div>
     </div>
