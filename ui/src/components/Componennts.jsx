@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import PopularPosts from './PopularPosts';
+// import PopularPosts from './PopularPosts';
 import { Link } from 'react-router-dom';
 import CodeEditor from '../components/CodeEditor';
-import ComponentsCard from '../components/Comp_Card';
+import ComponentsCard from './ComponentsCard';
 
 
 const LeftSliderNavbar = () => {
@@ -41,7 +41,6 @@ const App = () => {
                 {/* <PopularPosts /> */}
            {/* <CodeEditor /> */}
               <ComponentsCard />
-          
 
             </div>
         </div>

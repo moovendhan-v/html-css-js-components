@@ -1,9 +1,8 @@
-// store.js
 import { createStore, combineReducers } from 'redux';
-import {userReducer} from './userSession.reducers';
+import componentsReducer from '../reducres/Components.reducres';  // Correct import path
 
 const rootReducer = combineReducers({
-  user: userReducer,
+  components: componentsReducer,
   // Add other reducers as needed
 });
 

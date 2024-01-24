@@ -3,7 +3,7 @@ import Button from "./Button";
 import Community from './Community';
 import Contributer from './Contributer';
 import Heading from './Heading';
-import PopularPosts from './PopularPosts';
+// import PopularPosts from './PopularPosts';
 import ScroolAnimation, { ScrollAnimationForImage } from './Scrool';
 import SeachBar from './Search';
 import TypingTextEffect from './TypingText';
@@ -36,7 +36,7 @@ function Hero(){
             <Heading main={"Popular Components"}  sub={"trending"}/>
         </section>
         <section>
-            <PopularPosts />
+            {/* <PopularPosts /> */}
             {/* <PostContent /> */}
         </section>
         <section>
