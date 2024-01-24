@@ -33,7 +33,7 @@ const ComponentsCard = () => {
   useEffect(() => {
     console.log("Original components:", components);
     for (const key in components) {
-        // console.log(`+++ ${components.components[0].post_details}`);
+        console.log(`+++ ${typeof(components.components.post_details)}`);
     }
   }, [components]);
 
@@ -45,9 +45,9 @@ const ComponentsCard = () => {
         <div key={index} className="col rounded-1">
           <div className="box m-1 p-1">
             <OutputsOfComponents
-              html={component}
-              css={component}
-              js={component}
+              html={component.post_details.html}
+              css={component.post_details.css}
+              js={component.post_details.js}
             />
           </div>
         </div>
