@@ -4,12 +4,12 @@ import SliderNavbar from '../components/Componennts';
 // import LoginButton from '../components/Login'
 import GitHubLoginButton from '../components/Gitlogin';
 
-const Components = ()=>{
+const Components = ({catogreise})=>{
     return(
         <>
         <Nav />
         {/* <GitHubLoginButton /> */}
-            <SliderNavbar />
+            <SliderNavbar catogreise={catogreise}/>
         <Footer />
         </>
     )

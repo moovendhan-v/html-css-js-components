@@ -1,8 +1,9 @@
 import { createStore, combineReducers } from 'redux';
-import componentsReducer from '../reducres/Components.reducres';  // Correct import path
+import {componentsReducer, componentsReducerButtons } from '../reducres/Components.reducres';  // Correct import path
 
 const rootReducer = combineReducers({
   components: componentsReducer,
+  components_buttons : componentsReducerButtons,
   // Add other reducers as needed
 });
 

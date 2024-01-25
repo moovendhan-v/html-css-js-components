@@ -14,8 +14,9 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/components" element={<Componenets />} />
-          <Route path="/buttons" element={<Componenets />} />
+          <Route path="/components" element={<Componenets  catogreise={"buttons"}/>} />
+          <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
+          <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
           <Route path="/edit" element={<Editor />} />
         </Routes>
       </Router>

@@ -1,13 +1,12 @@
 // Components.reducres.js
 const initialState = {
   components: [],
+  components_buttons: [],
 };
 
-const componentsReducer = (state = initialState, action) => {
+export const componentsReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_COMPONENTS':
-    console.log('Previous State:', state);
-    console.log('Action:', action);
       return {
         ...state,
         components: [...state.components, ...action.payload],
@@ -17,4 +16,16 @@ const componentsReducer = (state = initialState, action) => {
   }
 };
 
-export default componentsReducer;
+export const componentsReducerButtons = (state = initialState, action) => {
+  switch (action.type) {
+    case 'ADD_COMPONENTS':
+      console.log(state);
+      console.log(action);
+      return {
+        ...state,
+        components_buttons: [...state.components_buttons, ...action.payload],
+      };
+    default:
+      return state;
+  }
+};
