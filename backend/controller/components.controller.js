@@ -54,7 +54,7 @@ function getLatestFiles(catogries, callback) {
       if (err) {
         return callback(`Error reading directory: ${err}`);
       }
-      const promises = files.slice(0, 10).map(file => {
+      const promises = files.slice(0, 9).map(file => {
         return new Promise((resolve, reject) => {
           readFilesInformations(catogries, file, (err, fileInfo) => {
             if (err) {
@@ -74,6 +74,9 @@ function getLatestFiles(catogries, callback) {
           callback(error);
         });
     });}
+
+
+    
 
 const getComponentsDetails = (req, res) => {
     readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {
@@ -100,6 +103,8 @@ const getComponentsDetails = (req, res) => {
         });
     });
 };
+
+
 
 module.exports = {
     getComponentsDetails,

@@ -10,7 +10,7 @@ const Components = ()=>{
         <Nav />
         {/* <GitHubLoginButton /> */}
             <SliderNavbar />
-        {/* <Footer /> */}
+        <Footer />
         </>
     )
 }

@@ -4,9 +4,9 @@
 npm install -g npm@10.3.0
 
 # Install Vite as a development dependency
-npm install --save-dev vite
+npm install --save-dev vite --force
 
-npm install --include=dev
+npm install --include=dev --force
 
 # npm install tailwindcss postcss autoprefixer
 
