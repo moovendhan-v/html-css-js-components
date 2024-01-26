@@ -286,6 +286,12 @@ body {
   text-decoration: none;
   cursor: pointer;
 }
+.profile_text{
+  text-decoration: none;
+}
+.profile_tabs{
+  min-height: 100px;
+}
 .align_button{
   position: relative;
   top: -70px;

@@ -4,7 +4,6 @@ import { addComponents } from '../actions/components.actions';
 import code from '../assets/myicons/code.svg';
 import OutputsOfComponents from './OutputsOfComponents';
 
-
 const ComponentsCard = ({catogreise}) => {
   const dispatch = useDispatch();
   const componentsPropertyName = `components_${catogreise}`;
