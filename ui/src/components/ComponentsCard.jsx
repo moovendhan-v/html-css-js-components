@@ -8,6 +8,7 @@ import OutputsOfComponents from './OutputsOfComponents';
 const ComponentsCard = ({catogreise}) => {
   const dispatch = useDispatch();
   const componentsPropertyName = `components_${catogreise}`;
+  console.log(componentsPropertyName);
   const components = useSelector((state) => state[componentsPropertyName]);
 
   console.log(`components ${components}`);

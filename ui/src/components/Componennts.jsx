@@ -23,7 +23,7 @@ const LeftSliderNavbar = ({ title, linkTo }) => {
 const App = ({catogreise}) => {
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid d-flex">
         <div className='left_div'>
           <div>
             <LeftSliderNavbar title="All" linkTo="components" />

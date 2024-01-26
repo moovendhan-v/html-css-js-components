@@ -309,7 +309,7 @@ body {
   font-size: 14px;
 }
 .left_div{
-    position: fixed;
+    /* position: fixed; */
     width: 15%;
     height: 100vh;
     color: #fff;
@@ -319,7 +319,7 @@ body {
 }
 .right_div{
   width: 85%;
-  margin-left: 15%;
+  /* margin-left: 15%; */
   height: 100vh;
   overflow-x: hidden;
 }
