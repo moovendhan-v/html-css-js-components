@@ -9,30 +9,34 @@ const ComponentsCard = ({catogreise}) => {
   const componentsPropertyName = `components_${catogreise}`;
   console.log(componentsPropertyName);
   const components = useSelector((state) => state.components[componentsPropertyName]);
-
-  console.log(`components=> ${components}`);
-  // console.log(JSON.stringify(components, null, 2));
-  // console.log(JSON.stringify(components[0], null, 2));
-
+  // console.log(`components=> ${components}`);
+  console.log(JSON.stringify(components, null, 2));
+  
   useEffect(() => {
-    const fetchComponentsFromAPI = async () => {
+    const fetchComponentsFromAPI = async (catogreise) => {
       try {
-        const response = await fetch(`http://localhost:4000/components/latest?category=${catogreise}`);
-        const data = await response.json();
-        console.log(data.response);
-        // Check if data.response is an array
-        if (Array.isArray(data?.response)) {
-          dispatch(addComponents({ components: data?.response, componentType: catogreise }));
+        // Check if components array is empty or null
+        if (!components || components.length === 0) {
+          const response = await fetch(`http://localhost:4000/components/latest?category=${catogreise}`);
+          const data = await response.json();
+          console.log(data.response);
+          // Check if data.response is an array
+          if (Array.isArray(data?.response)) {
+            dispatch(addComponents({ components: data?.response, componentType: catogreise }));
+          } else {
+            console.error("Invalid data structure from API");
+          }
         } else {
-          console.error("Invalid data structure from API");
+          console.log("Components already exist, skipping fetch");
         }
       } catch (error) {
         console.error("Error fetching components:", error);
       }
     };
-
-    fetchComponentsFromAPI();
-  }, [dispatch]);
+  
+    fetchComponentsFromAPI(catogreise);
+  }, [dispatch, catogreise, components]); // Include components in the dependency array  
+  
 
   return (
     <>
