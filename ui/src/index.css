@@ -322,6 +322,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: scroll;
 }
 .right_div{
   width: 85%;

@@ -2,23 +2,7 @@ import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-
-const LeftSliderNavbar = ({ title, linkTo }) => {
-    const [isActive, setIsActive] = useState(false);
-  
-    const toggleSlider = () => {
-      setIsActive(!isActive);
-    };
-    return (
-      <div className={`slider-navbar ${isActive ? 'active' : ''}`}>
-        <div className="slider-content">
-          <div>
-              <Link aria-current="page" className='nav-link active fw-semibold text-light' to={`/${linkTo}`} >{title}</Link>
-          </div>
-        </div>
-      </div>
-    );
-  };
+import LeftSliders from '../components/LeftSLiders';
 
 const Profile = ()=>{
     return(
@@ -27,12 +11,7 @@ const Profile = ()=>{
         <div className="container-fluid d-flex">
           <div className='left_div'>
             <div>
-              <LeftSliderNavbar title="All" linkTo="components" />
-              <LeftSliderNavbar title="Buttons" linkTo="buttons" />
-              <LeftSliderNavbar title="Cards" linkTo="cards" />
-              <LeftSliderNavbar title="Forms" linkTo="components" />
-              <LeftSliderNavbar title="Checkbox" linkTo="components" />
-              <LeftSliderNavbar title="Loader" linkTo="components" />
+            <LeftSliders />
             </div>
           </div>
           <div className='right_div'>

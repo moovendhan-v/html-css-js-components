@@ -10,7 +10,7 @@ const ComponentsCard = ({catogreise}) => {
   console.log(componentsPropertyName);
   const components = useSelector((state) => state.components[componentsPropertyName]);
   // console.log(`components=> ${components}`);
-  console.log(JSON.stringify(components, null, 2));
+  // console.log(JSON.stringify(components, null, 2));
   
   useEffect(() => {
     const fetchComponentsFromAPI = async (catogreise) => {
@@ -37,7 +37,6 @@ const ComponentsCard = ({catogreise}) => {
     fetchComponentsFromAPI(catogreise);
   }, [dispatch, catogreise, components]); // Include components in the dependency array  
   
-
   return (
     <>
 
@@ -51,7 +50,7 @@ const ComponentsCard = ({catogreise}) => {
    </div>
 
       <div className="container-fluid">
-        <div className="gallery_containers shadow_fade">
+        <div className="gallery_containers ">
 
         {components.map((component, index) => (
             
