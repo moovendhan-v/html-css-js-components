@@ -1,11 +1,11 @@
 import { createStore, combineReducers } from 'redux';
-import {componentsReducer, componentsReducerButtons, componentsReducerCards } from '../reducres/Components.reducres';
+import {componentsReducer } from '../reducres/Components.reducres';
 // import {userReducer} from '../reducres/userSession.reducers';
 
 const rootReducer = combineReducers({
   components: componentsReducer,
-  components_buttons : componentsReducerButtons,
-  components_cards : componentsReducerCards,
+  // components_buttons : componentsReducerButtons,
+  // components_cards : componentsReducerCards,
   // user: userReducer,
 
   // Add other reducers as needed

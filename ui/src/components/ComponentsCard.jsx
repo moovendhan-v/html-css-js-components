@@ -8,9 +8,11 @@ const ComponentsCard = ({catogreise}) => {
   const dispatch = useDispatch();
   const componentsPropertyName = `components_${catogreise}`;
   console.log(componentsPropertyName);
-  const components = useSelector((state) => state[componentsPropertyName]);
+  const components = useSelector((state) => state.components[componentsPropertyName]);
 
-  console.log(`components ${components}`);
+  console.log(`components=> ${components}`);
+  // console.log(JSON.stringify(components, null, 2));
+  // console.log(JSON.stringify(components[0], null, 2));
 
   useEffect(() => {
     const fetchComponentsFromAPI = async () => {
@@ -20,7 +22,7 @@ const ComponentsCard = ({catogreise}) => {
         console.log(data.response);
         // Check if data.response is an array
         if (Array.isArray(data?.response)) {
-          dispatch(addComponents(data?.response));
+          dispatch(addComponents({ components: data?.response, componentType: catogreise }));
         } else {
           console.error("Invalid data structure from API");
         }
@@ -47,7 +49,7 @@ const ComponentsCard = ({catogreise}) => {
       <div className="container-fluid">
         <div className="gallery_containers shadow_fade">
 
-        {components[componentsPropertyName].map((component, index) => (
+        {components.map((component, index) => (
             
             <div className="box myBoxContainer">
               <div key={index} className="col rounded-1 position-relative ">
@@ -79,6 +81,7 @@ const ComponentsCard = ({catogreise}) => {
 
         </div>
       </div>
+      
     </>
   );
 };
