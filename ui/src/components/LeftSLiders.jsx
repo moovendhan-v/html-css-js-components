@@ -30,9 +30,8 @@ const LeftSliders = ()=>{
               <LeftSliderNavbar title="Loader" linkTo="loader" />
               <LeftSliderNavbar title="Input" linkTo="input" />
               <LeftSliderNavbar title="tooltip" linkTo="tooltip" />
-              <LeftSliderNavbar title="tooltip" linkTo="components" />
               <LeftSliderNavbar title="navbar" linkTo="navbar" />
-              <LeftSliderNavbar title="tabs" linkTo="navbar" />
+              <LeftSliderNavbar title="tabs" linkTo="tabs" />
               <LeftSliderNavbar title="toast" linkTo="toast" />
         </>
     )

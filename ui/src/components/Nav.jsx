@@ -21,7 +21,7 @@ function Nav() {
                   <a className="nav-link active fw-semibold text-light" aria-current="page" ><Link to="/">Home</Link></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active fw-semibold text-light" aria-current="page"><Link to="/components">Components</Link></a>
+                  <a className="nav-link active fw-semibold text-light" aria-current="page"><Link to="/all">Components</Link></a>
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

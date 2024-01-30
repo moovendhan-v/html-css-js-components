@@ -29,3 +29,4 @@ node_modules
 
 project/config.env.json
 project/mongodb-backup
+project/project_datas

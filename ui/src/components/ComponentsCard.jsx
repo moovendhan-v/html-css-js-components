@@ -9,11 +9,11 @@ const ComponentsCard = ({catogreise}) => {
   const componentsPropertyName = `components_${catogreise}`;
   console.log(componentsPropertyName);
   const components = useSelector((state) => state.components[componentsPropertyName]);
-  // console.log(`components=> ${components}`);
+  console.log(`components=> ${components}`);
   // console.log(JSON.stringify(components, null, 2));
   
   useEffect(() => {
-    const fetchComponentsFromAPI = async (catogreise) => {
+    const fetchComponentsFromAPI = async () => {
       try {
         // Check if components array is empty or null
         if (!components || components.length === 0) {
@@ -34,7 +34,7 @@ const ComponentsCard = ({catogreise}) => {
       }
     };
   
-    fetchComponentsFromAPI(catogreise);
+    fetchComponentsFromAPI();
   }, [dispatch, catogreise, components]); // Include components in the dependency array  
   
   return (
