@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import GitHubLoginButton from '../components/Gitlogin';
 import Model from '../components/Model'
+import LeftSliders from '../components/LeftSLiders';
 
 function Nav() {
 
@@ -35,9 +36,7 @@ function Nav() {
                   <div className="dropdown-menu bg-theme">
                     <div className="d-flex dropdown_menus">
                       <div className="bg-theme p-3">
-                        <li><a className="dropdown-item" href="#">Action</a></li>
-                        <li><a className="dropdown-item" href="#">Another action</a></li>
-                        <li><a className="dropdown-item" href="#">Something else here</a></li>
+                       <LeftSliders />
                       </div>
                       <div className="bg-theme p-3">
                         <div>

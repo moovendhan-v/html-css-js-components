@@ -38,6 +38,11 @@ body {
 .navbar {
   background-color: black !important;
 }
+.active_nav{
+  background-color: var(--sub-theme);
+  transition: 0.2s;
+  cursor: pointer;
+}
 .modal-header{
   border-bottom: transparent !important;
 }
