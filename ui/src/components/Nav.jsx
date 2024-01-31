@@ -26,7 +26,7 @@ function Nav() {
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    More
+                    More Elements
                   </a>
                   {/* <ul className="dropdown-menu bg-theme">
                     <li><a className="dropdown-item" href="#">Action</a></li>
@@ -36,9 +36,12 @@ function Nav() {
                   <div className="dropdown-menu bg-theme">
                     <div className="d-flex dropdown_menus">
                       <div className="bg-theme p-3">
-                       <LeftSliders />
+                          <div className="menu-nav-container">
+                              <LeftSliders role="navbar" />
+                          </div>
                       </div>
                       <div className="bg-theme p-3">
+                          
                         <div>
                         </div>
                       </div>
