@@ -2,9 +2,8 @@ const UserComponents = require('../models/components.model');
 const { jsonStatus, jsonStatusError, jsonStatusSuccess } = require('../operations/errorhandlingOperations');
 const { createFiles } = require('../operations/fileOperations');
 
+// this base path is must be refer from app.js files
 const basePath = '../project/project_datas/';
-const category = 'tooltip';
-const folderName = "testing_folder_names";
 
 const addNewComponents = async (req, res) => {
     try {
@@ -19,16 +18,15 @@ const addNewComponents = async (req, res) => {
             categories,
         });
         await newComponents.save();
-        // Define basePath, category, and folderName
        
         // Call createFiles function to create files
-        createFiles(basePath, category, folderName, { html:"test html", css:"test css", js:"test js" }, (err) => {
+        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js }, (err) => {
             if (err) {
                 console.error('Error creating files:', err);
-                // Handle error if necessary
+                res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Not inserted Please contact admin plase visit contact us page : ${error}` }));
+                return;
             } else {
                 console.log('Files created successfully.');
-                // Handle success if necessary
             }
         });        
         // Send response
@@ -38,16 +36,5 @@ const addNewComponents = async (req, res) => {
         res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Insert fails : ${error}` }));
     }
 }
-
-
-// createFiles(basePath, category, folderName, { html:"test html", css:"test css", js:"test js" }, (err) => {
-//     if (err) {
-//         console.error('Error creating files:', err);
-//         // Handle error if necessary
-//     } else {
-//         console.log('Files created successfully.');
-//         // Handle success if necessary
-//     }
-// });
 
 module.exports = { addNewComponents };
