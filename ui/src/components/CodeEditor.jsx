@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import MonacoEditor from "react-monaco-editor";
+import { useSelector } from "react-redux";
 import * as monaco from "monaco-editor";
 
+
+// useEffect(()=>{
+//   const componentsPropertyName = `components_buttons`;
+//   const components = useSelector((state) => state.components[componentsPropertyName]);
+// },[])
+
+
+
 const CodeEditor = ({ language, value, onChange }) => {
+
+
+
   const editorOptions = {
     selectOnLineNumbers: true,
     roundedSelection: false,
@@ -87,7 +99,14 @@ const OutputScreen = ({ html, css, js }) => {
 };
 
 const WebEditor = () => {
-  const [html, setHtml] = useState('<div>Hello, CodePen Clone!</div>');
+
+  // const componentsPropertyName = `components_buttons`;
+  // const components = useSelector((state) => state.components.components_buttons);
+  // const componentsString = JSON.stringify(components, null, 2);
+  // console.log(componentsString);
+
+
+  const [html, setHtml] = useState(`<div> we-lcome to agricreations</div>`);
   const [css, setCss] = useState('div { color: blue; }');
   const [js, setJs] = useState('console.log("Hello, CodePen Clone!");');
 
@@ -103,8 +122,11 @@ const WebEditor = () => {
     setJs(newValue);
   };
 
+  // handleHtmlChange(components[0].post_details.html);
+
+
   return (
-    <div className="container mt-3">
+    <div className=" m-5">
       <div className="row rounded-1 p-3 bg-grey">
         <div className="col-8 ">
         <ul className="nav nav-pills" id="codeTabs" role="tablist">

@@ -75,9 +75,6 @@ function getLatestFiles(catogries, callback) {
         });
     });}
 
-
-    
-
 const getComponentsDetails = (req, res) => {
     readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {
         if (htmlErr) {
@@ -103,8 +100,6 @@ const getComponentsDetails = (req, res) => {
         });
     });
 };
-
-
 
 module.exports = {
     getComponentsDetails,

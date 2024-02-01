@@ -77,11 +77,10 @@ body {
   transition: 2s;
   /* animation: input 2s linear infinite; */
 }
-.hero_forms:focus{
+/* .hero_forms:focus{
   background-color: var(--app-theme)!important;
   transition: 2s;
-
-}
+} */
 .hero_forms_button{
   padding: 20px 100px !important;
   background-color: white;
@@ -336,7 +335,7 @@ body {
 .left_div{
     /* position: fixed; */
     width: 15%;
-    height: 100vh;
+    height: 60vh;
     color: #fff;
     display: flex;
     flex-direction: column;

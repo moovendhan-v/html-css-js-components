@@ -13,14 +13,5 @@ const githubUserSchema = new Schema({
 });
 
 const GitHubUser = mongoose.model('GitHubUser', githubUserSchema);
-// {
-//     "githubId": 96030910,
-//     "login": "agricreation",
-//     "avatar_url" : "htts://github.com",
-//     "url" : "htts://github.com",
-//     "organisation" : "github",
-//     "name": "Moovendhan",
-//     "blog": "testingblogs",
-//     "bio" : "Bio"
-// }
+
 module.exports = GitHubUser

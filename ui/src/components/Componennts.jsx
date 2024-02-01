@@ -8,8 +8,8 @@ const App = ({catogreise}) => {
   return (
     <>
       <div className="container-fluid d-flex">
-        <div className='left_div'>
-          <div>
+        <div className='left_div shadow_fade mb-3'>
+          <div className='mb-5'>
            <LeftSliders />
           </div>
         </div>
