@@ -11,7 +11,7 @@ function readFileContent(folderPath, fileName, callback) {
   });
 }
 
-function createFiles(basePath, category, folderName, callback) {
+function createFiles(basePath, category, folderName, {html, css, js}, callback) {
   const directoryNameForComponents = folderName;
   const folderPath = path.join(basePath, category, directoryNameForComponents);
   // {html, css, js},
@@ -25,9 +25,9 @@ function createFiles(basePath, category, folderName, callback) {
           path.join(folderPath, 'script.js')
       ];
       const fileContents = [
-          '<!DOCTYPE html>\n<html>\n<head>\n<title>Index</title>\n</head>\n<body>\n</body>\n</html>',
-          '/* Your CSS styles here */',
-          '// Your JavaScript code here'
+          `${html}`,
+          `${css}`,
+          `${js}`
       ];
       // Write content to each file
       filePaths.forEach((filePath, index) => {

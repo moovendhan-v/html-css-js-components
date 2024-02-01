@@ -2,6 +2,9 @@ const UserComponents = require('../models/components.model');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 const { createFiles } = require('../operations/fileOperations');
 
+const basePath = '../../project/project_datas/';
+const category = 'buttons';
+const folderName = "testing_folder_name";
 
 const addNewComponents = async (req, res) => {
     try {
@@ -24,17 +27,13 @@ const addNewComponents = async (req, res) => {
     }
 }
 
-const basePath = '../../project/project_datas/';
-const category = 'buttons';
-const folderName = "testing_folder_name";
 
-createFiles(basePath, category, folderName, (err)=>{
+createFiles(basePath, category, folderName, {html:"testing html", css: "testing css file", js: "testing js"}, (err)=>{
     if(err == null){
         return jsonStatusSuccess({ errorStatus : false, message : 'New Components added soon it will be added into github repository'})
     }else{
         return jsonStatusError({ errorStatus : true, message : `Something might wrong (${err}) please contact admin, so please visit contact us page for more details`, response : null, count : 0 });
     }
 });
-
 
 module.exports = {addNewComponents};
