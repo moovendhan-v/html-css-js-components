@@ -12,9 +12,6 @@ const userComponentsDetails = new Schema({
     categories: { type: String, required: true },
 
     // data html,css,js
-    html: { type: String },
-    css: { type: String },
-    js: { type: String },
 
 });
 
