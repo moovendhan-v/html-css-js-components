@@ -3,13 +3,18 @@ const Schema = mongoose.Schema;
 
 const userComponentsDetails = new Schema({
     // #TODO Schema.Types.ObjectId find this 
-
     user_id: { type: Schema.Types.ObjectId, ref:"GitHubUser", required: true },
     title: { type: String, required: true },
     upload_time: { type: Date, required: true },
     updated_time: { type: Date, required: true },
     folder_path: { type: String, required: true },
+    folder_name: { type: String, required: true },
     categories: { type: String, required: true },
+
+    // data html,css,js
+    html: { type: String },
+    css: { type: String },
+    js: { type: String },
 
 });
 

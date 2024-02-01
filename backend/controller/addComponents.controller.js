@@ -10,7 +10,11 @@ const addNewComponents = async (req, res) => {
             upload_time: req.body.upload_time,
             updated_time: req.body.updated_time,
             folder_path: req.body.folder_path,
+            folder_name: req.body.folder_name,
             categories: req.body.categories,
+            html: req.body.html,
+            css:req.body.css,
+            js: req.body.js,
         });
         await newComponents.save();
         res.send(jsonStatusSuccess({ errorStatus : false, statusCode : "201", message : 'success',}));
