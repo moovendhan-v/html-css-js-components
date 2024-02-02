@@ -14,30 +14,27 @@ const getUserProfileInformations = async (req, res) => {
         // Get userComponents details using user_id 
         const userComponents = await UserComponents.find({ user_id: existingUser._id });
 
-        const folderNames = userComponents.map(component => component.folder_name).join(','); // Join array elements into a single string
-        const categories = userComponents.map(component => component.categories).join(',');
+        // Map user components and append file information
+        const updatedComponentsPromises = userComponents.map(async component => {
+            const folderNames = component.folder_name;
+            const categories = component.categories;
 
-        // Define a promise to get file information
-        const gettingFileInfoFromProjectFiles = new Promise((resolve, reject) => {
-            readFilesInformations(categories, folderNames, (err, fileInfo) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    resolve(fileInfo);
-                }
+            return new Promise((resolve, reject) => {
+                readFilesInformations(categories, folderNames, (err, fileInfo) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve({
+                            ...component.toObject(), // Convert Mongoose document to object
+                            component_details: fileInfo // Add "component_details" array
+                        });
+                    }
+                });
             });
         });
 
-        // Wait for the file information promise to resolve
-        const fileInfo = await gettingFileInfoFromProjectFiles;
-
-        // Map user components and append file information
-        const updatedComponents = userComponents.map(component => {
-            return {
-                ...component.toObject(), // Convert Mongoose document to object
-                component_details: fileInfo // Add "component_details" array
-            };
-        });
+        // Wait for all promises to resolve
+        const updatedComponents = await Promise.all(updatedComponentsPromises);
 
         // Construct the response object
         const userProfileWithComponents = {
