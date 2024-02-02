@@ -27,7 +27,7 @@ const addNewComponents = async (req, res) => {
                 return;
             } else {
                 console.log('Files created successfully.');
-            }
+            } 
         });        
         // Send response
         res.send(jsonStatusSuccess({ errorStatus: false, statusCode: "201", message: 'success' }));

@@ -1,6 +1,8 @@
 const express = require('express');
 const passport = require('passport');
 const userRouter = express.Router();
+
+
 userRouter.post('/register', (req, res, next) => {
   registerUser(req.body)
     .then((user) => {

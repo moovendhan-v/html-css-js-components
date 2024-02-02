@@ -8,6 +8,7 @@ const baseFolderPath = '../';
 //read file content
 const readContent = (filename, catogries, catogriesFile, callback) => {
     const folderPath = path.join(baseFolderPath, 'project', 'project_datas', catogries, catogriesFile);
+    console.log(`Folder paths ${folderPath}`);
     readFileContent(folderPath, filename, (err, content) => {
         if (err) {
             console.error(err);
@@ -19,6 +20,7 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
 
 // reading file informations 
 function readFilesInformations(catogriesName, folderName, callback) {
+    console.log(`Catogreis ${catogriesName} Folder Name ${folderName}`);
     readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
         if (htmlErr) {
             console.log(`html error ${htmlErr}`);
@@ -104,4 +106,6 @@ const getComponentsDetails = (req, res) => {
 module.exports = {
     getComponentsDetails,
     getLatestFiles,
+    readFilesInformations,
+    readContent,
 };
