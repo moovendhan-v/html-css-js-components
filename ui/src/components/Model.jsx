@@ -46,6 +46,7 @@ const Models = () => {
 }
 
 const EditMyProfileModel = () => {
+    
     return (
         <>
             <div>
@@ -129,10 +130,11 @@ const EditMyProfileModel = () => {
 
                                 <div className="p-1">
                                     <div>
-                                        <span>Discord Webhook uri</span>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">Discord Webhook uri <a className="text-primary" href="#">Learn More</a> </span>
+                                        <span className="p"></span>
                                     </div>
                                     <div>
-                                        <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Website" aria-label=".form-control-lg example" />
+                                        <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="To send status update to your discord channel...!" aria-label=".form-control-lg example" />
                                     </div>
                                 </div>
                                 <div className="p-1">

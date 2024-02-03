@@ -1,13 +1,7 @@
-// // Action Types
-// const LOGIN = 'LOGIN';
-// const LOGOUT = 'LOGOUT';
+// actions.js
+export const UPDATE_USER_PROFILE = 'UPDATE_USER_PROFILE';
 
-// // Action Creators
-// export const login = (user) => ({
-//   type: LOGIN,
-//   payload: user,
-// });
-
-// export const logout = () => ({
-//   type: LOGOUT,
-// });
+export const updateUserProfile = (profileData) => ({
+  type: UPDATE_USER_PROFILE,
+  payload: profileData,
+});

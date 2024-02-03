@@ -1,26 +1,19 @@
-// // userSession.reducers.js
-// const initialState = {
-//     name: '',
-//     avatar: '',
-//     bio: '',
-//     isLoggedIn: false,
-// };
+// userProfile.reducers.js
+import { UPDATE_USER_PROFILE } from '../actions/user.action';
 
-// export const userReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//       case LOGIN:
-//         return {
-//           ...state,
-//           isLoggedIn: true,
-//           user: action.payload,
-//         };
-//       case LOGOUT:
-//         return {
-//           ...state,
-//           isLoggedIn: false,
-//           user: null,
-//         };
-//       default:
-//         return state;
-//     }
-// };
+const initialState = {
+  userProfile: {},
+};
+
+export const userProfileReducer = (state = initialState, action) => {
+    console.log(`user profile sections ${JSON.stringify(action)}`);
+  switch (action.type) {
+    case UPDATE_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
+      };
+    default:
+      return state;
+  }
+};

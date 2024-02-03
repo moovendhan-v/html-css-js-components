@@ -59,7 +59,7 @@ body {
   min-height: 500px !important;
 }
 ::placeholder {
-  color: white !important;
+  color: rgb(182, 182, 182) !important;
   font-size: 14px;
 }
 

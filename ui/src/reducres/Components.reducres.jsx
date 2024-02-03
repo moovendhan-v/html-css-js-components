@@ -11,7 +11,6 @@ export const componentsReducer = (state = {
   components_tabs: [],
   components_toast: [],
 
-
 }, action) => {
   switch (action.type) {
     case 'ADD_COMPONENTS':
