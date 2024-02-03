@@ -26,7 +26,7 @@ const getUserProfileInformations = async (req, res) => {
                     } else {
                         resolve({
                             ...component.toObject(), // Convert Mongoose document to object
-                            component_details: fileInfo // Add "component_details" array
+                            component_details: fileInfo 
                         });
                     }
                 });

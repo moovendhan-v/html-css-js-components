@@ -17,20 +17,28 @@ const addNewComponents = async (req, res) => {
             folder_name,
             categories,
         });
-        await newComponents.save();
        
         // Call createFiles function to create files
-        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js }, (err) => {
+        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js },async (err) => {
             if (err) {
                 console.error('Error creating files:', err);
-                res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Not inserted Please contact admin plase visit contact us page : ${error}` }));
+                res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Not inserted Please contact admin plase visit contact us page : ${err}` }));
                 return;
             } else {
-                console.log('Files created successfully.');
+                console.log('Files created successfully.'); 
+                try {
+                    await newComponents.save();
+                    res.send(jsonStatusSuccess({ errorStatus: false, statusCode: "201", message: 'Components has been updated Please wait for approval thank you for your contributons' }));
+                } catch (error) {
+                    console.error('Error saving new components:', error);
+                    res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Insert fails Please contact admin please visit contact us page : ${error}` }));
+                }   
             } 
         });        
+
+        // await newComponents.save();
         // Send response
-        res.send(jsonStatusSuccess({ errorStatus: false, statusCode: "201", message: 'success' }));
+
     } catch (error) {
         console.error('Error adding new components:', error);
         res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Insert fails : ${error}` }));
