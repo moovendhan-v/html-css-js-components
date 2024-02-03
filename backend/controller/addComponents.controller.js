@@ -19,7 +19,7 @@ const addNewComponents = async (req, res) => {
         });
        
         // Call createFiles function to create files
-        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js },async (err) => {
+        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js }, async (err) => {
             if (err) {
                 console.error('Error creating files:', err);
                 res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Not inserted Please contact admin plase visit contact us page : ${err}` }));

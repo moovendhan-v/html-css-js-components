@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import MonacoEditor from "react-monaco-editor";
 import { useSelector } from "react-redux";
 import * as monaco from "monaco-editor";
+import {SvgIcons} from "./Button";
 
 
 // useEffect(()=>{
@@ -12,8 +13,6 @@ import * as monaco from "monaco-editor";
 
 
 const CodeEditor = ({ language, value, onChange }) => {
-
-
 
   const editorOptions = {
     selectOnLineNumbers: true,
@@ -87,13 +86,13 @@ const OutputScreen = ({ html, css, js }) => {
   return (
     <div className="" id="output">
       <h4 className="text-center">Output</h4>
-     <div >
-     <iframe
-        title="output"
-        srcDoc={iframeContent}
-        style={{ width: "100%", height: "40vh" }}
-      />
-     </div>
+      <div >
+        <iframe
+          title="output"
+          srcDoc={iframeContent}
+          style={{ width: "100%", height: "40vh" }}
+        />
+      </div>
     </div>
   );
 };
@@ -126,33 +125,33 @@ const WebEditor = () => {
 
 
   return (
-    <div className=" m-5">
+    <div className=" m-5 ">
       <div className="row rounded-1 p-3 bg-grey">
-        <div className="col-8 ">
-        <ul className="nav nav-pills" id="codeTabs" role="tablist">
-        <li className="nav-item active" role="presentation">
-        <a class="nav-link active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true">HTML</a>
-        </li>
-        <li className="nav-item" role="presentation">
-          <a className="nav-link" id="css-tab" data-bs-toggle="pill" href="#css" role="tab" aria-controls="css" aria-selected="false">CSS</a>
-        </li>
-        <li className="nav-item" role="presentation">
-          <a className="nav-link" id="javascript-tab" data-bs-toggle="pill" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false">JavaScript</a>
-        </li>
-       
-      </ul>
-      <div className="tab-content my-3">
-        <CodeEditor language="html" value={html} onChange={handleHtmlChange} />
-        <CodeEditor language="css" value={css} onChange={handleCssChange} />
-        <CodeEditor language="javascript" value={js} onChange={handleJsChange} />
-        {/* <OutputScreen html={html} css={css} js={js} /> */}
-      </div>
+        <div className="col-6 my-3">
+          <OutputScreen html={html} css={css} js={js} />
         </div>
-        <div className="col-4 my-3">
-            <OutputScreen html={html} css={css} js={js} />
+        <div className="col-6 ">
+          <ul className="nav nav-pills bg-theme" id="codeTabs" role="tablist">
+            <li className="nav-item active" role="presentation">
+              <a class="nav-link active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true"><SvgIcons icon={"html"} />HTML</a>
+            </li>
+            <li className="nav-item" role="presentation">
+              <a className="nav-link" id="css-tab" data-bs-toggle="pill" href="#css" role="tab" aria-controls="css" aria-selected="false"><SvgIcons icon={"css"} />CSS</a>
+            </li>
+            <li className="nav-item" role="presentation">
+              <a className="nav-link" id="javascript-tab" data-bs-toggle="pill" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false"><SvgIcons icon={"javascript"} />JavaScript</a>
+            </li>
+
+          </ul>
+          <div className="tab-content my-3">
+            <CodeEditor language="html" value={html} onChange={handleHtmlChange} />
+            <CodeEditor language="css" value={css} onChange={handleCssChange} />
+            <CodeEditor language="javascript" value={js} onChange={handleJsChange} />
+            {/* <OutputScreen html={html} css={css} js={js} /> */}
+          </div>
         </div>
       </div>
-     
+
     </div>
   );
 };

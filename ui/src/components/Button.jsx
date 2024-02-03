@@ -2,7 +2,11 @@ import React from "react";
 import discordIcon from '../assets/myicons/discord.svg';
 import telegramIcon from '../assets/myicons/telegram.svg';
 import codeIcon from '../assets/myicons/code.svg';
-import Search from '../assets/myicons/search.svg'
+import Search from '../assets/myicons/search.svg';
+import Logo from '../assets/myicons/logo.svg';
+import Html from '../assets/myicons/html.svg';
+import Css from '../assets/myicons/css.svg';
+import Js from '../assets/myicons/javascript.svg';
 
 const Button = ({ icon, text }) => {
   return (
@@ -36,6 +40,14 @@ const getIconPath = (icon) => {
       return codeIcon;
     case 'search':
       return Search;
+    case 'logo':
+      return Logo;
+    case 'html':
+      return Html;
+    case 'css':
+      return Css;
+    case 'javascript':
+      return Js;
     default:
       return ''; // You might want to provide a default icon or handle this case differently
   }

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import GitHubLoginButton from '../components/Gitlogin';
 import Model from '../components/Model'
 import LeftSliders from '../components/LeftSLiders';
+import {SvgIcons} from "./Button";
+
 
 function Nav() {
 
@@ -11,6 +13,9 @@ function Nav() {
       <section>
         <nav className="navbar navbar-expand-lg bg-body-tertiary py-3">
           <div className="container-fluid">
+
+          <SvgIcons icon={"logo"} />
+
             <a className="navbar-brand fw-bold text-light" href="#">Ui-Comp</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>

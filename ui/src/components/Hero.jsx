@@ -27,7 +27,7 @@ function Hero(){
                 <ScrollAnimationForImage direction={"Left"} />
                 </div>
                 <div className="align_button mt-2 ">
-                        <Button icon={"code"} text={"Explore More Componenets"} />
+                        <Button icon={"logo"} text={"Explore More Componenets"} />
                 </div>
             </div>
         </section>
