@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addComponents } from '../actions/components.actions';
 import code from '../assets/myicons/code.svg';
 import OutputsOfComponents from './OutputsOfComponents';
+import {SvgIcons} from "./Button";
+
 
 const ComponentsCard = ({catogreise}) => {
   const dispatch = useDispatch();
@@ -58,7 +60,7 @@ const ComponentsCard = ({catogreise}) => {
               <div key={index} className="col rounded-1 position-relative ">
                   <div className='readCode d-flex  align-items-center'>
                     <div>
-                      <img className='svg' src={code} alt="" />
+                    <SvgIcons icon={"code"} />
                     </div>
                     <div>  Edit code</div>
                   </div>

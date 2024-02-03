@@ -7,6 +7,7 @@ import Logo from '../assets/myicons/logo.svg';
 import Html from '../assets/myicons/html.svg';
 import Css from '../assets/myicons/css.svg';
 import Js from '../assets/myicons/javascript.svg';
+import Edit from '../assets/myicons/edit.svg';
 
 const Button = ({ icon, text }) => {
   return (
@@ -48,6 +49,8 @@ const getIconPath = (icon) => {
       return Css;
     case 'javascript':
       return Js;
+    case 'edit':
+      return Edit;
     default:
       return ''; // You might want to provide a default icon or handle this case differently
   }

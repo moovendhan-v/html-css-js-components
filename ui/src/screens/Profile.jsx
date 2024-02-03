@@ -3,8 +3,13 @@ import Footer from '../components/Footer';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LeftSliders from '../components/LeftSLiders';
+import {SvgIcons} from  "../components/Button";
+import {EditMyProfileModel} from '../components/Model';
 
 const Profile = ()=>{
+  function openModelEditor(){
+
+  }
     return(
         <>
         <Nav />
@@ -17,11 +22,11 @@ const Profile = ()=>{
           <div className='right_div'>
             {/* profiles  */}
             <div>
-              <div className='row d-flex'>
-                    <div className="col-2 p-3 bg-grey">
+              <div className='row d-flex bg-grey'>
+                    <div className="col-2 p-3 ">
                         <img className='img-fluid' src="https://avatars.githubusercontent.com/u/96030910?v=4" alt="" />
                     </div>
-                    <div className="col-10 p-3 bg-grey">
+                    <div className="col-8 p-3">
                         <div><h3 className='fw-bolder'>Moovendhan v</h3></div>
                         <div><p className='text-info'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, ullam.</p></div>
                         <div><p>Organisations</p></div>
@@ -33,6 +38,15 @@ const Profile = ()=>{
                                 <a href="#">Website</a>
                             </div>
                         </div>
+                    </div>
+                    <div className='col-2'>
+                    <div className='m-3'>
+                                    <EditMyProfileModel />
+                      </div>
+                      <div className='btn w-80 bg-menuslider m-3 border border-primary'>
+                        <div><h4 className='text-primary'>100K</h4></div>
+                        <span>Total Posts</span>
+                      </div>
                     </div>
               </div>
             </div>

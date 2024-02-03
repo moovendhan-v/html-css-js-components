@@ -16,6 +16,7 @@ const addNewComponents = async (req, res) => {
             folder_path,
             folder_name,
             categories,
+            isActive: false,
         });
        
         // Call createFiles function to create files

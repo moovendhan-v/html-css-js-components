@@ -58,7 +58,7 @@ const CodeEditor = ({ language, value, onChange }) => {
   return (
     <div className={`tab-pane fade ${language === 'html' ? 'active show' : ''}`} id={language} role="tabpanel">
       <MonacoEditor
-        height="40vh"
+        height="60vh"
         language={language}
         theme="vs-dark"
         value={value}
@@ -85,12 +85,11 @@ const OutputScreen = ({ html, css, js }) => {
 
   return (
     <div className="" id="output">
-      <h4 className="text-center">Output</h4>
       <div >
         <iframe
           title="output"
           srcDoc={iframeContent}
-          style={{ width: "100%", height: "40vh" }}
+          style={{ width: "100%", height: "60vh" }}
         />
       </div>
     </div>
@@ -125,25 +124,29 @@ const WebEditor = () => {
 
 
   return (
+    // #TODO here we need to do that drag to adjust the screens 
     <div className=" m-5 ">
-      <div className="row rounded-1 p-3 bg-grey">
-        <div className="col-6 my-3">
+      <div className="row rounded-1bg-grey">
+        <div className="col-6 position-relative  bg-light code_editor rounded-start border border-end-0">
           <OutputScreen html={html} css={css} js={js} />
+        <div className="bg-dark col-resize position-absolute col-resize-line">
+
         </div>
-        <div className="col-6 ">
-          <ul className="nav nav-pills bg-theme" id="codeTabs" role="tablist">
+        </div>
+        <div className="col-6 code_editor">
+          <ul className="nav nav-pills bg-theme p-2" id="codeTabs" role="tablist">
             <li className="nav-item active" role="presentation">
-              <a class="nav-link active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true"><SvgIcons icon={"html"} />HTML</a>
+              <a class="nav-link p-1  active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true"><SvgIcons icon={"html"} />HTML</a>
             </li>
             <li className="nav-item" role="presentation">
-              <a className="nav-link" id="css-tab" data-bs-toggle="pill" href="#css" role="tab" aria-controls="css" aria-selected="false"><SvgIcons icon={"css"} />CSS</a>
+              <a className="nav-link p-1 " id="css-tab" data-bs-toggle="pill" href="#css" role="tab" aria-controls="css" aria-selected="false"><SvgIcons icon={"css"} />CSS</a>
             </li>
             <li className="nav-item" role="presentation">
-              <a className="nav-link" id="javascript-tab" data-bs-toggle="pill" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false"><SvgIcons icon={"javascript"} />JavaScript</a>
+              <a className="nav-link p-1 " id="javascript-tab" data-bs-toggle="pill" href="#javascript" role="tab" aria-controls="javascript" aria-selected="false"><SvgIcons icon={"javascript"} />JavaScript</a>
             </li>
 
           </ul>
-          <div className="tab-content my-3">
+          <div className="tab-content ">
             <CodeEditor language="html" value={html} onChange={handleHtmlChange} />
             <CodeEditor language="css" value={css} onChange={handleCssChange} />
             <CodeEditor language="javascript" value={js} onChange={handleJsChange} />
@@ -151,9 +154,9 @@ const WebEditor = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
 
 export default WebEditor;
+

@@ -19,11 +19,14 @@ body {
   background-color: var(--sub-theme);
   border: transparent;
 }
+.bg-modal{
+  background-color: #171414;
+}
 .bg-grey{
   background-color: #80808045;
 }
 .bg-menuslider{
-  background-color: var(--menu-theme);
+  background-color: var(--menu-theme) !important;
 }
 .bg-fade{
   background-color: rgba(156, 156, 241, 0.399) !important;
@@ -55,6 +58,11 @@ body {
 .min-height-400{
   min-height: 500px !important;
 }
+::placeholder {
+  color: white !important;
+  font-size: 14px;
+}
+
 /* .dropdown-menu{
   display: block;
 } */
@@ -348,8 +356,18 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
-
-
+.code_editor{
+  min-height: 60vh;
+}
+.col-resize{
+  cursor:col-resize;
+}
+.col-resize-line{
+  width: 10px;
+  height: 100%;
+  top: 0;
+  right: -10px;
+}
 /* Add more styles as needed */
 
 

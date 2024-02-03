@@ -10,9 +10,8 @@ const userComponentsDetails = new Schema({
     folder_path: { type: String, required: true },
     folder_name: { type: String, required: true },
     categories: { type: String, required: true },
-
+    isActive: { type: Boolean, required: true },
     // data html,css,js
-
 });
 
 const UserComponents = mongoose.model('UserComponents', userComponentsDetails);
