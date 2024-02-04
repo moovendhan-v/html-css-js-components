@@ -4,10 +4,11 @@ import GitHubLoginButton from '../components/Gitlogin';
 import Model from '../components/Model'
 import LeftSliders from '../components/LeftSLiders';
 import {SvgIcons} from "./Button";
+import { useSelector } from 'react-redux';
 
 
 function Nav() {
-
+  const userProfile = useSelector(state => state.userProfile);
   return (
     <>
       <section>
@@ -59,10 +60,10 @@ function Nav() {
 {/* TODO update the below code while managing the user state (set logout ? user logedin : Login witt github ) */}
               <div className="d-flex align-items-center">
                 <div>
-                  <span>Moovendhan v</span>
+                  <span>{userProfile.userProfile.name}</span>
                 </div>
                 <div className="bg-light rounded mx-4" >
-                  <img className="brandlogo img-fluid float-end rounded-circle " src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFz1aoq0RnlkDHO6OqApeAWXICc9xFcyqUZndGSfTyzPPDPksfhsYK7s4vEoYZ_Xc2Imeh9yEXbg09WAwEpH41KXANe8wbLqaQFyhMqkVH9_KDvhZ-VkUxzB5ppvwyOh_vEUDkLbPBwrYOgyMC7x9-aN5kF-Q1HB3cOugW5PBtrjXfHQIN15w5cz09LPt6/s16000/T-G%20logos%20only.png" alt="logo" />
+                  <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" />
                 </div>
                 <div>
                 <GitHubLoginButton />

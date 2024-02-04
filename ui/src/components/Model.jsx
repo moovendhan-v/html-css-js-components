@@ -1,8 +1,8 @@
 import react from "react";
 import { SvgIcons } from "./Button";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../actions/user.action';
+import { useSelector } from 'react-redux';
+
 
 const Models = () => {
     return (
@@ -50,7 +50,6 @@ const Models = () => {
 
 const EditMyProfileModel = () => {
 
-    const dispatch = useDispatch();
     const userProfile = useSelector(state => state.userProfile);
 
     return (
@@ -73,7 +72,7 @@ const EditMyProfileModel = () => {
                     id="staticBackdrop"
                     tabIndex="-1"
                 >
-                    <div className="modal-dialog modal-lg">
+                    <div className="modal-dialog modal-xl ">
                         <div className="modal-content bg-modal ">
 
                             <div className="modal-header">
@@ -109,7 +108,7 @@ const EditMyProfileModel = () => {
                                             <span>Location</span>
                                         </div>
                                         <div>
-                                            <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Location" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.location} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Location" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                 </div>
@@ -121,7 +120,7 @@ const EditMyProfileModel = () => {
                                             <span>Company</span>
                                         </div>
                                         <div>
-                                            <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Company" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.company} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Company" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -129,18 +128,8 @@ const EditMyProfileModel = () => {
                                             <span>Wesite</span>
                                         </div>
                                         <div>
-                                            <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Website" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.blog} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Website" aria-label=".form-control-lg example" />
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div className="p-1">
-                                    <div>
-                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">Discord Webhook uri <a className="text-primary" href="#">Learn More</a> </span>
-                                        <span className="p"></span>
-                                    </div>
-                                    <div>
-                                        <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="To send status update to your discord channel...!" aria-label=".form-control-lg example" />
                                     </div>
                                 </div>
                                 <div className="p-1">
@@ -148,9 +137,56 @@ const EditMyProfileModel = () => {
                                         <span>About Yours</span>
                                     </div>
                                     <div>
-                                        <textarea class="form-control bg-dark text-light " placeholder="Edit Bio" rows="3"></textarea>
+                                        <textarea value={userProfile.userProfile.bio} class="form-control bg-dark text-light " placeholder="Edit Bio" rows="3"></textarea>
                                     </div>
                                 </div>
+                                <div className="p-1">
+                                    <div>
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Tooltip on top">Discord Webhook uri <a className="text-primary" href="#">Learn More</a> </span>
+                                        <span className="p"></span>
+                                    </div>
+                                    <div>
+                                        <input value={userProfile.userProfile.discord_webhooks} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="To send status update to your discord channel...!" aria-label=".form-control-lg example" />
+                                    </div>
+                                </div>
+
+                                <div className="d-flex row p-2">
+
+                                    <div className="p-2 col-6">
+                                        <div>
+                                            <span>Facebook</span>
+                                        </div>
+                                        <div>
+                                            <input value={userProfile.userProfile.facebook} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Facebook" aria-label=".form-control-lg example" />
+                                        </div>
+                                    </div>
+                                    <div className="p-2 col-6">
+                                        <div>
+                                            <span>Instagram</span>
+                                        </div>
+                                        <div>
+                                            <input value={userProfile.userProfile.instagram} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Instagram" aria-label=".form-control-lg example" />
+                                        </div>
+                                    </div>
+                                    <div className="p-2 col-6">
+                                        <div>
+                                            <span>Twitter</span>
+                                        </div>
+                                        <div>
+                                            <input value={userProfile.userProfile.twitter_username} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Twitter" aria-label=".form-control-lg example" />
+                                        </div>
+                                    </div>
+                                    <div className="p-2 col-6">
+                                        <div>
+                                            <span>Telegram</span>
+                                        </div>
+                                        <div>
+                                            <input value={userProfile.userProfile.telegram} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Telegram" aria-label=".form-control-lg example" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                              
                             </div>
                             <div className="modal-footer">
                                 <button
