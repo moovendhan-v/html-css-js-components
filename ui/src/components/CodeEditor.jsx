@@ -4,16 +4,7 @@ import { useSelector } from "react-redux";
 import * as monaco from "monaco-editor";
 import {SvgIcons} from "./Button";
 
-
-// useEffect(()=>{
-//   const componentsPropertyName = `components_buttons`;
-//   const components = useSelector((state) => state.components[componentsPropertyName]);
-// },[])
-
-
-
 const CodeEditor = ({ language, value, onChange }) => {
-
   const editorOptions = {
     selectOnLineNumbers: true,
     roundedSelection: false,
@@ -136,7 +127,7 @@ const WebEditor = () => {
         <div className="col-6 code_editor">
           <ul className="nav nav-pills bg-theme p-2" id="codeTabs" role="tablist">
             <li className="nav-item active" role="presentation">
-              <a class="nav-link p-1  active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true"><SvgIcons icon={"html"} />HTML</a>
+              <a className="nav-link p-1  active" id="html-tab" data-bs-toggle="pill" href="#html" role="tab" aria-controls="html" aria-selected="true"><SvgIcons icon={"html"} />HTML</a>
             </li>
             <li className="nav-item" role="presentation">
               <a className="nav-link p-1 " id="css-tab" data-bs-toggle="pill" href="#css" role="tab" aria-controls="css" aria-selected="false"><SvgIcons icon={"css"} />CSS</a>

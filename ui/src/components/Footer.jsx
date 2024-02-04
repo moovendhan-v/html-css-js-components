@@ -5,7 +5,7 @@ const Footer = () => {
     return (
         <>
             <div className="d-flex justify-content-center footer">
-                <div class="container row row-cols-1 row-cols-md-2 row-cols-xl-3 my-3">
+                <div className="container row row-cols-1 row-cols-md-2 row-cols-xl-3 my-3">
                     <FootContentCol4 />
                     <FootContentCol2 />
                     <FootContentCol1 />
@@ -18,13 +18,13 @@ const Footer = () => {
 
 const FootContentCol1 = () => {
     return (
-        <div class="col">
-            <div class="card m-2  footer radius-10">
+        <div className="col">
+            <div className="card m-2  footer radius-10">
                 <div className="mb-3">
                     <span className="h4">About Us</span>
                 </div>
-                <div class="">
-                    <div><a class="navbar-brand fw-bold text-light" href="#">Ui-Comp</a></div>
+                <div className="">
+                    <div><a className="navbar-brand fw-bold text-light" href="#">Ui-Comp</a></div>
                     <div className="my-2">
                         <span className="p fw-lighter">
                             UI-Components is a open source components for your next awesome projects.
@@ -45,8 +45,8 @@ const FootContentCol1 = () => {
 
 const FootContentCol2 = () => {
     return (
-        <div class="col">
-            <div class="card m-2  radius-10 footer">
+        <div className="col">
+            <div className="card m-2  radius-10 footer">
                 <div className="mb-3">
                     <span className="h4">Who We Are</span>
                 </div>
@@ -76,10 +76,10 @@ const FootContentCol2 = () => {
 
 const FootContentCol4 = () => {
     return (
-        <div class="col">
-            <div class="card m-2  radius-10 footer">
+        <div className="col">
+            <div className="card m-2  radius-10 footer">
                 <div className="mb-3">
-                    <span className="h4">Leegal</span>
+                    <span className="h4 text-light ">Leegal</span>
                 </div>
                 <FooterLinks link={"#"} text={"Terms and condition"} />
                 <FooterLinks link={"#"} text={"Privacy Policy"} />

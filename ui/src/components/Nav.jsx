@@ -12,7 +12,7 @@ function Nav() {
   return (
     <>
       <section>
-        <nav className="navbar navbar-expand-lg bg-body-tertiary py-3">
+        <nav className="text-light navbar navbar-expand-lg bg-body-tertiary py-3">
           <div className="container-fluid">
 
           <SvgIcons icon={"logo"} />
@@ -25,10 +25,10 @@ function Nav() {
             <div className="collapse navbar-collapse justify-content-between " id="navbarNavDropdown">
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <a className="nav-link active fw-semibold text-light" aria-current="page" ><Link to="/">Home</Link></a>
+                  <a className="nav-link active fw-semibold text-light" aria-current="page" ><Link className="text-light" to="/">Home</Link></a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link active fw-semibold text-light" aria-current="page"><Link to="/all">Components</Link></a>
+                  <a className="nav-link active fw-semibold text-light" aria-current="page"><Link className="text-light" to="/all">Components</Link></a>
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

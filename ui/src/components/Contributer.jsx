@@ -3,10 +3,10 @@ import { Images } from '../konst/Images';
 
 const ContributerCard = () => {
     return (
-        <div class="col ">
-            <div class="card m-2  radius-10 contributer">
-                <div class="card-body contributes">
-                    <div class="d-flex align-items-center">
+        <div className="col ">
+            <div className="card m-2  radius-10 contributer">
+                <div className="card-body contributes">
+                    <div className="d-flex align-items-center">
                         <div className="brandlogos">
                             <img src={Images.LOGO} className="brandlogo m-2" alt="" />
                         </div>
@@ -25,7 +25,7 @@ const ContributerCard = () => {
 const Contributer = () => {
     return (
         <div className="d-flex justify-content-center ">
-            <div class="container row row-cols-1 row-cols-md-2 row-cols-xl-4 my-3">
+            <div className="container row row-cols-1 row-cols-md-2 row-cols-xl-4 my-3">
                 <ContributerCard />
                 <ContributerCard />
                 <ContributerCard />

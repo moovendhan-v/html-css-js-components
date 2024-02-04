@@ -47,11 +47,8 @@ const Models = () => {
         </>
     )
 }
-
 const EditMyProfileModel = () => {
-
     const userProfile = useSelector(state => state.userProfile);
-
     return (
         <>
             <div>
@@ -100,7 +97,7 @@ const EditMyProfileModel = () => {
                                             <span>Name</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.name} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Name" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.name} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Name" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -108,7 +105,7 @@ const EditMyProfileModel = () => {
                                             <span>Location</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.location} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Location" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.location} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Location" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                 </div>
@@ -120,7 +117,7 @@ const EditMyProfileModel = () => {
                                             <span>Company</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.company} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Company" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.company} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Company" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -128,7 +125,7 @@ const EditMyProfileModel = () => {
                                             <span>Wesite</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.blog} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Website" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.blog} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Website" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +134,7 @@ const EditMyProfileModel = () => {
                                         <span>About Yours</span>
                                     </div>
                                     <div>
-                                        <textarea value={userProfile.userProfile.bio} class="form-control bg-dark text-light " placeholder="Edit Bio" rows="3"></textarea>
+                                        <textarea value={userProfile.userProfile.bio} className="form-control bg-dark text-light " placeholder="Edit Bio" rows="3"></textarea>
                                     </div>
                                 </div>
                                 <div className="p-1">
@@ -146,7 +143,7 @@ const EditMyProfileModel = () => {
                                         <span className="p"></span>
                                     </div>
                                     <div>
-                                        <input value={userProfile.userProfile.discord_webhooks} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="To send status update to your discord channel...!" aria-label=".form-control-lg example" />
+                                        <input value={userProfile.userProfile.discord_webhooks} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="To send status update to your discord channel...!" aria-label=".form-control-lg example" />
                                     </div>
                                 </div>
 
@@ -157,7 +154,7 @@ const EditMyProfileModel = () => {
                                             <span>Facebook</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.facebook} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Facebook" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.facebook} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Facebook" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -165,7 +162,7 @@ const EditMyProfileModel = () => {
                                             <span>Instagram</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.instagram} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Instagram" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.instagram} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Instagram" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -173,7 +170,7 @@ const EditMyProfileModel = () => {
                                             <span>Twitter</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.twitter_username} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Twitter" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.twitter_username} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Twitter" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
@@ -181,7 +178,7 @@ const EditMyProfileModel = () => {
                                             <span>Telegram</span>
                                         </div>
                                         <div>
-                                            <input value={userProfile.userProfile.telegram} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Telegram" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.telegram} className="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Telegram" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                 </div>
