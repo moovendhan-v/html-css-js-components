@@ -15,7 +15,7 @@ const Profile = () => {
   console.log(`=> user profile ${JSON.stringify(userProfile.userProfile.login)}`);
 
   useEffect(() => {
-    const user_id = "65ab4cbe5120e974d9f5041b";
+    const user_id = "65bed6f673ccdf106ce604fc";
       fetch('http://localhost:4000/profile/getuserprofileinfo', {
         method: 'POST',
         headers: {
@@ -50,10 +50,10 @@ const Profile = () => {
               <div className="col-8 p-3">
                 <div><h3 className='fw-bolder'>{userProfile.userProfile.name}</h3></div>
                 <div><p className='text-info'>{userProfile.userProfile.bio}</p></div>
-                <div><p>Organisations</p></div>
+                <div><p>{userProfile.userProfile.company}</p></div>
                 <div className="d-flex">
                   <div className='pe-2'>
-                    <a href="#">Github</a>
+                    <a href={userProfile.userProfile.html_url}>Github</a>
                   </div>
                   <div className='pe-2'>
                     <a href={userProfile.userProfile.blog}>Website</a>

@@ -6,10 +6,19 @@ const githubUserSchema = new Schema({
     login: { type: String, required: true },
     avatar_url: { type: String, required: true },
     url : { type: String, required: true },
-    organisation : { type: String},
+    html_url : { type: String, required: true },
+    company : { type: String},
+    location : { type: String},
+    discord_webhooks : { type: String},
+    hire_me : { type: String},
+    email : { type: String},
     name : { type: String, required: true },
     blog : { type: String},
     bio : { type: String},
+    facebook : { type: String},
+    instagram : { type: String},
+    twitter_username : { type: String},
+    telegram : { type: String},
 });
 
 const GitHubUser = mongoose.model('GitHubUser', githubUserSchema);

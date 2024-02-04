@@ -33,21 +33,6 @@ async function exchangeGitHubCodeForToken(code) {
   }
 }
 
-// async function getUserAvatar(githubAccessToken) {
-//   try {
-//     const avatarResponse = await axios.get('https://api.github.com/user', {
-//       headers: {
-//         Authorization: `Bearer ${githubAccessToken}`,
-//       },
-//     });
-//     const avatarUrl = avatarResponse.data;
-//     console.log(avatarUrl);
-//     return avatarUrl;
-//   } catch (error) {
-//     console.error('Error fetching GitHub user avatar:', error);
-//     throw error;
-//   }
-// }
 
 async function getUserInformationsFromGitApi(githubAccessToken) {
   try {
@@ -89,19 +74,5 @@ const getUserInfoFromGit = async (req, res) => {
   }
 };
 
-// async function createUserByGitOauth(githubAccessToken) {
-//   try {
-//     const userInfo = await getUserInformationsFromGitApi(githubAccessToken);
-//     return true;
-//   } catch (error) {
-//     if (error.code === 11000 || error.code === 11001) {
-//       console.error(error.message);
-//     } else {
-//       console.error('Error in createUserByGitOauth:', error.message);
-//     }
-//   }
-// }
-
-// getUserInformationsFromGitApi("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");
 module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit};
 

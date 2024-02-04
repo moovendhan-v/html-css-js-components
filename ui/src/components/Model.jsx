@@ -1,6 +1,9 @@
 import react from "react";
 import { SvgIcons } from "./Button";
 
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUserProfile } from '../actions/user.action';
+
 const Models = () => {
     return (
         <>
@@ -46,7 +49,10 @@ const Models = () => {
 }
 
 const EditMyProfileModel = () => {
-    
+
+    const dispatch = useDispatch();
+    const userProfile = useSelector(state => state.userProfile);
+
     return (
         <>
             <div>
@@ -95,7 +101,7 @@ const EditMyProfileModel = () => {
                                             <span>Name</span>
                                         </div>
                                         <div>
-                                            <input class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Name" aria-label=".form-control-lg example" />
+                                            <input value={userProfile.userProfile.name} class="mt-2 form-control form-control-lg bg-dark text-light " type="text" placeholder="Name" aria-label=".form-control-lg example" />
                                         </div>
                                     </div>
                                     <div className="p-2 col-6">
