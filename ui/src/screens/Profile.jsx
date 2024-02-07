@@ -6,31 +6,34 @@ import LeftSliders from '../components/LeftSLiders';
 import { SvgIcons } from "../components/Button";
 import { EditMyProfileModel } from '../components/Model';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../actions/user.action';
+import { userProfileReducer } from '../actions/user.action';
 
 const Profile = () => {
-
   const dispatch = useDispatch();
   const userProfile = useSelector(state => state.userProfile);
-  console.log(`=> user profile ${JSON.stringify(userProfile.userProfile.login)}`);
+  const userComponents = useSelector(state => state.userComponents);
+
+  console.log(`=> user profile ${JSON.stringify(userProfile.userProfile)}`);
+  console.log(`=> user Components ${JSON.stringify(userComponents)}`);
 
   useEffect(() => {
     const user_id = "65bed6f673ccdf106ce604fc";
-      fetch('http://localhost:4000/profile/getuserprofileinfo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id }),
+    fetch('http://localhost:4000/profile/getuserprofileinfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(JSON.stringify(data.response.user, null, 2));
+        console.log(JSON.stringify(data.response.components, null, 2));
+        dispatch(userProfileReducer({ userProfileInfo: data.response.user, saveTo: "profile" }));
+        dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(JSON.stringify(data.response.user, null, 2));
-          dispatch(updateUserProfile(data.response.user));
-        })
   }, []);
-  
-  
+
   return (
     <>
       <Nav />
@@ -71,7 +74,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
           {/* infos */}
           <div className='d-flex bg-grey my-2 rounded-2 '>
             <div className='p-3'>

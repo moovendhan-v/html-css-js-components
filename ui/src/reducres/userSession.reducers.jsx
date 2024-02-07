@@ -3,17 +3,29 @@ import { UPDATE_USER_PROFILE } from '../actions/user.action';
 
 const initialState = {
   userProfile: {},
+  userComponents: {},
 };
 
 export const userProfileReducer = (state = initialState, action) => {
-    console.log(`user profile sections ${JSON.stringify(action)}`);
   switch (action.type) {
     case UPDATE_USER_PROFILE:
-      return {
-        ...state,
-        userProfile: action.payload,
-      };
+      console.log(action);
+      const { userProfileInfo, saveTo } = action.payload;
+      switch (saveTo) {
+        case "profile":
+          return {
+            ...state,
+            userProfile: userProfileInfo,
+          };
+        case "components":
+          return {
+            ...state,
+            userComponents: userProfileInfo,
+          };
+        default:
+          return state;
+      }
     default:
-      return state;
+      return state; // Add a default case to return the state unchanged if no action matches
   }
 };
