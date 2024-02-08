@@ -11,10 +11,9 @@ import { userProfileReducer } from '../actions/user.action';
 const Profile = () => {
   const dispatch = useDispatch();
   const userProfile = useSelector(state => state.userProfile);
-  const userComponents = useSelector(state => state.userComponents);
 
   console.log(`=> user profile ${JSON.stringify(userProfile.userProfile)}`);
-  console.log(`=> user Components ${JSON.stringify(userComponents)}`);
+  console.log(`=> User components${JSON.stringify(userProfile.userComponents)}`);
 
   useEffect(() => {
     const user_id = "65bed6f673ccdf106ce604fc";
