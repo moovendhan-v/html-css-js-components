@@ -7,6 +7,7 @@ import {SvgIcons} from "./Button";
 
 
 const ComponentsCard = ({catogreise}) => {
+  
   const dispatch = useDispatch();
   const componentsPropertyName = `components_${catogreise}`;
   console.log(componentsPropertyName);
