@@ -180,6 +180,7 @@ body {
   /* columns: 3; */
   column-gap: 20px;
   padding: 0 10px;
+  margin-bottom: 40px;
 }
 
 .box {
@@ -198,11 +199,15 @@ body {
   cursor: pointer;
   z-index: 1;
 }
+.sticky {
+  position: fixed !important;
+  top: 0;
+}
 .myBoxContainer{
   width: 100%;
   min-height: 300px;
   /* max-height: 600px; */
-  margin-bottom: 50px !important;
+  margin-bottom: 30px !important;
   position: relative;
   overflow: hidden;
   height: calc(100% - 30px);
@@ -353,8 +358,8 @@ body {
 .right_div{
   width: 85%;
   /* margin-left: 15%; */
-  height: 100vh;
-  overflow-x: hidden;
+  /* height: 100vh; */
+  /* overflow-x: hidden; */
 }
 .code_editor{
   min-height: 60vh;
