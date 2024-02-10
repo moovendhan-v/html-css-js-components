@@ -1,17 +1,16 @@
 import React from "react";
 
 const ScrollAnimation = () => {
-    const items = ["First", "Second", "Third", "Fourth", "Fifth", "First", "Second", "Third", "Fourth", "Fifth"];
+    const items = ["All", "Buttons", "Cards", "Forms", "Checkbox", "Loader", "Input", "tooltip", "navbar", "tabs", "toast"];
     const duplicatedItems = items.map((item, index) => (
-        <li className="btn" key={index}>
-            {item}
+        <li className="btn" key={index} aria-hidden="true">
             <span aria-hidden="true">{item}</span>
         </li>
     ));
     return (
         <>
-            <div id="scroolcontainerLeft" className="text-center py-2" data-animated>
-                <ul id="scrool_list" >{duplicatedItems}</ul>
+            <div id="scroolcontainerLeft" className="mt-2 text-center py-2" data-animated>
+                <ul id="scrool_list" data-animated="true" >{duplicatedItems}</ul>
             </div>
         </>
     );
@@ -24,7 +23,7 @@ const ScrollAnimationForImage = ({direction}) => {
     const duplicatedItems = itemss.map((item, index) => (
         <div className="sliderImg">
             <li key={index}>
-                <img className="img-fluid" src={item} alt="" />
+                <img data-animated="true" className="img-fluid" src={item} alt="" aria-hidden="true"/>
             </li>
         </div>
 
@@ -32,7 +31,7 @@ const ScrollAnimationForImage = ({direction}) => {
     return (
         <>
             <div id={`scroolcontainer${direction}`} className="text-center py-2" data-animated>
-                <ul id="scrool_list" >{duplicatedItems}</ul>
+                <ul data-animated="true" id="scrool_list" >{duplicatedItems}</ul>
             </div>
         </>
     );

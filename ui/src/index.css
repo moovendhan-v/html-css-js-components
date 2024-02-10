@@ -125,13 +125,7 @@ body {
 
 #scroolcontainerLeft[data-animated] #scrool_list {
   width: max-content;
-  animation: scroll 20s linear infinite;
-}
-
-@keyframes scroll {
-  to {
-    transform: translateX(calc(-30%));
-  }
+  animation: scroll 30s linear infinite;
 }
 
 #scroolcontainerRight[data-animated] {
@@ -140,14 +134,27 @@ body {
 
 #scroolcontainerRight[data-animated] #scrool_list {
   width: max-content;
-  animation: scroolright 25s linear infinite;
+  animation: scroolright 10s linear infinite;
+  transform: translateX(calc(-10% - 0.5rem));
 }
 
 @keyframes scroolright {
   to {
-    transform: translateX(calc(+10%));
+    transform: translateX(calc(+0% - 0.5rem));
   }
 }
+
+
+/* //home scrooling  */
+
+@keyframes scroll {
+  to {
+      transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
+/* home scrolling end  */
+
 /* @keyframes input {
   to {
    width: 100%;
