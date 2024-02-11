@@ -18,7 +18,7 @@ const OutputsOfComponents = ({ html, css, js }) => {
       <iframe
         title="output"
         srcDoc={iframeContent}
-        style={{ width: "100%", height: "40vh" }}
+        style={{ width: "100%", height: "30vh" }}
         sandbox="allow-scripts"
       />
     </div>
