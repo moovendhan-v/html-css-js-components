@@ -1,16 +1,22 @@
 const axios = require('axios');
+require('dotenv').config();
 
-//operations
-const { getJsonConfigDetails } = require('../operations/getConfigOperations'); 
+const DiscordWebhooks = {
+  alert: 'DISCORD_ALERT' // Storing the environment variable name as a string
+};
 
-// Function to send Discord webhook message
-function sendDiscordWebhookMessage(content) {
-  const webhookUrl = getJsonConfigDetails();
-  const discordUriToSend = webhookUrl.discord.alert;
-  // return;
+function sendDiscordWebhookMessage(content, uri) {
+  const envVarName = DiscordWebhooks[uri]; // Get the environment variable name from the DiscordWebhooks object
+  const discordUriToSend = process.env[envVarName]; // Access the environment variable using its name
+  if (!discordUriToSend) {
+    console.error('Webhook URL not found in environment variables');
+    return;
+  }
+
   const payload = {
     content: content,
   };
+
   axios.post(discordUriToSend, payload)
     .then(response => {
       console.log('Webhook message sent successfully:', response.data);
@@ -19,7 +25,7 @@ function sendDiscordWebhookMessage(content) {
       console.error('Error sending webhook message:', error.message);
     });
 }
+
 module.exports = {
-    sendDiscordWebhookMessage,
-  };
-  
+  sendDiscordWebhookMessage,
+};
