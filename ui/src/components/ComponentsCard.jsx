@@ -48,7 +48,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
             {components.map((component, index) => (
 
               <div className="box myBoxContainer">
-                <div key={index} className="col rounded-1 position-relative ">
+                <div key={index} className="col d-flex rounded-1 position-relative ">
                   <div className='readCode d-flex  align-items-center'>
                     <div>
                       <SvgIcons icon={"code"} />
@@ -87,7 +87,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
             {components.map((component, index) => (
 
               <div className="box myBoxContainer">
-                <div key={index} className="col rounded-1 position-relative ">
+                <div key={index} className="col d-flex  rounded-1 position-relative ">
                   <div className='readCode d-flex  align-items-center'>
                     <div>
                       <SvgIcons icon={"code"} />
