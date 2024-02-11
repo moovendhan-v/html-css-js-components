@@ -7,6 +7,7 @@ import Heading from './Heading';
 import ScroolAnimation, { ScrollAnimationForImage } from './Scrool';
 import SeachBar from './Search';
 import TypingTextEffect from './TypingText';
+import ComponentsCard from '../components/ComponentsCard';
 
 function Hero() {
     useEffect(() => {
@@ -15,12 +16,11 @@ function Hero() {
             const listContent = Array.from(list.children);
             listContent.forEach(item => {
                 const duplicatedItem = item.cloneNode(true);
-                duplicatedItem.setAttribute("aria-hidden", true);
+                duplicatedItem.setAttribute("aria-hidden", true);   
                 list.appendChild(duplicatedItem);
             });
         });
     }, []);
-    
 
     return (
         <>
@@ -49,8 +49,9 @@ function Hero() {
                 <Heading main={"Popular Components"} sub={"trending"} />
             </section>
             <section>
-                {/* <PopularPosts /> */}
-                {/* <PostContent /> */}
+                <div className="container">
+                    <ComponentsCard catogreise={"buttons"} componentType="all" onlyCard={true} />
+                </div>             
             </section>
             <section>
                 <Heading main={"Our Polular Contributer"} sub={"Signup to contribute"} />

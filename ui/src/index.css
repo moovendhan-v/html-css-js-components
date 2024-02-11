@@ -221,6 +221,16 @@ body {
   border-radius: 8px;
   position: relative;
 }
+.myBoxContainerScrool{
+  width: 100%;
+  /* min-height: 300px; */
+  /* max-height: 600px; */
+  position: relative;
+  overflow: hidden;
+  height: calc(100% - 30px);
+  border-radius: 8px;
+  position: relative;
+}
 .gallery_containers .box {
   width: 100%;
   margin-bottom: 10px;
@@ -275,6 +285,10 @@ body {
   z-index: 999;
 }
 .myBoxContainer:hover .readCode{
+  opacity: 100%;
+  cursor: pointer;
+}
+.myBoxContainerScrool:hover .readCode{
   opacity: 100%;
   cursor: pointer;
 }
