@@ -6,31 +6,39 @@ import LeftSliders from '../components/LeftSLiders';
 import { SvgIcons } from "../components/Button";
 import { EditMyProfileModel } from '../components/Model';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../actions/user.action';
+import { userProfileReducer } from '../actions/user.action';
+import OutputsOfComponents from '../components/OutputsOfComponents';
+
 
 const Profile = () => {
-
   const dispatch = useDispatch();
   const userProfile = useSelector(state => state.userProfile);
-  console.log(`=> user profile ${JSON.stringify(userProfile.userProfile.login)}`);
+  let userComponents = [];
+  if (userProfile.userComponents && userProfile.userComponents.length > 0) {
+    userComponents = userProfile.userComponents;
+    console.log(userComponents[0]);
+  } else {
+    console.log("userComponents is empty or undefined");
+  }
 
   useEffect(() => {
     const user_id = "65bed6f673ccdf106ce604fc";
-      fetch('http://localhost:4000/profile/getuserprofileinfo', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ user_id }),
+    fetch('http://localhost:4000/profile/getuserprofileinfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(JSON.stringify(data.response.user, null, 2));
+        console.log(JSON.stringify(data.response.components, null, 2));
+        dispatch(userProfileReducer({ userProfileInfo: data.response.user, saveTo: "profile" }));
+        dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(JSON.stringify(data.response.user, null, 2));
-          dispatch(updateUserProfile(data.response.user));
-        })
   }, []);
-  
-  
+
   return (
     <>
       <Nav />
@@ -71,7 +79,6 @@ const Profile = () => {
               </div>
             </div>
           </div>
-
           {/* infos */}
           <div className='d-flex bg-grey my-2 rounded-2 '>
             <div className='p-3'>
@@ -87,6 +94,39 @@ const Profile = () => {
 
           {/* details */}
           <div className='profile_tabs bg-grey'>
+            <div className="container-fluid mb-5  py-5">
+              <div className="gallery_containers">
+                {userComponents.map((component, index) => (
+                  <div className="box myBoxContainer" key={index}>
+                    <div className="col rounded-1 position-relative">
+                      <div className="readCode d-flex align-items-center">
+                        <div>
+                          {/* Add your SVG icon component here */}
+                        </div>
+                        <div> Edit code</div>
+                      </div>
+                      <div className="box m-1 p-1">
+                        {/* Pass HTML, CSS, and JS separately to OutputsOfComponents */}
+                        <OutputsOfComponents
+                          html={component.component_details.post_details.html}
+                          css={component.component_details.post_details.css}
+                          js={component.component_details.post_details.js}
+                        />
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between mt-4">
+                      <div>
+                        <span>{component.author}</span> {/* Assuming author is a property of your component */}
+                      </div>
+                      <div>
+                        <span>{component.views} Views</span> {/* Assuming views is a property of your component */}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
 
           </div>
 

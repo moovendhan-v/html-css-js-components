@@ -19,7 +19,7 @@ const Footer = () => {
 const FootContentCol1 = () => {
     return (
         <div className="col">
-            <div className="card m-2  footer radius-10">
+            <div className="card m-2 footer radius-10" id="footer">
                 <div className="mb-3">
                     <span className="h4">About Us</span>
                 </div>

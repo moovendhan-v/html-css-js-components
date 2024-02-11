@@ -89,12 +89,6 @@ const OutputScreen = ({ html, css, js }) => {
 
 const WebEditor = () => {
 
-  // const componentsPropertyName = `components_buttons`;
-  // const components = useSelector((state) => state.components.components_buttons);
-  // const componentsString = JSON.stringify(components, null, 2);
-  // console.log(componentsString);
-
-
   const [html, setHtml] = useState(`<div> we-lcome to agricreations</div>`);
   const [css, setCss] = useState('div { color: blue; }');
   const [js, setJs] = useState('console.log("Hello, CodePen Clone!");');

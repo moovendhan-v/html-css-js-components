@@ -125,13 +125,7 @@ body {
 
 #scroolcontainerLeft[data-animated] #scrool_list {
   width: max-content;
-  animation: scroll 20s linear infinite;
-}
-
-@keyframes scroll {
-  to {
-    transform: translateX(calc(-30%));
-  }
+  animation: scroll 30s linear infinite;
 }
 
 #scroolcontainerRight[data-animated] {
@@ -140,14 +134,27 @@ body {
 
 #scroolcontainerRight[data-animated] #scrool_list {
   width: max-content;
-  animation: scroolright 25s linear infinite;
+  animation: scroolright 10s linear infinite;
+  transform: translateX(calc(-10% - 0.5rem));
 }
 
 @keyframes scroolright {
   to {
-    transform: translateX(calc(+10%));
+    transform: translateX(calc(+0% - 0.5rem));
   }
 }
+
+
+/* //home scrooling  */
+
+@keyframes scroll {
+  to {
+      transform: translate(calc(-50% - 0.5rem));
+  }
+}
+
+/* home scrolling end  */
+
 /* @keyframes input {
   to {
    width: 100%;
@@ -180,6 +187,7 @@ body {
   /* columns: 3; */
   column-gap: 20px;
   padding: 0 10px;
+  margin-bottom: 40px;
 }
 
 .box {
@@ -198,11 +206,25 @@ body {
   cursor: pointer;
   z-index: 1;
 }
+.sticky {
+  position: fixed !important;
+  top: 0;
+}
 .myBoxContainer{
   width: 100%;
   min-height: 300px;
   /* max-height: 600px; */
-  margin-bottom: 50px !important;
+  margin-bottom: 30px !important;
+  position: relative;
+  overflow: hidden;
+  height: calc(100% - 30px);
+  border-radius: 8px;
+  position: relative;
+}
+.myBoxContainerScrool{
+  width: 100%;
+  /* min-height: 300px; */
+  /* max-height: 600px; */
   position: relative;
   overflow: hidden;
   height: calc(100% - 30px);
@@ -263,6 +285,10 @@ body {
   z-index: 999;
 }
 .myBoxContainer:hover .readCode{
+  opacity: 100%;
+  cursor: pointer;
+}
+.myBoxContainerScrool:hover .readCode{
   opacity: 100%;
   cursor: pointer;
 }
@@ -353,8 +379,8 @@ body {
 .right_div{
   width: 85%;
   /* margin-left: 15%; */
-  height: 100vh;
-  overflow-x: hidden;
+  /* height: 100vh; */
+  /* overflow-x: hidden; */
 }
 .code_editor{
   min-height: 60vh;
