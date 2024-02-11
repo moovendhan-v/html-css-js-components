@@ -46,7 +46,7 @@ const App = ({ catogreise }) => {
         </div>
         <div className={`right_div`} style={isSticky ? { marginLeft: '15%' } : {}}>
           <div>
-            <ComponentsCard catogreise={catogreise} />
+          <ComponentsCard catogreise={catogreise} componentType="all" />
           </div>
         </div>
       </div>
