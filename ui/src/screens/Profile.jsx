@@ -48,9 +48,9 @@ const Profile = () => {
             <LeftSliders />
           </div>
         </div>
-        <div className='right_div'>
+        <div className='right_div container '>
           {/* profiles  */}
-          <div>
+          <div className='container'>
             <div className='row d-flex bg-grey'>
               <div className="col-2 p-3 ">
                 <img className='img-fluid' src={userProfile.userProfile.avatar_url} alt="" />
@@ -94,11 +94,16 @@ const Profile = () => {
 
           {/* details */}
           <div className='profile_tabs bg-grey'>
-            <div className="container-fluid mb-5  py-5">
+          <div>
+            <div className="h6 text-center p-3">
+              {userProfile.userProfile.name} Contributed Components
+            </div>
+          </div>
+            <div className="container-fluid mb-5 pb-3">
               <div className="gallery_containers">
                 {userComponents.map((component, index) => (
                   <div className="box myBoxContainer" key={index}>
-                    <div className="col rounded-1 position-relative">
+                    <div className="col rounded-1 d-flex position-relative">
                       <div className="readCode d-flex align-items-center">
                         <div>
                           {/* Add your SVG icon component here */}
