@@ -221,6 +221,11 @@ body {
   border-radius: 8px;
   position: relative;
 }
+.profile{
+  background-color: darkslateblue;
+  padding: 5px;
+  border-radius: 35px;
+}
 .myBoxContainerScrool{
   width: 100%;
   /* min-height: 300px; */
