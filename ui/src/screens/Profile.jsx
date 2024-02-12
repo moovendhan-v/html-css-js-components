@@ -61,10 +61,10 @@ const Profile = () => {
                 <div><p>{userProfile.userProfile.company}</p></div>
                 <div className="d-flex">
                   <div className='pe-2'>
-                    <a href={userProfile.userProfile.html_url}>Github</a>
+                    <a className='badge text-bg-primary rounded-pill' href={userProfile.userProfile.html_url}>Github</a>
                   </div>
                   <div className='pe-2'>
-                    <a href={userProfile.userProfile.blog}>Website</a>
+                    <a className='badge text-bg-success rounded-pill' href={userProfile.userProfile.blog}>Website</a>
                   </div>
                 </div>
               </div>
@@ -84,6 +84,7 @@ const Profile = () => {
             <div className='p-3'>
               <Link className='profile_text' to="/publicvarient">Public Varient</Link>
             </div>
+            
             <div className='p-3'>
               <Link className='profile_text' to="/approvals">Waiting for Approvals</Link>
             </div>
