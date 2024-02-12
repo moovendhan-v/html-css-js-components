@@ -1,5 +1,5 @@
 // app.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
@@ -10,13 +10,22 @@ import Profile from './screens/Profile';
 
 
 function App() {
+  const [isStillLoading, setIsStillLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsStillLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [])
   return (
     <div className="App">
+      <div className={`progressBar ${!isStillLoading ? 'hide' : ''}`}>
+      </div>
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           {/* components  */}
-          <Route path="/all" element={<Componenets  catogreise={"all"}/>} />
+          <Route path="/all" element={<Componenets catogreise={"all"} />} />
           <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
           <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
           <Route path="/forms" element={<Componenets catogreise={"forms"} />} />

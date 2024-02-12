@@ -15,4 +15,35 @@
 .hero_section h3{
     font-size: 50px;
 }
-
+.progressBar {
+    position: sticky;
+    top: 0px;
+    width: 100%;
+    height: 2px;
+    background-color: #9461fb;
+    animation: progressBarAnimation 10s ;
+}
+.hide{
+    display: none !important;
+}
+@keyframes progressBarAnimation {
+    0% {
+        width: 0%;
+    }
+    10% {
+        width: 10%;
+    }
+    20% {
+        width: 50%;
+    }
+    80% {
+        width: 80%;
+    }
+    90%{
+        width: 90%;
+    }
+    100% {
+        width: 100%;
+        opacity: 0;
+    }
+}
