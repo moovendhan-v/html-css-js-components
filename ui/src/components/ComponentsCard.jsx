@@ -102,7 +102,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
                     />
                   </div>
                 </div>
-                <div className="d-flex justify-content-between mt-4">
+                <div className="d-flex justify-content-between mt-3">
                   <div >
                     <span>Moovendhan</span>
                   </div>

@@ -81,16 +81,21 @@ const Profile = () => {
           </div>
           {/* infos */}
           <div className='d-flex bg-grey my-2 rounded-2 '>
-            <div className='p-3'>
+            <div className='p-1 m-2 btn btn-light d-flex align-items-center'>
               <Link className='profile_text' to="/publicvarient">Public Varient</Link>
             </div>
             
-            <div className='p-3'>
+            {/* <div className='p-3'>
               <Link className='profile_text' to="/approvals">Waiting for Approvals</Link>
             </div>
             <div className='p-3'>
               <Link className='profile_text' to="/publicvarient">Drafts</Link>
+            </div> */}
+
+          <div className='p-1 m-2 btn btn-success '>
+              <Link className='profile_text text-light ' to="/contributenew"> <SvgIcons icon={"logo"} />Contribute New </Link>
             </div>
+
           </div>
 
           {/* details */}
@@ -107,7 +112,7 @@ const Profile = () => {
                     <div className="col rounded-1 d-flex position-relative">
                       <div className="readCode d-flex align-items-center">
                         <div>
-                          {/* Add your SVG icon component here */}
+                        <SvgIcons icon={"code"} />
                         </div>
                         <div> Edit code</div>
                       </div>
@@ -120,7 +125,7 @@ const Profile = () => {
                         />
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between mt-4">
+                    <div className="d-flex justify-content-between mt-3">
                       <div>
                         <span>{component.author}</span> {/* Assuming author is a property of your component */}
                       </div>
