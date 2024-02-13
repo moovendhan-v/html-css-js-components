@@ -16,7 +16,10 @@ const confFile = getJsonConfigDetails();
 
 //import operations
 const { readFileContent } = require('./operations/fileOperations'); //file operations
-const { sendDiscordWebhookMessage } = require('./operations/webhookOperations');
+
+// discord webhooks operaitons 
+// const { sendDiscordWebhookMessage } = require('./operations/webhookOperations');
+// sendDiscordWebhookMessage("test","alert");
 
 //importing express js
 const app = express();
