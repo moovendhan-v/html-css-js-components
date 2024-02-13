@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { readFileContent } = require('../operations/fileOperations');
+const UserComponents = require('../models/components.model');
 const baseFolderPath = '../';
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
@@ -53,59 +54,69 @@ function readFilesInformations(catogriesName, folderName, callback) {
 function getLatestFiles(catogries, callback) {
     const folderPaths = path.join("../", 'project', 'project_datas', catogries);
     fs.readdir(folderPaths, (err, files) => {
-      if (err) {
-        return callback(`Error reading directory: ${err}`);
-      }
-      const promises = files.slice(0, 9).map(file => {
-        return new Promise((resolve, reject) => {
-          readFilesInformations(catogries, file, (err, fileInfo) => {
-            if (err) {
-              reject(err);
-            } else {
-              console.log(`Fileinfos ${fileInfo}`);
-              resolve(fileInfo);
-            }
-          });
-        });
-      });
-      Promise.all(promises)
-        .then(result => {
-          callback(null, result);
-        })
-        .catch(error => {
-          callback(error);
-        });
-    });}
-
-const getComponentsDetails = (req, res) => {
-    readContent('index.html', "buttons" , "moovendhan", (htmlErr, htmlContent) => {
-        if (htmlErr) {
-            return res.status(500).json({ error: `${htmlErr} Error reading HTML content` });
+        if (err) {
+            return callback(`Error reading directory: ${err}`);
         }
-        readContent('style.css', "buttons" , "moovendhan", (cssErr, cssContent) => {
-            if (cssErr) {
-                return res.status(500).json({ error: `${cssErr} Error reading CSS content` });
-            }
-            readContent('script.js', "buttons" , "moovendhan", (jsErr, jsContent) => {
-                if (jsErr) {
-                    return res.status(500).json({ error: `${jsErr} Error reading JavaScript content` });
-                }
-                const dataObject = {
-                    "post_details": {
-                        "html": htmlContent,
-                        "css": cssContent,
-                        "js": jsContent
+        const promises = files.slice(0, 9).map(file => {
+            return new Promise((resolve, reject) => {
+                readFilesInformations(catogries, file, (err, fileInfo) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        console.log(`Fileinfos ${fileInfo}`);
+                        resolve(fileInfo);
                     }
-                };
-                res.json(dataObject);
+                });
             });
         });
+        Promise.all(promises)
+            .then(result => {
+                callback(null, result);
+            })
+            .catch(error => {
+                callback(error);
+            });
     });
+}
+
+// Get all components detals 
+const getAllCompDetailsFromDatabases = async (categories, callback) => {
+    const allComponentsDetails = [];
+    if (categories === "all") {
+        try {
+            const userComponents = await UserComponents.find();
+            await Promise.all(userComponents.map(async (data) => {
+                try {
+                    const datas = await new Promise((resolve, reject) => {
+                        readFilesInformations(data.categories, data.folder_name, (err, result) => {
+                            if (err) {
+                                reject(err);
+                            } else {
+                                resolve(result);
+                            }
+                        });
+                    });
+                    console.log(datas);
+                    allComponentsDetails.push(datas);
+                } catch (err) {
+                    console.error("Error reading files information:", err);
+                    throw err;
+                }
+            }));
+            callback(null, allComponentsDetails);
+        } catch (error) {
+            console.error("Error retrieving user components:", error);
+            callback("Internal server error", null);
+        }
+    } else {
+        callback("Invalid category", null);
+    }
 };
 
+
 module.exports = {
-    getComponentsDetails,
     getLatestFiles,
     readFilesInformations,
     readContent,
+    getAllCompDetailsFromDatabases,
 };

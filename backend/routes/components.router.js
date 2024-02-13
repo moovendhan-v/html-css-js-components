@@ -1,18 +1,29 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles} = require('../controller/components.controller');
+const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases} = require('../controller/components.controller');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
 componentsRouter.get('/latest', (req, res) => {
     const { category } = req.query;
-    getLatestFiles(category, (err, files) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({err: `${err}`, error: 'Internal Server Error' });
-      }
-      res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
-    });
+    if (category == "all") {
+      getAllCompDetailsFromDatabases(category, (err, files)=>{
+        //hadle the data
+        if(err){
+          return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
+        }
+        res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
+      });
+    }else{
+      getLatestFiles(category, (err, files) => {
+        if (err) {
+          console.error(err);
+          return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
+        }
+        res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
+      });
+    }
+
   });
 
 
