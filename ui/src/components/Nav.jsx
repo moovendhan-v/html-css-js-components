@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import GitHubLoginButton from '../components/Gitlogin';
 import Model from '../components/Model'
 import LeftSliders from '../components/LeftSLiders';
-import {SvgIcons} from "./Button";
+import { SvgIcons } from "./Button";
 import { useSelector } from 'react-redux';
 
 
@@ -15,7 +15,7 @@ function Nav() {
         <nav className="text-light navbar navbar-expand-lg bg-body-tertiary py-3">
           <div className="container-fluid">
 
-          <SvgIcons icon={"logo"} />
+            <SvgIcons icon={"logo"} />
 
             <a className="navbar-brand fw-bold text-light" href="#">Ui-Comp</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@ function Nav() {
                 </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    More Elements
+                    More
                   </a>
                   {/* <ul className="dropdown-menu bg-theme">
                     <li><a className="dropdown-item" href="#">Action</a></li>
@@ -42,12 +42,14 @@ function Nav() {
                   <div className="dropdown-menu bg-theme">
                     <div className="d-flex dropdown_menus">
                       <div className="bg-theme p-3">
-                          <div className="menu-nav-container">
-                              <LeftSliders role="navbar" />
-                          </div>
+                        <div className="menu-nav-container">
+                          <LeftSliders role="navbar" />
+                        </div>
                       </div>
                       <div className="bg-theme p-3">
-                          
+                        <div className="menu-nav-container">
+                          <GitHubLoginButton />
+                        </div>
                         <div>
                         </div>
                       </div>
@@ -57,16 +59,19 @@ function Nav() {
                 <li className="nav-item"></li>
                 {/* <Model /> */}
               </ul>
-{/* TODO update the below code while managing the user state (set logout ? user logedin : Login witt github ) */}
-              <div className="d-flex align-items-center">
-                <div>
+              {/* TODO update the below code while managing the user state (set logout ? user logedin : Login witt github ) */}
+              <div className="d-flex align-items-center profile">
+
+                <div className="bg-light rounded mx-4 " >
+                  <Link className="text-light " to="/profile">
+                    <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" />
+                  </Link>
+                </div>
+                <div className="bg-grey nav-pills p-2 px-4 rounded-5 cursor-pointer">
                   <span>{userProfile.userProfile.name}</span>
                 </div>
-                <div className="bg-light rounded mx-4" >
-                  <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" />
-                </div>
                 <div>
-                <GitHubLoginButton />
+                  {/* <GitHubLoginButton /> */}
                 </div>
               </div>
             </div>

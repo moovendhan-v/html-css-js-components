@@ -48,9 +48,9 @@ const Profile = () => {
             <LeftSliders />
           </div>
         </div>
-        <div className='right_div'>
+        <div className='right_div container '>
           {/* profiles  */}
-          <div>
+          <div className='container'>
             <div className='row d-flex bg-grey'>
               <div className="col-2 p-3 ">
                 <img className='img-fluid' src={userProfile.userProfile.avatar_url} alt="" />
@@ -61,10 +61,10 @@ const Profile = () => {
                 <div><p>{userProfile.userProfile.company}</p></div>
                 <div className="d-flex">
                   <div className='pe-2'>
-                    <a href={userProfile.userProfile.html_url}>Github</a>
+                    <a className='badge text-bg-primary rounded-pill' href={userProfile.userProfile.html_url}>Github</a>
                   </div>
                   <div className='pe-2'>
-                    <a href={userProfile.userProfile.blog}>Website</a>
+                    <a className='badge text-bg-success rounded-pill' href={userProfile.userProfile.blog}>Website</a>
                   </div>
                 </div>
               </div>
@@ -81,27 +81,38 @@ const Profile = () => {
           </div>
           {/* infos */}
           <div className='d-flex bg-grey my-2 rounded-2 '>
-            <div className='p-3'>
+            <div className='p-1 m-2 btn btn-light d-flex align-items-center'>
               <Link className='profile_text' to="/publicvarient">Public Varient</Link>
             </div>
-            <div className='p-3'>
+            
+            {/* <div className='p-3'>
               <Link className='profile_text' to="/approvals">Waiting for Approvals</Link>
             </div>
             <div className='p-3'>
               <Link className='profile_text' to="/publicvarient">Drafts</Link>
+            </div> */}
+
+          <div className='p-1 m-2 btn btn-success '>
+              <Link className='profile_text text-light ' to="/contributenew"> <SvgIcons icon={"logo"} />Contribute New </Link>
             </div>
+
           </div>
 
           {/* details */}
           <div className='profile_tabs bg-grey'>
-            <div className="container-fluid mb-5  py-5">
+          <div>
+            <div className="h6 text-center p-3">
+              {userProfile.userProfile.name} Contributed Components
+            </div>
+          </div>
+            <div className="container-fluid mb-5 pb-3">
               <div className="gallery_containers">
                 {userComponents.map((component, index) => (
                   <div className="box myBoxContainer" key={index}>
-                    <div className="col rounded-1 position-relative">
+                    <div className="col rounded-1 d-flex position-relative">
                       <div className="readCode d-flex align-items-center">
                         <div>
-                          {/* Add your SVG icon component here */}
+                        <SvgIcons icon={"code"} />
                         </div>
                         <div> Edit code</div>
                       </div>
@@ -114,7 +125,7 @@ const Profile = () => {
                         />
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between mt-4">
+                    <div className="d-flex justify-content-between mt-3">
                       <div>
                         <span>{component.author}</span> {/* Assuming author is a property of your component */}
                       </div>
