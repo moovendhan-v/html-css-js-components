@@ -7,7 +7,7 @@ import HomePage from './screens/Home';
 import Componenets from './screens/Components';
 import Editor from './screens/Editor';
 import Profile from './screens/Profile';
-
+import ContributeNewComp from './screens/ContributeNew';
 
 function App() {
   const [isStillLoading, setIsStillLoading] = useState(true);
@@ -24,6 +24,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/contributenew" element={<ContributeNewComp />} />
           {/* components  */}
           <Route path="/all" element={<Componenets catogreise={"all"} />} />
           <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
@@ -36,7 +37,6 @@ function App() {
           <Route path="/navbar" element={<Componenets catogreise={"navbar"} />} />
           <Route path="/tabs" element={<Componenets catogreise={"tabs"} />} />
           <Route path="/toast" element={<Componenets catogreise={"toast"} />} />
-
           {/* component routeing end  */}
           <Route path="/edit" element={<Editor />} />
           <Route path="/profile" element={<Profile />} />
