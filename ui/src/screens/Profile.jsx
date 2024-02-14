@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userProfileReducer } from '../actions/user.action';
 import OutputsOfComponents from '../components/OutputsOfComponents';
 
-
 const Profile = () => {
   const dispatch = useDispatch();
   const userProfile = useSelector(state => state.userProfile);
+
   let userComponents = [];
   if (userProfile.userComponents && userProfile.userComponents.length > 0) {
     userComponents = userProfile.userComponents;
@@ -73,7 +73,7 @@ const Profile = () => {
                   <EditMyProfileModel />
                 </div>
                 <div className='btn w-80 bg-menuslider m-3 border border-primary'>
-                  <div><h4 className='text-primary'>100K</h4></div>
+                  <div><h4 className='text-primary'>{userProfile.userComponents.length}</h4></div>
                   <span>Total Posts</span>
                 </div>
               </div>
