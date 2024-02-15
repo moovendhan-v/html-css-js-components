@@ -6,7 +6,7 @@ const baseFolderPath = '../';
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
-//read file content
+//read file content 
 const readContent = (filename, catogries, catogriesFile, callback) => {
     const folderPath = path.join(baseFolderPath, 'project', 'project_datas', catogries, catogriesFile);
     console.log(`Folder paths ${folderPath}`);
