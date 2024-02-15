@@ -32,8 +32,9 @@ function createFiles(basePath, category, folderName, {html, css, js}, callback) 
     if (isFolderExist) {
       return callback("Name already exists please choose someother files");
     }
+    const categoryFolderPath = path.join(basePath, category);
     // checking catogries is avalable or not 
-    checkIfFolderExists(category, (checkIfFolderAvalibale)=>{
+    checkIfFolderExists(categoryFolderPath, (checkIfFolderAvalibale)=>{
       if(!checkIfFolderAvalibale){
         return callback("Catogries not available");
       }
