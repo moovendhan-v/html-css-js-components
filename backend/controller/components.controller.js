@@ -79,6 +79,7 @@ function getLatestFiles(catogries, callback) {
     });
 }
 
+
 // Get all components detals 
 const getAllCompDetailsFromDatabases = async (categories, callback) => {
     const allComponentsDetails = [];
