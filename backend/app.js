@@ -34,6 +34,8 @@ const {componentsRouter} = require('./routes/components.router')
 const {authRouter} = require('./routes/github-oauth.router')
 const {CreateComponentsRouter} = require('./routes/addComponents.router')
 const {userProfileRouter} = require('./routes/userProfile.router')
+const {apiRouter} = require('./routes/api.router')
+
 
 const baseFolderPath = '../'; //one step back
 const folderPath = path.join(baseFolderPath, 'project', 'project_datas', 'buttons');
@@ -54,6 +56,8 @@ app.use('/components', componentsRouter);
 app.use('/auth', authRouter);
 app.use('/', CreateComponentsRouter);
 app.use('/profile', userProfileRouter);
+app.use('/api', apiRouter);
+
 connectDB();
 
 app.listen(port, () => {
