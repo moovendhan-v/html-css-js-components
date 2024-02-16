@@ -11,7 +11,7 @@ apiRouter.get('/all', (req, res) => {
         if (err) {
             return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
         }
-        res.send(jsonStatusSuccess({ errorStatus: false, message: `Latest ${category}`, response: files, count: 0 }));
+        res.send(jsonStatusSuccess({ errorStatus: false, message: `Latest ${categories}`, response: files, count: 0 }));
     });
 });
 
