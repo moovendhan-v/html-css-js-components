@@ -78,8 +78,6 @@ function getLatestFiles(catogries, callback) {
             });
     });
 }
-
-
 // Get all components detals 
 const getAllCompDetailsFromDatabases = async (categories, callback) => {
     const allComponentsDetails = [];
@@ -96,7 +94,7 @@ const getAllCompDetailsFromDatabases = async (categories, callback) => {
                                 resolve(result);
                             }
                         });
-                    });
+                    }); 
                     console.log(datas);
                     allComponentsDetails.push(datas);
                 } catch (err) {
@@ -113,7 +111,6 @@ const getAllCompDetailsFromDatabases = async (categories, callback) => {
         callback("Invalid category", null);
     }
 };
-
 
 module.exports = {
     getLatestFiles,
