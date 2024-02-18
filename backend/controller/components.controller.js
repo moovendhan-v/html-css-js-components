@@ -78,39 +78,56 @@ function getLatestFiles(catogries, callback) {
             });
     });
 }
-// Get all components detals 
-const getAllCompDetailsFromDatabases = async (categories, callback) => {
+
+//get all components and search funcitons
+const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery }, callback) => {
     const allComponentsDetails = [];
-    if (categories === "all") {
-        try {
-            const userComponents = await UserComponents.find();
-            await Promise.all(userComponents.map(async (data) => {
-                try {
-                    const datas = await new Promise((resolve, reject) => {
-                        readFilesInformations(data.categories, data.folder_name, (err, result) => {
-                            if (err) {
-                                reject(err);
-                            } else {
-                                resolve(result);
-                            }
-                        });
-                    }); 
-                    console.log(datas);
-                    allComponentsDetails.push(datas);
-                } catch (err) {
-                    console.error("Error reading files information:", err);
-                    throw err;
-                }
-            }));
-            callback(null, allComponentsDetails);
-        } catch (error) {
-            console.error("Error retrieving user components:", error);
-            callback("Internal server error", null);
+    try {
+        let userComponents;
+        if (categories === "all") {
+            userComponents = await UserComponents.find();
+        } else if (categories === "search") {
+            userComponents = await UserComponents.aggregate([
+                {
+                    $match: {
+                        $or: [
+                            { 'title': { $regex: searchQuery, $options: 'i' } },
+                            { 'folder_name': { $regex: searchQuery, $options: 'i' } },
+                            { 'categories': { $regex: searchQuery, $options: 'i' } }
+                        ]
+                    }
+                },
+            ]);
+        } else {
+            return callback("Invalid category", null);
         }
-    } else {
-        callback("Invalid category", null);
+
+        await Promise.all(userComponents.map(async (data) => {
+            try {
+                const datas = await new Promise((resolve, reject) => {
+                    readFilesInformations(data.categories, data.folder_name, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
+                });
+                console.log(datas);
+                allComponentsDetails.push(datas);
+            } catch (err) {
+                console.error("Error reading files information:", err);
+                throw err;
+            }
+        }));
+        callback(null, allComponentsDetails);
+    } catch (error) {
+        console.error("Error retrieving user components:", error);
+        callback("Internal server error", null);
     }
 };
+
+
 
 module.exports = {
     getLatestFiles,
