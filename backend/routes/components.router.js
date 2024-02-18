@@ -7,7 +7,7 @@ const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/
 componentsRouter.get('/latest', (req, res) => {
     const { category } = req.query;
     if (category == "all") {
-      getAllCompDetailsFromDatabases(category, (err, files)=>{
+      getAllCompDetailsFromDatabases({categories:category}, (err, files)=>{
         //hadle the data
         if(err){
           return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
