@@ -7,10 +7,12 @@ const basePath = '../project/project_datas/';
 
 const addNewComponents = async (req, res) => {
     try {
-        const { user_id, title, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = req.body;
+        const { user_id, title,description, tags, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = req.body;
         const newComponents = new UserComponents({
             user_id,
             title,
+            description,
+            tags,
             upload_time,
             updated_time,
             folder_path,
