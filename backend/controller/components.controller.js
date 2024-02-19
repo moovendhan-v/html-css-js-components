@@ -93,7 +93,9 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
                         $or: [
                             { 'title': { $regex: searchQuery, $options: 'i' } },
                             { 'folder_name': { $regex: searchQuery, $options: 'i' } },
-                            { 'categories': { $regex: searchQuery, $options: 'i' } }
+                            { 'categories': { $regex: searchQuery, $options: 'i' } },
+                            { 'description': { $regex: searchQuery, $options: 'i' } },
+                            { 'tags': { $regex: searchQuery, $options: 'i' } }
                         ]
                     }
                 },
