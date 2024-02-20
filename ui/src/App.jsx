@@ -9,6 +9,7 @@ import Editor from './screens/Editor';
 import Profile from './screens/Profile';
 import ContributeNewComp from './screens/ContributeNew';
 
+
 function App() {
   const [isStillLoading, setIsStillLoading] = useState(true);
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/contributenew" element={<ContributeNewComp />} />
           {/* components  */}
+          <Route path="/search" element={<Componenets catogreise={"search"} />} />
           <Route path="/all" element={<Componenets catogreise={"all"} />} />
           <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
           <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
