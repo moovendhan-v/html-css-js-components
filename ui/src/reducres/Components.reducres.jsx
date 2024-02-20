@@ -1,4 +1,5 @@
 export const componentsReducer = (state = {
+  components_search: [],
   components_all: [],
   components_buttons: [],
   components_cards: [],
@@ -22,6 +23,11 @@ export const componentsReducer = (state = {
 
       // Update the corresponding slice of the state based on the componentType
       switch (componentType) {
+        case 'search':
+          return {
+            ...state,
+            components_search: [...state.components_search, ...components],
+          };
         case 'all':
           return {
             ...state,
