@@ -1,9 +1,11 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases} = require('../controller/components.controller');
+const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch} = require('../controller/components.controller');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
+// app.use('/components', componentsRouter);
+
 componentsRouter.get('/latest', (req, res) => {
     const { category } = req.query;
     if (category == "all") {
@@ -24,7 +26,8 @@ componentsRouter.get('/latest', (req, res) => {
       });
     }
 
-  });
+});
 
+componentsRouter.get('/searchcomponents', getComponentsBySearch);
 
 module.exports = {componentsRouter}
