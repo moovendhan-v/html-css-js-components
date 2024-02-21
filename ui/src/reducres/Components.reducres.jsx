@@ -26,7 +26,7 @@ export const componentsReducer = (state = {
         case 'search':
           return {
             ...state,
-            components_search: [...state.components_search, ...components],
+            components_search: components, // Override existing components
           };
         case 'all':
           return {

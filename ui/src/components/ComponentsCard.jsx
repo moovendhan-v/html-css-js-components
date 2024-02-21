@@ -13,28 +13,31 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
   const componentsPropertyName = `components_${catogreise}`;
   console.log(componentsPropertyName);
   const components = useSelector((state) => state.components[componentsPropertyName]);
-  console.log(`components=> ${components}`);
+  console.log(`components=> ${JSON.stringify(components)}`);
   // console.log(JSON.stringify(components, null, 2));
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('comps');
 
-    if (catogreise === "search") {
-      const searchApi = `http://localhost:4000/components/searchcomponents?search=${code}`;
-      axios.get(searchApi)
-        .then(datas => {
-          console.log('Response data:', datas.data.response);
-          if (Array.isArray(datas.data.response)) {
-            dispatch(addComponents({ components: datas.data.response, componentType: catogreise }));
-          } else {
-            console.error("Invalid data structure from API");
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
+    function fetchComponentsUsingSearch(){
+      if (catogreise === "search") {
+        const searchApi = `http://localhost:4000/components/searchcomponents?search=${code}`;
+        axios.get(searchApi)
+          .then(datas => {
+            console.log('Response data:', datas.data.response);
+            if (Array.isArray(datas.data.response)) {
+              dispatch(addComponents({ components: datas.data.response, componentType: catogreise }));
+            } else {
+              console.error("Invalid data structure from API");
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }
+    }fetchComponentsUsingSearch();
+   
   }, []); // Empty dependency array ensures the effect runs only once
 
 
@@ -100,9 +103,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
         <div>
           <div>
             {catogreise === 'search' ? (
-              <div>
-                <SeachBar role="search" />
-              </div>
+                <SeachBar role="search" catogreise={catogreise} />
             ) :  
             <div className="p-3">
             <h3>Browse-{catogreise} Ui-Components</h3>
