@@ -39,8 +39,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
 
 
   useEffect(() => {
-    const fetchComponentsFromAPI = async () => {
-    if (!catogreise === "search") {
+    const fetchComponentsFromAPI = async () => {      
       try {
         // Check if components array is empty or null
         if (!components || components.length === 0) {
@@ -59,8 +58,9 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
         console.error("Error fetching components:", error);
       }
     };
-  }
-    fetchComponentsFromAPI();
+    if (catogreise !== "search") {
+      fetchComponentsFromAPI();
+    }
   }, [dispatch, catogreise, components]); // Include components in the dependency array  
 
   if (onlyCard) {
