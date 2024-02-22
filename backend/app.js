@@ -36,11 +36,9 @@ const {CreateComponentsRouter} = require('./routes/addComponents.router')
 const {userProfileRouter} = require('./routes/userProfile.router')
 const {apiRouter} = require('./routes/api.router')
 
-
 const baseFolderPath = '../'; //one step back
 const folderPath = path.join(baseFolderPath, 'project', 'project_datas', 'buttons');
 const indexPath = "style.css";
-
 
 app.use('/', homeRouter);
 
