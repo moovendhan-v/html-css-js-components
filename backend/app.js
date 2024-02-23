@@ -8,7 +8,7 @@ const connectDB = require('./config/db')
 const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
-
+ 
 //getting configeration file informations
 const { getJsonConfigDetails } = require('./operations/getConfigOperations'); 
 const confFile = getJsonConfigDetails();

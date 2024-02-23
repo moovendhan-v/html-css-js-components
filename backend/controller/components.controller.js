@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
+const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
@@ -21,8 +22,9 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
     });
 };
 
+
 // reading file informations 
-function readFilesInformations(catogriesName, folderName, callback) {
+function readFilesInformations(catogriesName, folderName,{data, user}, callback) {
     console.log(`Catogreis ${catogriesName} Folder Name ${folderName}`);
     readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
         if (htmlErr) {
@@ -39,11 +41,20 @@ function readFilesInformations(catogriesName, folderName, callback) {
                     console.log(`js error ${jsErr}`);
                     return callback(jsErr);
                 }
+                
                 const dataObject = {
                     "post_details": {
                         "html": htmlContent,
                         "css": cssContent,
-                        "js": jsContent
+                        "js": jsContent,
+                        "folder_path": data.folder_path,
+                        "folder_name": data.folder_name,
+                        "catogries": data.categories,
+                        "isActive": data.isActive,
+                        "title": data.title,
+                        "description": data.description,
+                        "compId": data.id,
+                        "admin": user
                     }
                 };
                 callback(null, dataObject);
@@ -52,33 +63,40 @@ function readFilesInformations(catogriesName, folderName, callback) {
     });
 }
 
-// this is asyncronus taks so that we need to handle this in a asyncronus promise way
-function getLatestFiles(catogries, callback) {
-    const folderPaths = path.join("../", 'project', 'project_datas', catogries);
-    fs.readdir(folderPaths, (err, files) => {
-        if (err) {
-            return callback(`Error reading directory: ${err}`);
-        }
-        const promises = files.slice(0, 9).map(file => {
-            return new Promise((resolve, reject) => {
-                readFilesInformations(catogries, file, (err, fileInfo) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        console.log(`Fileinfos ${fileInfo}`);
-                        resolve(fileInfo);
-                    }
+// this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
+async function getLatestFiles (catogries, callback) {
+    const catComponentsDetails = [];
+    // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
+
+         userComponents = await UserComponents.aggregate([
+            {
+                $match: {
+                    $or: [
+                        { 'categories': { $regex: catogries, $options: 'i' } }
+                    ]
+                }
+            },
+        ]);
+        await Promise.all(userComponents.map(async (data) => {
+            try {
+                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
+                const datas = await new Promise((resolve, reject) => {
+                    readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(result);
+                        }
+                    });
                 });
-            });
-        });
-        Promise.all(promises)
-            .then(result => {
-                callback(null, result);
-            })
-            .catch(error => {
-                callback(error);
-            });
-    });
+                console.log(datas);
+                catComponentsDetails.push(datas);
+            } catch (err) {
+                console.error("Error reading files information:", err);
+                throw err;
+            }
+        }));
+        callback(null, catComponentsDetails);
 }
 
 //get all components and search funcitons
@@ -108,8 +126,9 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 
         await Promise.all(userComponents.map(async (data) => {
             try {
+                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
                 const datas = await new Promise((resolve, reject) => {
-                    readFilesInformations(data.categories, data.folder_name, (err, result) => {
+                    readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
                         if (err) {
                             reject(err);
                         } else {
@@ -145,8 +164,6 @@ const getComponentsBySearch = (req,res)=>{
         res.send(jsonStatusSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
     });
 }
-
-
 
 module.exports = {
     getLatestFiles,
