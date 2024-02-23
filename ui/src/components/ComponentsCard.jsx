@@ -1,10 +1,9 @@
+import axios from 'axios';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComponents } from '../actions/components.actions';
-import code from '../assets/myicons/code.svg';
-import OutputsOfComponents from './OutputsOfComponents';
 import { SvgIcons } from "./Button";
-import axios from 'axios';
+import OutputsOfComponents from './OutputsOfComponents';
 import SeachBar from './Search';
 
 const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
@@ -74,7 +73,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
             {components.map((component, index) => (
 
               <div className="box myBoxContainer">
-                <div key={index} className="col d-flex rounded-1 position-relative ">
+                <div key={index} className="col d-flex rounded-1 position-relative comp-bg">
                   <div className='readCode d-flex  align-items-center'>
                     <div>
                       <SvgIcons icon={"code"} />
@@ -118,7 +117,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
             {components.map((component, index) => (
 
               <div className="box myBoxContainer">
-                <div key={index} className="col d-flex  rounded-1 position-relative ">
+                <div key={index} className="col d-flex  rounded-1 position-relative comp-bg">
                   <div className='readCode d-flex  align-items-center'>
                     <div>
                       <SvgIcons icon={"code"} />
@@ -133,12 +132,12 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
                     />
                   </div>
                 </div>
-                <div className="d-flex justify-content-between mt-3">
+                <div className="d-flex justify-content-between mt-2">
                   <div >
-                    <span>Moovendhan</span>
+                    <span>{component.post_details.admin.name}</span>
                   </div>
                   <div>
-                    <span>100Views</span>
+                    <span className='text-white-50 '>{component.post_details.admin.company}</span>
                   </div>
                 </div>
 
@@ -155,7 +154,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
       <>
         {components.map((component, index) => (
           <div className="box myBoxContainerScrool">
-            <div key={index} className="col rounded-1 position-relative ">
+            <div key={index} className="col rounded-1 position-relative comp-bg">
               <div className='readCode d-flex  align-items-center'>
                 <div>
                   <SvgIcons icon={"code"} />

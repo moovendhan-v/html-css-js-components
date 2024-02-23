@@ -189,13 +189,15 @@ body {
   padding: 0 10px;
   margin-bottom: 40px;
 }
-
+.comp-bg{
+  background-color: #e8e8e8;
+}
 .box {
   cursor: pointer;
   position: relative;
-  background-color: #6495ed2e;
-  padding: 10px;
+  /* background-color: #6495ed2e; */
 }
+
 .myBox{
   width: 100% !important;
   height: 100% !important;

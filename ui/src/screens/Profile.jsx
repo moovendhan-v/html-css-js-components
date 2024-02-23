@@ -125,7 +125,7 @@ const Profile = () => {
                         />
                       </div>
                     </div>
-                    <div className="d-flex justify-content-between mt-3">
+                    <div className="d-flex justify-content-between mt-2">
                       <div>
                         <span>{component.author}</span> {/* Assuming author is a property of your component */}
                       </div>

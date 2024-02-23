@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import MonacoEditor from "react-monaco-editor";
-import { useSelector } from "react-redux";
 import * as monaco from "monaco-editor";
-import {SvgIcons} from "./Button";
+import React, { useEffect, useState } from "react";
+import MonacoEditor from "react-monaco-editor";
+import { SvgIcons } from "./Button";
 
 const CodeEditor = ({ language, value, onChange }) => {
   const editorOptions = {
@@ -112,7 +111,7 @@ const WebEditor = () => {
     // #TODO here we need to do that drag to adjust the screens 
     <div className=" m-5 ">
       <div className="row rounded-1bg-grey">
-        <div className="col-6 position-relative  bg-light code_editor rounded-start border border-end-0">
+        <div className="col-6 position-relative  comp-bg code_editor rounded-start border border-end-0">
           <OutputScreen html={html} css={css} js={js} />
         <div className="bg-dark col-resize position-absolute col-resize-line">
 
