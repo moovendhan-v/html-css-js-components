@@ -108,7 +108,7 @@ const Profile = () => {
             <div className="container-fluid mb-5 pb-3">
               <div className="gallery_containers">
                 {userComponents.map((component, index) => (
-                  <div className="box myBoxContainer" key={index}>
+                  <div className="box myBoxContainer bg-theme" key={index}>
                     <div className="col rounded-1 d-flex position-relative">
                       <div className="readCode d-flex align-items-center">
                         <div>

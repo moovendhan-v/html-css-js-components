@@ -154,7 +154,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
       <>
         {components.map((component, index) => (
           <div className="box myBoxContainerScrool">
-            <div key={index} className="col rounded-1 position-relative comp-bg">
+            <div key={index} className="col rounded-1 position-relative comp-bg-scrool ">
               <div className='readCode d-flex  align-items-center'>
                 <div>
                   <SvgIcons icon={"code"} />
