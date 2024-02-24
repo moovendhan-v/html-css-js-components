@@ -18,9 +18,12 @@ const getUserProfileInformations = async (req, res) => {
         const updatedComponentsPromises = userComponents.map(async component => {
             const folderNames = component.folder_name;
             const categories = component.categories;
+            const data = component;
+            const user = existingUser;
+            console.log(`Component ${component}`);
 
             return new Promise((resolve, reject) => {
-                readFilesInformations(categories, folderNames, (err, fileInfo) => {
+                readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
                     if (err) {
                         reject(err);
                     } else {

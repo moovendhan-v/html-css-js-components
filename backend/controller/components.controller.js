@@ -6,42 +6,36 @@ const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
-
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
 //read file content 
 const readContent = (filename, catogries, catogriesFile, callback) => {
     const folderPath = path.join(baseFolderPath, 'project', 'project_datas', catogries, catogriesFile);
-    console.log(`Folder paths ${folderPath}`);
     readFileContent(folderPath, filename, (err, content) => {
         if (err) {
-            console.error(err);
             return callback(`${err} Internal Server Errors`);
         }
         callback(null, content);
     });
 };
 
-
 // reading file informations 
 function readFilesInformations(catogriesName, folderName,{data, user}, callback) {
-    console.log(`Catogreis ${catogriesName} Folder Name ${folderName}`);
     readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
         if (htmlErr) {
-            console.log(`html error ${htmlErr}`);
             return callback(htmlErr);
         }
         readContent('style.css', catogriesName, folderName, (cssErr, cssContent) => {
             if (cssErr) {
-                console.log(`css error ${cssErr}`);
                 return callback(cssErr);
             }
             readContent('script.js', catogriesName, folderName, (jsErr, jsContent) => {
                 if (jsErr) {
-                    console.log(`js error ${jsErr}`);
                     return callback(jsErr);
                 }
                 
+                console.log(`Catogries ${catogriesName} foldername ${folderName} data ${data} user ${user}`);
+
                 const dataObject = {
                     "post_details": {
                         "html": htmlContent,
@@ -89,10 +83,8 @@ async function getLatestFiles (catogries, callback) {
                         }
                     });
                 });
-                console.log(datas);
                 catComponentsDetails.push(datas);
             } catch (err) {
-                console.error("Error reading files information:", err);
                 throw err;
             }
         }));
@@ -136,10 +128,8 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
                         }
                     });
                 });
-                console.log(datas);
                 allComponentsDetails.push(datas);
             } catch (err) {
-                console.error("Error reading files information:", err);
                 throw err;
             }
         }));
