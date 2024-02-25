@@ -21,14 +21,21 @@ const GitHubAuth = () => {
       })
         .then(response => response.json())
         .then(data => {
-          console.log(JSON.stringify(data, null, 2));
-          const githubAccessToken = data && data.githubAccessToken;
-          if (githubAccessToken) {
+          // window.location.href = '/';
+          alert(JSON.stringify(data));
+          alert(JSON.stringify(data.profile));
+          console.log(`User profile data ${data}`);
+          // #TODO update this githubaccess token into state managements 
+
+          // const githubAccessToken = data && data.githubAccessToken;
+          // if (githubAccessToken) {
             // Store the GitHub access token in localStorage
-            localStorage.setItem('githubAccessToken', githubAccessToken);
-          } else {
-            console.error('GitHub authentication error: Invalid access token received');
-          }
+            // localStorage.setItem('githubAccessToken', githubAccessToken);
+          // }
+          // else {
+          //   console.error('GitHub authentication error: Invalid access token received');
+          // }
+
         })
         .catch(error => {
           console.error('GitHub authentication error:', error);

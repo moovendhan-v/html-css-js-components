@@ -33,7 +33,6 @@ async function exchangeGitHubCodeForToken(code) {
   }
 }
 
-
 async function getUserInformationsFromGitApi(githubAccessToken) {
   try {
     const userData = await axios.get('https://api.github.com/user', {
