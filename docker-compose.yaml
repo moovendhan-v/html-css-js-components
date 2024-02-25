@@ -13,6 +13,8 @@ services:
     tty: true
     depends_on:
       - mongodb
+    networks:
+      - my_network
 
   mongodb:
     image: mongo
@@ -22,6 +24,16 @@ services:
     volumes:
       - mongodb_data:/data/db
       - ./project/mongodb-backup:/data/db
+    networks:
+      my_network:
+        ipv4_address: 172.28.0.2
 
 volumes:
   mongodb_data:
+
+networks:
+  my_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
