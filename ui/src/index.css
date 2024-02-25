@@ -228,6 +228,9 @@ body {
   padding: 5px;
   border-radius: 35px;
 }
+.comp-bg-scrool{
+  background-color: #1e304c;
+}
 .myBoxContainerScrool{
   width: 100%;
   /* min-height: 300px; */
@@ -237,6 +240,8 @@ body {
   height: calc(100% - 30px);
   border-radius: 8px;
   position: relative;
+  padding: 10px;
+  background-color: var(--sub-theme);
 }
 .gallery_containers .box {
   width: 100%;

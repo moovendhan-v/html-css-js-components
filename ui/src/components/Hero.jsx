@@ -8,6 +8,8 @@ import ScroolAnimation, { ScrollAnimationForImage } from './Scrool';
 import SeachBar from './Search';
 import TypingTextEffect from './TypingText';
 import ComponentsCard from '../components/ComponentsCard';
+import { Link } from 'react-router-dom';
+
 
 function Hero() {
     useEffect(() => {
@@ -40,7 +42,9 @@ function Hero() {
                         <ScrollAnimationForImage direction={"Left"} />
                     </div>
                     <div className="align_button mt-2 ">
-                        <Button icon={"logo"} text={"Explore More Componenets"} />
+                        <Link to={`/${"all"}`} >
+                                <Button icon={"logo"} text={"Explore More Componenets"} />
+                        </Link>
                     </div>
                 </div>
             </section>
