@@ -16,3 +16,7 @@ yarn add  @tabler/icons-react
 
 # Install both development and production dependencies
 npm install
+
+#Run vite in local
+vite --host 0.0.0.0
+npm install -g vite
