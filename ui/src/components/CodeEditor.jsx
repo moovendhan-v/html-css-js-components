@@ -42,7 +42,7 @@ const CodeEditor = ({ language, value, onChange }) => {
 
   const handleEditorDidMount = (editor) => {
     // Access the editor instance if needed
-    console.log(`Editor for ${language} instance:`, editor);
+    // console.log(`Editor for ${language} instance:`, editor);
   };
 
   return (

@@ -42,7 +42,6 @@ function createFiles(basePath, category, folderName, {html, css, js}, callback) 
         if (err) {
           return callback(err);
         }
-        console.log('Directory created successfully:', folderPath);
   
         const filePaths = [
           path.join(folderPath, 'index.html'),

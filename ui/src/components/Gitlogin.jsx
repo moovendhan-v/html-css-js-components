@@ -2,11 +2,35 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { userProfileReducer } from '../actions/user.action';
-
+import { logout } from '../actions/user.action';
 
 const GitHubLoginButton = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      fetch('http://localhost:4000/auth/github-oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          alert(JSON.stringify(data));
+          alert(JSON.stringify(data.profile));
+          window.location.href = '/';
+          dispatch(userProfileReducer({ userProfileInfo: data.profile, saveTo: "profile" }));
+        })
+        .catch(error => {
+          console.error('GitHub authentication error:', error);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     const githubOAuthState = window.localStorage.getItem('githubOAuthState');
@@ -24,31 +48,33 @@ const GitHubLoginButton = () => {
     window.localStorage.setItem('githubOAuthState', state);
     // Redirect to GitHub for authentication
     window.location.href = githubOAuthUrl;
-
-    //getting user profile info from api
-    const user_id = "65bed6f673ccdf106ce604fc";
-    fetch('http://localhost:4000/profile/getuserprofileinfo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(`Profiles ${JSON.stringify(data.response.user, null, 2)}`);
-        console.log(JSON.stringify(data.response.components, null, 2));
-        dispatch(userProfileReducer({ userProfileInfo: data.response.user, saveTo: "profile" }));
-        dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    if (code) {
+      fetch('http://localhost:4000/auth/github-oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
       })
+        .then(response => response.json())
+        .then(data => {
+          window.location.href = '/';
+          dispatch(userProfileReducer({ userProfileInfo: data.profile, saveTo: "profile" }));
+        })
+        .catch(error => {
+          console.error('GitHub authentication error:', error);
+        });
+    }
 
   };
 
   const handleLogout = () => {
     // Clear the GitHub token from local storage
-    window.localStorage.removeItem('githubAccessToken');
     window.localStorage.removeItem('githubOAuthState');
     setIsLoggedIn(false);
+    dispatch(logout());
   };
 
   const generateRandomState = () => {

@@ -18,7 +18,6 @@ const SeachBar = (props) => {
         const searchApi = `http://localhost:4000/components/searchcomponents?search=${input}`;
         axios.get(searchApi)
             .then(datas => {
-                console.log('Response data:', datas.data.response);
                 if (Array.isArray(datas.data.response)) {
                     dispatch(addComponents({ components: datas.data.response, componentType: props.catogreise }));
                 } else {

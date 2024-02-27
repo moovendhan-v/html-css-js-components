@@ -10,10 +10,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
 
   const dispatch = useDispatch();
   const componentsPropertyName = `components_${catogreise}`;
-  console.log(componentsPropertyName);
   const components = useSelector((state) => state.components[componentsPropertyName]);
-  console.log(`components=> ${JSON.stringify(components)}`);
-  // console.log(JSON.stringify(components, null, 2));
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -24,7 +21,6 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
         const searchApi = `http://localhost:4000/components/searchcomponents?search=${code}`;
         axios.get(searchApi)
           .then(datas => {
-            console.log('Response data:', datas.data.response);
             if (Array.isArray(datas.data.response)) {
               dispatch(addComponents({ components: datas.data.response, componentType: catogreise }));
             } else {
@@ -54,7 +50,7 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
             console.error("Invalid data structure from API");
           }
         } else {
-          console.log("Components already exist, skipping fetch");
+          console.warn("Components already exist, skipping fetch");
         }
       } catch (error) {
         console.error("Error fetching components:", error);
