@@ -17,7 +17,7 @@ authRouter.post('/getUserInfoFromGit', getUserInfoFromGit);
 authRouter.post('/github-oauth', async (req, res) => {
   const { code } = req.body;
   try {
-    // const githubAccessToken = await exchangeGitHubCodeForToken(code);
+    const githubAccessToken = await exchangeGitHubCodeForToken(code);
     console.log(`Git access token ${githubAccessToken}`);
 
     const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
@@ -25,27 +25,25 @@ authRouter.post('/github-oauth', async (req, res) => {
     //get user profile info with github oauth 
     const gitUserId = userInformations.id;
     const existingUser = await GitHubUser.findOne({ id: gitUserId });
-    var gitCompleProfile ;
-    // const getUserCompleteInfo = getUserInformationsByName(await `${existingUser.name}`);
 
-    getUserInformationsByName(existingUser.name, (error, userProfileWithComponents) => {
+      // #TODO test if not an existing user (Test the app behaviour) and update the code (high priyority)
+      if (!existingUser) {
+        const githubUser = new GitHubUser(userInformations);
+        await githubUser.save();
+      }
+
+    getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
       if (error) {
           return res.status(500).send(`Internal Server Error ${error}`);
       } else {
-        gitCompleProfile = userProfileWithComponents;
+        res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, response: await userProfileWithComponents});
       }
   });
 
-    console.log(`GitUserId ${await gitUserId} existingUser ${await existingUser} `);
 
-    if (!existingUser) {
-      const githubUser = new GitHubUser(userInformations);
-      await githubUser.save();
-    }
  
-    req.session.githubAccessToken = await githubAccessToken;
+    // req.session.githubAccessToken = await githubAccessToken;
 
-    res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, profile: existingUser, profileInfo: await gitCompleProfile });
   } catch (error) {
     console.error('Error during GitHub OAuth:', error);
     res.status(500).json({ success: false, error: error });
