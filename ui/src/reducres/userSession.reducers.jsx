@@ -9,9 +9,10 @@ const initialState = {
 export const userProfileReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER_PROFILE:
-      console.log(action);
       const { userProfileInfo, saveTo } = action.payload;
       switch (saveTo) {
+        case 'LOGOUT':
+          return { initialState };
         case "profile":
           return {
             ...state,
@@ -25,7 +26,10 @@ export const userProfileReducer = (state = initialState, action) => {
         default:
           return state;
       }
+  
     default:
       return state; // Add a default case to return the state unchanged if no action matches
   }
 };
+
+

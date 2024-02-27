@@ -14,11 +14,11 @@ const Profile = () => {
   const userProfile = useSelector(state => state.userProfile);
 
   let userComponents = [];
+  
   if (userProfile.userComponents && userProfile.userComponents.length > 0) {
     userComponents = userProfile.userComponents;
-    console.log(userComponents[0]);
   } else {
-    console.log("userComponents is empty or undefined");
+    console.error("userComponents is empty or undefined");
   }
 
   useEffect(() => {
@@ -32,9 +32,6 @@ const Profile = () => {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(JSON.stringify(data.response.user, null, 2));
-        console.log(JSON.stringify(data.response.components, null, 2));
-        dispatch(userProfileReducer({ userProfileInfo: data.response.user, saveTo: "profile" }));
         dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
       })
   }, []);

@@ -61,14 +61,13 @@ function Nav() {
               </ul>
               {/* TODO update the below code while managing the user state (set logout ? user logedin : Login witt github ) */}
               <div className="d-flex align-items-center profile">
-
                 <div className="bg-light rounded mx-4 " >
                   <Link className="text-light " to="/profile">
-                    <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" />
+                    {/* <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" /> */}
                   </Link>
                 </div>
                 <div className="bg-grey nav-pills p-2 px-4 rounded-5 cursor-pointer">
-                  <span>{userProfile.userProfile.name}</span>
+                  {/* <span>{userProfile.userProfile.name}</span> */}
                 </div>
                 <div>
                   {/* <GitHubLoginButton /> */}

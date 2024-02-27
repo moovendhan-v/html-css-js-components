@@ -8,40 +8,40 @@ import './index.css';
 const root = createRoot(document.getElementById('root'));
 
 const GitHubAuth = () => {
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    if (code) {
-      fetch('http://localhost:4000/auth/github-oauth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // window.location.href = '/';
-          alert(JSON.stringify(data));
-          alert(JSON.stringify(data.profile));
-          console.log(`User profile data ${data}`);
-          // #TODO update this githubaccess token into state managements 
+  // useEffect(() => {
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const code = urlParams.get('code');
+  //   if (code) {
+  //     fetch('http://localhost:4000/auth/github-oauth', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ code }),
+  //     })
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         // window.location.href = '/';
+  //         alert(JSON.stringify(data));
+  //         alert(JSON.stringify(data.profile));
+  //         console.log(`User profile data ${data}`);
+  //         // #TODO update this githubaccess token into state managements 
 
-          // const githubAccessToken = data && data.githubAccessToken;
-          // if (githubAccessToken) {
-            // Store the GitHub access token in localStorage
-            // localStorage.setItem('githubAccessToken', githubAccessToken);
-          // }
-          // else {
-          //   console.error('GitHub authentication error: Invalid access token received');
-          // }
+  //         // const githubAccessToken = data && data.githubAccessToken;
+  //         // if (githubAccessToken) {
+  //           // Store the GitHub access token in localStorage
+  //           // localStorage.setItem('githubAccessToken', githubAccessToken);
+  //         // }
+  //         // else {
+  //         //   console.error('GitHub authentication error: Invalid access token received');
+  //         // }
 
-        })
-        .catch(error => {
-          console.error('GitHub authentication error:', error);
-        });
-    }
-  }, []);
+  //       })
+  //       .catch(error => {
+  //         console.error('GitHub authentication error:', error);
+  //       });
+  //   }
+  // }, []);
 
   return (
     <Provider store={store}>

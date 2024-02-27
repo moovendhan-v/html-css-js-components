@@ -34,8 +34,6 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
                     return callback(jsErr);
                 }
                 
-                console.log(`Catogries ${catogriesName} foldername ${folderName} data ${data} user ${user}`);
-
                 const dataObject = {
                     "post_details": {
                         "html": htmlContent,

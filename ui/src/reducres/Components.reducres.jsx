@@ -15,8 +15,6 @@ export const componentsReducer = (state = {
 }, action) => {
   switch (action.type) {
     case 'ADD_COMPONENTS':
-      console.log('components');
-      console.log(action);
 
       // Determine the type of components being added
       const { componentType, components } = action.payload;

@@ -24,7 +24,6 @@ const App = ({ catogreise }) => {
       }
       if(containerTop > 120){
         setIsSticky(false);
-        console.log("done");
       }
 
     };
