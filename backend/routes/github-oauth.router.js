@@ -17,7 +17,8 @@ authRouter.post('/getUserInfoFromGit', getUserInfoFromGit);
 authRouter.post('/github-oauth', async (req, res) => {
   const { code } = req.body;
   try {
-    const githubAccessToken = await exchangeGitHubCodeForToken(code);
+    // #TODO Upadate a auth token where authanticated by user 
+    // const githubAccessToken = await exchangeGitHubCodeForToken(code);
     console.log(`Git access token ${githubAccessToken}`);
 
     const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
