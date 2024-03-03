@@ -9,6 +9,8 @@ const initialState = {
 export const userProfileReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER_PROFILE:
+      console.log(parseInt(state));
+      // eslint-disable-next-line no-case-declarations
       const { userProfileInfo, saveTo } = action.payload;
       switch (saveTo) {
         case 'LOGOUT':

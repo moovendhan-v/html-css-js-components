@@ -30,6 +30,9 @@ function Nav() {
                 <li className="nav-item">
                   <a className="nav-link active fw-semibold text-light" aria-current="page"><Link className="text-light" to="/all">Components</Link></a>
                 </li>
+                <li className="nav-item">
+                    <GitHubLoginButton />
+                </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     More
@@ -48,7 +51,7 @@ function Nav() {
                       </div>
                       <div className="bg-theme p-3">
                         <div className="menu-nav-container">
-                          <GitHubLoginButton />
+                          {/* <GitHubLoginButton /> */}
                         </div>
                         <div>
                         </div>
@@ -63,11 +66,11 @@ function Nav() {
               <div className="d-flex align-items-center profile">
                 <div className="bg-light rounded mx-4 " >
                   <Link className="text-light " to="/profile">
-                    {/* <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" /> */}
+                    <img className="brandlogo img-fluid float-end rounded-circle " src={userProfile.userProfile.avatar_url} alt="logo" />
                   </Link>
                 </div>
                 <div className="bg-grey nav-pills p-2 px-4 rounded-5 cursor-pointer">
-                  {/* <span>{userProfile.userProfile.name}</span> */}
+                  <span>{userProfile.userProfile.name}</span>
                 </div>
                 <div>
                   {/* <GitHubLoginButton /> */}

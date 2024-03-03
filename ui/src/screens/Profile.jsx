@@ -10,31 +10,19 @@ import { userProfileReducer } from '../actions/user.action';
 import OutputsOfComponents from '../components/OutputsOfComponents';
 
 const Profile = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const userProfile = useSelector(state => state.userProfile);
 
+  useSelector(state => console.log(state));
+
   let userComponents = [];
-  
+  console.log(`User comp ${userComponents}`);
   if (userProfile.userComponents && userProfile.userComponents.length > 0) {
     userComponents = userProfile.userComponents;
   } else {
-    console.error("userComponents is empty or undefined");
+    // console.error("userComponents is empty or undefined");
   }
 
-  useEffect(() => {
-    const user_id = "65bed6f673ccdf106ce604fc";
-    fetch('http://localhost:4000/profile/getuserprofileinfo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ user_id }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
-      })
-  }, []);
 
   return (
     <>
