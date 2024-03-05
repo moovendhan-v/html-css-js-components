@@ -1,8 +1,7 @@
 // useGitHubAuthentication.js
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { userProfileReducer } from '../actions/user.action';
-import { logout } from '../actions/user.action';
+import { updateUserProfile, logout } from '../actions/user.action';
 
 const useGitHubAuthentication = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,8 +37,8 @@ const useGitHubAuthentication = () => {
       .then(data => {
         window.localStorage.setItem('githubOAuthState', state);
         // window.location.href = '/profile';
-        dispatch(userProfileReducer({ userProfileInfo: data.response.user, saveTo: "profile" }));
-        dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
+        dispatch(updateUserProfile({ userProfileInfo: data.response.user, saveTo: "profile" }));
+        dispatch(updateUserProfile({ userProfileInfo: data.response.components, saveTo: "components" }));
         // dispatch(userProfileReducer({ userProfileInfo: data.response.components, saveTo: "components" }));
         setIsLoggedIn(true);
         authWindow.close();

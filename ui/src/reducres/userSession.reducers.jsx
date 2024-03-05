@@ -1,5 +1,5 @@
 // userProfile.reducers.js
-import { UPDATE_USER_PROFILE } from '../actions/user.action';
+import { UPDATE_USER_PROFILE, LOGOUT } from '../actions/user.action';
 
 const initialState = {
   userProfile: {},
@@ -9,18 +9,14 @@ const initialState = {
 export const userProfileReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USER_PROFILE:
-      console.log(parseInt(state));
-      // eslint-disable-next-line no-case-declarations
       const { userProfileInfo, saveTo } = action.payload;
       switch (saveTo) {
-        case 'LOGOUT':
-          return { initialState };
-        case "profile":
+        case 'profile':
           return {
             ...state,
             userProfile: userProfileInfo,
           };
-        case "components":
+        case 'components':
           return {
             ...state,
             userComponents: userProfileInfo,
@@ -28,10 +24,9 @@ export const userProfileReducer = (state = initialState, action) => {
         default:
           return state;
       }
-  
+    case LOGOUT:
+      return initialState; // Return the initial state upon logout
     default:
-      return state; // Add a default case to return the state unchanged if no action matches
+      return state;
   }
 };
-
-

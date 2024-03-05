@@ -19,6 +19,7 @@ authRouter.post('/github-oauth', async (req, res) => {
   try {
     // #TODO Upadate a auth token where authanticated by user 
     // const githubAccessToken = await exchangeGitHubCodeForToken(code);
+    const githubAccessToken = "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";
     console.log(`Git access token ${githubAccessToken}`);
 
     const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
@@ -40,9 +41,6 @@ authRouter.post('/github-oauth', async (req, res) => {
         res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, response: await userProfileWithComponents});
       }
   });
-
-
- 
     // req.session.githubAccessToken = await githubAccessToken;
 
   } catch (error) {

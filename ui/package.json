@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@auth0/auth0-react": "^2.2.4",
+    "@reduxjs/toolkit": "^2.2.1",
     "@tabler/icons-react": "^2.46.0",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.5",
@@ -27,7 +28,10 @@
     "react-router-dom": "^6.21.2",
     "react-scripts": "^5.0.1",
     "react-split": "^2.0.14",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^3.1.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
