@@ -6,7 +6,7 @@ import LeftSliders from '../components/LeftSLiders';
 import { SvgIcons } from "../components/Button";
 import { EditMyProfileModel } from '../components/Model';
 import { useDispatch, useSelector } from 'react-redux';
-import { userProfileReducer } from '../actions/user.action';
+
 import OutputsOfComponents from '../components/OutputsOfComponents';
 
 const Profile = () => {
