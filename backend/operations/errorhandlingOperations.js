@@ -17,7 +17,7 @@ function jsonStatusError({ errorStatus = true, statusCode = "", message = '', re
 // #TODO https://discordjs.guide/popular-topics/embeds.html#using-the-embed-constructor update discord messge style with this docs
     // Send the embed message via the provided function
 
-    sendDiscordWebhookMessage(message, "alert");
+    // sendDiscordWebhookMessage(message, "alert");
 
     return data;
 }

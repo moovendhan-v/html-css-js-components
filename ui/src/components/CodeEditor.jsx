@@ -86,11 +86,11 @@ const OutputScreen = ({ html, css, js }) => {
   );
 };
 
-const WebEditor = () => {
+const WebEditor = (props) => {
 
-  const [html, setHtml] = useState(`<div> we-lcome to agricreations</div>`);
-  const [css, setCss] = useState('div { color: blue; }');
-  const [js, setJs] = useState('console.log("Hello, CodePen Clone!");');
+  const [html, setHtml] = useState(props.html);
+  const [css, setCss] = useState(props.css);
+  const [js, setJs] = useState(props.js);
 
   const handleHtmlChange = (newValue) => {
     setHtml(newValue);

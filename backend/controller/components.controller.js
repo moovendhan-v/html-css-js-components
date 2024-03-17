@@ -156,8 +156,23 @@ const getComponentsBySearch = (req,res)=>{
 //Bring a particular components
 const getParticularComponent = async (req,res)=>{
   const {comp} = req.query;
-  componentDetails = await UserComponents.findOne({ folder_name: comp });
-  res.send(componentDetails);
+  try {
+    const data = await UserComponents.findOne({ folder_name: comp });
+    if(!data){
+        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
+    }
+    const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
+    if(!user){
+        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
+    }
+    const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
+        err ? res.send(err):res.send(result);
+    });
+  } catch (error) {
+    res.send(error)
+  }
+
+
 }
 
 module.exports = {

@@ -7,8 +7,12 @@ const ContributeNewComp = ()=>{
     return(
         <>
       <Nav />
-           <CodeEditor />
-       <Footer />    
+           <CodeEditor
+           html = {"testing"}
+           css = {"css"}
+           js = {"js"}
+           />
+       <Footer /> 
         </>
     )
 }

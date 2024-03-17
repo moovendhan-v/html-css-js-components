@@ -8,6 +8,7 @@ import Componenets from './screens/Components';
 import Editor from './screens/Editor';
 import Profile from './screens/Profile';
 import ContributeNewComp from './screens/ContributeNew';
+import ViewComponent from './screens/ViewComponent';
 
 
 function App() {
@@ -42,6 +43,9 @@ function App() {
           {/* component routeing end  */}
           <Route path="/edit" element={<Editor />} />
           <Route path="/profile" element={<Profile />} />
+          {/* Dynamic routing for viewing a ciomponent details  */}
+          <Route path="/view" element={<ViewComponent />} />
+
         </Routes>
       </Router>
     </div>
