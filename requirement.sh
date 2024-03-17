@@ -20,3 +20,6 @@ npm install
 #Run vite in local
 vite --host 0.0.0.0
 npm install -g vite
+
+
+npm install -g nodemon

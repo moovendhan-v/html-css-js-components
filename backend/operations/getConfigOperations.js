@@ -10,4 +10,4 @@ function getJsonConfigDetails() {
 module.exports = {
     getJsonConfigDetails,
 }
-        
+
