@@ -153,10 +153,18 @@ const getComponentsBySearch = (req,res)=>{
     });
 }
 
+//Bring a particular components
+const getParticularComponent = async (req,res)=>{
+  const {comp} = req.query;
+  componentDetails = await UserComponents.findOne({ folder_name: comp });
+  res.send(componentDetails);
+}
+
 module.exports = {
     getLatestFiles,
     readFilesInformations,
     readContent,
     getAllCompDetailsFromDatabases,
     getComponentsBySearch,
+    getParticularComponent,
 };

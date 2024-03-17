@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch} = require('../controller/components.controller');
+const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent} = require('../controller/components.controller');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
@@ -27,6 +27,8 @@ componentsRouter.get('/latest', (req, res) => {
     }
 
 });
+
+componentsRouter.get('/view',getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 
