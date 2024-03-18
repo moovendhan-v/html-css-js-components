@@ -44,7 +44,7 @@ function App() {
           <Route path="/edit" element={<Editor />} />
           <Route path="/profile" element={<Profile />} />
           {/* Dynamic routing for viewing a ciomponent details  */}
-          <Route path="/view" element={<ViewComponent />} />
+          <Route path="/:catogries/:title" element={<ViewComponent />} />
 
         </Routes>
       </Router>

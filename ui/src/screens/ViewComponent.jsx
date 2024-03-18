@@ -3,15 +3,19 @@ import { useEffect, useState } from 'react';
 import CodeEditor from '../components/CodeEditor';
 import Nav from '../components/Nav';
 import Footer from '../components/Footer';
+import { useParams } from 'react-router-dom';
 
 
 const ViewComponent = ()=>{
 
     const [componentDetails, setComponentDetails] = useState({});
+    const { catogries, title } = useParams(); 
 
     async function fetchComponentDetails(){
+        // const urlParams = new URLSearchParams(window.location.search);
+        // const comps = urlParams.get('comp');
         try {
-            const response = await fetch('http://localhost:4000/components/view?comp=moovendhan_amazing_tooltip4');
+            const response = await fetch(`http://localhost:4000/components/${catogries}/${title}`);
             if(!response.ok){
                 throw new Error("Error Fetching data");
             }

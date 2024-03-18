@@ -155,9 +155,10 @@ const getComponentsBySearch = (req,res)=>{
 
 //Bring a particular components
 const getParticularComponent = async (req,res)=>{
-  const {comp} = req.query;
+  const {category, title} = req.params;
+console.log('working')
   try {
-    const data = await UserComponents.findOne({ folder_name: comp });
+    const data = await UserComponents.findOne({ folder_name: title, categories: category });
     if(!data){
         return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
     }
@@ -171,8 +172,6 @@ const getParticularComponent = async (req,res)=>{
   } catch (error) {
     res.send(error)
   }
-
-
 }
 
 module.exports = {

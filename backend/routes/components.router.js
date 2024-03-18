@@ -28,7 +28,7 @@ componentsRouter.get('/latest', (req, res) => {
 
 });
 
-componentsRouter.get('/view',getParticularComponent);
+componentsRouter.get('/:category/:title',getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 
