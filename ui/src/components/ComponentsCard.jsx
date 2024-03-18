@@ -5,6 +5,7 @@ import { addComponents } from '../actions/components.actions';
 import { SvgIcons } from "./Button";
 import OutputsOfComponents from './OutputsOfComponents';
 import SeachBar from './Search';
+import { Link } from 'react-router-dom';
 
 const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
 
@@ -74,7 +75,9 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
                     <div>
                       <SvgIcons icon={"code"} />
                     </div>
-                    <div>  Edit code</div>
+                    <Link to={`/${component.post_details.catogries}/${component.post_details.folder_name}`}>
+                    <div> Edit code</div>
+                  </Link>
                   </div>
                   <div className="box m-1 p-1">
                     <OutputsOfComponents
@@ -118,7 +121,9 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
                     <div>
                       <SvgIcons icon={"code"} />
                     </div>
-                    <div>  Edit code</div>
+                    <Link to={`/${component.post_details.catogries}/${component.post_details.folder_name}`}>
+                    <div> Edit code</div>
+                  </Link>
                   </div>
                   <div className="box m-1 p-1">
                     <OutputsOfComponents
@@ -155,7 +160,9 @@ const ComponentsCard = ({ catogreise, componentType, onlyCard = false }) => {
                 <div>
                   <SvgIcons icon={"code"} />
                 </div>
-                <div>  Edit code</div>
+                <Link to={`/${component.post_details.catogries}/${component.post_details.folder_name}`}>
+                    <div> Edit code</div>
+                </Link>
               </div>
               <div className="box m-1 p-1">
                 <OutputsOfComponents

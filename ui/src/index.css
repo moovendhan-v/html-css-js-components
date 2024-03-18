@@ -296,6 +296,9 @@ body {
   cursor: pointer;
   z-index: 999;
 }
+.readCode a{
+  text-decoration: none;
+}
 .myBoxContainer:hover .readCode{
   opacity: 100%;
   cursor: pointer;
