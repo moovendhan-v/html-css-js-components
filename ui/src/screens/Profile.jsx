@@ -99,7 +99,9 @@ const Profile = () => {
                         <div>
                         <SvgIcons icon={"code"} />
                         </div>
-                        <div> Edit code</div>
+                        <Link to={`/${component.post_details.catogries}/${component.post_details.folder_name}`}>
+                            <div> Edit code</div>
+                        </Link>
                       </div>
                       <div className="box m-1 p-1">
                         {/* Pass HTML, CSS, and JS separately to OutputsOfComponents */}

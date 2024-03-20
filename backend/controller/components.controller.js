@@ -156,7 +156,6 @@ const getComponentsBySearch = (req,res)=>{
 //Bring a particular components
 const getParticularComponent = async (req,res)=>{
   const {category, title} = req.params;
-console.log('working')
   try {
     const data = await UserComponents.findOne({ folder_name: title, categories: category });
     if(!data){
