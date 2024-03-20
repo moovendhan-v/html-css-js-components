@@ -23,3 +23,6 @@ npm install -g vite
 
 
 npm install -g nodemon
+
+# tailwind css 
+npx tailwindcss -i ./src/input.css -o ./src/output.css --watch

@@ -13,3 +13,4 @@ export default defineConfig({
     host: 'localhost', // Specify the host for the development server
   },
 });
+

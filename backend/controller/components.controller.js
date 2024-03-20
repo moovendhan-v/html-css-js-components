@@ -56,8 +56,9 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
 }
 
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
-async function getLatestFiles (catogries, callback) {
+async function getLatestFiles (catogries,page, callback) {
     const catComponentsDetails = [];
+    const skip = (page-1)*10;
     // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
 
          userComponents = await UserComponents.aggregate([
@@ -68,6 +69,8 @@ async function getLatestFiles (catogries, callback) {
                     ]
                 }
             },
+            {$skip: skip},
+            {$limit: 10}
         ]);
         await Promise.all(userComponents.map(async (data) => {
             try {
