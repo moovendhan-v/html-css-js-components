@@ -60,7 +60,6 @@ async function getLatestFiles (catogries,page, callback) {
     const catComponentsDetails = [];
         page = page ?? 1;
         const skip = (page-1)*10;
-        console.log(page);
     // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
 
          userComponents = await UserComponents.aggregate([
