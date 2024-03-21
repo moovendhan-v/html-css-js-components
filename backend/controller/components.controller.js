@@ -58,7 +58,9 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
 async function getLatestFiles (catogries,page, callback) {
     const catComponentsDetails = [];
-    const skip = (page-1)*10;
+        page = page ?? 1;
+        const skip = (page-1)*10;
+        console.log(page);
     // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
 
          userComponents = await UserComponents.aggregate([
@@ -70,7 +72,7 @@ async function getLatestFiles (catogries,page, callback) {
                 }
             },
             {$skip: skip},
-            {$limit: 10}
+            {$limit: 12}
         ]);
         await Promise.all(userComponents.map(async (data) => {
             try {
@@ -93,12 +95,14 @@ async function getLatestFiles (catogries,page, callback) {
 }
 
 //get all components and search funcitons
-const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery }, callback) => {
+const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery , page: pageNo}, callback) => {
     const allComponentsDetails = [];
+    pageNo = pageNo ?? 1;
+    const skip = (pageNo-1)*10;
     try {
         let userComponents;
         if (categories === "all") {
-            userComponents = await UserComponents.find();
+            userComponents = await UserComponents.find().skip(skip).limit(12);
         } else if (categories === "search") {
             userComponents = await UserComponents.aggregate([
                 {
@@ -112,6 +116,8 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
                         ]
                     }
                 },
+                {$skip: skip},
+                {$limit: 12}
             ]);
         } else {
             return callback("Invalid category", null);

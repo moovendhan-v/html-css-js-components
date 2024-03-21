@@ -9,7 +9,7 @@ const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/
 componentsRouter.get('/latest', (req, res) => {
     const { category, page } = req.query;
     if (category == "all") {
-      getAllCompDetailsFromDatabases({categories:category}, (err, files)=>{
+      getAllCompDetailsFromDatabases({categories:category, page: page}, (err, files)=>{
         //hadle the data
         if(err){
           return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
@@ -17,7 +17,7 @@ componentsRouter.get('/latest', (req, res) => {
         res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
       });
     }else{
-      getLatestFiles(category,2, (err, files) => {
+      getLatestFiles(category,page, (err, files) => {
         const fileStatus = files.length <= 0 ? "Limit reached No More Components where available" : `Latest ${category}`;
         if (err) {
           console.error(err);
