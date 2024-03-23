@@ -17,6 +17,11 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        main: ['"montserrat"', 'Montserrat'],
+        jost: ['"Jost"', 'Jost'],
+        niconne: ['"Niconne"', 'niconne'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

@@ -1,33 +1,41 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import '../app/globals.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './screens/Home';
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+<Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          {/* <Route path="/contributenew" element={<ContributeNewComp />} /> */}
+          {/* components  */}
+          {/* <Route path="/search" element={<Componenets catogreise={"search"} />} />
+          <Route path="/all" element={<Componenets catogreise={"all"} />} />
+          <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
+          <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
+          <Route path="/forms" element={<Componenets catogreise={"forms"} />} />
+          <Route path="/checkbox" element={<Componenets catogreise={"checkbox"} />} />
+          <Route path="/loader" element={<Componenets catogreise={"loader"} />} />
+          <Route path="/input" element={<Componenets catogreise={"input"} />} />
+          <Route path="/tooltip" element={<Componenets catogreise={"tooltip"} />} />
+          <Route path="/navbar" element={<Componenets catogreise={"navbar"} />} />
+          <Route path="/tabs" element={<Componenets catogreise={"tabs"} />} />
+          <Route path="/toast" element={<Componenets catogreise={"toast"} />} /> */}
+          {/* component routeing end  */}
+          {/* <Route path="/edit" element={<Editor />} />
+          <Route path="/profile" element={<Profile />} /> */}
+          {/* Dynamic routing for viewing a ciomponent details  */}
+          {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
+
+        </Routes>
+      </Router>
+
+
     </>
   )
 }

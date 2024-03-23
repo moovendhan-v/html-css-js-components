@@ -4,7 +4,16 @@ import App from './App.tsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  //   <App />
+  // </React.StrictMode>,
+
+<React.StrictMode>
+{/* <Provider store={store}> */}
+  {/* <PersistGate loading={null} persistor={persistor}> */}
     <App />
-  </React.StrictMode>,
+  {/* </PersistGate> */}
+{/* </Provider> */}
+</React.StrictMode>
+
 )
