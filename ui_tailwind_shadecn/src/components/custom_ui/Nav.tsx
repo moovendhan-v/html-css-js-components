@@ -1,6 +1,5 @@
 
 
-import { Button } from "@/ui/button"
 
 import {
   NavigationMenu,
@@ -11,7 +10,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
-} from "@/ui/navigation-menu"
+} from "@/components/ui/navigation-menu"
 
 const Nav = ()=>{
 

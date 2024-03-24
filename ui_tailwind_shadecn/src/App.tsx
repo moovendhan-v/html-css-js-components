@@ -2,6 +2,7 @@ import './App.css'
 import '../app/globals.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './screens/Home';
+import Testing from './screens/Testing';
 
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
 <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/testing" element={<Testing />} />
+
           {/* <Route path="/contributenew" element={<ContributeNewComp />} /> */}
           {/* components  */}
           {/* <Route path="/search" element={<Componenets catogreise={"search"} />} />
