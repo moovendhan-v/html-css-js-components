@@ -279,7 +279,8 @@ export function Dashboard() {
                                 type="text"
                                 name="price"
                                 id="price"
-                                className="w-full rounded-full bg-background text-xl border-2 border-gray-500 p-4 placeholder-gray-400 focus:text-gray-900 focus:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                                className="
+                                placeholder:text-muted-foreground  w-full rounded-full  bg-background text-xl border-2  p-4 focus:outline-none focus:ring-2 focus:ring-gray-500"
                                 placeholder="Explore all ui Components"
                             />
 
