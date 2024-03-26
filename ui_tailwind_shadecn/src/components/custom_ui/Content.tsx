@@ -4,20 +4,18 @@ const Content = ()=>{
         <section className="text-gray-400 bg-gray-900 body-font">
   <div className="container px-5 py-24 mx-auto flex flex-wrap">
     <h2 className="sm:text-3xl text-2xl text-white font-medium title-font mb-2 md:w-2/5">
-      Kickstarter Actually Pinterest Brunch Bitters Occupy
+      Design Without Limits: <br /> Explore the World of Open Source UI
     </h2>
     <div className="md:w-3/5 md:pl-6">
       <p className="leading-relaxed text-base">
-        Taxidermy bushwick celiac master cleanse microdosing seitan. Fashion axe
-        four dollar toast truffaut, direct trade kombucha brunch williamsburg
-        keffiyeh gastropub tousled squid meh taiyaki drinking vinegar tacos.
+      Join the Revolution of Open Source UI, <br /> Design Better, Faster, Stronger with Our Open Source Components, Join the Open Source Revolution: Transform Your Website Today
       </p>
       <div className="flex md:mt-4 mt-6">
-        <button className="inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded">
-          Button
+        <button className="inline-flex text-white bg-primary border-0 py-1 px-4 focus:outline-none hover:bg-secondary rounded">
+          Contribute
         </button>
-        <a className="text-indigo-400 inline-flex items-center ml-4">
-          Learn More
+        <a className="text-primary inline-flex items-center ml-4">
+          Star On Github
           <svg
             fill="none"
             stroke="currentColor"

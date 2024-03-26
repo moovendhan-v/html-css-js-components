@@ -3,10 +3,18 @@ const BlogCard = ()=>{
         <>
         
         <>
-  Blog Contact Content CTA Ecommerce Feature Footer Gallery Header Hero Pricing
-  Statistic Step Team Testimonial Copied!
-  <section className="text-gray-400 bg-gray-900 body-font">
+  <section className=" body-font">
     <div className="container px-5 py-24 mx-auto">
+
+    <div className="flex flex-col text-center w-full mb-20">
+      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
+        Take Look At Our Latest blog Post
+      </h1>
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
+        Find more 
+      </p>
+    </div>
+
       <div className="flex flex-wrap -m-4">
         <div className="p-4 md:w-1/3">
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
@@ -19,7 +27,7 @@ const BlogCard = ()=>{
               <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
                 CATEGORY
               </h2>
-              <h1 className="title-font text-lg font-medium text-white mb-3">
+              <h1 className="title-font text-lg font-medium mb-3">
                 The Catalyzer
               </h1>
               <p className="leading-relaxed mb-3">
@@ -86,7 +94,7 @@ const BlogCard = ()=>{
               <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
                 CATEGORY
               </h2>
-              <h1 className="title-font text-lg font-medium text-white mb-3">
+              <h1 className="title-font text-lg font-medium mb-3">
                 The 400 Blows
               </h1>
               <p className="leading-relaxed mb-3">
@@ -153,7 +161,7 @@ const BlogCard = ()=>{
               <h2 className="tracking-widest text-xs title-font font-medium text-gray-500 mb-1">
                 CATEGORY
               </h2>
-              <h1 className="title-font text-lg font-medium text-white mb-3">
+              <h1 className="title-font text-lg font-medium mb-3">
                 Shooting Stars
               </h1>
               <p className="leading-relaxed mb-3">
@@ -212,7 +220,7 @@ const BlogCard = ()=>{
       </div>
     </div>
   </section>
-  GitHub
+  
 </>
 </>
     )

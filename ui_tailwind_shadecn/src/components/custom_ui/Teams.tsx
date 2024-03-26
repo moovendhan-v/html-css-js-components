@@ -1,16 +1,14 @@
 const Teams = ()=>{
     return(
         <>
-        <section className="text-gray-400 bg-gray-900 body-font">
+        <section className="body-font">
   <div className="container px-5 py-24 mx-auto">
     <div className="flex flex-col text-center w-full mb-20">
-      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">
-        Our Team
+      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
+        Our Popular Contributers
       </h1>
-      <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
-        Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-        gentrify, subway tile poke farm-to-table. Franzen you probably haven't
-        heard of them.
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
+        Let's Contribute More
       </p>
     </div>
     <div className="flex flex-wrap -m-2">
@@ -22,7 +20,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/80x80"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">
+            <h2 className="font-medium">
               Holden Caulfield
             </h2>
             <p className="text-gray-600">UI Designer</p>
@@ -37,7 +35,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/84x84"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Henry Letham</h2>
+            <h2 className=" font-medium">Henry Letham</h2>
             <p className="text-gray-600">CTO</p>
           </div>
         </div>
@@ -50,7 +48,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/88x88"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Oskar Blinde</h2>
+            <h2 className=" font-medium">Oskar Blinde</h2>
             <p className="text-gray-600">Founder</p>
           </div>
         </div>
@@ -63,7 +61,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/90x90"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">John Doe</h2>
+            <h2 className=" font-medium">John Doe</h2>
             <p className="text-gray-600">DevOps</p>
           </div>
         </div>
@@ -76,7 +74,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/94x94"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Martin Eden</h2>
+            <h2 className=" font-medium">Martin Eden</h2>
             <p className="text-gray-600">Software Engineer</p>
           </div>
         </div>
@@ -89,7 +87,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/98x98"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Boris Kitua</h2>
+            <h2 className=" font-medium">Boris Kitua</h2>
             <p className="text-gray-600">UX Researcher</p>
           </div>
         </div>
@@ -102,7 +100,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/100x90"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Atticus Finch</h2>
+            <h2 className=" font-medium">Atticus Finch</h2>
             <p className="text-gray-600">QA Engineer</p>
           </div>
         </div>
@@ -115,7 +113,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/104x94"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">Alper Kamu</h2>
+            <h2 className=" font-medium">Alper Kamu</h2>
             <p className="text-gray-600">System</p>
           </div>
         </div>
@@ -128,7 +126,7 @@ const Teams = ()=>{
             src="https://dummyimage.com/108x98"
           />
           <div className="flex-grow">
-            <h2 className="text-white title-font font-medium">
+            <h2 className=" font-medium">
               Rodrigo Monchi
             </h2>
             <p className="text-gray-600">Product Manager</p>

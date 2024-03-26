@@ -10,14 +10,13 @@ const Icons = ()=>{
 const Logo = ()=>{
     return(
      <>
-
-        <div className="px-1 ">
+        <div className="bg-primary p-1 text-white rounded">
             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
             width="24pt" height="24pt" viewBox="0 0 831.000000 595.000000"
             preserveAspectRatio="xMidYMid meet">
 
             <g transform="translate(0.000000,595.000000) scale(0.100000,-0.100000)"
-            fill="text-primary" stroke="none">
+            fill="white" stroke="text-white">
             <path d="M1804 5585 c-78 -17 -134 -46 -191 -98 -52 -48 -76 -91 -92 -165 -8
             -38 -11 -466 -11 -1495 0 -1579 -3 -1508 58 -1607 32 -51 96 -104 150 -121 25
             -9 143 -14 369 -16 l333 -4 2 1193 3 1193 24 53 c32 72 112 143 187 168 57 18
@@ -39,5 +38,16 @@ const Logo = ()=>{
     )
 }
 
+const VscodeLogo = () =>{
+    return
+    (
+        <>
+
+        
+
+        </>
+    )
+}
+
 export default Icons;
-export {Logo}
+export {Logo, VscodeLogo}

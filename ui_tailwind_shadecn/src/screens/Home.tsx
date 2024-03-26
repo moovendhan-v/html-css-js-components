@@ -70,6 +70,14 @@ import { Mail } from "lucide-react"
 
 import {Logo} from "@/components/custom_ui/Svg"
 
+
+import Teams from '../components/custom_ui/Teams';
+import BlogCard from '../components/custom_ui/BlogCard';
+import Content from '../components/custom_ui/Content';
+import Extension from '../components/custom_ui/Extensions';
+import Footer from '@/components/custom_ui/Footer';
+
+
 export function Dashboard() {
     const { setTheme } = useTheme()
     return (
@@ -292,12 +300,19 @@ export function Dashboard() {
                     </div>
 
                     <div className="flex justify-center ">
-                    <Button>
+                    <Button >
                             <Logo /> Explore More Components
                     </Button>
                     </div>
 
                 </div>
+
+        <Teams />
+        <BlogCard />
+        <Content />
+        <Extension />
+        <Footer />
+
 
 
             </main>
