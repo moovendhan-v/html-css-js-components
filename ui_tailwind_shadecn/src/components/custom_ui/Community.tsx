@@ -47,19 +47,19 @@ const Community = ()=>{
       </div>
       <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
-          <a href="#">
+          <a  href="#">
             Discord <span aria-hidden="true">→</span>
           </a>
-          <a href="#">
+          <a  href="#">
             Telegram <span aria-hidden="true">→</span>
           </a>
-          <a href="#">
+          <a  href="#">
             Linkedin <span aria-hidden="true">→</span>
           </a>
-          <a href="#">
+          <a  href="#">
             Youtube <span aria-hidden="true">→</span>
           </a>
-          <a href="#">
+          <a  href="#">
             Instagram <span aria-hidden="true">→</span>
           </a>
         </div>

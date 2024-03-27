@@ -1,13 +1,7 @@
 import {
-    Activity,
-    ArrowUpRight,
     CircleUser,
-    CreditCard,
-    DollarSign,
     Menu,
-    Package2,
     Search,
-    Users,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -17,31 +11,11 @@ import { useTheme } from "@/components/theme-provider"
 import {
     NavigationMenu,
     NavigationMenuContent,
-    NavigationMenuIndicator,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    NavigationMenuViewport,
 } from "@/components/ui/navigation-menu"
-
-
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
-
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-
 
 import {
     DropdownMenu,
@@ -51,25 +25,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+
 import { Link } from "react-router-dom"
 
-import Grid from "@/components/custom_ui/Grid"
-
 import { Input } from "@/components/ui/input"
-import { Mail } from "lucide-react" 
 
 import {Logo} from "@/components/custom_ui/Svg"
-
 
 import Teams from '../components/custom_ui/Teams';
 import BlogCard from '../components/custom_ui/BlogCard';
@@ -78,7 +41,6 @@ import Extension from '../components/custom_ui/Extensions';
 import Footer from '@/components/custom_ui/Footer';
 import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
-
 
 export function Dashboard() {
     const { setTheme } = useTheme()
@@ -89,20 +51,20 @@ export function Dashboard() {
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Logo />
                     <Link
-                        href="#"
+                        to={`/}`}
                         className="text-foreground transition-colors hover:text-foreground"
                     >
                         UiComponents
                     </Link>
                     <Link
-                        href="#"
+                       to={`/${"components"}`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         Components
                     </Link>
 
                     <Link
-                        href="#"
+                        to={`/`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
                         <NavigationMenu>
@@ -138,16 +100,6 @@ export function Dashboard() {
                                                     </a>
                                                 </NavigationMenuLink>
                                             </li>
-
-                                            {/* <ListItem href="https://stitches.dev/" title="Stitches">
-                                                            CSS-in-JS with best-in-class developer experience.
-                                                        </ListItem>
-                                                        <ListItem href="/colors" title="Colors">
-                                                            Beautiful, thought-out palettes with auto dark mode.
-                                                        </ListItem>
-                                                        <ListItem href="https://icons.radix-ui.com/" title="Icons">
-                                                            A crisp set of 15x15 icons, balanced and consistent.
-                                                        </ListItem> */}
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
@@ -169,36 +121,30 @@ export function Dashboard() {
                     </SheetTrigger>
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
-                            <Link
-                                href="#"
-                                className="flex items-center gap-2 text-lg font-semibold"
-                            >
-                                <Package2 className="h-6 w-6" />
-                                <span className="sr-only">Acme Inc</span>
-                            </Link>
-                            <Link href="#" className="hover:text-foreground">
+                        <Logo />
+                            <Link to={`/}`} className="hover:text-foreground">
                                 Dashboard
                             </Link>
                             <Link
-                                href="#"
+                                to={`/`}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Orders
                             </Link>
                             <Link
-                                href="#"
+                                to={`/`}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Products
                             </Link>
                             <Link
-                                href="#"
+                                to={`/`}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Customers
                             </Link>
                             <Link
-                                href="#"
+                                to={`/`}
                                 className="text-muted-foreground hover:text-foreground"
                             >
                                 Analytics

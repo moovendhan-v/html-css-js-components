@@ -5,7 +5,6 @@ import {
   LineChart,
   Menu,
   Package,
-  Package2,
   Search,
   ShoppingCart,
   Users,
@@ -46,17 +45,18 @@ export function Components() {
               <span className="sr-only">Toggle notifications</span>
             </Button>
           </div>
+
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                href="#"
+                to={`/`}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Home className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
-                href="#"
+                to={`/`}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <ShoppingCart className="h-4 w-4" />
@@ -66,21 +66,21 @@ export function Components() {
                 </Badge>
               </Link>
               <Link
-                href="#"
+                to={`/`}
                 className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
               >
                 <Package className="h-4 w-4" />
                 Products{" "}
               </Link>
               <Link
-                href="#"
+                to={`/`}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Users className="h-4 w-4" />
                 Customers
               </Link>
               <Link
-                href="#"
+                to={`/`}
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <LineChart className="h-4 w-4" />
@@ -103,6 +103,8 @@ export function Components() {
               </CardContent>
             </Card>
           </div>
+
+
         </div>
       </div>
       <div className="flex flex-col">
@@ -121,21 +123,21 @@ export function Components() {
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
-                  href="#"
+                  to={`/`}
                   className="flex items-center gap-2 text-lg font-semibold"
                 >
-                  <Package2 className="h-6 w-6" />
-                  <span className="sr-only">Acme Inc</span>
+                  <Logo />
+                  <span className="sr-only">Ui components</span>
                 </Link>
                 <Link
-                  href="#"
+                  to={`/`}
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Home className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
-                  href="#"
+                  to={`/`}
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
@@ -145,21 +147,21 @@ export function Components() {
                   </Badge>
                 </Link>
                 <Link
-                  href="#"
+                  to={`/`}
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Package className="h-5 w-5" />
                   Products
                 </Link>
                 <Link
-                  href="#"
+                  to={`/`}
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Users className="h-5 w-5" />
                   Customers
                 </Link>
                 <Link
-                  href="#"
+                  to={`/`}
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <LineChart className="h-5 w-5" />
@@ -240,7 +242,6 @@ export function Components() {
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
 </div>
-    
     
           {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
