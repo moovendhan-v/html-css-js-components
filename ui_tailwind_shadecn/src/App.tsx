@@ -3,6 +3,7 @@ import '../app/globals.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {Dashboard} from './screens/Home';
 import Testing from './screens/Testing';
+import {Components} from './screens/Components';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
+          <Route path="/components" element={<Components />} />
 
           {/* <Route path="/contributenew" element={<ContributeNewComp />} /> */}
           {/* components  */}

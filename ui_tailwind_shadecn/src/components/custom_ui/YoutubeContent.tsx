@@ -1,17 +1,25 @@
 const YoutubeContent = ()=>{
     return(
         <>
-  Blog Contact Content CTA Ecommerce Feature Footer Gallery Header Hero Pricing
-  Statistic Step Team Testimonial Copied!
   <section className="text-gray-400 bg-gray-900 body-font">
     <div className="container px-5 py-24 mx-auto">
       <div className="flex flex-wrap -mx-4 -mb-10 text-center">
+
+      <div className="flex flex-col text-center w-full mb-20">
+      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
+        Take Look At Our Videos 
+      </h1>
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
+        Subscribe For More
+      </p>
+    </div>
+
         <div className="sm:w-1/2 mb-10 px-4">
           <div className="rounded-lg h-64 overflow-hidden">
             <img
               alt="content"
               className="object-cover object-center h-full w-full"
-              src="https://dummyimage.com/1201x501"
+              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
             />
           </div>
           <h2 className="title-font text-2xl font-medium text-white mt-6 mb-3">
@@ -30,7 +38,7 @@ const YoutubeContent = ()=>{
             <img
               alt="content"
               className="object-cover object-center h-full w-full"
-              src="https://dummyimage.com/1202x502"
+              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
             />
           </div>
           <h2 className="title-font text-2xl font-medium text-white mt-6 mb-3">
@@ -47,7 +55,6 @@ const YoutubeContent = ()=>{
       </div>
     </div>
   </section>
-  GitHub
 </>
 
     )

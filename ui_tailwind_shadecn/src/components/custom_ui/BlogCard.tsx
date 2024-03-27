@@ -20,7 +20,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://dummyimage.com/720x400"
+              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
               alt="blog"
             />
             <div className="p-6">
@@ -87,7 +87,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://dummyimage.com/721x401"
+              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
               alt="blog"
             />
             <div className="p-6">
@@ -154,7 +154,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://dummyimage.com/722x402"
+              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
               alt="blog"
             />
             <div className="p-6">
