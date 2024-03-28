@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import {Dashboard} from './screens/Home';
 import Testing from './screens/Testing';
 import {Components} from './screens/Components';
+import { View } from '@/screens/View';
+
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
           <Route path="/components" element={<Components />} />
+          <Route path="/view" element={<View />} />
 
           {/* <Route path="/contributenew" element={<ContributeNewComp />} /> */}
           {/* components  */}

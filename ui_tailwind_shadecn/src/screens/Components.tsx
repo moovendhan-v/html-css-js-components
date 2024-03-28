@@ -32,6 +32,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
+import { ComponentType } from "@/hooks/iframHooks"
 
 export function Components() {
   return (
@@ -220,7 +221,7 @@ export function Components() {
           </div>
 
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" />
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
 
     <a className=" items-center">
           <span className="flex justify-between flex-row pt-1"> 
@@ -232,15 +233,15 @@ export function Components() {
     </div>
 
 
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" /></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
 </div>
     
           {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
