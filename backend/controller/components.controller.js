@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
@@ -181,6 +181,44 @@ const getParticularComponent = async (req,res)=>{
   }
 }
 
+
+const isDirectoryCheck = async (filePath) => {
+    try {
+        const stats = await fs.stat(filePath);
+        return stats.isDirectory();
+    } catch (error) {
+        console.error('Error checking if directory:', error);
+        return false;
+    }
+};
+
+const getCategoriesList = async (req, res) => {
+    const baseFolderPath = '../'; 
+    const folderPath = path.join(baseFolderPath, 'project', 'project_datas');
+    console.log(folderPath);
+    try {
+        const files = await fs.readdir(folderPath);
+        const directories = [];
+
+        for (const file of files) {
+            const filePath = path.join(folderPath, file);
+            const isDirectory = await isDirectoryCheck(filePath);
+            if (isDirectory) {
+                directories.push(file);
+            }
+        }
+        console.log(directories);
+        res.json({ directories });
+    } catch (error) {
+        console.error('Error while reading directory:', error);
+        res.status(500).json({ error: 'Error reading directory' , message : error});
+    }
+};
+
+module.exports = { getCategoriesList };
+
+
+
 module.exports = {
     getLatestFiles,
     readFilesInformations,
@@ -188,4 +226,5 @@ module.exports = {
     getAllCompDetailsFromDatabases,
     getComponentsBySearch,
     getParticularComponent,
+    getCategoriesList,
 };
