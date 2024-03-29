@@ -5,6 +5,7 @@ import {
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
   import { ComponentType } from "@/hooks/iframHooks";
+import CodeEditor from '@/components/custom_ui/code_editor/Editor';
 
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
@@ -106,7 +107,7 @@ export function View() {
                 </ResizablePanel>
         <ResizableHandle />
                 <ResizablePanel>
-                    Code editor
+                      <CodeEditor />
                 </ResizablePanel>
         </ResizablePanelGroup>
       </main>

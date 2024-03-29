@@ -8,7 +8,8 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       // '~': path.resolve(__dirname, './src'),
-      "~": path.resolve(__dirname, "./src/components/custom_ui")
+      "~": path.resolve(__dirname, "./src/components/custom_ui"),
+      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api.js'
     },
   },
 })
