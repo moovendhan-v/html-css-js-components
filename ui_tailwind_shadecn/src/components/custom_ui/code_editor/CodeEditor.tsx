@@ -43,11 +43,11 @@ const MonacoEditorComponent: React.FC<MonacoEditorProps> = ({ language, value, o
   }, [language]);
 
   // Update editor value when 'value' prop changes
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.setValue(value);
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (editorRef.current) {
+  //     editorRef.current.setValue(value);
+  //   }
+  // }, [value]);
 
   // Ensure focus on editor when clicked or focused
   const handleEditorClick = () => {

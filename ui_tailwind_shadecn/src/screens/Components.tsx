@@ -32,7 +32,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
-import { ComponentType } from "@/hooks/iframHooks"
+import { ComponentType } from "@/enums/iframEnums"
 
 export function Components() {
   return (

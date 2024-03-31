@@ -4,7 +4,7 @@ import {
     ResizablePanel,
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
-  import { ComponentType } from "@/hooks/iframHooks";
+  import { ComponentType } from "@/enums/iframEnums";
 import CodeEditor from '@/components/custom_ui/code_editor/Editor';
 
 import { Button } from "@/components/ui/button"

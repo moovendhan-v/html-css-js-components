@@ -1,4 +1,4 @@
-import { ComponentType } from "@/hooks/iframHooks";
+import { ComponentType } from "@/enums/iframEnums";
 
 interface OutputOfComponentsProps {
     html ?: string;
