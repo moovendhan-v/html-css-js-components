@@ -8,8 +8,10 @@ const CodeEditor: React.FC = () => {
   const [js, setJs] = useState('');
     
   return (
-    <div className="container mx-auto">
-      <div className="flex justify-center">
+    <div className="bg-secondary">
+
+      <div className="">
+      <div className="flex p-3">
         <nav className="flex space-x-4">
           <button
             className={`focus:outline-none ${activeTab === 'html' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-500'}`}
@@ -31,7 +33,6 @@ const CodeEditor: React.FC = () => {
           </button>
         </nav>
       </div>
-      <div className="mt-4">
         {activeTab === 'html' && <MonacoEditorComponent language="html" value={html} onChange={setHtml} />}
         {activeTab === 'css' && <MonacoEditorComponent language="css" value={css} onChange={setCss} />}
         {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={js} onChange={setJs} />}

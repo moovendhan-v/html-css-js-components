@@ -5,7 +5,7 @@ import {
     ResizablePanelGroup,
   } from "@/components/ui/resizable"
   import { ComponentType } from "@/enums/iframEnums";
-import CodeEditor from '@/components/custom_ui/code_editor/Editor';
+// import CodeEditor from '@/components/custom_ui/code_editor/Editor';
 
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
@@ -14,8 +14,23 @@ import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, Dropdown
 import { Link } from "react-router-dom";
 import { MenuIcon, SearchIcon, UserCircleIcon } from "lucide-react";
 import { Logo } from "@/components/custom_ui/Svg";
+import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
+import { useState } from "react";
+import { Switch } from "@/components/ui/switch"
+import Extension from "@/components/custom_ui/Extensions";
+
 
 export function View() {
+
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const handleSwitchToggle = () => {
+    setIsSwitchOn((prev) => !prev);
+  };
+  const [activeTab, setActiveTab] = useState('html');
+  const [html, setHtml] = useState('');
+  const [css, setCss] = useState('');
+  const [js, setJs] = useState('');
+
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -100,16 +115,55 @@ export function View() {
           </DropdownMenu>
         </div>
       </header>
-      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+      <main className="flex flex-1 flex-col gap-4 p-4 md:gap-4 md:p-4">
+
+
       <ResizablePanelGroup direction="horizontal">
-                <ResizablePanel>
-                        <OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.VIEW} />
+                  <ResizablePanel>
+                      <div className="relative">
+                        <div className="absolute p-4 right-0 top-0">
+                          <Switch  onChange={handleSwitchToggle} />
+                        </div>
+                        <OutputsOfComponents html={html} css={css} js={js} type={ComponentType.VIEW} mode={isSwitchOn} />
+                      </div>
                 </ResizablePanel>
-        <ResizableHandle />
+        <ResizableHandle withHandle/>
                 <ResizablePanel>
-                      <CodeEditor />
+                          <div className="bg-secondary">
+                            <div className="">
+                            <div className="flex p-3">
+                              <nav className="flex space-x-4">
+                                <button
+                                  className={`focus:outline-none ${activeTab === 'html' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-500'}`}
+                                  onClick={() => setActiveTab('html')}
+                                >
+                                  HTML
+                                </button>
+                                <button
+                                  className={`focus:outline-none ${activeTab === 'css' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-500'}`}
+                                  onClick={() => setActiveTab('css')}
+                                >
+                                  CSS
+                                </button>
+                                <button
+                                  className={`focus:outline-none ${activeTab === 'javascript' ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-500'}`}
+                                  onClick={() => setActiveTab('javascript')}
+                                >
+                                  JavaScript
+                                </button>
+                              </nav>
+                            </div>
+                            {activeTab === 'html' && <MonacoEditorComponent language="html" value={html} onChange={setHtml} />}
+                            {activeTab === 'css' && <MonacoEditorComponent language="css" value={css} onChange={setCss} />}
+                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={js} onChange={setJs} />}
+
+                            </div>
+                        </div>
                 </ResizablePanel>
-        </ResizablePanelGroup>
+      </ResizablePanelGroup>
+
+      <Extension />
+
       </main>
     </div>
   )

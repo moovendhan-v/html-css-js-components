@@ -4,59 +4,46 @@ import * as monaco from 'monaco-editor';
 interface MonacoEditorProps {
   language: string;
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string) => void; // Add onChange prop
 }
 
 const MonacoEditorComponent: React.FC<MonacoEditorProps> = ({ language, value, onChange }) => {
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
 
   useEffect(() => {
     if (!editorRef.current) {
-      // Create Monaco Editor instance
       editorRef.current = monaco.editor.create(document.getElementById('editor-container')!, {
         value,
         language,
-        theme: 'vs-dark', // Set dark theme
-        automaticLayout: true, // Enable automatic layout
-        suggest: { // Enable suggestions
+        theme: 'vs-dark',
+        automaticLayout: true,
+        suggest: {
           showWords: true,
           showSnippets: true,
         },
-  
         selectOnLineNumbers: true,
         roundedSelection: false,
         readOnly: false,
-        cursorStyle: "line",
-        fontSize: 16,
+        cursorStyle: 'line',
+        fontSize: 16
       });
 
-      // Listen to editor changes
+      // Listen to editor changes and call onChange callback
       editorRef.current.onDidChangeModelContent(() => {
         onChange(editorRef.current!.getValue());
       });
     }
 
     return () => {
-      // Dispose editor instance on component unmount
       editorRef.current?.dispose();
     };
-  }, [language]);
+  }, [language, onChange]);
 
-  // Update editor value when 'value' prop changes
-  // useEffect(() => {
-  //   if (editorRef.current) {
-  //     editorRef.current.setValue(value);
-  //   }
-  // }, [value]);
-
-  // Ensure focus on editor when clicked or focused
   const handleEditorClick = () => {
     editorRef.current?.focus();
-    console.log('printing');
-    
   };
 
-  return <div id="editor-container" style={{ height: '100vh' }} onClick={handleEditorClick} />
+  return <div id="editor-container" style={{ height: '450px' }} onClick={handleEditorClick} />;
 };
 
 export default MonacoEditorComponent;
