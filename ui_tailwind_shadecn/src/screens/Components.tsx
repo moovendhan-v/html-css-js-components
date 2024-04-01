@@ -89,6 +89,7 @@ export function Components() {
               </Link>
             </nav>
           </div>
+          
           <div className="mt-auto p-4">
             <Card>
               <CardHeader className="p-2 pt-0 md:p-4">
@@ -121,6 +122,7 @@ export function Components() {
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
+
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
@@ -185,6 +187,7 @@ export function Components() {
                 </Card>
               </div>
             </SheetContent>
+
           </Sheet>
           <div className="w-full flex-1">
             <form>
