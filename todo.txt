@@ -3,3 +3,13 @@ https://github.com/login/oauth/authorize?scope=user:email&allow_signup=true&resp
 
 
 
+front end
+
+   font-stretch: 150%;
+  font-variation-settings: "opsz" 28, "GRAD" 525.3399658203125;
+  font-weight: 410;
+  font-size: 3.4rem;
+  line-height: 1.1;
+
+  Add this lines for homepage styling for fonts
+  

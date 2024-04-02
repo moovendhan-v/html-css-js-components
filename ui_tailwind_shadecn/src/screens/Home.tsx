@@ -1,8 +1,10 @@
 import {
     CircleUser,
     Menu,
-    Search,
+    Search
 } from "lucide-react"
+
+import {SearchIcon} from '../components/custom_ui/Svg';
 
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
@@ -32,7 +34,7 @@ import { Link } from "react-router-dom"
 
 import { Input } from "@/components/ui/input"
 
-import {Logo} from "@/components/custom_ui/Svg"
+import {Logo, LogoPlain} from "@/components/custom_ui/Svg"
 
 import Teams from '../components/custom_ui/Teams';
 import BlogCard from '../components/custom_ui/BlogCard';
@@ -41,6 +43,8 @@ import Extension from '../components/custom_ui/Extensions';
 import Footer from '@/components/custom_ui/Footer';
 import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
+import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
+import { ComponentType } from "@/enums/iframEnums"
 
 export function Dashboard() {
     const { setTheme } = useTheme()
@@ -203,13 +207,14 @@ export function Dashboard() {
             </header>
 
             <main>
-                <div className="py-6">
-                    <h1 className="scroll-m-20 text-7xl font-semibold tracking-tight lg:text-7xl text-center leading-10">
-                        Open Source Awesome Ui-Componenets
-                        <br />
-                        for your next projects
-                    </h1>
-                </div>
+            <div className="py-6">
+    <h1 className="scroll-m-20 text-7xl font-semibold tracking-tight lg:text-7xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
+        Open Source Awesome Ui-Componenets
+        <br />
+        for your next projects
+    </h1>
+</div>
+
                 <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center">
                     Save and share your creative designes to open source
                 </h4>
@@ -235,20 +240,56 @@ export function Dashboard() {
                                 placeholder="Explore all ui Components"
                             />
 
-                            <button className="absolute px-6 inset-y-0 flex right-0 items-center">
-                                search
+                            <button className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
+                              <SearchIcon />  <span className="px-1">Search</span>
                             </button>
 
                         </div>
                     </div>
 
-                    <div className="flex justify-center ">
+                    <div className="flex justify-center hover:animate-pulse">
                     <Button >
-                            <Logo /> Explore More Components
+                            <LogoPlain /> Search Components
                     </Button>
                     </div>
 
                 </div>
+
+  <div className="flex flex-col text-center w-full mb-10 pt-10">
+      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
+        Popular Components That you might like to use
+      </h1>
+      <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
+        Most popular components 
+      </p>
+ </div>
+
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
+
+    <a className=" items-center">
+          <span className="flex justify-between flex-row pt-1"> 
+            <span className="title-font font-medium">Holden Caulfield</span>
+            <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
+          </span>
+    </a>
+    
+</div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
+</div>
+
+<div className="flex justify-center mt-10">
+                    <Button >
+                            <Logo /> Explore All Components
+                    </Button>
+</div>
 
         <Teams />
         <BlogCard />

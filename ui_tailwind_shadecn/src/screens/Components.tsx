@@ -232,10 +232,7 @@ export function Components() {
             <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
           </span>
     </a>
-
-    </div>
-
-
+</div>
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
