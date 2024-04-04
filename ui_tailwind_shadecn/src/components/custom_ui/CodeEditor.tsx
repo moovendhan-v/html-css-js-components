@@ -20,15 +20,15 @@
 
     useEffect(() => {
       const loadMonacoLanguage = async () => {
-        const loader = await import("monaco-editor/esm/vs/loader");
+        const loader: any = await import("monaco-editor/esm/vs/loader"); // Type assertion to 'any'
         const vsBaseUrl = "/node_modules/monaco-editor/min/vs";
-
+    
         loader.require.config({
           paths: {
             vs: vsBaseUrl,
           },
         });
-
+    
         await new Promise<void>((resolve) => {
           loader.require(["vs/editor/editor.main"], async () => {
             await loader.require([`vs/language/${language}/${language}`], () => {
@@ -37,15 +37,16 @@
                   monaco.editor.layout();
                 }
               });
-
+    
               resolve();
             });
           });
         });
       };
-
+    
       loadMonacoLanguage();
     }, [language]);
+    
 
     const handleEditorDidMount: EditorDidMount = (editor) => {
       // Access the editor instance if needed

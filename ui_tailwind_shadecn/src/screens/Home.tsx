@@ -10,6 +10,14 @@ import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
 
+// import {
+//     Tooltip,
+//     TooltipContent,
+//     TooltipProvider,
+//     TooltipTrigger,
+//   } from "@/components/ui/tooltip"
+  
+
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -46,8 +54,23 @@ import Community from '../components/custom_ui/Community';
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 
+// import useFetchData from '@/hooks/use_fetch_data.hooks';
+
+
 export function Dashboard() {
     const { setTheme } = useTheme()
+    // const apiUrl = process.env.BASE_URI;
+
+    // const { data, loading, error } = useFetchData<UserData>('https://api.example.com/data');
+
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    //   }
+    
+    // if (error) {
+    //     return <div>Error: {error.message}</div>;
+    //   }
+
     return (
         
         <div className="flex min-h-screen w-full flex-col">
@@ -64,7 +87,7 @@ export function Dashboard() {
                        to={`/${"components"}`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Components
+                        components {data}
                     </Link>
 
                     <Link
@@ -230,12 +253,24 @@ export function Dashboard() {
                 <div>
 
                     <div className="w-full flex justify-center">
+                        
+                        {/* <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger>Hover</TooltipTrigger>
+                            <TooltipContent>
+                            <p>Add to library</p>
+                            </TooltipContent>
+                        </Tooltip>
+                        </TooltipProvider> */}
+
                         <div className="w-8/12 relative mt-2 rounded-md shadow-sm flex justify-center py-4 ">
                             <input
                                 type="text"
                                 name="price"
                                 id="price"
                                 className="
+                               border-gradient-blue
+                                animate-pulse
                                 placeholder:text-muted-foreground  w-full rounded-full  bg-background text-xl border-2  p-4 focus:outline-none focus:ring-2 focus:ring-gray-500"
                                 placeholder="Explore all ui Components"
                             />
@@ -245,6 +280,7 @@ export function Dashboard() {
                             </button>
 
                         </div>
+
                     </div>
 
                     <div className="flex justify-center hover:animate-pulse">
@@ -255,7 +291,7 @@ export function Dashboard() {
 
                 </div>
 
-  <div className="flex flex-col text-center w-full mb-10 pt-10">
+  <div className="flex flex-col text-center w-full mb-10 pt-10 ">
       <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
         Popular Components That you might like to use
       </h1>
@@ -264,7 +300,7 @@ export function Dashboard() {
       </p>
  </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
 
     <a className=" items-center">
@@ -285,9 +321,9 @@ export function Dashboard() {
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
 </div>
 
-<div className="flex justify-center mt-10">
+<div className="flex justify-center mt-10 hover:animate-pulse">
                     <Button >
-                            <Logo /> Explore All Components
+                    <LogoPlain /> Explore All Components
                     </Button>
 </div>
 
