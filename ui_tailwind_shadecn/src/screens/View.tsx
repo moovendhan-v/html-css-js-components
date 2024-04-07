@@ -32,9 +32,12 @@ import { Switch } from "@/components/ui/switch"
 // import { cn } from "@/lib/utils";
 // import React from "react";
 
-
+import { useCounterStore } from "@/store/store";
 
 export function View() {
+
+  const count = useCounterStore((state) => state.count);
+
 
   // const frameworks = [
   //   {
@@ -74,6 +77,7 @@ export function View() {
   return (
 
     <>
+  <   h3>{count}</h3>
 
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={15}>

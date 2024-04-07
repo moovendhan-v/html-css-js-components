@@ -13,3 +13,42 @@ front end
 
   Add this lines for homepage styling for fonts
   
+
+  List of components 
+
+  Nav and menu
+  Buttons,
+  hero selection
+  carosel
+  dropdown
+  testimonial sections
+  features sections
+  toggles
+  3d sections
+  faq sections
+  feature sections
+  form sections
+  hero sections
+  pricing sections
+  login signup
+  accordian
+  cards
+  toggle 
+  tabs
+  input
+  modals
+  notifications
+  models
+  loader
+  countdown
+   contactus
+   footer
+   tooltips
+
+
+   others
+
+
+   types of components.
+
+   React components, html,css and js, bootstrap, tailwind, => seprate catogreis

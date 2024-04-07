@@ -1,4 +1,5 @@
 import { ComponentType } from "@/enums/iframEnums";
+import { CodeIcon, TailwindCss } from "./Svg";
 
 interface OutputOfComponentsProps {
   html?: string;
@@ -25,7 +26,24 @@ const OutputsOfComponents: React.FC<OutputOfComponentsProps> = ({ html, css, js,
     `;
 
   return (
-    <div className="">
+    <div className="relative">
+
+      <div className="absolute right-0 bottom-0 p-2">
+        <div className="flex bg-primary p-1 rounded-lg bg-zinc-950">
+          <div><CodeIcon /></div>
+          <div><p className="text-white">Get Code</p></div>
+        </div>
+      </div>
+
+      <div className="absolute left-0 top-0 p-2">
+        <div className="flex bg-sky-400/100 p-1 rounded-full">
+          <div><p className="text-white"><TailwindCss /></p></div>
+          <div><p className="text-white"><TailwindCss /></p></div>
+        </div>
+      </div>
+      
+
+
       <iframe
         title="output"
         srcDoc={iframeContent}
@@ -34,7 +52,7 @@ const OutputsOfComponents: React.FC<OutputOfComponentsProps> = ({ html, css, js,
         className={`transition-opacity duration-300 ${borderRadius}`}
       />
     </div>
-  ); ``
+  );
 };
 
 export default OutputsOfComponents;

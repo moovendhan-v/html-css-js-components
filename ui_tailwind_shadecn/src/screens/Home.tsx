@@ -87,7 +87,7 @@ export function Dashboard() {
                        to={`/${"components"}`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        components {data}
+                        components 
                     </Link>
 
                     <Link
@@ -269,9 +269,10 @@ export function Dashboard() {
                                 name="price"
                                 id="price"
                                 className="
+
                                border-gradient-blue
                                 animate-pulse
-                                placeholder:text-muted-foreground  w-full rounded-full  bg-background text-xl border-2  p-4 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                                placeholder:text-muted-foreground  w-full rounded-full  bg-background text-xl border-2  p-4 focus:outline-none focus:ring-2 focus:ring-primary"
                                 placeholder="Explore all ui Components"
                             />
 
@@ -303,12 +304,12 @@ export function Dashboard() {
 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
 
-    <a className=" items-center">
+    {/* <a className=" items-center">
           <span className="flex justify-between flex-row pt-1"> 
             <span className="title-font font-medium">Holden Caulfield</span>
             <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
           </span>
-    </a>
+    </a> */}
     
 </div>
     <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>

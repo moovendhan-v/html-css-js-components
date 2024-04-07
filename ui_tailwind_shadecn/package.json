@@ -30,6 +30,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
+    "framer-motion": "^11.0.25",
     "lucide-react": "^0.360.0",
     "monaco-editor": "^0.44.0",
     "next-themes": "^0.3.0",
@@ -40,7 +41,8 @@
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
-    "vaul": "^0.9.0"
+    "vaul": "^0.9.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",
