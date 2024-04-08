@@ -12,11 +12,17 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link } from "react-router-dom";
-import {  CircleUser, Menu, Search } from "lucide-react";
+import { CircleUser, Menu, Search } from "lucide-react";
 import { LeftArrow, Logo, SaveIcon } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch"
+import { useCategoriesStore } from '@/store/store';
+import { fetchCategories } from '@/api/components/categories';
+import { useEffect } from "react";
+import { Skeleton } from "@/components/ui/skeleton"
+import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton";
+
 // import {
 //   Command,
 //   CommandEmpty,
@@ -32,11 +38,8 @@ import { Switch } from "@/components/ui/switch"
 // import { cn } from "@/lib/utils";
 // import React from "react";
 
-import { useCounterStore } from "@/store/store";
 
 export function View() {
-
-  const count = useCounterStore((state) => state.count);
 
 
   // const frameworks = [
@@ -70,49 +73,56 @@ export function View() {
   const [html, setHtml] = useState('');
   const [css, setCss] = useState('');
   const [js, setJs] = useState('');
+  const categries = useCategoriesStore((state) => state.categories);
 
-  // const [open, setOpen] = React.useState(false)
-  // const [value, setValue] = React.useState("")
+  useEffect(() => {
+    fetchCategories();
+  }, [])
+
 
   return (
-
     <>
-  <   h3>{count}</h3>
-
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={15}>
-          <div className="flex h-14 items-center  px-4 lg:h-[60px] lg:px-6 bg-primary ">
-            <Logo /> <h3 className=" px-2 font-bold">Components</h3>
-          </div>
-          <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4 py-2">
+        {/* //position fixed */}
+          <div className="">
+            <div className="flex h-14 items-center  px-4 lg:h-[60px] lg:px-6 bg-primary ">
+              <Logo /> <h3 className=" px-2 font-bold">Components</h3>
+            </div>
+            <div className="flex-1">
 
-              <Link
-                to={`/`}
-                className="bg-muted hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
-              >
-                All
-              </Link>
+              <nav className="grid items-start px-2 text-sm font-medium lg:px-4 py-2">
+                {categries.length > 0 ? (
+                  categries.map((category, index) => (
+                    <div className="transition duration-1000 ease-in-out">
+                      <Link
+                        key={index}
+                        to={`/${category}`} // Assuming each category corresponds to a route
+                        className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-1000 ease-in-out my-1"
+                      >
+                        {category}
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                    <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+                  </>
+                )}
+              </nav>
+            </div>
 
-              <Link
-                to={`/`}
-                className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
-              >
-                Nav{" "}
-              </Link>
-              <Link
-                to={`/`}
-                className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
-              >
-                Cards
-              </Link>
-              <Link
-                to={`/`}
-                className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
-              >
-                Buttons
-              </Link>
-            </nav>
           </div>
         </ResizablePanel>
         <ResizableHandle withHandle />
@@ -135,44 +145,24 @@ export function View() {
                 <SheetContent side="left" className="flex flex-col">
 
                   <nav className="grid gap-2 text-lg font-medium">
-                    <Link
-                      to={`/`}
-                      className="flex items-center gap-2 text-lg font-semibold"
-                    >
-                      <Logo />
-                      <span className="sr-only">Components</span>
-                    </Link>
-                    {/* <Link
-                      to={`/`}
-                      className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                      <Home className="h-5 w-5" />
-                      Dashboard
-                    </Link> */}
-                    <Link
-                      to={`/`}
-                      className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                    >
-                      All
-                    </Link>
-                    <Link
-                      to={`/`}
-                      className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                      Nav
-                    </Link>
-                    <Link
-                      to={`/`}
-                      className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                      Cards
-                    </Link>
-                    <Link
-                      to={`/`}
-                      className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                    >
-                      Buttons
-                    </Link>
+                    {categries.length > 0 ? (
+                      categries.map((category, index) => (
+                        <div className="transition duration-1000 ease-in-out">
+                          <Link
+                            key={index}
+                            to={`/${category}`} // Assuming each category corresponds to a route
+                            className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
+                          >
+                            {category}
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      <>
+                         <NavSkeleton />
+                      </>
+                    )}
+
                   </nav>
 
                 </SheetContent>

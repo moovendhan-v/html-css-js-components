@@ -17,13 +17,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
-          <Route path="/components" element={<Components />} />
+          <Route path="/components" element={<Components componentCatogries='buttons' />} />
           <Route path="/view" element={<View />} />
 
-          {/* <Route path="/contributenew" element={<ContributeNewComp />} /> */}
-          {/* components  */}
-          {/* <Route path="/search" element={<Componenets catogreise={"search"} />} />
-          <Route path="/all" element={<Componenets catogreise={"all"} />} />
+          {/* <Route path="/search" element={<Componenets catogreise={"search"} />} /> */}
+          {/* <Route path="/all" element={<Componenets catogreise={"all"} />} />
           <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
           <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
           <Route path="/forms" element={<Componenets catogreise={"forms"} />} />
@@ -35,8 +33,8 @@ function App() {
           <Route path="/tabs" element={<Componenets catogreise={"tabs"} />} />
           <Route path="/toast" element={<Componenets catogreise={"toast"} />} /> */}
           {/* component routeing end  */}
-          {/* <Route path="/edit" element={<Editor />} />
-          <Route path="/profile" element={<Profile />} /> */}
+          {/* <Route path="/edit" element={<Editor />} /> */}
+          {/* <Route path="/profile" element={<Profile />} /> */}
           {/* Dynamic routing for viewing a ciomponent details  */}
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 

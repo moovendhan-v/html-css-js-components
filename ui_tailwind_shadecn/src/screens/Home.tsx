@@ -53,11 +53,14 @@ import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
+// import {fetchCategories} from '@/api/components/categories';
 
-// import useFetchData from '@/hooks/use_fetch_data.hooks';
+// // import useFetchData from '@/hooks/use_fetch_data.hooks';
+// import {useCategoriesStore} from '@/store/store';
 
 
 export function Dashboard() {
+
     const { setTheme } = useTheme()
     // const apiUrl = process.env.BASE_URI;
 
@@ -70,9 +73,7 @@ export function Dashboard() {
     // if (error) {
     //     return <div>Error: {error.message}</div>;
     //   }
-
     return (
-        
         <div className="flex min-h-screen w-full flex-col">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">

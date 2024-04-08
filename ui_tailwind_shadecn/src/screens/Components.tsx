@@ -1,16 +1,10 @@
 import {
   Bell,
   CircleUser,
-  Home,
-  LineChart,
   Menu,
-  Package,
   Search,
-  ShoppingCart,
-  Users,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -33,12 +27,34 @@ import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
+import { useCategoriesStore, useComponentsStore } from "@/store/store"
+import { useEffect } from "react"
+import { fetchCategories } from "@/api/components/categories"
+import { fetchComponentsStore } from "@/api/components/components"
+import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
+import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 
-export function Components() {
+
+type Props = {
+  componentCatogries: string;
+};
+
+export function Components({ componentCatogries }: Props) {
+  const categries = useCategoriesStore((state) => state.categories);
+  const components = useComponentsStore((state) => state.buttons);
+  console.log(components);
+  console.log(componentCatogries);
+
+  useEffect(() => {
+    fetchCategories();
+    fetchComponentsStore(componentCatogries);
+
+  }, [componentCatogries])
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
-        <div className="flex h-full max-h-screen flex-col gap-2">
+        <div className="flex h-full max-h-screen flex-col gap-2 relative">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Logo /> <h3 className=" px-2 font-bold">Ui Components</h3>
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
@@ -47,55 +63,34 @@ export function Components() {
             </Button>
           </div>
 
-          <div className="flex-1">
+          <div className="flex-1 ">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-              <Link
-                to={`/`}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Home className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <Link
-                to={`/`}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <ShoppingCart className="h-4 w-4" />
-                Orders
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
-              <Link
-                to={`/`}
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
-              >
-                <Package className="h-4 w-4" />
-                Products{" "}
-              </Link>
-              <Link
-                to={`/`}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Users className="h-4 w-4" />
-                Customers
-              </Link>
-              <Link
-                to={`/`}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <LineChart className="h-4 w-4" />
-                Analytics
-              </Link>
+              {categries.length > 0 ? (
+                categries.map((category, index) => (
+                  <div className="transition duration-1000 ease-in-out relative">
+                    <Link
+                      key={index}
+                      to={`/${category}`} // Assuming each category corresponds to a route
+                      className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
+                    >
+                      {category}
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <>
+                  <NavSkeleton />
+                </>
+              )}
             </nav>
           </div>
-          
-          <div className="mt-auto p-4">
+
+          {/* <div className="mt-auto p-4 absolute bottom-0">
             <Card>
               <CardHeader className="p-2 pt-0 md:p-4">
                 <CardTitle>Join With Us</CardTitle>
                 <CardDescription>
-                    Join the Revolution of Open Source UI
+                  Join the Revolution of Open Source UI
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
@@ -104,8 +99,7 @@ export function Components() {
                 </Button>
               </CardContent>
             </Card>
-          </div>
-
+          </div> */}
 
         </div>
       </div>
@@ -125,58 +119,30 @@ export function Components() {
 
             <SheetContent side="left" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  to={`/`}
-                  className="flex items-center gap-2 text-lg font-semibold"
-                >
-                  <Logo />
-                  <span className="sr-only">Ui components</span>
-                </Link>
-                <Link
-                  to={`/`}
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  to={`/`}
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
-                </Link>
-                <Link
-                  to={`/`}
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Package className="h-5 w-5" />
-                  Products
-                </Link>
-                <Link
-                  to={`/`}
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Users className="h-5 w-5" />
-                  Customers
-                </Link>
-                <Link
-                  to={`/`}
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <LineChart className="h-5 w-5" />
-                  Analytics
-                </Link>
+                {categries.length > 0 ? (
+                  categries.map((category, index) => (
+                    <div className="transition duration-1000 ease-in-out">
+                      <Link
+                        key={index}
+                        to={`/${category}`} // Assuming each category corresponds to a route
+                        className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
+                      >
+                        {category}
+                      </Link>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <NavSkeleton />
+                  </>
+                )}
               </nav>
               <div className="mt-auto">
                 <Card>
                   <CardHeader>
                     <CardTitle>Join With Us </CardTitle>
                     <CardDescription>
-                    Join the Revolution of Open Source UI
+                      Join the Revolution of Open Source UI
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -220,30 +186,40 @@ export function Components() {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">{} - Components</h1>
+            <h1 className="text-lg font-semibold md:text-2xl">{ } - Components</h1>
           </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-    <a className=" items-center">
-          <span className="flex justify-between flex-row pt-1"> 
-            <span className="title-font font-medium">Holden Caulfield</span>
-            <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
-          </span>
-    </a>
-</div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-</div>
-    
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+              <CardSkeleton />
+
+
+
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} />
+
+              <a className=" items-center">
+                <span className="flex justify-between flex-row pt-1">
+                  <span className="title-font font-medium">Holden Caulfield</span>
+                  <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
+                </span>
+              </a>
+            </div>
+
+
+            {/* <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div> */}
+          </div>
+
           {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
             <div className="flex flex-col items-center gap-1 text-center">
               <h3 className="text-2xl font-bold tracking-tight">
