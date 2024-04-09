@@ -53,6 +53,10 @@ import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
+// import { ContainerScroll } from "@/components/ui/container-scrool-animation";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
+
+
 // import {fetchCategories} from '@/api/components/categories';
 
 // // import useFetchData from '@/hooks/use_fetch_data.hooks';
@@ -62,19 +66,39 @@ import { ComponentType } from "@/enums/iframEnums"
 export function Dashboard() {
 
     const { setTheme } = useTheme()
-    // const apiUrl = process.env.BASE_URI;
-
-    // const { data, loading, error } = useFetchData<UserData>('https://api.example.com/data');
-
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    //   }
-    
-    // if (error) {
-    //     return <div>Error: {error.message}</div>;
-    //   }
+    const words = [
+        {
+          text: "Save",
+        },
+        {
+          text: "and",
+        },
+        {
+          text: "Share",
+        },
+        {
+          text: "Your",
+        },
+        {
+          text: "Creative",
+        },
+        {
+          text: "Design",
+        },
+        {
+          text: "to",
+        },
+        {
+          text: "Open",
+          className: "text-blue-500 dark:text-blue-500",
+        },
+        {
+            text: "Source.",
+            className: "text-blue-500 dark:text-blue-500",
+          },
+      ];
     return (
-        <div className="flex min-h-screen w-full flex-col">
+        <div className="flex min-h-screen w-full flex-col font-primary">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                 <Logo />
@@ -232,38 +256,18 @@ export function Dashboard() {
 
             <main>
             <div className="py-6">
-    <h1 className="scroll-m-20 text-7xl font-semibold tracking-tight lg:text-7xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
+    <h1 className="scroll-m-20 text-6xl font-semibold tracking-tight lg:text-6xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
         Open Source Awesome Ui-Componenets
         <br />
         for your next projects
     </h1>
 </div>
 
-                <h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center">
-                    Save and share your creative designes to open source
-                </h4>
-
-
-                <div className="w-screen flex justify-center py-4">
-                    {/* <input
-                className="rounded-full bg-background text-xl border-2 border-gray-500 p-4 placeholder-gray-400 focus:text-gray-900 focus:border-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                placeholder="Explore all ui Components"
-            /> */}
-                </div>
-
+<div className="flex flex-col items-center justify-center ">
+      <TypewriterEffectSmooth words={words} />
+      </div>
                 <div>
-
                     <div className="w-full flex justify-center">
-                        
-                        {/* <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger>Hover</TooltipTrigger>
-                            <TooltipContent>
-                            <p>Add to library</p>
-                            </TooltipContent>
-                        </Tooltip>
-                        </TooltipProvider> */}
-
                         <div className="w-8/12 relative mt-2 rounded-md shadow-sm flex justify-center py-4 ">
                             <input
                                 type="text"
@@ -292,6 +296,10 @@ export function Dashboard() {
                     </div>
 
                 </div>
+       <div className="flex flex-col overflow-hidden">
+   
+    </div>
+
 
   <div className="flex flex-col text-center w-full mb-10 pt-10 ">
       <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">

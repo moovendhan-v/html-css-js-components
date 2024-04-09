@@ -24,7 +24,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton";
 
 export function View() {
+
   const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [isSticky, setIsSticky] = useState(false);
+
   const handleSwitchToggle = () => {
     setIsSwitchOn((prev) => !prev);
   };
@@ -37,6 +40,27 @@ export function View() {
   useEffect(() => {
     fetchCategories();
   }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const footer = document.getElementById('footer');
+      if (!footer) return;
+
+      const navbar = document.querySelector('.flex-1') as HTMLElement;
+      const footerPosition = footer.getBoundingClientRect().top;
+
+      setIsSticky(window.scrollY > navbar.offsetTop);
+      if (footerPosition <= window.innerHeight) {
+        navbar.style.position = 'relative';
+      } else {
+        navbar.style.position = 'fixed';
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
 
   return (
@@ -65,7 +89,7 @@ export function View() {
             {/* <div className="flex h-14 items-center  px-4 lg:h-[60px] lg:px-6 bg-primary ">
               <Logo /> <h3 className=" px-2 font-bold">Components</h3>
             </div> */}
-            <div className="flex-1 fixed">
+            <div className={`${isSticky}`}>
 
               <nav className="grid items-start px-2 text-sm font-medium lg:px-4 py-2">
                 {categries.length > 0 ? (

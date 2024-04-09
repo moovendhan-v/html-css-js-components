@@ -1,5 +1,10 @@
 // tailwind.config.js
 
+const {
+  default: flattenColorPalette,
+} = require("tailwindcss/lib/util/flattenColorPalette");
+ 
+
 module.exports = {
   darkMode: "class",
   content: [
@@ -21,8 +26,8 @@ module.exports = {
     extend: {
 
       fontFamily: {
-        main: ['"montserrat"', 'Montserrat'],
-        jost: ['"Jost"', 'Jost'],
+        primary: ['"montserrat"', 'Montserrat'],
+        secondary: ['"Jost"', 'Jost'],
         niconne: ['"Niconne"', 'niconne'],
       },
       colors: {
@@ -74,14 +79,35 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
       },
       animation: {
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
   plugins: [
-    require("tailwindcss-animate")
+    require("tailwindcss-animate"),
+    [addVariablesForColors]
   ],
 };
+
+
+// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+function addVariablesForColors({ addBase, theme }) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
+ 
+  addBase({
+    ":root": newVars,
+  });
+}
