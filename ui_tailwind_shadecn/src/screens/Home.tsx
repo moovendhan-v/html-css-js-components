@@ -4,19 +4,11 @@ import {
     Search
 } from "lucide-react"
 
-import {SearchIcon} from '../components/custom_ui/Svg';
+import { SearchIcon } from '../components/custom_ui/Svg';
 
 import { Button } from "@/components/ui/button"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
-
-// import {
-//     Tooltip,
-//     TooltipContent,
-//     TooltipProvider,
-//     TooltipTrigger,
-//   } from "@/components/ui/tooltip"
-  
 
 import {
     NavigationMenu,
@@ -42,7 +34,7 @@ import { Link } from "react-router-dom"
 
 import { Input } from "@/components/ui/input"
 
-import {Logo, LogoPlain} from "@/components/custom_ui/Svg"
+import { Logo, LogoPlain } from "@/components/custom_ui/Svg"
 
 import Teams from '../components/custom_ui/Teams';
 import BlogCard from '../components/custom_ui/BlogCard';
@@ -53,55 +45,22 @@ import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
-// import { ContainerScroll } from "@/components/ui/container-scrool-animation";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-
-
-// import {fetchCategories} from '@/api/components/categories';
-
-// // import useFetchData from '@/hooks/use_fetch_data.hooks';
-// import {useCategoriesStore} from '@/store/store';
-
+import { Products } from '@/data/HeroParallax';
+import { MovingWords } from '@/data/MovingText';
+import { Cateogries } from '@/data/ScroolingAnimations';
+import { HeroParallax } from "@/components/ui/hero-parallax";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export function Dashboard() {
 
     const { setTheme } = useTheme()
-    const words = [
-        {
-          text: "Save",
-        },
-        {
-          text: "and",
-        },
-        {
-          text: "Share",
-        },
-        {
-          text: "Your",
-        },
-        {
-          text: "Creative",
-        },
-        {
-          text: "Design",
-        },
-        {
-          text: "to",
-        },
-        {
-          text: "Open",
-          className: "text-blue-500 dark:text-blue-500",
-        },
-        {
-            text: "Source.",
-            className: "text-blue-500 dark:text-blue-500",
-          },
-      ];
+
     return (
         <div className="flex min-h-screen w-full flex-col font-primary">
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
-                <Logo />
+                    <Logo />
                     <Link
                         to={`/}`}
                         className="text-foreground transition-colors hover:text-foreground"
@@ -109,10 +68,10 @@ export function Dashboard() {
                         UiComponents
                     </Link>
                     <Link
-                       to={`/${"components"}`}
+                        to={`/${"components"}`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        components 
+                        Components
                     </Link>
 
                     <Link
@@ -173,7 +132,7 @@ export function Dashboard() {
                     </SheetTrigger>
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
-                        <Logo />
+                            <Logo />
                             <Link to={`/}`} className="hover:text-foreground">
                                 Dashboard
                             </Link>
@@ -216,25 +175,25 @@ export function Dashboard() {
                         </div>
                     </form>
                     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="icon">
+                                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                                <span className="sr-only">Toggle theme</span>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => setTheme("light")}>
+                                Light
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("dark")}>
+                                Dark
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("system")}>
+                                System
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">
@@ -255,17 +214,17 @@ export function Dashboard() {
             </header>
 
             <main>
-            <div className="py-6">
-    <h1 className="scroll-m-20 text-6xl font-semibold tracking-tight lg:text-6xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
-        Open Source Awesome Ui-Componenets
-        <br />
-        for your next projects
-    </h1>
-</div>
+                <div className="py-6">
+                    <h1 className="scroll-m-20 text-6xl font-semibold tracking-tight lg:text-6xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
+                        Open Source Awesome Ui-Components
+                        <br />
+                        for your next projects
+                    </h1>
+                </div>
 
-<div className="flex flex-col items-center justify-center ">
-      <TypewriterEffectSmooth words={words} />
-      </div>
+                <div className="flex flex-col items-center justify-center ">
+                    <TypewriterEffectSmooth words={MovingWords} />
+                </div>
                 <div>
                     <div className="w-full flex justify-center">
                         <div className="w-8/12 relative mt-2 rounded-md shadow-sm flex justify-center py-4 ">
@@ -282,7 +241,7 @@ export function Dashboard() {
                             />
 
                             <button className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
-                              <SearchIcon />  <span className="px-1">Search</span>
+                                <SearchIcon />  <span className="px-1">Search</span>
                             </button>
 
                         </div>
@@ -290,60 +249,75 @@ export function Dashboard() {
                     </div>
 
                     <div className="flex justify-center hover:animate-pulse">
-                    <Button >
+                        <Button >
                             <LogoPlain /> Search Components
-                    </Button>
+                        </Button>
                     </div>
 
                 </div>
-       <div className="flex flex-col overflow-hidden">
-   
-    </div>
+                <div className="flex flex-col overflow-hidden">
+
+                </div>
 
 
-  <div className="flex flex-col text-center w-full mb-10 pt-10 ">
-      <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
-        Popular Components That you might like to use
-      </h1>
-      <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
-        Most popular components 
-      </p>
- </div>
+                <div className="flex flex-col text-center w-full mb-10 pt-10 ">
+                    <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4">
+                        Popular Components That you might like to use
+                    </h1>
+                    <p className="lg:w-2/3 mx-auto leading-relaxed text-primary">
+                        Most popular components
+                    </p>
+                </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS}/>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} />
 
-    {/* <a className=" items-center">
-          <span className="flex justify-between flex-row pt-1"> 
-            <span className="title-font font-medium">Holden Caulfield</span>
-            <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
-          </span>
-    </a> */}
-    
-</div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing"  type={ComponentType.COMPONENTS}/></div>
-</div>
+                    </div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
+                </div>
 
-<div className="flex justify-center mt-10 hover:animate-pulse">
+                <div className="flex justify-center mt-10 hover:animate-pulse">
                     <Button >
-                    <LogoPlain /> Explore All Components
+                        <LogoPlain /> Explore All Components
                     </Button>
+                </div> 
+
+
+<div className="h-[20rem] first-letter: rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden my-5 ">
+      <InfiniteMovingCards
+        items={Cateogries}
+        direction="right"
+        speed="slow"
+      />
+       <InfiniteMovingCards
+        items={Cateogries}
+        direction="left"
+        speed="slow"
+      />
+       <InfiniteMovingCards
+        items={Cateogries}
+        direction="right"
+        speed="slow"
+      />
 </div>
 
-        <Teams />
-        <BlogCard />
-        <Content />
-        <Extension />
-        <YoutubeContent />
-        <Community />
-        <Footer />
+               
+                <HeroParallax products={Products} />
+
+                <Teams />
+                <BlogCard />
+                <Content />
+                <Extension />
+                <YoutubeContent />
+                <Community />
+                <Footer />
 
             </main>
         </div>

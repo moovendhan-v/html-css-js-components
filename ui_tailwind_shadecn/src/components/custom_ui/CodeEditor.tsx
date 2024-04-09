@@ -1,6 +1,6 @@
   import React, { useEffect, useState } from "react";
   import MonacoEditor, { EditorDidMount } from "react-monaco-editor";
-  import * as monaco from "monaco-editor";
+  // import * as monaco from "monaco-editor";
 
   interface CodeEditorProps {
     language: string;
@@ -9,46 +9,46 @@
   }
 
   const CodeEditor: React.FC<CodeEditorProps> = ({ language, value, onChange }) => {
-    const editorOptions = {
-      selectOnLineNumbers: true,
-      roundedSelection: false,
-      readOnly: false,
-      cursorStyle: "line",
-      automaticLayout: true,
-      fontSize: 16,
-    };
+    // const editorOptions = {
+    //   selectOnLineNumbers: true,
+    //   roundedSelection: false,
+    //   readOnly: false,
+    //   cursorStyle: "line",
+    //   automaticLayout: true,
+    //   fontSize: 16,
+    // };
 
     useEffect(() => {
       const loadMonacoLanguage = async () => {
-        const loader: any = await import("monaco-editor/esm/vs/loader"); // Type assertion to 'any'
-        const vsBaseUrl = "/node_modules/monaco-editor/min/vs";
+        // const loader: any = await import("monaco-editor/esm/vs/loader"); // Type assertion to 'any'
+        // const vsBaseUrl = "/node_modules/monaco-editor/min/vs";
     
-        loader.require.config({
-          paths: {
-            vs: vsBaseUrl,
-          },
-        });
+        // loader.require.config({
+        //   paths: {
+        //     vs: vsBaseUrl,
+        //   },
+        // });
     
-        await new Promise<void>((resolve) => {
-          loader.require(["vs/editor/editor.main"], async () => {
-            await loader.require([`vs/language/${language}/${language}`], () => {
-              loader.require(["vs/editor/editor.main"], () => {
-                if (monaco.editor) {
-                  monaco.editor.layout();
-                }
-              });
+        // await new Promise<void>((resolve) => {
+        //   loader.require(["vs/editor/editor.main"], async () => {
+        //     await loader.require([`vs/language/${language}/${language}`], () => {
+        //       loader.require(["vs/editor/editor.main"], () => {
+        //         if (monaco.editor) {
+        //           monaco.editor.layout();
+        //         }
+        //       });
     
-              resolve();
-            });
-          });
-        });
+        //       resolve();
+        //     });
+        //   });
+        // });
       };
     
       loadMonacoLanguage();
     }, [language]);
     
 
-    const handleEditorDidMount: EditorDidMount = (editor) => {
+    const handleEditorDidMount: EditorDidMount = () => {
       // Access the editor instance if needed
       // console.log(`Editor for ${language} instance:`, editor);
     };
@@ -60,7 +60,7 @@
           language={language}
           theme="vs-dark"
           value={value}
-          options={editorOptions}
+          // options={editorOptions}
           editorDidMount={handleEditorDidMount}
           onChange={onChange}
         />

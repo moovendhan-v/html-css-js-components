@@ -20,7 +20,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D"
               alt="blog"
             />
             <div className="p-6">
@@ -87,7 +87,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D"
               alt="blog"
             />
             <div className="p-6">
@@ -154,7 +154,7 @@ const BlogCard = ()=>{
           <div className="h-full border-2 border-gray-800 rounded-lg overflow-hidden">
             <img
               className="lg:h-48 md:h-36 w-full object-cover object-center"
-              src="https://images.pexels.com/photos/4492497/pexels-photo-4492497.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2&auto=format&fit=crop&crop=focalpoint&fp-y=.8&w=2830&h=1500&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
+              src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGVjaG5vbG9neXxlbnwwfHwwfHx8MA%3D%3D"
               alt="blog"
             />
             <div className="p-6">

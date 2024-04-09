@@ -1,7 +1,6 @@
-import { Stars } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+
 import React, { useEffect } from "react";
-import { FiArrowRight } from "react-icons/fi";
+
 import {
   useMotionTemplate,
   useMotionValue,
@@ -59,14 +58,14 @@ export const AuroraHero: React.FC = () => {
           className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
         >
           Start free trial
-          <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+          {/* <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" /> */}
         </motion.button>
       </div>
 
       <div className="absolute inset-0 z-0">
-        <Canvas>
+        {/* <Canvas>
           <Stars radius={50} count={2500} factor={4} fade speed={2} />
-        </Canvas>
+        </Canvas> */}
       </div>
     </motion.section>
   );
