@@ -1,3 +1,4 @@
+
 import {
   Bell,
   CircleUser,
@@ -33,23 +34,23 @@ import { fetchCategories } from "@/api/components/categories"
 import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
+import { useParams } from 'react-router-dom';
+import {ComponentData} from '@/type/ComponentData.type';
 
+export function Components() {
 
-type Props = {
-  componentCatogries: string;
-};
+  const { catogries } = useParams<{ catogries: string }>();
 
-export function Components({ componentCatogries }: Props) {
   const categries = useCategoriesStore((state) => state.categories);
-  const components = useComponentsStore((state) => state.buttons);
+  const components = useComponentsStore((state) => state[catogries]);
+  console.log(catogries);
   console.log(components);
-  console.log(componentCatogries);
+
 
   useEffect(() => {
     fetchCategories();
-    fetchComponentsStore(componentCatogries);
-
-  }, [componentCatogries])
+    fetchComponentsStore(catogries);
+  }, [catogries])
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -69,9 +70,10 @@ export function Components({ componentCatogries }: Props) {
                 categries.map((category, index) => (
                   <div className="transition duration-1000 ease-in-out relative">
                     <Link
+                      to={`/${category}`}
                       key={index}
-                      to={`/${category}`} // Assuming each category corresponds to a route
-                      className="hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1"
+                      className={`${category === catogries ? 'text-primary bg-muted' : ''
+                        } hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1`}
                     >
                       {category}
                     </Link>
@@ -84,22 +86,6 @@ export function Components({ componentCatogries }: Props) {
               )}
             </nav>
           </div>
-
-          {/* <div className="mt-auto p-4 absolute bottom-0">
-            <Card>
-              <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Join With Us</CardTitle>
-                <CardDescription>
-                  Join the Revolution of Open Source UI
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  Join
-                </Button>
-              </CardContent>
-            </Card>
-          </div> */}
 
         </div>
       </div>
@@ -186,62 +172,46 @@ export function Components({ componentCatogries }: Props) {
         </header>
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <div className="flex items-center">
-            <h1 className="text-lg font-semibold md:text-2xl">{ } - Components</h1>
+            <h1 className="text-lg font-semibold md:text-2xl">{catogries}  Components</h1>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-              <CardSkeleton />
-              <CardSkeleton />
-              <CardSkeleton />
-              <CardSkeleton />
+            {components.count > 0 ? (
+             components.map((category: ComponentData, index: number) => (
+                <div className="transition duration-1000 ease-in-out relative">
+                  <Link
+                    to={`/${category}`}
+                    key={index}
+                  >
+                    <div ><OutputsOfComponents html={category.html} css={category.css} js={category.js} type={ComponentType.COMPONENTS} />
+                      <a className=" items-center">
+                        <span className="flex justify-between flex-row pt-1">
+                          <span className="title-font font-medium">name</span>
+                          <span className="title-font font-thin text-gray-200">@info</span>
+                        </span>
+                      </a>
+                    </div>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <>
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+                <CardSkeleton />
+              </>
+            )}
 
 
-
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} />
-
-              <a className=" items-center">
-                <span className="flex justify-between flex-row pt-1">
-                  <span className="title-font font-medium">Holden Caulfield</span>
-                  <span className="title-font font-thin text-gray-200">Holden Caulfield</span>
-                </span>
-              </a>
-            </div>
-
-
-            {/* <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div>
-            <div ><OutputsOfComponents html="Testing" css="Testing" js="testing" type={ComponentType.COMPONENTS} /></div> */}
           </div>
 
-          {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-2xl font-bold tracking-tight">
-                <OutputsOfComponents html="Testing" css="Testing" js="testing" />
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Your Searching for {} which is not available
-              </p>
-              <Button className="mt-4">Contribute</Button>
-            </div>
-          </div> */}
-          {/* <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
-            <div className="flex flex-col items-center gap-1 text-center">
-              <h3 className="text-2xl font-bold tracking-tight">
-                No Components where Found Contribute your Components
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Your Searching for {} which is not available
-              </p>
-              <Button className="mt-4">Contribute</Button>
-            </div>
-          </div> */}
+         
         </main>
       </div>
     </div>

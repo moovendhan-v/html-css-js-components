@@ -1,36 +1,42 @@
 import { create } from 'zustand';
+import {ComponentData} from '@/type/ComponentData.type'
 
 type CategoriesStore = {
     categories: string[];
 };
+
 type ComponentsStore = {
-    all: object[];
-    nav: object[]; 
-    buttons: object[];
-    carosel: object[];
-    hero_section: object[];
-    dropdown: object[];
-    testimonial: object[];
-    features: object[];
-    toggles: object[];
-    faq: object[];
-    form: object[];
-    pricing: object[];
-    login_signup: object[];
-    accordian: object[];
-    card: object[];
-    toggle: object[];
-    tabs: object[];
-    input: object[];
-    modals: object[];
-    notification: object[];
-    loader: object[];
-    countdown: object[];
-    contactus: object[];
-    footer: object[];
-    tooltips: object[];
-    others: object[];
-}
+    all: ComponentData[];
+    navbar: ComponentData[]; 
+    buttons: ComponentData[];
+    carosel: ComponentData[];
+    hero_section: ComponentData[];
+    dropdown: ComponentData[];
+    testimonial: ComponentData[];
+    features: ComponentData[];
+    toggles: ComponentData[];
+    faq: ComponentData[];
+    forms: ComponentData[];
+    pricing: ComponentData[];
+    login_signup: ComponentData[];
+    accordian: ComponentData[];
+    cards: ComponentData[];
+    toggle: ComponentData[];
+    tabs: ComponentData[];
+    input: ComponentData[];
+    modals: ComponentData[];
+    notification: ComponentData[];
+    loader: ComponentData[];
+    countdown: ComponentData[];
+    contactus: ComponentData[];
+    footer: ComponentData[];
+    tooltip: ComponentData[];
+    others: ComponentData[];
+    checkbox: ComponentData[];
+    gradient: ComponentData[];
+    toast: ComponentData[];
+};
+
 
 export const useCategoriesStore = create<CategoriesStore>(() => ({
     categories: [], 
@@ -38,7 +44,7 @@ export const useCategoriesStore = create<CategoriesStore>(() => ({
 
 export const useComponentsStore = create<ComponentsStore>(() => ({
     all : [],
-    nav : [],
+    navbar : [],
     buttons : [],
     carosel : [],
     hero_section : [],
@@ -47,11 +53,11 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     features : [],
     toggles : [],
     faq : [],
-    form : [],
+    forms : [],
     pricing : [],
     login_signup : [],
     accordian : [],
-    card : [],
+    cards : [],
     toggle : [],
     tabs : [],
     input : [],
@@ -61,6 +67,9 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     countdown : [],
     contactus : [],
     footer : [],
-    tooltips : [],
+    tooltip : [],
     others : [],
+    checkbox : [],
+    gradient : [],
+    toast : [],
 }));

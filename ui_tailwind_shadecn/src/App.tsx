@@ -17,8 +17,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
-          <Route path="/components" element={<Components componentCatogries='buttons' />} />
+          <Route path="/:catogries" element={<Components />} />
           <Route path="/view" element={<View />} />
+
+          {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 
           {/* <Route path="/search" element={<Componenets catogreise={"search"} />} /> */}
           {/* <Route path="/all" element={<Componenets catogreise={"all"} />} />
