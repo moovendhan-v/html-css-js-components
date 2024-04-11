@@ -68,10 +68,10 @@ export function Dashboard() {
                         UiComponents
                     </Link>
                     <Link
-                        to={`/${"components"}`}
+                        to={`/${"all"}`}
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Components
+                        AllComponents
                     </Link>
 
                     <Link
