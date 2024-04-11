@@ -35,21 +35,24 @@ import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 import { useParams } from 'react-router-dom';
-import {ComponentData} from '@/type/ComponentData.type';
+import {ComponentData} from '@/types/ComponentData.type';
 
 export function Components() {
 
-  const { catogries } = useParams<{ catogries: string }>();
+  type componentParamType = {
+    catogries?: string;
+  };
 
+  const { catogries } = useParams<componentParamType>();
+
+  // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries]);
-  console.log(catogries);
   console.log(components);
-
 
   useEffect(() => {
     fetchCategories();
-    fetchComponentsStore(catogries);
+    fetchComponentsStore(catogries ?? '');
   }, [catogries])
 
   return (
@@ -177,7 +180,7 @@ export function Components() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-            {components.count > 0 ? (
+            {components.length > 0 ? (
              components.map((category: ComponentData, index: number) => (
                 <div className="transition duration-1000 ease-in-out relative">
                   <Link

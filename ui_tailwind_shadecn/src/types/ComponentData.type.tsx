@@ -1,3 +1,4 @@
+// components data that we are getting. for components
 export interface ComponentData {
     html: string;
     css: string;

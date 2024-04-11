@@ -1,40 +1,16 @@
 import { useComponentsStore } from '@/store/store';
+import {ComponentData} from '@/types/ComponentData.type'
+import {getEnvVariable} from '@/utils/load.utils';
 
-type PostDetails = {
-    html: string;
-    css: string;
-    js: string;
-    folder_path: string;
-    folder_name: string;
-    catogries: string;
-    isActive: boolean;
-    title: string;
-    description: string;
-    admin: {
-        _id: string;
-        id: number;
-        login: string;
-        avatar_url: string;
-        url: string;
-        html_url: string;
-        company: string;
-        location: string;
-        email: string | null;
-        name: string;
-        blog: string;
-        bio: string;
-        twitter_username: string | null;
-        __v: number;
-    };
-};
 
 type ResponseItem = {
-    post_details: PostDetails;
+    post_details: ComponentData;
 };
 
 export const fetchComponentsStore = async (categories: string) => {
+    const baseUri = getEnvVariable('BASE_URI');
     try {
-        const response = await fetch(`http://localhost:4000/components/searchcomponents?search=${categories}`);
+        const response = await fetch(`${baseUri}/components/searchcomponents?search=${categories}`);
         if (!response.ok) {
             throw new Error('Failed to fetch categories');
         }
@@ -42,10 +18,10 @@ export const fetchComponentsStore = async (categories: string) => {
         const { response: responseData } = data;
 
         // Extract post_details from response
-        const details: PostDetails[] = responseData.map((item: ResponseItem) => item.post_details);
+        const details: ComponentData[] = responseData.map((item: ResponseItem) => item.post_details);
 
         // Update the store
-        useComponentsStore.setState({ buttons: details });
+        useComponentsStore.setState({ [categories]: details });
 
         return details;
     } catch (error) {
