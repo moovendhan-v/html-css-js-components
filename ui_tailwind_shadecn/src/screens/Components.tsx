@@ -48,7 +48,7 @@ export function Components() {
 
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
-  const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'default');
+  const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
   console.log(components);
 
   useEffect(() => {
