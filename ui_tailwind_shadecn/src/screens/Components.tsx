@@ -29,6 +29,7 @@ import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { useCategoriesStore, useComponentsStore } from "@/store/store"
+import {ComponentsStore, } from '@/types/ComponentStore.type'
 import { useEffect } from "react"
 import { fetchCategories } from "@/api/components/categories"
 import { fetchComponentsStore } from "@/api/components/components"
@@ -47,7 +48,7 @@ export function Components() {
 
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
-  const components = useComponentsStore((state) => state[catogries]);
+  const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'default');
   console.log(components);
 
   useEffect(() => {
