@@ -18,7 +18,10 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
           <Route path="/:catogries" element={<Components />} />
+          <Route path="/:categorie/:title" element={<View />} />
+
           <Route path="/view" element={<View />} />
+
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 

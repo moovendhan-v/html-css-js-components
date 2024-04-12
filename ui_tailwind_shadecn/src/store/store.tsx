@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import {ComponentsStore} from '@/types/ComponentStore.type'
+import {ComponentsStore, } from '@/types/ComponentStore.type'
 import {CategoriesStore} from '@/types/CategoriesStore.type'
 
 
@@ -38,3 +38,8 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     gradient : [],
     toast : [],
 }));
+
+
+// export const useComponentStore = create<ComponentStore>(()=>{
+//     currentComponentStore : ComponentStore;
+// })

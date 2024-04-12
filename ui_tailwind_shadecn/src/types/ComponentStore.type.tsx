@@ -32,3 +32,9 @@ export type ComponentsStore = {
     gradient: ComponentData[];
     toast: ComponentData[];
 };
+
+export type ComponentStore ={
+    html: string;
+    css : string;
+    js : string;
+}

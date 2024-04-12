@@ -4,7 +4,7 @@ import * as monaco from 'monaco-editor';
 interface MonacoEditorProps {
   language: string;
   value: string;
-  onChange: (value: string) => void; // Add onChange prop
+  onChange: (value: string) => void; // Modify onChange prop to accept a string parameter
 }
 
 const MonacoEditorComponent: React.FC<MonacoEditorProps> = ({ language, value, onChange }) => {
@@ -30,14 +30,14 @@ const MonacoEditorComponent: React.FC<MonacoEditorProps> = ({ language, value, o
 
       // Listen to editor changes and call onChange callback
       editorRef.current.onDidChangeModelContent(() => {
-        onChange(editorRef.current!.getValue());
+        onChange(editorRef.current!.getValue()); // Call onChange callback with current editor value
       });
     }
 
     return () => {
       editorRef.current?.dispose();
     };
-  }, [language, onChange]);
+  }, []);
 
   const handleEditorClick = () => {
     editorRef.current?.focus();

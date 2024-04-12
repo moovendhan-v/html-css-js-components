@@ -35,15 +35,15 @@ import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 import { useParams } from 'react-router-dom';
-import {ComponentData} from '@/type/ComponentData.type';
+import {ComponentData} from '@/types/ComponentData.type';
 
 export function Components() {
 
-  type componentParamType = {
+  type componentsParamType = {
     catogries?: string;
   };
 
-  const { catogries } = useParams<componentParamType>();
+  const { catogries } = useParams<componentsParamType>();
 
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
@@ -187,17 +187,17 @@ export function Components() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
             {components.length > 0 ? (
-             components.map((category: ComponentData, index: number) => (
+             components.map((component: ComponentData, index: number) => (
                 <div className="transition duration-1000 ease-in-out relative">
                   <Link
-                    to={`/${category}`}
+                    to={`/${component.catogries}/${component.folder_name}`}
                     key={index}
                   >
-                    <div ><OutputsOfComponents html={category.html} css={category.css} js={category.js} type={ComponentType.COMPONENTS} />
+                    <div ><OutputsOfComponents html={component.html} css={component.css} js={component.js} type={ComponentType.COMPONENTS} />
                       <a className=" items-center">
                         <span className="flex justify-between flex-row pt-1">
-                          <span className="title-font font-medium">name</span>
-                          <span className="title-font font-thin text-gray-200">@info</span>
+                          <span className="title-font font-medium">{component.title}</span>
+                          <span className="title-font font-thin text-gray-200">{component.admin.name}</span>
                         </span>
                       </a>
                     </div>
