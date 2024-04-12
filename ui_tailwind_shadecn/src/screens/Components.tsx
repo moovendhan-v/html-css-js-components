@@ -37,6 +37,7 @@ import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 import { useParams } from 'react-router-dom';
 import {ComponentData} from '@/types/ComponentData.type';
+import { Switch } from "@/components/ui/switch"
 
 export function Components() {
 
@@ -181,9 +182,11 @@ export function Components() {
           </DropdownMenu>
         </header>
         <main className="flex flex-1 flex-col gap-4 lg:gap-6 ">
-          <div className="flex items-center">
+          <div className="flex space justify-between items-center">
             <h1 className="text-lg font-semibold md:text-2xl">{catogries}  Components</h1>
+          <div className="px-2"><Switch id="airplane-mode" defaultChecked/></div>
           </div>
+
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
 

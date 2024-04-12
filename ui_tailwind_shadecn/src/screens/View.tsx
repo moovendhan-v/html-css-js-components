@@ -23,7 +23,8 @@ import { useEffect } from "react";
 import { Skeleton } from "@/components/ui/skeleton"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton";
 import { fetchComponentStore } from '@/api/components/component';
-import { ComponentStore, } from '@/types/ComponentStore.type'
+import { ComponentStore, } from '@/types/ComponentStore.type';
+import { ViewSkeleton } from "@/components/custom_ui/skeleton/ViewSkeleton";
 
 export function View() {
 
@@ -109,17 +110,13 @@ export function View() {
       </header>
       {componentDetails === null ? (
         // Render loader while componentDetails is null
-        <h3>Loading</h3>
+        <ViewSkeleton />
       ) : (
         // Render content once componentDetails is fetched
         <div>
           <div className="grid min-h-screen w-full md:grid-cols-[180px_1fr] lg:grid-cols-[200px_1fr]">
             <div className="">
-              {/* <div className="flex h-14 items-center  px-4 lg:h-[60px] lg:px-6 bg-primary ">
-              <Logo /> <h3 className=" px-2 font-bold">Components</h3>
-            </div> */}
               <div className={`${isSticky}`}>
-
                 <nav className="grid items-start px-2 text-sm font-medium lg:px-4 py-2">
                   {categries.length > 0 ? (
                     categries.map((category, index) => (
@@ -154,7 +151,33 @@ export function View() {
             </div>
             <div className="flex flex-col">
 
-              <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
+            
+              <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6">
+                <div className="flex min-h-screen w-full flex-col">
+                  <main className="flex flex-1 flex-col gap-4 md:gap-4 ">
+                    <div className="flex justify-between items-center">
+                      
+                      <div className="flex items-center">
+                        <span className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"><LeftArrow />  Go Back</span>
+                        <h1 className="px-3 md:text-2xl text-1xl font-medium">
+                        Awesome Buttons
+                      </h1>
+                      </div>
+                    
+                    <div className="w-full flex-1">
+                      <form>
+                        <div className="relative">
+                          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            type="search"
+                            placeholder="Search Components..."
+                            className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                          />
+                        </div>
+                      </form>
+                    </div>
+
+                    <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
                 <Sheet>
                   <SheetTrigger asChild>
                     <Button
@@ -194,16 +217,6 @@ export function View() {
 
                 </Sheet>
                 <div className="w-full flex-1">
-                  <form>
-                    <div className="relative">
-                      <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                      <Input
-                        type="search"
-                        placeholder="Search Components..."
-                        className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
-                      />
-                    </div>
-                  </form>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -222,16 +235,7 @@ export function View() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </header>
-              <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6">
-                <div className="flex min-h-screen w-full flex-col">
-                  <main className="flex flex-1 flex-col gap-4 md:gap-4 ">
-                    <div className="flex">
-                      <div className="flex items-center">
-                        <span className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"><LeftArrow />  Go Back</span>
-                      </div>
-                      <h1 className="px-3 md:text-2xl text-1xl font-medium">
-                        Awesome Buttons
-                      </h1>
+
                     </div>
                     <ResizablePanelGroup direction="horizontal">
                       <ResizablePanel>
