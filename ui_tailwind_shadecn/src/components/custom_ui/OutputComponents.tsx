@@ -26,31 +26,33 @@ const OutputsOfComponents: React.FC<OutputOfComponentsProps> = ({ html, css, js,
     `;
 
   return (
-    <div className="relative">
+    <div className="relative group">
 
-      <div className="absolute right-0 bottom-0 p-2">
-        <div className="flex bg-primary p-1 rounded-lg bg-zinc-950">
+    {type === ComponentType.COMPONENTS && (
+      <div className="hidden group-hover:block absolute bottom-0 right-0 p-2">
+        <div className="flex bg-primary p-1">
           <div><CodeIcon /></div>
           <div><p className="text-white">Get Code</p></div>
         </div>
       </div>
+    )}
 
-      <div className="absolute left-0 top-0 p-2">
-        <div className="flex bg-sky-400/100 p-1 rounded-full">
+    {type === ComponentType.COMPONENTS && (
+      <div className="absolute top-0 left-0 p-2">
+        <div className="flex bg-primary p-1 rounded-full">
           <div><p className="text-white"><TailwindCss /></p></div>
           <div><p className="text-white"><TailwindCss /></p></div>
         </div>
       </div>
-      
+    )}
 
-
-      <iframe
-        title="output"
-        srcDoc={iframeContent}
-        style={{ width: "100%", height: type }}
-        sandbox="allow-scripts"
-        className={`transition-opacity duration-300 ${borderRadius}`}
-      />
+    <iframe
+      title="output"
+      srcDoc={iframeContent}
+      style={{ width: "100%", height: type }}
+      sandbox="allow-scripts"
+      className={`transition-opacity duration-300 ${borderRadius}`}
+    />
     </div>
   );
 };

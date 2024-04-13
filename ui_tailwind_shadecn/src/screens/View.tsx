@@ -277,7 +277,6 @@ export function View() {
                                 language="html"
                                 value={componentDetails?.html || ''}
                                 onChange={(value) => {
-                                  console.log('Value:', value);
                                   setComponentDetails((prevDetails) => ({
                                     ...prevDetails,
                                     html: value,
@@ -288,7 +287,6 @@ export function View() {
                               />
                             )}
                             {activeTab === 'css' && <MonacoEditorComponent language="css" value={componentDetails?.css || ''}  onChange={(value) => {
-                                  console.log('Value:', value);
                                   setComponentDetails((prevDetails) => ({
                                     ...prevDetails,
                                     html: prevDetails?.html || "",
@@ -297,7 +295,6 @@ export function View() {
                                   }));
                                 }}/>}
                             {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={componentDetails?.js || ''} onChange={(value) => {
-                                  console.log('Value:', value);
                                   setComponentDetails((prevDetails) => ({
                                     ...prevDetails,
                                     html: prevDetails?.html || "",
