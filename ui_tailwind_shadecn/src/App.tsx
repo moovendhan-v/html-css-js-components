@@ -5,12 +5,13 @@ import {Dashboard} from './screens/Home';
 import Testing from './screens/Testing';
 import {Components} from './screens/Components';
 import { View } from '@/screens/View';
+import { Settings } from '@/screens/Settings';
 
 
 
 function App() {
 
-  return (
+  return (  
     <>
 
 <Router>
@@ -21,6 +22,8 @@ function App() {
           <Route path="/:categorie/:title" element={<View />} />
 
           <Route path="/view" element={<View />} />
+          <Route path="/settings" element={<Settings />} />
+
 
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
