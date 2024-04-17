@@ -12,6 +12,7 @@ import  SettingsNotificationsPage from '@/screens/settings/notifications/page'
 import  SettingsAppearancePage from '@/screens/settings/appearance/page'
 import  SettingsDisplayPage from '@/screens/settings/display/page'
 import  SettingsLayout from '@/screens/settings/layout'
+import AboutUs from '@/screens/AboutUs';
 
 function App() {
 
@@ -35,6 +36,8 @@ function App() {
           <Route path="/settings/display" element={<SettingsLayout children={<SettingsDisplayPage />} />} />
 
           <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage  />} />} />
+          <Route path="/aboutus" element={<AboutUs />} />
+
 
 
 
