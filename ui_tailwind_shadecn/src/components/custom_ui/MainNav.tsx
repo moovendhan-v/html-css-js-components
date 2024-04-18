@@ -56,6 +56,12 @@ export default function MainNav(){
                     >
                         AllComponents
                     </Link>
+                    <Link
+                        to={`/${"aboutus"}`}
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                        AboutUs
+                    </Link>
 
                     <Link
                         to={`/`}
@@ -116,33 +122,24 @@ export default function MainNav(){
                     <SheetContent side="left">
                         <nav className="grid gap-6 text-lg font-medium">
                             <Logo />
-                            <Link to={`/}`} className="hover:text-foreground">
-                                Dashboard
-                            </Link>
                             <Link
-                                to={`/`}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Orders
-                            </Link>
-                            <Link
-                                to={`/`}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Products
-                            </Link>
-                            <Link
-                                to={`/`}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Customers
-                            </Link>
-                            <Link
-                                to={`/`}
-                                className="text-muted-foreground hover:text-foreground"
-                            >
-                                Analytics
-                            </Link>
+                        to={`/`}
+                        className="text-foreground transition-colors hover:text-foreground"
+                    >
+                        UiComponents
+                    </Link>
+                    <Link
+                        to={`/${"all"}`}
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                        AllComponents
+                    </Link>
+                    <Link
+                        to={`/${"aboutus"}`}
+                        className="text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                        AboutUs
+                    </Link>
                         </nav>
                     </SheetContent>
                 </Sheet>
