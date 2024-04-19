@@ -10,7 +10,7 @@ type ResponseItem = {
 export const fetchComponentsStore = async (categories: string) => {
     const baseUri = getEnvVariable('BASE_URI');
     try {
-        const response = await fetch(`${baseUri}/components/searchcomponents?search=${categories}`);
+        const response = await fetch(`${baseUri}/components/latest?category=${categories}`);
         if (!response.ok) {
             throw new Error('Failed to fetch categories');
         }

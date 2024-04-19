@@ -9,6 +9,7 @@ const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
 
+
 // json webtokens 
 const jwt = require('jsonwebtoken')
   
@@ -29,6 +30,7 @@ const app = express();
 const port = 4000;
 app.use(cors());
 app.use(express.json());
+
 // app.use(bodyParser.json());
 
 //importing router files

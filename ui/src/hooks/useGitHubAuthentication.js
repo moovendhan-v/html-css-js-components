@@ -13,6 +13,8 @@ const useGitHubAuthentication = () => {
       setIsLoggedIn(true);
     }
   }, []);
+
+  // https://github.com/login/oauth/authorize?client_id=5871c78bb36c12b03eb3&redirect_uri=http://localhost:5174/&scope=user
   
   const handleLogin = () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,7 +25,6 @@ const useGitHubAuthentication = () => {
     const scope = 'user';
     const state = generateRandomState();
     const githubOAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
-
     const authWindow = window.open(githubOAuthUrl, '_blank');
 
     fetch('http://localhost:4000/auth/github-oauth', {
