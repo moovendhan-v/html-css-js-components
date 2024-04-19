@@ -1,57 +1,76 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-function checkIfFolderExists(folderPath, callback) {
+type Callback = (error: Error | null, result?: any) => void;
+
+function checkIfFolderExists(folderPath: string, callback: Callback): void {
   fs.access(folderPath, fs.constants.F_OK, (err) => {
     if (!err) {
       // Directory exists
-      callback(true);
+      callback(null, true);
     } else {
       // Directory does not exist
-      callback(false);
+      callback(null, false);
     }
   });
 }
 
-
-function readFileContent(folderPath, fileName, callback) {
+function readFileContent(folderPath: string, fileName: string, callback: Callback): void {
   const filePath = path.join(folderPath, fileName);
   fs.readFile(filePath, 'utf8', (err, content) => {
     if (err) {
-      return callback(err, null);
+      return callback(err);
     }
     callback(null, content);
   });
 }
 
-function createFiles(basePath, category, folderName, {html, css, js}, callback) {
+interface FileContent {
+  html: string;
+  css: string;
+  js: string;
+}
+
+function createFiles(
+  basePath: string,
+  category: string,
+  folderName: string,
+  fileContent: FileContent,
+  callback: Callback
+): void {
   const directoryNameForComponents = folderName;
   const folderPath = path.join(basePath, category, directoryNameForComponents);
 
-  checkIfFolderExists(folderPath, (isFolderExist) => {
+  checkIfFolderExists(folderPath, (err, isFolderExist) => {
+    if (err) {
+      return callback(err);
+    }
     if (isFolderExist) {
-      return callback("Name already exists please choose someother files");
+      return callback(new Error("Name already exists please choose some other files"));
     }
     const categoryFolderPath = path.join(basePath, category);
-    // checking catogries is avalable or not 
-    checkIfFolderExists(categoryFolderPath, (checkIfFolderAvalibale)=>{
-      if(!checkIfFolderAvalibale){
-        return callback("Catogries not available");
+    // checking categories is available or not
+    checkIfFolderExists(categoryFolderPath, (err, checkIfFolderAvailable) => {
+      if (err) {
+        return callback(err);
+      }
+      if (!checkIfFolderAvailable) {
+        return callback(new Error("Categories not available"));
       }
       fs.mkdir(folderPath, { recursive: true }, (err) => {
         if (err) {
           return callback(err);
         }
-  
+
         const filePaths = [
           path.join(folderPath, 'index.html'),
           path.join(folderPath, 'style.css'),
           path.join(folderPath, 'script.js')
         ];
         const fileContents = [
-          `${html}`,
-          `${css}`,
-          `${js}`
+          fileContent.html,
+          fileContent.css,
+          fileContent.js
         ];
         // Write content to each file
         filePaths.forEach((filePath, index) => {
@@ -67,14 +86,10 @@ function createFiles(basePath, category, folderName, {html, css, js}, callback) 
         });
       });
     });
-
-
   });
 }
 
-
-
-module.exports = {
+export {
   readFileContent,
   createFiles,
 };

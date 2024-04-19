@@ -1,31 +1,32 @@
-// authRouter.js
-const express = require('express');
-const axios = require('axios');
-const { exchangeGitHubCodeForToken, getUserInfoFromGit, getUserInformationsFromGitApi } = require('../controller/github-oauth.controller');
-const authRouter = express.Router();
-require('dotenv').config();
-const GitHubUser = require('../models/user.model');
-const {getUserInformationsByName} = require('../controller/userProfile.controller');
+import express, { Request, Response, Router } from 'express';
+import axios from 'axios';
+import { exchangeGitHubCodeForToken, getUserInfoFromGit, getUserInformationsFromGitApi } from '../controller/github-oauth.controller';
+import dotenv from 'dotenv';
+import GitHubUser from '../models/user.model';
+import { getUserInformationsByName } from '../controller/userProfile.controller';
 
-authRouter.get('/', (req, res) => {
-  res.send('welcome to git')
-})
+dotenv.config();
+const authRouter: Router = express.Router();
+
+authRouter.get('/', (req: Request, res: Response) => {
+  res.send('welcome to git');
+});
 
 authRouter.post('/getUserInfoFromGit', getUserInfoFromGit);
 
 // #TODO upgrade this with proper session 
-authRouter.post('/github-oauth', async (req, res) => {
-  const { code } = req.body;
+authRouter.post('/github-oauth', async (req: Request, res: Response) => {
+  const { code }: { code: string } = req.body;
   try {
     // #TODO Upadate a auth token where authanticated by user 
     // const githubAccessToken = await exchangeGitHubCodeForToken(code);
-    const githubAccessToken = "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";
+    const githubAccessToken: string = "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";
     console.log(`Git access token ${githubAccessToken}`);
 
     const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
 
     //get user profile info with github oauth 
-    const gitUserId = userInformations.id;
+    const gitUserId: number = userInformations.id;
     const existingUser = await GitHubUser.findOne({ id: gitUserId });
 
       // #TODO test if not an existing user (Test the app behaviour) and update the code (high priyority)
@@ -34,7 +35,7 @@ authRouter.post('/github-oauth', async (req, res) => {
         await githubUser.save();
       }
 
-    getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
+    getUserInformationsByName(existingUser.name, async (error: Error, userProfileWithComponents: any) => {
       if (error) {
           return res.status(500).send(`Internal Server Error ${error}`);
       } else {
@@ -49,4 +50,4 @@ authRouter.post('/github-oauth', async (req, res) => {
   }
 });
 
-module.exports = { authRouter };
+export { authRouter };
