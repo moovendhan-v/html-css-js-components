@@ -2,9 +2,22 @@
 import { MovingButton } from "@/components/ui/moving-border"
 import { Checkbox } from "@/components/ui/checkbox"
 import MainNav from "@/components/custom_ui/MainNav"
-
+import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import {HandleLogin} from '@/hooks/handle_login.hooks';
 
 export function Login() {
+
+    const location = useLocation();
+    useEffect(() => {
+        // Parse the query string to get the value of the 'code' parameter
+        const params = new URLSearchParams(location.search);
+        const code = params.get('code');
+    
+        // Do something with the 'code' value, like sending it to the server for authentication
+        console.log('Code:', code);
+      }, [location.search]);
+      
     return (
         <>
            < MainNav/>
@@ -31,6 +44,7 @@ export function Login() {
                                 duration={3000}
                                 borderRadius="10px"
                                 className="p-1 mr-3"
+                                onClick={HandleLogin}
                             >
                                 Signup With Github
                             </MovingButton>

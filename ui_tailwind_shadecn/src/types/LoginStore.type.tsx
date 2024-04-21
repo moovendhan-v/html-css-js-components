@@ -1,0 +1,19 @@
+export type LoginStore = {
+   isLogin: boolean;
+   user: {
+    _id: string;
+   id: number | null;
+   login: string | null;
+   avatar_url: string | null;
+   url: string | null;
+   html_url: string | null;
+   company: string | null;
+   location: string | null;
+   email: string | null;
+   name: string | null;
+   blog: string | null;
+   bio: string | null;
+   twitter_username: string | null;
+   __v: number;
+   }
+};

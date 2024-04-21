@@ -29,6 +29,7 @@ import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { useCategoriesStore, useComponentsStore } from "@/store/store"
+import {useLoginStore} from "@/store/Auth"
 import {ComponentsStore, } from '@/types/ComponentStore.type'
 import { useEffect } from "react"
 import { fetchCategories } from "@/api/components/categories"
@@ -50,7 +51,8 @@ export function Components() {
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
-  console.log(components);
+  const user = useLoginStore((state)=> state.user);
+  // useLoginStore.setState({isLogin: true});
 
   useEffect(() => {
     fetchCategories();
@@ -184,6 +186,7 @@ export function Components() {
         <main className="flex flex-1 flex-col gap-4 lg:gap-6 ">
           <div className="flex space justify-between items-center">
             <h1 className="text-lg font-semibold md:text-2xl">{catogries}  Components</h1>
+            <h1>{user ? user.name : "please login"}</h1>
           <div className="px-2"><Switch id="airplane-mode" defaultChecked/></div>
           </div>
 
