@@ -8,6 +8,7 @@ const {getUserInformationsByName} = require('../controller/userProfile.controlle
 const { response } = require('express');
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
+const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
 
 async function exchangeGitHubCodeForToken(code) {
   const client_id = process.env.GITHUB_CLIENT_ID;
@@ -27,11 +28,10 @@ async function exchangeGitHubCodeForToken(code) {
     const { access_token } = response.data;
     if (!access_token) {
       console.error('GitHub OAuth code exchange failed. Response:', response.data);
-      throw new Error('Access token not received from GitHub.');
+      throw new Error('Bad Verifications Code Exchange');
     }
     return access_token;
   } catch (error) {
-    console.error('GitHub OAuth code exchange error:', error);
     throw error;
   }
 }
