@@ -15,12 +15,21 @@ import  SettingsLayout from '@/screens/settings/layout'
 import AboutUs from '@/screens/AboutUs';
 import { Login } from './screens/Login';
 
+import { LogtoProvider, LogtoConfig } from '@logto/react';
+import { Callback } from './components/auth/Callback';
+
+const config: LogtoConfig = {
+  endpoint: 'http://localhost:3001/',
+  appId: '78lfaky11od6o86y8b50f',
+};
+
 function App() {
 
   return (  
     <>
+  <LogtoProvider config={config}>
 
-<Router>
+      <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
@@ -39,34 +48,13 @@ function App() {
           <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage  />} />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
-
-
-
-
-          {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
-
-          {/* <Route path="/search" element={<Componenets catogreise={"search"} />} /> */}
-          {/* <Route path="/all" element={<Componenets catogreise={"all"} />} />
-          <Route path="/buttons" element={<Componenets catogreise={"buttons"} />} />
-          <Route path="/cards" element={<Componenets catogreise={"cards"} />} />
-          <Route path="/forms" element={<Componenets catogreise={"forms"} />} />
-          <Route path="/checkbox" element={<Componenets catogreise={"checkbox"} />} />
-          <Route path="/loader" element={<Componenets catogreise={"loader"} />} />
-          <Route path="/input" element={<Componenets catogreise={"input"} />} />
-          <Route path="/tooltip" element={<Componenets catogreise={"tooltip"} />} />
-          <Route path="/navbar" element={<Componenets catogreise={"navbar"} />} />
-          <Route path="/tabs" element={<Componenets catogreise={"tabs"} />} />
-          <Route path="/toast" element={<Componenets catogreise={"toast"} />} /> */}
-          {/* component routeing end  */}
-          {/* <Route path="/edit" element={<Editor />} /> */}
-          {/* <Route path="/profile" element={<Profile />} /> */}
-          {/* Dynamic routing for viewing a ciomponent details  */}
-          {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
-
+          <Route path="/callback" element={<Callback />} />
+          
         </Routes>
       </Router>
 
-
+  </LogtoProvider>
+  
     </>
   )
 }
