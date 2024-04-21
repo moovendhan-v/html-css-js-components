@@ -8,11 +8,11 @@ const {getUserInformationsByName} = require('../controller/userProfile.controlle
 const { response } = require('express');
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
+const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
 
 async function exchangeGitHubCodeForToken(code) {
   const client_id = process.env.GITHUB_CLIENT_ID;
   const client_secret = process.env.GITHUB_CLIENT_SECRET;
-  console.log(client_secret);
   const params = `?client_id=${client_id}&client_secret=${client_secret}&code=${code}`;
   try {
     const response = await axios.post(
@@ -27,11 +27,10 @@ async function exchangeGitHubCodeForToken(code) {
     const { access_token } = response.data;
     if (!access_token) {
       console.error('GitHub OAuth code exchange failed. Response:', response.data);
-      throw new Error('Access token not received from GitHub.');
+      throw new Error('Bad Verifications Code Exchange');
     }
     return access_token;
   } catch (error) {
-    console.error('GitHub OAuth code exchange error:', error);
     throw error;
   }
 }
@@ -81,6 +80,7 @@ const signup_or_login_with_git = async (req,res)=>{
   // it will create a new account if account not already existis or creates a new account
 
   const { code } = req.body;
+  
   try {
     // #TODO Upadate a auth token where authanticated by user 
     const githubAccessToken = await exchangeGitHubCodeForToken(code);
@@ -96,37 +96,36 @@ const signup_or_login_with_git = async (req,res)=>{
         const githubUser = new GitHubUser(userInformations);
         await githubUser.save();
         const response ={ 
-          "token": createTokens({userId: githubUser.id, userName: githubUser.name}),
+          "token": createTokens({user_id: githubUser._id, name: githubUser.name}),
           "user": githubUser,
           "components": []
         }
         return res.json(jsonStatusSuccess({ message: `New Account created ${githubUser.name}`, response: response }));
       }
 
+
     getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
       if (error) {
           return res.status(500).send(`Internal Server Error ${error}`);
       } else {
-        userProfileWithComponents['token'] = createTokens({userId: existingUser.id, userName: existingUser.name});
+        userProfileWithComponents['token'] = createTokens({user_id: existingUser._id, name: existingUser.name});
         return res.json(jsonStatusSuccess({ message: `Welcome Back ${existingUser.name}`, response: await userProfileWithComponents }));
-
-        // res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, response: await userProfileWithComponents});
       }
   });
     // req.session.githubAccessToken = await githubAccessToken;
 
   } catch (error) {
     console.error('Error during GitHub OAuth:', error);
-    res.status(500).json({ success: false, error: error });
+    return res.json(jsonStatusError({message: error.message}))
   }
 }
 
-const createTokens = (tokenProperties)=>{
+const createTokens = (user)=>{
    // Assume user is authenticated via GitHub and obtain user info
   //  const { userId, username } = req.body;
 
    // Create JWT token
-   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1h' });
+   const token = jwt.sign({ user }, JWT_SECRET, { expiresIn: TOKEN_EXPIRE_TIMEOUT });
  
    // Set HTTPOnly cookie with JWT token
   //  res.cookie('jwt', token, { httpOnly: true, secure: true });
@@ -135,13 +134,15 @@ const createTokens = (tokenProperties)=>{
 }
 
 const validateToken = (req,res)=>{
-    // Retrieve JWT token from cookie
-  // const token = req.cookies.jwt;
-  const { token } = req.body;
 
-  if (!token) {
-      return res.status(401).json({ message: 'Unauthorized' });
+  const authHeader = req.headers['authorization'];
+  console.log(req.headers);
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Unauthorized' });
   }
+
+  const token = authHeader.split(' ')[1];
 
   try {
       // Verify JWT token
