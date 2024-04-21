@@ -218,7 +218,6 @@ const getCategoriesList = async (req, res) => {
 module.exports = { getCategoriesList };
 
 
-
 module.exports = {
     getLatestFiles,
     readFilesInformations,
