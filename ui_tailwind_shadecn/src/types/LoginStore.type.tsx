@@ -1,6 +1,8 @@
 export type LoginStore = {
    isLogin: boolean;
-   user: {
+};
+
+export type LoginUserInfoStore = {
     _id: string;
    id: number | null;
    login: string | null;
@@ -15,5 +17,4 @@ export type LoginStore = {
    bio: string | null;
    twitter_username: string | null;
    __v: number;
-   }
-};
+}

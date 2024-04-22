@@ -1,7 +1,7 @@
 
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/screens/settings/components/sidebar-nav"
-import MainNav from "@/components/custom_ui/MainNav";
+import MainNav from "@/components/custom_ui/NavBar/MainNav";
 
 
 export interface Metadata {

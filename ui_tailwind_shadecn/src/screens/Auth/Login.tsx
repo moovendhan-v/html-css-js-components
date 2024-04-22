@@ -1,7 +1,7 @@
 
 import { MovingButton } from "@/components/ui/moving-border"
 import { Checkbox } from "@/components/ui/checkbox"
-import MainNav from "@/components/custom_ui/MainNav"
+import MainNav from "@/components/custom_ui/NavBar/MainNav"
 import { useLocation } from 'react-router-dom';
 import { useEffect } from "react";
 import {HandleLogin} from '@/hooks/handle_login.hooks';

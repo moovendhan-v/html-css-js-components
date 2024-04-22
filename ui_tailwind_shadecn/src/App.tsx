@@ -13,9 +13,10 @@ import SettingsAppearancePage from '@/screens/settings/appearance/page'
 import SettingsDisplayPage from '@/screens/settings/display/page'
 import SettingsLayout from '@/screens/settings/layout'
 import AboutUs from '@/screens/AboutUs';
-import { Login } from './screens/Auth/Login';
+import { Login } from '@/screens/Auth/Login';
 import { useEffect } from 'react';
-import {useLoginStore} from "@/store/Auth"
+import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
+import { Profile } from './screens/Profile/Profile';
 
 function App() {
    const urlParams = new URLSearchParams(window.location.search);
@@ -38,7 +39,8 @@ function App() {
           window.localStorage.setItem('githubOAuthState', data.response.user);
           window.localStorage.setItem('user', data.response.user.id);
           window.localStorage.setItem('token', data.response.token);
-
+          useLoginStore.setState({isLogin: true});
+          useLoginUserInfo.setState(data.response.user)
         })
         .catch(error => {
           console.error('GitHub authentication error:', error);
@@ -68,6 +70,7 @@ function App() {
           <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage />} />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
 
 
 
