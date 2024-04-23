@@ -2,6 +2,7 @@
 const axios = require('axios');
 const GitHubUser = require('../models/user.model');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 const {getUserInformationsByName} = require('../controller/userProfile.controller');
 const { response } = require('express');
@@ -12,6 +13,7 @@ const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
 async function exchangeGitHubCodeForToken(code) {
   const client_id = process.env.GITHUB_CLIENT_ID;
   const client_secret = process.env.GITHUB_CLIENT_SECRET;
+  console.log(client_secret);
   const params = `?client_id=${client_id}&client_secret=${client_secret}&code=${code}`;
   try {
     const response = await axios.post(
@@ -74,5 +76,86 @@ const getUserInfoFromGit = async (req, res) => {
   }
 };
 
-module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit};
+const signup_or_login_with_git = async (req,res)=>{
+
+  // it will create a new account if account not already existis or creates a new account
+
+  const { code } = req.body;
+  try {
+    // #TODO Upadate a auth token where authanticated by user 
+    const githubAccessToken = await exchangeGitHubCodeForToken(code);
+
+    const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
+
+    //get user profile info with github oauth 
+    const gitUserId = userInformations.id;
+    const existingUser = await GitHubUser.findOne({ id: gitUserId });
+
+      // #TODO test if not an existing user (Test the app behaviour) and update the code (high priyority)
+      if (!existingUser) {
+        const githubUser = new GitHubUser(userInformations);
+        await githubUser.save();
+        const response ={ 
+          "token": createTokens({userId: githubUser.id, userName: githubUser.name}),
+          "user": githubUser,
+          "components": []
+        }
+        return res.json(jsonStatusSuccess({ message: `New Account created ${githubUser.name}`, response: response }));
+      }
+
+    getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
+      if (error) {
+          return res.status(500).send(`Internal Server Error ${error}`);
+      } else {
+        userProfileWithComponents['token'] = createTokens({userId: existingUser.id, userName: existingUser.name});
+        return res.json(jsonStatusSuccess({ message: `Welcome Back ${existingUser.name}`, response: await userProfileWithComponents }));
+
+        // res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, response: await userProfileWithComponents});
+      }
+  });
+    // req.session.githubAccessToken = await githubAccessToken;
+
+  } catch (error) {
+    console.error('Error during GitHub OAuth:', error);
+    res.status(500).json({ success: false, error: error });
+  }
+}
+
+const createTokens = (tokenProperties)=>{
+   // Assume user is authenticated via GitHub and obtain user info
+  //  const { userId, username } = req.body;
+
+   // Create JWT token
+   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1h' });
+ 
+   // Set HTTPOnly cookie with JWT token
+  //  res.cookie('jwt', token, { httpOnly: true, secure: true });
+ 
+   return token;
+}
+
+const validateToken = (req,res)=>{
+    // Retrieve JWT token from cookie
+  // const token = req.cookies.jwt;
+  const { token } = req.body;
+
+  if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  try {
+      // Verify JWT token
+      const decoded = jwt.verify(token, JWT_SECRET);
+      console.log(decoded);
+
+      // Access protected resource
+      res.status(200).json({ message: 'Token validated', user: decoded });
+  } catch (err) {
+      // Token verification failed
+      res.status(401).json({ message: 'Unauthorized' });
+  }
+}
+
+
+module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, createTokens, validateToken, signup_or_login_with_git};
 

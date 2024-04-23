@@ -1,7 +1,6 @@
 
 import {
-  Bell,
-  CircleUser,
+
   Menu,
   Search,
 } from "lucide-react"
@@ -14,14 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
@@ -29,6 +21,7 @@ import { Logo } from "@/components/custom_ui/Svg"
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { useCategoriesStore, useComponentsStore } from "@/store/store"
+// import {useLoginStore , useLoginUserInfo} from "@/store/Auth"
 import {ComponentsStore, } from '@/types/ComponentStore.type'
 import { useEffect } from "react"
 import { fetchCategories } from "@/api/components/categories"
@@ -38,6 +31,8 @@ import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 import { useParams } from 'react-router-dom';
 import {ComponentData} from '@/types/ComponentData.type';
 import { Switch } from "@/components/ui/switch"
+import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
+// import { json } from "stream/consumers"
 
 export function Components() {
 
@@ -50,14 +45,17 @@ export function Components() {
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
-  console.log(components);
+  // const user = useLoginStore((state)=> state.isLogin);
+  // const userInfo = useLoginUserInfo((state)=> state)
 
   useEffect(() => {
     fetchCategories();
     fetchComponentsStore(catogries ?? '');
   }, [catogries])
 
+
   return (
+    
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[220px_1fr]">
       <div className="hidden   md:block">
        <div className="fixed h-full">
@@ -160,26 +158,7 @@ export function Components() {
               </div>
             </form>
           </div> 
-          <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+         <NavProfile />
         </header>
         <main className="flex flex-1 flex-col gap-4 lg:gap-6 ">
           <div className="flex space justify-between items-center">

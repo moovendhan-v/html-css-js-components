@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/navigation-menu"
 
 import {
-    CircleUser,
     Menu,
     Search
 } from "lucide-react"
@@ -20,8 +19,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -32,12 +29,18 @@ import { Link } from "react-router-dom"
 import { Input } from "@/components/ui/input"
 
 import { Logo } from "@/components/custom_ui/Svg"
-import { Button } from "../ui/button"
+import { Button } from "../../ui/button"
+import { NavProfile } from "./NavProfile"
+
+// import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 
 
-export default function MainNav(){
+export default function MainNav() {
 
     const { setTheme } = useTheme()
+    // const user = useLoginStore((state) => state.isLogin);
+    // const userInfo = useLoginUserInfo((state) => state);
+    
 
     return (
         <>
@@ -123,23 +126,23 @@ export default function MainNav(){
                         <nav className="grid gap-6 text-lg font-medium">
                             <Logo />
                             <Link
-                        to={`/`}
-                        className="text-foreground transition-colors hover:text-foreground"
-                    >
-                        UiComponents
-                    </Link>
-                    <Link
-                        to={`/${"all"}`}
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        AllComponents
-                    </Link>
-                    <Link
-                        to={`/${"aboutus"}`}
-                        className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                        AboutUs
-                    </Link>
+                                to={`/`}
+                                className="text-foreground transition-colors hover:text-foreground"
+                            >
+                                UiComponents
+                            </Link>
+                            <Link
+                                to={`/${"all"}`}
+                                className="text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                                AllComponents
+                            </Link>
+                            <Link
+                                to={`/${"aboutus"}`}
+                                className="text-muted-foreground transition-colors hover:text-foreground"
+                            >
+                                AboutUs
+                            </Link>
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -174,26 +177,8 @@ export default function MainNav(){
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
-                                <CircleUser className="h-5 w-5" />
-                                <span className="sr-only">Toggle user menu</span>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>
-                                <Link to={`/settings`}>
-                                Settings
-                                    </Link>
-                                </DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                 
+                 <NavProfile />
                 </div>
             </header>
         </>

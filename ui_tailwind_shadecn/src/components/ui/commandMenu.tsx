@@ -1,11 +1,9 @@
 
 import * as React from "react"
 import {
-  Calculator,
-  Calendar,
   CreditCard,
+  Layers,
   Settings,
-  Smile,
   User,
 } from "lucide-react"
 
@@ -19,6 +17,10 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/ui/command"
+
+import { useCategoriesStore } from '@/store/store';
+import { Skeleton } from "./skeleton";
+import { Link } from "react-router-dom";
 
 export function CommandDialogDemo() {
   const [open, setOpen] = React.useState(false)
@@ -35,6 +37,8 @@ export function CommandDialogDemo() {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
+  const categries = useCategoriesStore((state) => state.categories);
+
   return (
     <>
       <p className="text-sm text-muted-foreground">
@@ -47,20 +51,29 @@ export function CommandDialogDemo() {
         <CommandInput placeholder="Type a command or search..." />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Suggestions">
-            <CommandItem>
-              <Calendar className="mr-2 h-4 w-4" />
-              <span>Calendar</span>
-            </CommandItem>
-            <CommandItem>
-              <Smile className="mr-2 h-4 w-4" />
-              <span>Search Emoji</span>
-            </CommandItem>
-            <CommandItem>
-              <Calculator className="mr-2 h-4 w-4" />
-              <span>Calculator</span>
-            </CommandItem>
+          <CommandGroup heading="Categries">
+
+            {categries.length > 0 ? (
+              categries.map((category, index) => (
+                <div className="transition duration-1000 ease-in-out">
+                  <Link
+                    key={index}
+                    to={`/${category}`}>
+                    <CommandItem>
+                      <Layers className="mr-2 h-4 w-4" />
+                      <span>{category}</span>
+                    </CommandItem>
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <>
+                <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
+              </>
+            )}
+
           </CommandGroup>
+
           <CommandSeparator />
           <CommandGroup heading="Settings">
             <CommandItem>

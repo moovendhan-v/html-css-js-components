@@ -1,4 +1,4 @@
-import MainNav from "@/components/custom_ui/MainNav"
+import MainNav from "@/components/custom_ui/NavBar/MainNav"
 import ScroolCardReveal from "@/components/custom_ui/ScroolCardReveal"
 
 

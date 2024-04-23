@@ -1,25 +1,57 @@
 import './App.css'
 import '../app/globals.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import {Dashboard} from './screens/Home';
+import { Dashboard } from './screens/Home';
 import Testing from './screens/Testing';
-import {Components} from './screens/Components';
+import { Components } from './screens/Components';
 import { View } from '@/screens/View';
 // import { Settings } from '@/screens/Settings';
-import  SettingsProfilePage from '@/screens/settings/page'
-import  SettingsAccountPage from '@/screens/settings/account/page'
-import  SettingsNotificationsPage from '@/screens/settings/notifications/page'
-import  SettingsAppearancePage from '@/screens/settings/appearance/page'
-import  SettingsDisplayPage from '@/screens/settings/display/page'
-import  SettingsLayout from '@/screens/settings/layout'
+import SettingsProfilePage from '@/screens/settings/page'
+import SettingsAccountPage from '@/screens/settings/account/page'
+import SettingsNotificationsPage from '@/screens/settings/notifications/page'
+import SettingsAppearancePage from '@/screens/settings/appearance/page'
+import SettingsDisplayPage from '@/screens/settings/display/page'
+import SettingsLayout from '@/screens/settings/layout'
 import AboutUs from '@/screens/AboutUs';
+import { Login } from '@/screens/Auth/Login';
+import { useEffect } from 'react';
+import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
+import { Profile } from './screens/Profile/Profile';
 
 function App() {
+   const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
 
-  return (  
+  useEffect(() => {
+    if(code){
+      fetch('http://localhost:4000/auth/github-oauth', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ code }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if(data.error == false){
+            useLoginStore.setState({isLogin: true});
+          }
+          window.localStorage.setItem('githubOAuthState', data.response.user);
+          window.localStorage.setItem('user', data.response.user.id);
+          window.localStorage.setItem('token', data.response.token);
+          useLoginStore.setState({isLogin: true});
+          useLoginUserInfo.setState(data.response.user)
+        })
+        .catch(error => {
+          console.error('GitHub authentication error:', error);
+        });
+    }
+  }, [code])
+
+  return (
     <>
 
-<Router>
+      <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
@@ -35,8 +67,10 @@ function App() {
           <Route path="/settings/notifications" element={<SettingsLayout children={<SettingsNotificationsPage />} />} />
           <Route path="/settings/display" element={<SettingsLayout children={<SettingsDisplayPage />} />} />
 
-          <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage  />} />} />
+          <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage />} />} />
           <Route path="/aboutus" element={<AboutUs />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
 
 
 

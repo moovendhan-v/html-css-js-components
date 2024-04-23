@@ -21,7 +21,7 @@ import { MovingWords } from '@/data/MovingText';
 import { Cateogries } from '@/data/ScroolingAnimations';
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
-import MainNav from "@/components/custom_ui/MainNav";
+import MainNav from "@/components/custom_ui/NavBar/MainNav";
 
 export function Dashboard() {
 

@@ -39,10 +39,54 @@ services:
     networks:
       my_network:
         ipv4_address: 172.28.0.3
+    
+  adminer:
+    image: adminer
+    container_name: my_adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: my_database
+      POSTGRES_USER: my_user
+      POSTGRES_PASSWORD: my_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  logto:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: svhd/logto:${TAG-latest}
+    entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
+    ports:
+      - "3001:3001"   # Map container port 3001 to host port 3001
+      - "3002:3002"   # Map container port 3002 to host port 3002
+    environment:
+      - TRUST_PROXY_HEADER=1
+      # Use localhost instead of the service name for local testing
+      - DB_URL=postgres://my_user:my_password@postgres:5432/logto
+      # Set other environment variables as needed
+      - ENDPOINT
+      - ADMIN_ENDPOINT
+  
 
 volumes:
   mongodb_data:
   redis_data:
+  postgres_data:
 
 networks:
   my_network:
