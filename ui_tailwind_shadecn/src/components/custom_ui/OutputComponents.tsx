@@ -86,7 +86,7 @@ const OutputViewComponents: React.FC<ComponentStore> = ({ html, css, js }) => {
       <iframe
         title="output"
         srcDoc={iframe}
-        style={{ width: "100%", height: "500px" }}
+        style={{ width: "100%", height: "550px" }}
         sandbox="allow-scripts"
         className={`transition-opacity duration-300`}
       />
