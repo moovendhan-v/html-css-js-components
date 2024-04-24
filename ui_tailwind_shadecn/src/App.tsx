@@ -72,9 +72,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
 
-
-
-
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 
           {/* <Route path="/search" element={<Componenets catogreise={"search"} />} /> */}

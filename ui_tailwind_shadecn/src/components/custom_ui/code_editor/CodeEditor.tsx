@@ -43,7 +43,7 @@ const MonacoEditorComponent: React.FC<MonacoEditorProps> = ({ language, value, o
     editorRef.current?.focus();
   };
 
-  return <div id="editor-container" style={{ height: '450px' }} onClick={handleEditorClick} />;
+  return <div id="editor-container" style={{ height: '502px' }} onClick={handleEditorClick} />;
 };
 
 export default MonacoEditorComponent;

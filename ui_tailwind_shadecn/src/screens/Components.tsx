@@ -176,13 +176,7 @@ export function Components() {
                     to={`/${component.catogries}/${component.folder_name}`}
                     key={index}
                   >
-                    <div ><OutputsOfComponents html={component.html} css={component.css} js={component.js} type={ComponentType.COMPONENTS} />
-                      <a className=" items-center">
-                        <span className="flex justify-between flex-row pt-1">
-                          <span className="title-font font-medium">{component.title}</span>
-                          <span className="title-font font-thin text-gray-200">{component.admin.name}</span>
-                        </span>
-                      </a>
+                    <div ><OutputsOfComponents componentsDetails={component} type={ComponentType.COMPONENTS} />
                     </div>
                   </Link>
                 </div>
