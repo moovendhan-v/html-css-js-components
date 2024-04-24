@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
-import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { useCategoriesStore, useComponentsStore } from "@/store/store"
 // import {useLoginStore , useLoginUserInfo} from "@/store/Auth"
@@ -27,11 +26,10 @@ import { useEffect } from "react"
 import { fetchCategories } from "@/api/components/categories"
 import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
-import { CardSkeleton } from "@/components/custom_ui/skeleton/CardSkeleton"
 import { useParams } from 'react-router-dom';
-import {ComponentData} from '@/types/ComponentData.type';
 import { Switch } from "@/components/ui/switch"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
+import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 // import { json } from "stream/consumers"
 
 export function Components() {
@@ -166,37 +164,9 @@ export function Components() {
           <div className="px-2"><Switch id="airplane-mode" defaultChecked/></div>
           </div>
 
-
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            {components.length > 0 ? (
-             components.map((component: ComponentData, index: number) => (
-                <div className="transition duration-1000 ease-in-out relative">
-                  <Link
-                    to={`/${component.catogries}/${component.folder_name}`}
-                    key={index}
-                  >
-                    <div ><OutputsOfComponents componentsDetails={component} type={ComponentType.COMPONENTS} />
-                    </div>
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <>
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-                <CardSkeleton />
-              </>
-            )}
-
-
+              <RenderComponents components={components} type={ComponentType.COMPONENTS}/>
           </div>
-
          
         </main>
       </div>
