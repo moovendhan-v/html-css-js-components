@@ -1,11 +1,9 @@
-import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
+import  { OutputViewComponents } from "@/components/custom_ui/OutputComponents"
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
-import { ComponentType } from "@/enums/iframEnums";
-// import CodeEditor from '@/components/custom_ui/code_editor/Editor';
 
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
@@ -16,7 +14,6 @@ import { CircleUser, Layers, Menu, Search, Github } from "lucide-react";
 import { LeftArrow, Logo, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
-import { Switch } from "@/components/ui/switch"
 import { useCategoriesStore } from '@/store/store';
 import { fetchCategories } from '@/api/components/categories';
 import { useEffect } from "react";
@@ -31,7 +28,6 @@ import { CommandDialogDemo } from "@/components/ui/commandMenu";
 
 export function View() {
 
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
   const [isSticky, setIsSticky] = useState(false);
   const [componentDetails, setComponentDetails] = useState<ComponentStore | null>(null);
   type componentParamType = {
@@ -44,9 +40,6 @@ export function View() {
   const defaultCategorie = categorie === null ? "all" : categorie;
   const defaultTitle = title === null ? "error" : title;
 
-  const handleSwitchToggle = () => {
-    setIsSwitchOn((prev) => !prev);
-  };
   const fetchComponentDetails = async () => {
     try {
       const componentStore = await fetchComponentStore(defaultCategorie, defaultTitle);
@@ -273,9 +266,8 @@ export function View() {
                       <ResizablePanel>
                         <div className="relative">
                           <div className="absolute p-4 right-0 top-0">
-                            <Switch onChange={handleSwitchToggle} />
                           </div>
-                          <OutputsOfComponents html={componentDetails.html} css={componentDetails.css} js={componentDetails.js} type={ComponentType.VIEW} mode={isSwitchOn} />
+                          <OutputViewComponents html={componentDetails.html} css={componentDetails.css} js={componentDetails.js}/>
                         </div>
                       </ResizablePanel>
                       <ResizableHandle className="px-1" withHandle />
@@ -340,21 +332,6 @@ export function View() {
                     </ResizablePanelGroup>
 
                     <div className="bg-secondary rounded">
-                      {/* <a className="inline-flex items-center">
-                    <img
-                      alt="blog"
-                      src="https://dummyimage.com/104x104"
-                      className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
-                    />
-                    <span className="flex-grow flex flex-col pl-4">
-                      <span className="title-font font-medium ">
-                        Holden Caulfield
-                      </span>
-                      <span className=" text-xs tracking-widest mt-0.5">
-                        UI DEVELOPER
-                      </span>
-                    </span>
-                  </a> */}
                     </div>
 
                     <header className=" bg-gray-900 body-font">
