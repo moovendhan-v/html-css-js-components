@@ -174,7 +174,7 @@ const getParticularComponent = async (req,res)=>{
         return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
     }
     const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-        err ? res.send(err):res.send(result);
+        err ? res.send(err):res.send(jsonStatusSuccess({errorStatus: false, statusCode: 200, response: result}));
     });
   } catch (error) {
     res.send(error)
