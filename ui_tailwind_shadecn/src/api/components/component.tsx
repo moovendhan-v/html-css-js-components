@@ -18,7 +18,7 @@ export const fetchComponentStore = async (categorie: string , title: string) => 
             throw new Error('Failed to fetch categorie');
         }
         const responseData = await response.json();
-        const postDetails = responseData.post_details; 
+        const postDetails = responseData.response.post_details; 
         
         // Extract post_details from response
         // const details: ComponentData[] = responseData.map((item: ResponseItem) => item.post_details);
