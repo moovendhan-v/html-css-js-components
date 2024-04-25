@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import {ComponentsStore, } from '@/types/ComponentStore.type'
+import {ComponentsStore, ViewComponentStore, } from '@/types/ComponentStore.type'
 import {CategoriesStore} from '@/types/CategoriesStore.type'
 
 
@@ -39,7 +39,32 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     toast : [],
 }));
 
-
-// export const useComponentStore = create<ComponentStore>(()=>{
-//     currentComponentStore : ComponentStore;
-// })
+export const useViewComponentStore = create<ViewComponentStore>(() => ({
+    viewComponents: {
+        html: "",
+        css: "",
+        js: "",
+        catogries: "",
+        folder_path: "",
+        folder_name: "",
+        isActive: false,
+        title: "",
+        description: "",
+        admin: {
+            _id: "",
+            id: 0,
+            login: "",
+            avatar_url: "",
+            url: "",
+            html_url: "",
+            company: "",
+            location: "",
+            email: null,
+            name: "",
+            blog: "",
+            bio: "",
+            twitter_username: null,
+            __v: 0,
+        },
+    },
+}));

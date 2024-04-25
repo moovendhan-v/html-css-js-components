@@ -25,11 +25,16 @@ import { ViewSkeleton } from "@/components/custom_ui/skeleton/ViewSkeleton";
 import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
+import { useViewComponentStore }from "@/store/store";
+// import { SelectValue } from "@/components/ui/select"
 
 export function View() {
 
   const [isSticky, setIsSticky] = useState(false);
   const [componentDetails, setComponentDetails] = useState<ComponentStore | null>(null);
+  // #TODO do a api call and stoe in a zustand store 
+  const viewCompoentsStore = useViewComponentStore((state) => state.viewComponents);
+
   type componentParamType = {
     categorie: string;
     title: string;
@@ -182,7 +187,7 @@ export function View() {
                       <div className="flex items-center">
                         <span className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"><LeftArrow />  Go Back</span>
                         <h1 className="px-3 md:text-2xl text-1xl font-medium">
-                          Awesome Buttons
+                          {viewCompoentsStore.title}
                         </h1>
                       </div>
 
@@ -267,7 +272,7 @@ export function View() {
                         <div className="relative">
                           <div className="absolute p-4 right-0 top-0">
                           </div>
-                          <OutputViewComponents html={componentDetails.html} css={componentDetails.css} js={componentDetails.js}/>
+                          <OutputViewComponents html={viewCompoentsStore.html} css={viewCompoentsStore.css} js={viewCompoentsStore.js}/>
                         </div>
                       </ResizablePanel>
                       <ResizableHandle className="px-1" withHandle />
@@ -301,30 +306,30 @@ export function View() {
                                 language="html"
                                 value={componentDetails?.html || ''}
                                 onChange={(value) => {
-                                  setComponentDetails((prevDetails) => ({
-                                    ...prevDetails,
-                                    html: value,
-                                    css: prevDetails?.css || '',
-                                    js: prevDetails?.js || ""
-                                  }));
+                                  useViewComponentStore.setState((state) => ({
+                                    viewComponents: {
+                                        ...state.viewComponents, 
+                                        html: value, 
+                                    },
+                                }));
                                 }}
                               />
                             )}
                             {activeTab === 'css' && <MonacoEditorComponent language="css" value={componentDetails?.css || ''} onChange={(value) => {
-                              setComponentDetails((prevDetails) => ({
-                                ...prevDetails,
-                                html: prevDetails?.html || "",
-                                css: value,
-                                js: prevDetails?.js || ""
-                              }));
+                             useViewComponentStore.setState((state) => ({
+                              viewComponents: {
+                                  ...state.viewComponents, 
+                                  html: value, 
+                              },
+                          }));
                             }} />}
                             {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={componentDetails?.js || ''} onChange={(value) => {
-                              setComponentDetails((prevDetails) => ({
-                                ...prevDetails,
-                                html: prevDetails?.html || "",
-                                css: prevDetails?.css || '',
-                                js: value
-                              }));
+                              useViewComponentStore.setState((state) => ({
+                                viewComponents: {
+                                    ...state.viewComponents, 
+                                    html: value, 
+                                },
+                            }));
                             }} />}
                           </div>
                         </div>

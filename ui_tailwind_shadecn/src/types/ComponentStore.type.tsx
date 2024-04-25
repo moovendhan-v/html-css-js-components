@@ -38,3 +38,6 @@ export type ComponentStore ={
     css : string;
     js : string;
 }
+ export type ViewComponentStore = {
+    viewComponents : ComponentData;
+ }
