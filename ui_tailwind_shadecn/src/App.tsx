@@ -18,6 +18,7 @@ import { useEffect } from 'react';
 import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 import { Profile } from './screens/Profile/Profile';
 
+
 function App() {
    const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');

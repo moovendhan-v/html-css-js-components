@@ -37,6 +37,7 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     checkbox : [],
     gradient : [],
     toast : [],
+    search: [],
 }));
 
 export const useViewComponentStore = create<ViewComponentStore>(() => ({
@@ -48,11 +49,30 @@ export const useViewComponentStore = create<ViewComponentStore>(() => ({
         folder_path: "",
         folder_name: "",
         isActive: false,
+        type: "",
+        like: {
+          isLiked: false,
+          likeCount: "0"
+        },
+        saved:{
+          isSaved: false,
+          savedCount: "0"
+        },
         title: "",
         description: "",
+        comments:{
+            count: "",
+            commentsList:[
+              {
+                comment:"",
+                user:"",
+                avatar:"",
+                date:""
+              }
+            ]
+          },
         admin: {
             _id: "",
-            id: 0,
             login: "",
             avatar_url: "",
             url: "",

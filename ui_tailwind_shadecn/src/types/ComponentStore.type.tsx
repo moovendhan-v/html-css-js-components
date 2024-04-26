@@ -31,6 +31,7 @@ export type ComponentsStore = {
     checkbox: ComponentData[];
     gradient: ComponentData[];
     toast: ComponentData[];
+    search: ComponentData[];
 };
 
 export type ComponentStore ={

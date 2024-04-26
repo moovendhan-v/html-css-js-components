@@ -115,7 +115,7 @@ export function View() {
               borderRadius="10px"
               className="p-1 mr-3"
             >
-              <Github className="m-3 h-4 w-4" />
+              <Github />
               Star On Github
             </MovingButton>
           </div>
