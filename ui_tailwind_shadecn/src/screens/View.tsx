@@ -28,7 +28,6 @@ import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
-import {fetchComponentsBySearch} from "@/api/components/searchComponents"
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {

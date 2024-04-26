@@ -47,7 +47,6 @@ export function Components() {
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
-  alert(components)
   
   // const user = useLoginStore((state)=> state.isLogin);
   // const userInfo = useLoginUserInfo((state)=> state)
