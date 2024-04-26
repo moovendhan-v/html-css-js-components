@@ -33,12 +33,38 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
                 if (jsErr) {
                     return callback(jsErr);
                 }
-                
+                // #TODO handle this likes and saved with the real data 
                 const dataObject = {
                     "post_details": {
                         "html": htmlContent,
                         "css": cssContent,
                         "js": jsContent,
+                        "type" : "components",
+                        "like": {
+                            "isLiked": true,
+                            "likeCount": "100"
+                          },
+                        "saved":{
+                            "isSaved": true,
+                            "savedCount": "100"
+                          },
+                        "comments":{
+                            "count": "10",
+                            "commentsList": [
+                                {
+                                    "comment":"testing comments",
+                                    "user": "Moovendhan",
+                                    "avatar": "testing",
+                                    "date": "testing"
+                                },
+                                {
+                                    "comment":"testing comments two",
+                                    "user": "Agricreations",
+                                    "avatar": "testing",
+                                    "date": "testing"
+                                }
+                            ]
+                        },
                         "folder_path": data.folder_path,
                         "folder_name": data.folder_name,
                         "catogries": data.categories,
