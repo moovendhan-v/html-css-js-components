@@ -28,6 +28,7 @@ import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
+import {fetchComponentsBySearch} from "@/api/components/searchComponents"
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {
@@ -115,7 +116,7 @@ export function View() {
               borderRadius="10px"
               className="p-1 mr-3"
             >
-              <Github className="m-3 h-4 w-4" />
+              <Github />
               Star On Github
             </MovingButton>
           </div>

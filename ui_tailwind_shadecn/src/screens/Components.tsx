@@ -30,6 +30,9 @@ import { useParams } from 'react-router-dom';
 import { Switch } from "@/components/ui/switch"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
+import {useQueryString} from "@/hooks/query_string_hooks";
+import { fetchComponentsBySearch } from "@/api/components/searchComponents"
+
 // import { json } from "stream/consumers"
 
 export function Components() {
@@ -39,17 +42,24 @@ export function Components() {
   };
 
   const { catogries } = useParams<componentsParamType>();
+  const query = useQueryString("search");
 
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
+  alert(components)
+  
   // const user = useLoginStore((state)=> state.isLogin);
   // const userInfo = useLoginUserInfo((state)=> state)
 
   useEffect(() => {
     fetchCategories();
+    if(catogries == 'search'){
+        fetchComponentsBySearch(query ?? '');
+      return
+    }
     fetchComponentsStore(catogries ?? '');
-  }, [catogries])
+  }, [catogries, query])
 
 
   return (
