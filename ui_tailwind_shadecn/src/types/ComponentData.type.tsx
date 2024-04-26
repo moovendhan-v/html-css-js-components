@@ -7,11 +7,30 @@ export interface ComponentData {
     folder_path: string;
     folder_name: string;
     isActive: boolean;
+    type: string;
+    like: {
+      isLiked: boolean | false;
+      likeCount:string | "0";
+    };
+    saved:{
+      isSaved: boolean | false;
+      savedCount: string | "0";
+    };
     title: string;
     description: string;
+    comments:{
+      count: string,
+      commentsList:[
+        {
+          comment:string,
+          user:string,
+          avatar:string,
+          date:string
+        }
+      ]
+    };
     admin: {
       _id: string;
-      id: number;
       login: string;
       avatar_url: string;
       url: string;
@@ -23,6 +42,5 @@ export interface ComponentData {
       blog: string;
       bio: string;
       twitter_username: string | null;
-      __v: number;
     };
   }
