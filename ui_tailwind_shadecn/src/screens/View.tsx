@@ -1,17 +1,19 @@
-import  { OutputViewComponents } from "@/components/custom_ui/OutputComponents"
+import { OutputViewComponents } from "@/components/custom_ui/OutputComponents"
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Layers, Menu, Search, Github } from "lucide-react";
-import { LeftArrow, Logo, LogoPlain } from "@/components/custom_ui/Svg";
+import { CircleUser, Layers, Menu, Search } from "lucide-react";
+import { LeftArrow, Like, Liked, Bookmarks, BookmarkSaved, Github, Comment, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
 import { useCategoriesStore } from '@/store/store';
@@ -25,7 +27,7 @@ import { ViewSkeleton } from "@/components/custom_ui/skeleton/ViewSkeleton";
 import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
-import { useViewComponentStore }from "@/store/store";
+import { useViewComponentStore } from "@/store/store";
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {
@@ -272,7 +274,7 @@ export function View() {
                         <div className="relative">
                           <div className="absolute p-4 right-0 top-0">
                           </div>
-                          <OutputViewComponents html={viewCompoentsStore.html} css={viewCompoentsStore.css} js={viewCompoentsStore.js}/>
+                          <OutputViewComponents html={viewCompoentsStore.html} css={viewCompoentsStore.css} js={viewCompoentsStore.js} />
                         </div>
                       </ResizablePanel>
                       <ResizableHandle className="px-1" withHandle />
@@ -308,28 +310,28 @@ export function View() {
                                 onChange={(value) => {
                                   useViewComponentStore.setState((state) => ({
                                     viewComponents: {
-                                        ...state.viewComponents, 
-                                        html: value, 
+                                      ...state.viewComponents,
+                                      html: value,
                                     },
-                                }));
+                                  }));
                                 }}
                               />
                             )}
                             {activeTab === 'css' && <MonacoEditorComponent language="css" value={componentDetails?.css || ''} onChange={(value) => {
-                             useViewComponentStore.setState((state) => ({
-                              viewComponents: {
-                                  ...state.viewComponents, 
-                                  html: value, 
-                              },
-                          }));
+                              useViewComponentStore.setState((state) => ({
+                                viewComponents: {
+                                  ...state.viewComponents,
+                                  css: value,
+                                },
+                              }));
                             }} />}
                             {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={componentDetails?.js || ''} onChange={(value) => {
                               useViewComponentStore.setState((state) => ({
                                 viewComponents: {
-                                    ...state.viewComponents, 
-                                    html: value, 
+                                  ...state.viewComponents,
+                                  js: value,
                                 },
-                            }));
+                              }));
                             }} />}
                           </div>
                         </div>
@@ -342,33 +344,44 @@ export function View() {
                     <header className=" bg-gray-900 body-font">
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                          <Logo />
-                          <span className="ml-3 text-xl">User Profile</span>
+                          <Avatar>
+                            <AvatarImage src={viewCompoentsStore.admin.avatar_url} />
+                            <AvatarFallback>Profile</AvatarFallback>
+                          </Avatar>
+                          <Link to={``}>
+                            <span className="ml-3 text-xl">{viewCompoentsStore.admin.name}</span>
+                          </Link>
                         </a>
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-                          <span>100 </span>
-                          <a className="mr-5 hover:text-white">Likes</a>
-                          <span>100 </span>
-                          <a className="mr-5 hover:text-white">Comments</a>
-                          <div className="flex">
-                            <span>100</span>
+
+                        {viewCompoentsStore.like.isLiked ?
+                          <><div className="flex p-2">
+                          <Liked />
+                          <span>{viewCompoentsStore.like.likeCount}</span>
+                        </div></>
+                          : <><div className="flex p-2">
+                          <Like />
+                          <span>{viewCompoentsStore.like.likeCount}</span>
+                        </div></>}
+
+                          <div className="flex p-2">
+                            <Comment />
+                            <span>{viewCompoentsStore.comments.count} </span>
                           </div>
-                          <a className="mr-5 hover:text-white">Saves</a>
+
+
+                          {viewCompoentsStore.saved.isSaved ?
+                          <><div className="flex p-2">
+                          <BookmarkSaved />
+                          <span>{viewCompoentsStore.saved.savedCount}</span>
+                        </div></>
+                          : <><div className="flex p-2">
+                          <Bookmarks />
+                          <span>{viewCompoentsStore.saved.savedCount}</span>
+                        </div></>}
+
                         </nav>
-                        <button className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0">
-                          Button
-                          <svg
-                            fill="none"
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            className="w-4 h-4 ml-1"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                          </svg>
-                        </button>
+
                       </div>
                     </header>
 
