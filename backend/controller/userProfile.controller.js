@@ -7,7 +7,9 @@ const getUserProfileInformations = async (req, res) => {
     try {
         const user_id = req.body.user_id;
         // Find user information using user_id
-        const existingUser = await GitHubUser.findOne({ _id: user_id });
+        const existingUser = await GitHubUser.findOne(
+            { _id: user_id },
+            {login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, email:1, name: 1, blog: 1, bio:1, twitter_username:1});
         if (!existingUser) {
             return res.status(404).send('User not found');
         }
@@ -59,7 +61,8 @@ const getUserInformationsByName = async (userName, callback) => {
     console.log(`UUsername ${userName}`);
     try {
         // Find user information using user_id
-        const existingUser = await GitHubUser.findOne({ name: userName});
+        const existingUser = await GitHubUser.findOne({ name: userName},
+            {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, email:1, name: 1, blog: 1, bio:1, twitter_username:1});
         if (!existingUser) {
             return callback('User not found', null);
         }

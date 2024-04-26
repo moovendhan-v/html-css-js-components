@@ -101,7 +101,7 @@ async function getLatestFiles (catogries,page, callback) {
         ]);
         await Promise.all(userComponents.map(async (data) => {
             try {
-                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
+                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid }, {_id: 0, login: 1});
                 const datas = await new Promise((resolve, reject) => {
                     readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
                         if (err) {
@@ -150,7 +150,9 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 
         await Promise.all(userComponents.map(async (data) => {
             try {
-                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
+                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
+                    {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
+                    );
                 const datas = await new Promise((resolve, reject) => {
                     readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
                         if (err) {
@@ -195,7 +197,9 @@ const getParticularComponent = async (req,res)=>{
     if(!data){
         return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
     }
-    const user = await GitHubUser.findOne({ user_id: data.user_id.$oid });
+    const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
+        {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
+        );
     if(!user){
         return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
     }
