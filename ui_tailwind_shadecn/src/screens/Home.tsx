@@ -1,5 +1,4 @@
 
-
 import { SearchIcon } from '../components/custom_ui/Svg';
 
 import { Button } from "@/components/ui/button"
@@ -22,26 +21,39 @@ import { Cateogries } from '@/data/ScroolingAnimations';
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
-import { useState } from 'react';
+import { useState} from 'react';
+// import { fetchCategories } from '@/api/components/categories';
+// import { useCategoriesStore } from '@/store/store';
 
 export function Dashboard() {
+
+    // useEffect(()=>{
+    //     fetchCategories();
+    // },[])
+
+    // const categries = useCategoriesStore((state) => state.categories);
+    // const Categories = () => {
+    //     const allCategories: { title: string }[] = categries.map((value) => ({ title: value }));
+    //     return allCategories;
+    // };
+    
+
     const [searchQuery, setSearchQuery] = useState('');
     
     const handleSearch = () => {
         const newUrl = `/search?search=${encodeURIComponent(searchQuery)}`;
         window.location.href = newUrl;
-      };
+    };
       
-      const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
         }
-        };
-       
+    };
 
-        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            setSearchQuery(event.target.value);
-        };
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(event.target.value);
+    };
 
       
     return (
@@ -126,23 +138,23 @@ export function Dashboard() {
                 </div> 
 
 
-<div className="h-[20rem] first-letter: rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden my-5 ">
-      <InfiniteMovingCards
-        items={Cateogries}
-        direction="right"
-        speed="slow"
-      />
-       <InfiniteMovingCards
-        items={Cateogries}
-        direction="left"
-        speed="slow"
-      />
-       <InfiniteMovingCards
-        items={Cateogries}
-        direction="right"
-        speed="slow"
-      />
-</div>
+                <div className="h-[20rem] first-letter: rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden my-5 ">
+                    <InfiniteMovingCards
+                        items={Cateogries}
+                        direction="right"
+                        speed="slow"
+                    />
+                    <InfiniteMovingCards
+                        items={Cateogries}
+                        direction="left"
+                        speed="slow"
+                    />
+                    <InfiniteMovingCards
+                        items={Cateogries}
+                        direction="right"
+                        speed="slow"
+                    />
+                </div>
 
                
                 <HeroParallax products={Products} />
@@ -168,3 +180,5 @@ export function TypographyH4() {
         </h4>
     )
 }
+
+

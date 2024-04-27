@@ -28,6 +28,7 @@ import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
+import { Comments } from "@/components/custom_ui/Comments"
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {
@@ -381,6 +382,8 @@ export function View() {
                         </div></>}
 
                         </nav>
+
+                      <Comments comments={viewCompoentsStore.comments.commentsList} />
 
                       </div>
                     </header>

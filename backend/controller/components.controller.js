@@ -54,13 +54,13 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
                                 {
                                     "comment":"testing comments",
                                     "user": "Moovendhan",
-                                    "avatar": "testing",
+                                    "avatar": "https://avatars.githubusercontent.com/u/96030910?v=4",
                                     "date": "testing"
                                 },
                                 {
                                     "comment":"testing comments two",
                                     "user": "Agricreations",
-                                    "avatar": "testing",
+                                    "avatar": "https://avatars.githubusercontent.com/u/96030910?v=4",
                                     "date": "testing"
                                 }
                             ]
