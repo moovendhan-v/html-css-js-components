@@ -22,9 +22,28 @@ import { Cateogries } from '@/data/ScroolingAnimations';
 import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
+import { useState } from 'react';
 
 export function Dashboard() {
+    const [searchQuery, setSearchQuery] = useState('');
+    
+    const handleSearch = () => {
+        const newUrl = `/search?search=${encodeURIComponent(searchQuery)}`;
+        window.location.href = newUrl;
+      };
+      
+      const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+        };
+       
 
+        const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            setSearchQuery(event.target.value);
+        };
+
+      
     return (
         <div className="flex min-h-screen w-full flex-col font-primary">
            < MainNav/>
@@ -47,15 +66,17 @@ export function Dashboard() {
                                 type="text"
                                 name="price"
                                 id="price"
+                                value={searchQuery}
+                                onChange={handleChange}
+                                onKeyDown={handleKeyDown}
                                 className="
-
-                               border-gradient-blue
+                                border-gradient-blue
                                 animate-pulse
                                 placeholder:text-muted-foreground  w-full rounded-full  bg-background text-xl border-2  p-4 focus:outline-none focus:ring-2 focus:ring-primary"
                                 placeholder="Explore all ui Components"
                             />
 
-                            <button className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
+                            <button  onClick={handleSearch} className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
                                 <SearchIcon />  <span className="px-1">Search</span>
                             </button>
 
@@ -64,7 +85,7 @@ export function Dashboard() {
                     </div>
 
                     <div className="flex justify-center hover:animate-pulse">
-                        <Button >
+                        <Button onClick={handleSearch}>
                             <LogoPlain /> Search Components
                         </Button>
                     </div>
