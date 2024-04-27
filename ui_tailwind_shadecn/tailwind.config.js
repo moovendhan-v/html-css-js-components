@@ -31,6 +31,8 @@ module.exports = {
         niconne: ['"Niconne"', 'niconne'],
       },
       colors: {
+        theme: "#132435c7",
+        // sub-theme: "#1c186f",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
