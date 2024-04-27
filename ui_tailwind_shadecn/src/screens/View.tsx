@@ -19,7 +19,6 @@ import { useState } from "react";
 import { useCategoriesStore } from '@/store/store';
 import { fetchCategories } from '@/api/components/categories';
 import { useEffect } from "react";
-import { Skeleton } from "@/components/ui/skeleton"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton";
 import { fetchComponentStore } from '@/api/components/component';
 import { ComponentStore, } from '@/types/ComponentStore.type';
@@ -29,11 +28,12 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
 import { Comments } from "@/components/custom_ui/Comments"
+import Footer from "@/components/custom_ui/Footer"
+import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {
 
-  const [isSticky, setIsSticky] = useState(false);
   const [componentDetails, setComponentDetails] = useState<ComponentStore | null>(null);
   // #TODO do a api call and stoe in a zustand store 
   const viewCompoentsStore = useViewComponentStore((state) => state.viewComponents);
@@ -73,18 +73,18 @@ export function View() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const footer = document.getElementById('footer');
-      if (!footer) return;
+      // const footer = document.getElementById('footer');
+      // if (!footer) return;
 
-      const navbar = document.querySelector('.flex-1') as HTMLElement;
-      const footerPosition = footer.getBoundingClientRect().top;
+      // const navbar = document.querySelector('.flex-1') as HTMLElement;
+      // const footerPosition = footer.getBoundingClientRect().top;
 
-      setIsSticky(window.scrollY > navbar.offsetTop);
-      if (footerPosition <= window.innerHeight) {
-        navbar.style.position = 'relative';
-      } else {
-        navbar.style.position = 'fixed';
-      }
+      // setIsSticky(window.scrollY > navbar.offsetTop);
+      // if (footerPosition <= window.innerHeight) {
+      //   navbar.style.position = 'relative';
+      // } else {
+      //   navbar.style.position = 'fixed';
+      // }
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -110,6 +110,7 @@ export function View() {
             <a className="mr-5 hover:text-white">Contact Us</a>
             <a className="mr-5 hover:text-white">All Components</a>
           </nav>
+
           <div className="mr-3">
             <MovingButton
               duration={3000}
@@ -120,13 +121,12 @@ export function View() {
               Star On Github
             </MovingButton>
           </div>
+          
           <div className="mr-3">
             <Button>
               <Layers className="mr-2 h-4 w-4" /> Create New One
             </Button>
           </div>
-
-
 
           <HoverBorderGradient
             containerClassName="rounded-full"
@@ -139,49 +139,18 @@ export function View() {
         </div>
       </header>
       {componentDetails === null ? (
-        // Render loader while componentDetails is null
         <ViewSkeleton />
       ) : (
-        // Render content once componentDetails is fetched
         <div>
           <div className="grid min-h-screen w-full md:grid-cols-[180px_1fr] lg:grid-cols-[200px_1fr]">
             <div className="">
-              <div className={`${isSticky}`}>
-                <nav className="grid items-start px-2 text-sm font-medium lg:px-4 py-2">
-                  {categries.length > 0 ? (
-                    categries.map((category, index) => (
-                      <div className="transition duration-1000 ease-in-out">
-                        <Link
-                          key={index}
-                          to={`/${category}`} // Assuming each category corresponds to a route
-                          className="text-base font-xs hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-1000 ease-in-out my-1"
-                        >
-                          {category}
-                        </Link>
-                      </div>
-                    ))
-                  ) : (
-                    <>
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                      <Skeleton className="w-[100%] h-[40px] rounded transition duration-900 px-3 py-3 ease-in-out my-1" />
-                    </>
-                  )}
-                </nav>
+              <div className={` sticky top-0`}>
+                 
+                  <CategriesSlider categories={categries}  />
+                  
               </div>
             </div>
             <div className="flex flex-col">
-
-
               <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6">
                 <div className="flex min-h-screen w-full flex-col">
                   <main className="flex flex-1 flex-col gap-4 md:gap-4 ">
@@ -355,15 +324,15 @@ export function View() {
                         </a>
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
 
-                        {viewCompoentsStore.like.isLiked ?
-                          <><div className="flex p-2">
-                          <Liked />
-                          <span>{viewCompoentsStore.like.likeCount}</span>
-                        </div></>
-                          : <><div className="flex p-2">
-                          <Like />
-                          <span>{viewCompoentsStore.like.likeCount}</span>
-                        </div></>}
+                          {viewCompoentsStore.like.isLiked ?
+                            <><div className="flex p-2">
+                              <Liked />
+                              <span>{viewCompoentsStore.like.likeCount}</span>
+                            </div></>
+                            : <><div className="flex p-2">
+                              <Like />
+                              <span>{viewCompoentsStore.like.likeCount}</span>
+                            </div></>}
 
                           <div className="flex p-2">
                             <Comment />
@@ -372,22 +341,20 @@ export function View() {
 
 
                           {viewCompoentsStore.saved.isSaved ?
-                          <><div className="flex p-2">
-                          <BookmarkSaved />
-                          <span>{viewCompoentsStore.saved.savedCount}</span>
-                        </div></>
-                          : <><div className="flex p-2">
-                          <Bookmarks />
-                          <span>{viewCompoentsStore.saved.savedCount}</span>
-                        </div></>}
+                            <><div className="flex p-2">
+                              <BookmarkSaved />
+                              <span>{viewCompoentsStore.saved.savedCount}</span>
+                            </div></>
+                            : <><div className="flex p-2">
+                              <Bookmarks />
+                              <span>{viewCompoentsStore.saved.savedCount}</span>
+                            </div></>}
 
                         </nav>
 
-                      <Comments comments={viewCompoentsStore.comments.commentsList} />
-
+                        <Comments comments={viewCompoentsStore.comments.commentsList} />
                       </div>
                     </header>
-
 
                   </main>
                 </div>
@@ -397,6 +364,7 @@ export function View() {
           </div>
         </div>
       )}
+      <Footer />
     </>
   )
 }
