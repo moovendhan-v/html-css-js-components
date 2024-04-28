@@ -20,6 +20,9 @@ export interface ComponentData {
       isLiked: boolean | false;
       likeCount:string | "0";
     };
+    views:{
+      count: string;
+    };
     saved:{
       isSaved: boolean | false;
       savedCount: string | "0";

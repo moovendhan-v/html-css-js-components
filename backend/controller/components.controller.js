@@ -40,6 +40,9 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
                         "css": cssContent,
                         "js": jsContent,
                         "type" : "components",
+                        "views": {
+                            "count":"12"
+                        },
                         "like": {
                             "isLiked": true,
                             "likeCount": "100"

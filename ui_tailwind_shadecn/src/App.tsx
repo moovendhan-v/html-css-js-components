@@ -17,6 +17,7 @@ import { Login } from '@/screens/Auth/Login';
 import { useEffect } from 'react';
 import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 import { Profile } from './screens/Profile/Profile';
+import { CreateComponents } from './screens/CreateComponents/CreateComponents';
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create" element={<CreateComponents />} />
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 
