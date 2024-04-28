@@ -58,6 +58,9 @@ export const useViewComponentStore = create<ViewComponentStore>(() => ({
           isSaved: false,
           savedCount: "0"
         },
+        views:{
+          count: ""
+        },
         title: "",
         description: "",
         comments:{
