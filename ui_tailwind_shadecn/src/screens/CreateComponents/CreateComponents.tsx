@@ -12,8 +12,8 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Layers, Menu, Search, Blinds } from "lucide-react";
-import { LeftArrow, Like, Liked, Bookmarks, BookmarkSaved, Github, Comment, LogoPlain } from "@/components/custom_ui/Svg";
+import { CircleUser, Layers, Menu, Search } from "lucide-react";
+import { LeftArrow, Github, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
 import { useCategoriesStore } from '@/store/store';
@@ -27,12 +27,11 @@ import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
-import { Comments } from "@/components/custom_ui/Comments"
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 // import { SelectValue } from "@/components/ui/select"
 
-export function View() {
+export function CreateComponents() {
 
   const [componentDetails, setComponentDetails] = useState<ComponentStore | null>(null);
   // #TODO do a api call and stoe in a zustand store 
@@ -276,7 +275,7 @@ export function View() {
                             {activeTab === 'html' && (
                               <MonacoEditorComponent
                                 language="html"
-                                value={componentDetails?.html || ''}
+                                value={viewCompoentsStore?.html || ''}
                                 onChange={(value) => {
                                   useViewComponentStore.setState((state) => ({
                                     viewComponents: {
@@ -287,7 +286,7 @@ export function View() {
                                 }}
                               />
                             )}
-                            {activeTab === 'css' && <MonacoEditorComponent language="css" value={componentDetails?.css || ''} onChange={(value) => {
+                            {activeTab === 'css' && <MonacoEditorComponent language="css" value={viewCompoentsStore?.css || ''} onChange={(value) => {
                               useViewComponentStore.setState((state) => ({
                                 viewComponents: {
                                   ...state.viewComponents,
@@ -295,7 +294,7 @@ export function View() {
                                 },
                               }));
                             }} />}
-                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={componentDetails?.js || ''} onChange={(value) => {
+                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={viewCompoentsStore?.js || ''} onChange={(value) => {
                               useViewComponentStore.setState((state) => ({
                                 viewComponents: {
                                   ...state.viewComponents,
@@ -319,45 +318,9 @@ export function View() {
                             <AvatarFallback>Profile</AvatarFallback>
                           </Avatar>
                           <Link to={``}>
-                            <span className="ml-3 text-xl">{viewCompoentsStore.admin.name}</span>
+                            <span className="ml-3 text-xl">Moovendhan</span>
                           </Link>
                         </a>
-                        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-
-                            <div className="flex p-2">
-                                <Blinds />
-                                <span>{viewCompoentsStore.views.count}</span>
-                            </div>
-
-                          {viewCompoentsStore.like.isLiked ?
-                            <><div className="flex p-2">
-                              <Liked />
-                              <span>{viewCompoentsStore.like.likeCount}</span>
-                            </div></>
-                            : <><div className="flex p-2">
-                              <Like />
-                              <span>{viewCompoentsStore.like.likeCount}</span>
-                            </div></>}
-
-                          <div className="flex p-2">
-                            <Comment />
-                            <span>{viewCompoentsStore.comments.count} </span>
-                          </div>
-
-
-                          {viewCompoentsStore.saved.isSaved ?
-                            <><div className="flex p-2">
-                              <BookmarkSaved />
-                              <span>{viewCompoentsStore.saved.savedCount}</span>
-                            </div></>
-                            : <><div className="flex p-2">
-                              <Bookmarks />
-                              <span>{viewCompoentsStore.saved.savedCount}</span>
-                            </div></>}
-
-                        </nav>
-
-                        <Comments comments={viewCompoentsStore.comments.commentsList} />
                       </div>
                     </header>
 
