@@ -1,14 +1,16 @@
-# FROM node:14
+FROM node:latest
 
-# WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /ui_tailwind_shadecn
 
-# # COPY ui/package*.json ./
+COPY ui_tailwind_shadecn/package*.json ./
 
-# # RUN npm install
+RUN npm install --force
 
-# # COPY . .
 
-# # EXPOSE 3000
+RUN npm install -g vite
 
-# # CMD ["npm", "start"]
 
+EXPOSE 5173
+
+CMD ["vite", "--host", "0.0.0.0"]

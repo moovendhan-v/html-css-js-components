@@ -22,6 +22,7 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
+// import { useAuthStore } from '@/store/Auth/Auth';
 // import { fetchCategories } from '@/api/components/categories';
 // import { useCategoriesStore } from '@/store/store';
 
@@ -37,6 +38,7 @@ export function Dashboard() {
     //     return allCategories;
     // };
     
+
 
     const [searchQuery, setSearchQuery] = useState('');
     

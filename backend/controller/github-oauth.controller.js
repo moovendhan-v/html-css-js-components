@@ -6,14 +6,31 @@ const jwt = require('jsonwebtoken');
 const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
 const {getUserInformationsByName} = require('../controller/userProfile.controller');
 const { response } = require('express');
+const { Client, Databases, Functions, Account, Users, Storage, InputFile, Query, Permission, Role, ID } = require('node-appwrite');
+const sdk = require('node-appwrite');
+
+
+// // Config
+// const client = new Client()
+//     .setEndpoint('YOUR_ENDPOINT')   // Replace with your endpoint
+//     .setProject('6631da7e003003f677f6')  // Replace with your project ID
+//     .setKey('YOUR_API_KEY');        // Replace with your API Key
+//    //.setJWT('jwt');        
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
 const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
+ 
+const appwrite = new sdk.Client()
+                .setEndpoint('http://localhost/v1')
+                .setProject('6631da7e003003f677f6') 
+                .setKey('145eefe3ff1d960084e6c5c08fac644c30b9715066d27a6da3d492f4764499bc109c33ad47841c88898b3bee3a92fc31181e9cd8dff42544dc58aabd1b4549714565206675834d683a1cf789406771990e27edf49692601a5671aded5e2ec6642d8a7a2f1be9f07cdc25963fc2e90b980f3ce1cb7fcb4648368e967893fbfd77')
+                .setSelfSigned(true);
+
+const users = new sdk.Users(appwrite);
 
 async function exchangeGitHubCodeForToken(code) {
   const client_id = process.env.GITHUB_CLIENT_ID;
   const client_secret = process.env.GITHUB_CLIENT_SECRET;
-  console.log(client_secret);
   const params = `?client_id=${client_id}&client_secret=${client_secret}&code=${code}`;
   try {
     const response = await axios.post(
@@ -50,7 +67,7 @@ async function getUserInformationsFromGitApi(githubAccessToken) {
     throw error;
   }
 }
-
+ 
 const getUserInfoFromGit = async (req, res) => {
   const data = req.body;
 
@@ -156,6 +173,58 @@ const validateToken = (req,res)=>{
   }
 }
 
+const handleGitHubCallback = async (code) => {
+  try {
 
-module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, createTokens, validateToken, signup_or_login_with_git};
+      const accessToken = await exchangeGitHubCodeForToken(code)
+      const githubUser = await getUserInformationsFromGitApi(accessToken)
+      console.log(`accesstoken ${accessToken} githubUser ${githubUser}`)
+
+      // Update user profile in Appwrite with additional attributes
+      // const users = await appwrite.users.list();
+      // console.log(`users ${users}`)
+      // await appwrite.users.update(
+      //     appwrite.auth.user.$id, // ID of the currently authenticated user
+      //     {
+      //         name: githubUser.data.name,
+      //         // Add other attributes as needed
+      //     }
+      // );
+
+      console.log('User profile updated successfully:', githubUser.data);
+  } catch (error) {
+      console.error('Error handling GitHub callback:', error);
+  }
+};
+
+// Function to initiate GitHub OAuth flow via Appwrite
+const initiateGitHubOAuth = async () => {
+  try {
+      const authUrl = await appwrite.account.createOAuth2Session('github', 'http://localhost:5173/');
+      console.log('Redirect user to:', authUrl);
+  } catch (error) {
+      console.error('Error initiating GitHub OAuth flow:', error);
+  }
+};
+
+const handleAppwriteAuth = (req,res)=>{
+  const code = req.query.code;
+  handleGitHubCallback(code, res);
+}
+
+const test = async () => {
+  try {
+    console.log(users)
+    const result = await users.list(
+    );
+    console.log('List of users:', result);
+  } catch (error) {
+      console.error('Error listing users:', error);
+  }
+
+};
+
+test();
+
+module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, createTokens, validateToken, signup_or_login_with_git, handleAppwriteAuth};
 

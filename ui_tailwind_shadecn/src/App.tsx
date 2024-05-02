@@ -18,11 +18,17 @@ import { useEffect } from 'react';
 import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 import { Profile } from './screens/Profile/Profile';
 import { CreateComponents } from './screens/CreateComponents/CreateComponents';
+import Authtest from '@/screens/Auth'
+import AuthLogin from './screens/LoginAuth';
+import { getUserData } from './appwrite';
+import { useAuthStore } from './store/Auth/Auth';
 
 
 function App() {
    const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+  const account = useAuthStore((state) => state.user);
+
 
   useEffect(() => {
     if(code){
@@ -50,6 +56,13 @@ function App() {
     }
   }, [code])
 
+  useEffect(() => {
+    if(account == null){
+      getUserData()
+      .then((account) => useAuthStore.getState().setUser(account))
+    }
+  }, [])
+
   return (
     <>
 
@@ -74,6 +87,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/create" element={<CreateComponents />} />
+          <Route path="/auth" element={<Authtest />} />
+          <Route path="/authlogin" element={<AuthLogin />} />
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
 

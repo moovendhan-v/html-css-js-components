@@ -8,6 +8,9 @@ services:
       - ./:/app
     ports:
       - "3000:3000"
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
     environment:
       NODE_ENV: production
     tty: true
@@ -15,7 +18,8 @@ services:
       - mongodb
       - redis
     networks:
-      - my_network
+      my_network:
+        ipv4_address: 172.28.0.4
 
   mongodb:
     image: mongo
@@ -81,6 +85,13 @@ services:
       # Set other environment variables as needed
       - ENDPOINT
       - ADMIN_ENDPOINT
+
+  my_appwrite:
+    image: appwrite/appwrite:1.5.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./appwrite:/usr/src/code/appwrite:rw
+    entrypoint: install
   
 
 volumes:
