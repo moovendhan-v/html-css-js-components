@@ -13,6 +13,13 @@ const userComponentsDetails = new Schema({
     folder_name: { type: String, required: true },
     categories: { type: String, required: true },
     isActive: { type: Boolean, required: true },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GitHubUser' }],
+    saves: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GitHubUser' }],
+    comments: [{
+        body: String,
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'GitHubUser' },
+        date: { type: Date, default: Date.now },
+    }],
     // data html,css,js
 });
 

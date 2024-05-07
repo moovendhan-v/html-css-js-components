@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList} = require('../controller/components.controller');
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
+const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList, addLikesToComponents, removeLikeToComponents} = require('../controller/components.controller');
+const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);
@@ -12,21 +12,25 @@ componentsRouter.get('/latest', (req, res) => {
       getAllCompDetailsFromDatabases({categories:category, page: page}, (err, files)=>{
         //hadle the data
         if(err){
-          return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
+          return res.send(sendJSONError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
         }
-        res.send(jsonStatusSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
+        res.send(sendJSONSuccess({ errorStatus : false, message : `Latest ${category}`, response : files, count : 0 }))
       });
     }else{
       getLatestFiles(category,page, (err, files) => {
         const fileStatus = files.length <= 0 ? "Limit reached No More Components where available" : `Latest ${category}`;
         if (err) {
           console.error(err);
-          return res.send(jsonStatusError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
+          return res.send(sendJSONError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
         }
-        res.send(jsonStatusSuccess({ errorStatus : false, message : fileStatus, response : files, count : files.length }))
+        res.send(sendJSONSuccess({ errorStatus : false, message : fileStatus, response : files, count : files.length }))
       });
     }
 });
+
+componentsRouter.get('/:postId/like', addLikesToComponents)
+
+componentsRouter.get('/:postId/removelike', removeLikeToComponents)
 
 componentsRouter.get('/:category/:title',getParticularComponent);
 

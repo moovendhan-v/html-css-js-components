@@ -4,7 +4,7 @@ const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
+const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
@@ -42,7 +42,7 @@ function readFilesInformations(catogriesName, folderName,{data, user}, callback)
                         "type" : "components",
                         "like": {
                             "isLiked": true,
-                            "likeCount": "100"
+                            "likeCount": data.likes.length
                           },
                         "saved":{
                             "isSaved": true,
@@ -178,14 +178,14 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 const getComponentsBySearch = (req,res)=>{
     const { categories = "search", search } = req.query;
     if(!search){
-        return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `Please add a search query`, response: null, }));
+        return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `Please add a search query`, response: null, }));
     }
     getAllCompDetailsFromDatabases({ categories: categories, search: search }, (err, files) => {
         // Handle the data
         if (err) {
-            return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
+            return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
         }
-        res.send(jsonStatusSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
+        res.send(sendJSONSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
     });
 }
 
@@ -195,22 +195,67 @@ const getParticularComponent = async (req,res)=>{
   try {
     const data = await UserComponents.findOne({ folder_name: title, categories: category });
     if(!data){
-        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
+        return res.send(sendJSONError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
     }
     const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
         {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
         );
     if(!user){
-        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
+        return res.send(sendJSONError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
     }
     const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-        err ? res.send(err):res.send(jsonStatusSuccess({errorStatus: false, statusCode: 200, response: result}));
+        err ? res.send(err):res.send(sendJSONSuccess({errorStatus: false, statusCode: 200, response: result}));
     });
   } catch (error) {
     res.send(error)
   }
 }
 
+//components like 
+const addLikesToComponents = async (req,res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        console.log(post)
+        // Check if the user has already liked the post
+        if (post.likes.includes(userId)) {
+            // return res.status(400).json(sendJSONError({ errorStatus : true, statusCode : "400", message : 'user already liked', response : ""}));
+            res.badreq({message: "user already liked"});
+        }
+    
+        post.likes.push(userId);
+        await post.save();
+        res.status(200).json(sendJSONSuccess({ errorStatus : false, statusCode : "200", message : 'post liked', response : post}));
+        // res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+
+}
+
+//components dislike
+const removeLikeToComponents = async (req, res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        console.log(post)
+        // Check if the user has already liked the post
+        const index = post.likes.indexOf(userId);
+        console.log(index)
+        if (index === -1) {
+            return res.status(400);
+        //   return res.status(400).json({ error: 'User has not liked the post' });
+        }
+    
+        post.likes.splice(index, 1); // Remove user ID from likes array
+        await post.save();
+        res.json(post);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+}
 
 const isDirectoryCheck = async (filePath) => {
     try {
@@ -256,4 +301,6 @@ module.exports = {
     getComponentsBySearch,
     getParticularComponent,
     getCategoriesList,
+    addLikesToComponents,
+    removeLikeToComponents
 };

@@ -1,6 +1,6 @@
 const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
-const { jsonStatus, jsonStatusError, jsonStatusSuccess } = require('../operations/errorhandlingOperations');
+const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
 const { readFilesInformations, readContent } = require('../controller/components.controller');
 
 const getUserProfileInformations = async (req, res) => {
@@ -48,7 +48,7 @@ const getUserProfileInformations = async (req, res) => {
         };
 
         // Send the success response
-        res.send(jsonStatusSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents, count: userComponents.length }));
+        res.send(sendJSONSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents, count: userComponents.length }));
 
     } catch (error) {
         // Handle errors
@@ -152,7 +152,7 @@ const getprofileinfoprotect = async (req, res) => {
         };
 
         // Send the success response
-        res.send(jsonStatusSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents, count: userComponents.length }));
+        res.send(sendJSONSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents, count: userComponents.length }));
 
     } catch (error) {
         // Handle errors
@@ -169,7 +169,7 @@ const getUserInformationsByNameFromDb = async (req, res) => {
             if (error) {
                 return res.status(500).send(`Internal Server Error ${error}`);
             } else {
-                res.send(jsonStatusSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents }));
+                res.send(sendJSONSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents }));
             }
         });
     } catch (error) {
