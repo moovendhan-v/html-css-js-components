@@ -240,15 +240,13 @@ const removeLikeToComponents = async (req, res)=>{
         const postId = req.params.postId;
         const userId = req.body.userId; 
         const post = await UserComponents.findById(postId);
-        console.log(post)
         // Check if the user has already liked the post
         const index = post.likes.indexOf(userId);
-        console.log(index)
         if (index === -1) {
-            return res.status(400);
-        //   return res.status(400).json({ error: 'User has not liked the post' });
+            // return res.status(400);
+            return res.badreq({message: "user not liked"});
         }
-    
+     
         post.likes.splice(index, 1); // Remove user ID from likes array
         await post.save();
         res.json(post);
