@@ -4,7 +4,6 @@ const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
-const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
@@ -178,14 +177,14 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 const getComponentsBySearch = (req,res)=>{
     const { categories = "search", search } = req.query;
     if(!search){
-        return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `Please add a search query`, response: null, }));
+        return res.error({message: "Please add search query"})
     }
     getAllCompDetailsFromDatabases({ categories: categories, search: search }, (err, files) => {
         // Handle the data
         if (err) {
-            return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
+            return res.error({message: err});
         }
-        res.send(sendJSONSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
+        return res.success({message:`${categories} latest components`, response:files, count: files.length})
     });
 }
 
@@ -195,16 +194,16 @@ const getParticularComponent = async (req,res)=>{
   try {
     const data = await UserComponents.findOne({ folder_name: title, categories: category });
     if(!data){
-        return res.send(sendJSONError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
+        return res.error({message: 'Components not avaialble'})
     }
     const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
         {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
         );
     if(!user){
-        return res.send(sendJSONError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
+        return res.error({message: 'Fails in fetching components details Please contact admin Please visit contactus page for more details'})
     }
     const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-        err ? res.send(err):res.send(sendJSONSuccess({errorStatus: false, statusCode: 200, response: result}));
+        err ? res.send(err):res.success({response:result})
     });
   } catch (error) {
     res.send(error)
@@ -220,16 +219,14 @@ const addLikesToComponents = async (req,res)=>{
         console.log(post)
         // Check if the user has already liked the post
         if (post.likes.includes(userId)) {
-            // return res.status(400).json(sendJSONError({ errorStatus : true, statusCode : "400", message : 'user already liked', response : ""}));
-            res.badreq({message: "user already liked"});
+            return res.badreq({message: "user already liked"});
         }
     
         post.likes.push(userId);
         await post.save();
-        res.status(200).json(sendJSONSuccess({ errorStatus : false, statusCode : "200", message : 'post liked', response : post}));
-        // res.json(post);
+        return res.success({message : 'Post liked', response : post});
       } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.internalerr({message:error.message})
       }
 
 }
@@ -249,11 +246,54 @@ const removeLikeToComponents = async (req, res)=>{
      
         post.likes.splice(index, 1); // Remove user ID from likes array
         await post.save();
-        res.json(post);
+        return res.json(post);
       } catch (error) {
-        res.status(500).json({ error: error.message });
+        return res.internalerr({message:error.message})
       }
 }
+
+//components saves
+const saveComponents = async (req,res)=>{
+    try {
+        console.log("running")
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        console.log(post)
+        if (post.saves.includes(userId)) {
+            return res.badreq({message: "components already saved"});
+        }
+    
+        post.saves.push(userId);
+        await post.save();
+        return res.success({message : 'components saved', response : post});
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+
+}
+
+//components unsave
+const unSavedComponents = async (req, res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        // Check if the user has already liked the post
+        const index = post.saves.indexOf(userId);
+        if (index === -1) {
+            // return res.status(400);
+            return res.badreq({message: "components not saved"});
+        }
+     
+        post.saves.splice(index, 1); // Remove user ID from likes array
+        await post.save();
+        return res.json(post);
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+}
+
 
 const isDirectoryCheck = async (filePath) => {
     try {
@@ -300,5 +340,7 @@ module.exports = {
     getParticularComponent,
     getCategoriesList,
     addLikesToComponents,
-    removeLikeToComponents
+    removeLikeToComponents,
+    saveComponents,
+    unSavedComponents
 };

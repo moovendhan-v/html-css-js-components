@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList, addLikesToComponents, removeLikeToComponents} = require('../controller/components.controller');
+const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList, addLikesToComponents, removeLikeToComponents, saveComponents, unSavedComponents} = require('../controller/components.controller');
 const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 
 // componentsRouter.get('/:test', getComponentsDetails);
@@ -31,6 +31,10 @@ componentsRouter.get('/latest', (req, res) => {
 componentsRouter.get('/:postId/like', addLikesToComponents)
 
 componentsRouter.get('/:postId/removelike', removeLikeToComponents)
+
+componentsRouter.get('/:postId/save', saveComponents)
+
+componentsRouter.get('/:postId/unsave', unSavedComponents)
 
 componentsRouter.get('/:category/:title',getParticularComponent);
 

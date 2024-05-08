@@ -61,15 +61,15 @@ const getUserInfoFromGit = async (req, res) => {
       const existingUser = await GitHubUser.findOne({ id: userInfo.id });
 
       if (existingUser) {
-        return res.json(sendJSONSuccess({ message: `Welcome Back ${userInfo.name}`, response: userInfo }));
+        return res.success({ message: `Welcome Back ${userInfo.name}`, response: userInfo })
       }
 
       const githubUser = new GitHubUser(userInfo);
       await githubUser.save();
       
-      res.json(sendJSONSuccess({ message: `Hi ! ${userInfo.name}`, response: userInfo }));
+      res.success({ message: `Hi ! ${userInfo.name}`, response: userInfo })
     } catch (error) {
-      res.json(sendJSONError({ response: userInfo, errorStatus: true, statusCode: 11000, message: error.message }));
+      res.error({ response: userInfo, code: 11000, message: error.message })
     }
   } else {
     res.status(400).json({ error: 'Bad Request' });
@@ -100,7 +100,7 @@ const signup_or_login_with_git = async (req,res)=>{
           "user": githubUser,
           "components": []
         }
-        return res.json(sendJSONSuccess({ message: `New Account created ${githubUser.name}`, response: response }));
+        return res.success({message: `New Account created ${githubUser.name}`, response: response })
       }
 
     getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
@@ -108,9 +108,7 @@ const signup_or_login_with_git = async (req,res)=>{
           return res.status(500).send(`Internal Server Error ${error}`);
       } else {
         userProfileWithComponents['token'] = createTokens({userId: existingUser.id, userName: existingUser.name});
-        return res.json(sendJSONSuccess({ message: `Welcome Back ${existingUser.name}`, response: await userProfileWithComponents }));
-
-        // res.json({ success: true, githubAccessToken: await req.session.githubAccessToken, token: githubAccessToken, response: await userProfileWithComponents});
+        return res.success({message: `Welcome Back ${existingUser.name}`,response: await userProfileWithComponents })
       }
   });
     // req.session.githubAccessToken = await githubAccessToken;

@@ -11,7 +11,7 @@ const getUserProfileInformations = async (req, res) => {
             { _id: user_id },
             {login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, email:1, name: 1, blog: 1, bio:1, twitter_username:1});
         if (!existingUser) {
-            return res.status(404).send('User not found');
+            return res.notFount({message: "user not found"})
         }
         // Get userComponents details using user_id 
         const userComponents = await UserComponents.find({ user_id: existingUser._id });
@@ -22,7 +22,6 @@ const getUserProfileInformations = async (req, res) => {
             const categories = component.categories;
             const data = component;
             const user = existingUser;
-            console.log(`Component ${component}`);
 
             return new Promise((resolve, reject) => {
                 readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
