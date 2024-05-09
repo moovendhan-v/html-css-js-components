@@ -4,7 +4,23 @@ const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
+const util = require('util');
+
+const getUserInfoByIdForComments = async (uid) => {
+    try {
+        const user_id = uid
+        // Find user information using user_id
+        const existingUser = await GitHubUser.findOne(
+            { _id: user_id },
+            {login:1, avatar_url:1, name: 1});
+       return existingUser
+    } catch (error) {
+        // Handle errors
+        console.error('Error in getUserProfileInformations:', error);
+        res.status(500).send(`Internal Server Error ${error}`);
+    }
+}
+
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
@@ -20,69 +36,61 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
 };
 
 // reading file informations 
-function readFilesInformations(catogriesName, folderName,{data, user}, callback) {
-    readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
-        if (htmlErr) {
-            return callback(htmlErr);
-        }
-        readContent('style.css', catogriesName, folderName, (cssErr, cssContent) => {
-            if (cssErr) {
-                return callback(cssErr);
+const readContentAsync = util.promisify(readContent);
+
+async function readFilesInformations(categoriesName, folderName, { data, user }, callback) {
+    try {
+        const htmlContent = await readContentAsync('index.html', categoriesName, folderName);
+        const cssContent = await readContentAsync('style.css', categoriesName, folderName);
+        const jsContent = await readContentAsync('script.js', categoriesName, folderName);
+        const post = await UserComponents.findById(data._id);
+        // const post = await UserComponents.findOne({ folder_name: data.folder_name });
+
+        const commentsListWithUserInfo = await Promise.all(data.comments.map(async comment => {
+            const userInfo = await getUserInfoByIdForComments(comment.user);
+            return {
+                comment: comment.comment,
+                user: userInfo.name,
+                avatar: userInfo.avatar_url,
+                date: comment.date
+            };
+        }));
+
+        const dataObject = {
+            "post_details": {
+                "html": htmlContent,
+                "css": cssContent,
+                "js": jsContent,
+                "type": "components",
+                "like": {
+                    "isLiked": post.likes.includes(user._id)? true : false,
+                    "likeCount": data.likes.length
+                },
+                "saved": {
+                    "isSaved":  post.saves.includes(user._id)? true : false,
+                    "savedCount": data.saves.length
+                },
+                "comments": {
+                    "count": data.comments.length,
+                    "commentsList": commentsListWithUserInfo
+                },
+                "folder_path": data.folder_path,
+                "folder_name": data.folder_name,
+                "categories": data.categories,
+                "isActive": data.isActive,
+                "title": data.title,
+                "description": data.description,
+                "compId": data.id,
+                "admin": user
             }
-            readContent('script.js', catogriesName, folderName, (jsErr, jsContent) => {
-                if (jsErr) {
-                    return callback(jsErr);
-                }
-                // #TODO handle this likes and saved with the real data 
-                const dataObject = {
-                    "post_details": {
-                        "html": htmlContent,
-                        "css": cssContent,
-                        "js": jsContent,
-                        "type" : "components",
-                        "views": {
-                            "count":"12"
-                        },
-                        "like": {
-                            "isLiked": true,
-                            "likeCount": "100"
-                          },
-                        "saved":{
-                            "isSaved": true,
-                            "savedCount": "100"
-                          },
-                        "comments":{
-                            "count": "10",
-                            "commentsList": [
-                                {
-                                    "comment":"testing comments",
-                                    "user": "Moovendhan",
-                                    "avatar": "https://avatars.githubusercontent.com/u/96030910?v=4",
-                                    "date": "testing"
-                                },
-                                {
-                                    "comment":"testing comments two",
-                                    "user": "Agricreations",
-                                    "avatar": "https://avatars.githubusercontent.com/u/96030910?v=4",
-                                    "date": "testing"
-                                }
-                            ]
-                        },
-                        "folder_path": data.folder_path,
-                        "folder_name": data.folder_name,
-                        "catogries": data.categories,
-                        "isActive": data.isActive,
-                        "title": data.title,
-                        "description": data.description,
-                        "compId": data.id,
-                        "admin": user
-                    }
-                };
-                callback(null, dataObject);
-            });
-        });
-    });
+        };
+        callback(null, dataObject);
+    } catch (error) {
+        callback(error); // Pass error to the callback
+    }
+
 }
+
 
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
 async function getLatestFiles (catogries,page, callback) {
@@ -181,14 +189,14 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 const getComponentsBySearch = (req,res)=>{
     const { categories = "search", search } = req.query;
     if(!search){
-        return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `Please add a search query`, response: null, }));
+        return res.error({message: "Please add search query"})
     }
     getAllCompDetailsFromDatabases({ categories: categories, search: search }, (err, files) => {
         // Handle the data
         if (err) {
-            return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
+            return res.error({message: err});
         }
-        res.send(jsonStatusSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
+        return res.success({message:`${categories} latest components`, response:files, count: files.length})
     });
 }
 
@@ -198,20 +206,119 @@ const getParticularComponent = async (req,res)=>{
   try {
     const data = await UserComponents.findOne({ folder_name: title, categories: category });
     if(!data){
-        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Components not available', response : null, count : 0 }));
+        return res.error({message: 'Components not avaialble'})
     }
     const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
         {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
         );
     if(!user){
-        return res.send(jsonStatusError({ errorStatus : true, statusCode : "", message : 'Fails in fetching components details Please contact admin Please visit contactus page for more details', response : null, count : 0 }));
+        return res.error({message: 'Fails in fetching components details Please contact admin Please visit contactus page for more details'})
     }
     const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-        err ? res.send(err):res.send(jsonStatusSuccess({errorStatus: false, statusCode: 200, response: result}));
+        err ? res.send(err):res.success({response:result})
     });
   } catch (error) {
     res.send(error)
   }
+}
+
+//components like 
+const addLikesToComponents = async (req,res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        console.log(post)
+        // Check if the user has already liked the post
+        if (post.likes.includes(userId)) {
+            return res.badreq({message: "user already liked"});
+        }
+    
+        post.likes.push(userId);
+        await post.save();
+        return res.success({message : 'Post liked', response : post});
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+
+}
+
+//components dislike
+const removeLikeToComponents = async (req, res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        // Check if the user has already liked the post
+        const index = post.likes.indexOf(userId);
+        if (index === -1) {
+            // return res.status(400);
+            return res.badreq({message: "user not liked"});
+        }
+     
+        post.likes.splice(index, 1); // Remove user ID from likes array
+        await post.save();
+        return res.json(post);
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+}
+
+//components saves
+const saveComponents = async (req,res)=>{
+    try {
+        console.log("running")
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        console.log(post)
+        if (post.saves.includes(userId)) {
+            return res.badreq({message: "components already saved"});
+        }
+    
+        post.saves.push(userId);
+        await post.save();
+        return res.success({message : 'components saved', response : post});
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+
+}
+
+//components unsave
+const unSavedComponents = async (req, res)=>{
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId; 
+        const post = await UserComponents.findById(postId);
+        // Check if the user has already liked the post
+        const index = post.saves.indexOf(userId);
+        if (index === -1) {
+            // return res.status(400);
+            return res.badreq({message: "components not saved"});
+        }
+     
+        post.saves.splice(index, 1); // Remove user ID from likes array
+        await post.save();
+        return res.json(post);
+      } catch (error) {
+        return res.internalerr({message:error.message})
+      }
+}
+
+//add comments
+const addComments = async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId;
+        const commentBody = req.body.comment;
+        const post = await UserComponents.findById(postId);
+        post.comments.push({ comment: commentBody, user: userId });
+        await post.save();
+        return res.success({ message: 'Comment added successfully', response: post });
+    } catch (error) {
+        return res.internalerr({ message: error.message });
+    }
 }
 
 
@@ -259,4 +366,9 @@ module.exports = {
     getComponentsBySearch,
     getParticularComponent,
     getCategoriesList,
+    addLikesToComponents,
+    removeLikeToComponents,
+    saveComponents,
+    unSavedComponents,
+    addComments
 };
