@@ -1,3 +1,4 @@
-export type CategoriesStore = {
-    categories: string[];
-};
+export interface CategoriesStore {
+    categories: string[]; // Or whatever type your categories are
+    addCategories: (categories: string[]) => void;
+  }

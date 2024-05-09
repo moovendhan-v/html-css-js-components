@@ -88,6 +88,7 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
     } catch (error) {
         callback(error); // Pass error to the callback
     }
+
 }
 
 

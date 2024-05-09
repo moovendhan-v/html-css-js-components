@@ -14,6 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
+
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
@@ -30,6 +31,10 @@ import { useParams } from 'react-router-dom';
 import { Switch } from "@/components/ui/switch"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
+import {useQueryString} from "@/hooks/query_string_hooks";
+import { fetchComponentsBySearch } from "@/api/components/searchComponents"
+import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
+
 // import { json } from "stream/consumers"
 
 export function Components() {
@@ -39,17 +44,23 @@ export function Components() {
   };
 
   const { catogries } = useParams<componentsParamType>();
+  const query = useQueryString("search");
 
   // this categries getting from a zustand store 
   const categries = useCategoriesStore((state) => state.categories);
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
+  
   // const user = useLoginStore((state)=> state.isLogin);
   // const userInfo = useLoginUserInfo((state)=> state)
 
   useEffect(() => {
     fetchCategories();
+    if(catogries == 'search'){
+        fetchComponentsBySearch(query ?? '');
+      return
+    }
     fetchComponentsStore(catogries ?? '');
-  }, [catogries])
+  }, [catogries, query])
 
 
   return (
@@ -63,31 +74,8 @@ export function Components() {
             <Logo /> <h3 className=" px-2 font-bold">Ui Components</h3>
           </div>
       </Link>
-      {/* [mask-image:linear-gradient(to_top,transparent,white_50%,white_100%,transparent)] */}
-          <div className="flex-1 overflow-scroll  relative z-20 max-w-7xl ">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-             <div>
-             {categries.length > 0 ? (
-                categries.map((category, index) => (
-                  <div className="transition duration-1000 ease-in-out relative">
-                    <Link
-                      to={`/${category}`}
-                      key={index}
-                      className={`${category === catogries ? 'text-primary bg-muted' : ''
-                        } hover:bg-muted hover:text-primary flex items-center gap-3 rounded-lg px-3 py-3 text-muted-foreground transition duration-500 ease-in-out my-1`}
-                    >
-                      {category}
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <>
-                  <NavSkeleton />
-                </>
-              )}
-             </div>
-            </nav>
-          </div>
+     
+        <CategriesSlider categories={categries}  />
 
         </div>
        </div>

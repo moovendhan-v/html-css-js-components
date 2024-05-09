@@ -1,4 +1,12 @@
 // components data that we are getting. for components
+
+export interface Comment {
+  avatar: string;
+  user: string;
+  comment: string;
+}
+
+
 export interface ComponentData {
     html: string;
     css: string;
@@ -12,6 +20,9 @@ export interface ComponentData {
       isLiked: boolean | false;
       likeCount:string | "0";
     };
+    views:{
+      count: string;
+    };
     saved:{
       isSaved: boolean | false;
       savedCount: string | "0";
@@ -21,12 +32,7 @@ export interface ComponentData {
     comments:{
       count: string,
       commentsList:[
-        {
-          comment:string,
-          user:string,
-          avatar:string,
-          date:string
-        }
+        Comment
       ]
     };
     admin: {

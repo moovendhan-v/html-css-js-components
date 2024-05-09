@@ -31,137 +31,20 @@ import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 // import { ParallaxScroll } from "@/components/ui/parallax-scrool";
-import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
+// import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 import { MainAuth } from "@/screens/Auth/MainAuth";
-import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
-import { ComponentType } from "@/enums/iframEnums"
-import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
+// import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
+// import { ComponentType } from "@/enums/iframEnums"
+// import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 
 
 export function Profile() {
 
-    const userData = {
-        "error": false,
-        "statusCode": 200,
-        "message": "User data received successfully",
-        "response": {
-            "user": {
-                "_id": "6622a2bdd71dc2bc780a3bab",
-                "id": 96030910,
-                "login": "agricreation",
-                "avatar_url": "https://avatars.githubusercontent.com/u/96030910?v=4",
-                "url": "https://api.github.com/users/agricreation",
-                "html_url": "https://github.com/agricreation",
-                "company": "@agricreations",
-                "location": "Puducherry",
-                "email": null,
-                "name": "Moovendhan",
-                "blog": "https://agricreations.com",
-                "bio": "Exploring different technologies (Love to automate everything)",
-                "twitter_username": null,
-                "__v": 0
-            },
-            "components": [
-                {
-                    "_id": "66292cd519b7bc0954254891",
-                    "user_id": "6622a2bdd71dc2bc780a3bab",
-                    "title": "Sample Component",
-                    "description": "sample descriptions",
-                    "tags": [
-                        "['testing', 'tags,]"
-                    ],
-                    "upload_time": "2023-12-31T23:59:59.999Z",
-                    "updated_time": "2024-01-30T12:00:00.000Z",
-                    "folder_path": "/path/to/component",
-                    "folder_name": "moovendhan_amazing_tooedfd",
-                    "categories": "tabs",
-                    "isActive": false,
-                    "__v": 0,
-                    "component_details": {
-                        "post_details": {
-                            "html": "testing",
-                            "css": "testing css",
-                            "js": "testing js",
-                            "folder_path": "/path/to/component",
-                            "folder_name": "moovendhan_amazing_tooedfd",
-                            "catogries": "tabs",
-                            "isActive": false,
-                            "title": "Sample Component",
-                            "description": "sample descriptions",
-                            "compId": "66292cd519b7bc0954254891",
-                            "admin": {
-                                "_id": "6622a2bdd71dc2bc780a3bab",
-                                "id": 96030910,
-                                "login": "agricreation",
-                                "avatar_url": "https://avatars.githubusercontent.com/u/96030910?v=4",
-                                "url": "https://api.github.com/users/agricreation",
-                                "html_url": "https://github.com/agricreation",
-                                "company": "@agricreations",
-                                "location": "Puducherry",
-                                "email": null,
-                                "name": "Moovendhan",
-                                "blog": "https://agricreations.com",
-                                "bio": "Exploring different technologies (Love to automate everything)",
-                                "twitter_username": null,
-                                "__v": 0
-                            }
-                        }
-                    }
-                },
-                {
-                    "_id": "6629327819b7bc09542549c0",
-                    "user_id": "6622a2bdd71dc2bc780a3bab",
-                    "title": "Sample Component",
-                    "description": "sample descriptions",
-                    "tags": [
-                        "['testing', 'tags,]"
-                    ],
-                    "upload_time": "2023-12-31T23:59:59.999Z",
-                    "updated_time": "2024-01-30T12:00:00.000Z",
-                    "folder_path": "/path/to/component",
-                    "folder_name": "moovendhan_amazing_tooedfffd",
-                    "categories": "tabs",
-                    "isActive": false,
-                    "__v": 0,
-                    "component_details": {
-                        "post_details": {
-                            "html": "testing",
-                            "css": "testing css",
-                            "js": "testing js",
-                            "folder_path": "/path/to/component",
-                            "folder_name": "moovendhan_amazing_tooedfffd",
-                            "catogries": "tabs",
-                            "isActive": false,
-                            "title": "Sample Component",
-                            "description": "sample descriptions",
-                            "compId": "6629327819b7bc09542549c0",
-                            "admin": {
-                                "_id": "6622a2bdd71dc2bc780a3bab",
-                                "id": 96030910,
-                                "login": "agricreation",
-                                "avatar_url": "https://avatars.githubusercontent.com/u/96030910?v=4",
-                                "url": "https://api.github.com/users/agricreation",
-                                "html_url": "https://github.com/agricreation",
-                                "company": "@agricreations",
-                                "location": "Puducherry",
-                                "email": null,
-                                "name": "Moovendhan",
-                                "blog": "https://agricreations.com",
-                                "bio": "Exploring different technologies (Love to automate everything)",
-                                "twitter_username": null,
-                                "__v": 0
-                            }
-                        }
-                    }
-                }
-            ]
-        },
-        "count": 2
-    }
+  
 
     // const user = useLoginStore((state) => state.isLogin);
     const user = true;
-    const userInfo = useLoginUserInfo((state) => state);
+    // const userInfo = useLoginUserInfo((state) => state);
 
     type componentsParamType = {
         catogries?: string;

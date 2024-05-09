@@ -1,11 +1,25 @@
-import { create } from 'zustand';
 import {ComponentsStore, ViewComponentStore, } from '@/types/ComponentStore.type'
 import {CategoriesStore} from '@/types/CategoriesStore.type'
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 
-export const useCategoriesStore = create<CategoriesStore>(() => ({
-    categories: [], 
-}));
+// Create the store with zustand
+export const useCategoriesStore = create<CategoriesStore>()(
+  persist(
+    (set) => ({
+      categories: [],
+      addCategories: (newCategories) => set((state) => ({
+        categories: [...state.categories, ...newCategories],
+      })),
+    }),
+    {
+      name: 'catogries-store', 
+      storage: createJSONStorage(() => sessionStorage), 
+      partialize: (state) => ({ categories: state.categories}),
+    }
+  )
+);
 
 export const useComponentsStore = create<ComponentsStore>(() => ({
     all : [],
@@ -37,6 +51,7 @@ export const useComponentsStore = create<ComponentsStore>(() => ({
     checkbox : [],
     gradient : [],
     toast : [],
+    search: [],
 }));
 
 export const useViewComponentStore = create<ViewComponentStore>(() => ({
@@ -48,11 +63,33 @@ export const useViewComponentStore = create<ViewComponentStore>(() => ({
         folder_path: "",
         folder_name: "",
         isActive: false,
+        type: "",
+        like: {
+          isLiked: false,
+          likeCount: "0"
+        },
+        saved:{
+          isSaved: false,
+          savedCount: "0"
+        },
+        views:{
+          count: ""
+        },
         title: "",
         description: "",
+        comments:{
+            count: "",
+            commentsList:[
+              {
+                comment:"",
+                user:"",
+                avatar:"",
+                date:""
+              }
+            ]
+          },
         admin: {
             _id: "",
-            id: 0,
             login: "",
             avatar_url: "",
             url: "",
