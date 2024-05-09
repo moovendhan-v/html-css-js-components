@@ -28,15 +28,15 @@ componentsRouter.get('/latest', (req, res) => {
     }
 });
 
-componentsRouter.get('/:postId/like', addLikesToComponents)
+componentsRouter.post('/:postId/like', addLikesToComponents)
 
-componentsRouter.get('/:postId/removelike', removeLikeToComponents)
+componentsRouter.post('/:postId/removelike', removeLikeToComponents)
 
-componentsRouter.get('/:postId/save', saveComponents)
+componentsRouter.post('/:postId/save', saveComponents)
 
-componentsRouter.get('/:postId/unsave', unSavedComponents)
+componentsRouter.post('/:postId/unsave', unSavedComponents)
 
-componentsRouter.get('/:postId/addcomments', addComments)
+componentsRouter.post('/:postId/addcomments', addComments)
 
 componentsRouter.get('/:category/:title',getParticularComponent);
 

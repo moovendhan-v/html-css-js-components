@@ -57,7 +57,6 @@ const getUserProfileInformations = async (req, res) => {
 }
 
 const getUserInformationsByName = async (userName, callback) => {
-    console.log(`UUsername ${userName}`);
     try {
         // Find user information using user_id
         const existingUser = await GitHubUser.findOne({ name: userName},
@@ -160,7 +159,6 @@ const getprofileinfoprotect = async (req, res) => {
     }
 }
 
-
 const getUserInformationsByNameFromDb = async (req, res) => {
     const userName = req.body.user_name;
     try {
@@ -176,7 +174,6 @@ const getUserInformationsByNameFromDb = async (req, res) => {
         res.status(500).send(`Internal Server Error ${error}`);
     }
 };
-
 
 
 module.exports = { getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect };

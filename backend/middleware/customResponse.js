@@ -11,8 +11,8 @@ const customResponsesMiddleware = function(req, res, next) {
         });
     };
 
-    res.error = function({error = true, code=400, message="something went wrong", response=null, count = 0}) {
-        return res.status(code)({
+    res.error = function({error = true, code=400, message="something went wrong", response=null, count = 0} = {}) {
+        return res.status(code).json({
             error,
             code,
             message,
@@ -42,7 +42,7 @@ const customResponsesMiddleware = function(req, res, next) {
     };
 
     res.unauth = function({ error = {}, code = 401, message = "Unauthorised", response = null, count = 0} = {}) {
-        return res.status(401).json({
+        return res.status(code).json({
             error,
             code,
             message,
@@ -52,7 +52,7 @@ const customResponsesMiddleware = function(req, res, next) {
     };
 
     res.internalerr = function({ error = {}, code = 500, message = "Internal Server Error", response = null, count = 0} = {}) {
-        return res.status(500).json({
+        return res.status(code).json({
             error,
             code,
             message,
@@ -62,7 +62,7 @@ const customResponsesMiddleware = function(req, res, next) {
     };
 
     res.notFount = function({ error = {}, code = 404, message = "Not found", response = null, count = 0 } = {}) {
-        return res.status(404).json({
+        return res.status(code).json({
             error,
             code,
             message,

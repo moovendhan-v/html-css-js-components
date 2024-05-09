@@ -4,7 +4,22 @@ const { readFileContent } = require('../operations/fileOperations');
 const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
+const util = require('util');
 
+const getUserInfoByIdForComments = async (uid) => {
+    try {
+        const user_id = uid
+        // Find user information using user_id
+        const existingUser = await GitHubUser.findOne(
+            { _id: user_id },
+            {login:1, avatar_url:1, name: 1});
+       return existingUser
+    } catch (error) {
+        // Handle errors
+        console.error('Error in getUserProfileInformations:', error);
+        res.status(500).send(`Internal Server Error ${error}`);
+    }
+}
 
 
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
@@ -21,66 +36,50 @@ const readContent = (filename, catogries, catogriesFile, callback) => {
 };
 
 // reading file informations 
-function readFilesInformations(catogriesName, folderName,{data, user}, callback) {
-    readContent('index.html', catogriesName, folderName, (htmlErr, htmlContent) => {
-        if (htmlErr) {
-            return callback(htmlErr);
-        }
-        readContent('style.css', catogriesName, folderName, (cssErr, cssContent) => {
-            if (cssErr) {
-                return callback(cssErr);
+const readContentAsync = util.promisify(readContent);
+
+async function readFilesInformations(categoriesName, folderName, { data, user }, callback) {
+    try {
+        const htmlContent = await readContentAsync('index.html', categoriesName, folderName);
+        const cssContent = await readContentAsync('style.css', categoriesName, folderName);
+        const jsContent = await readContentAsync('script.js', categoriesName, folderName);
+
+        const commentsList = await Promise.all(data.comments.map(comment => getUserInfoByIdForComments(comment.user)));
+
+        const dataObject = {
+            "post_details": {
+                "html": htmlContent,
+                "css": cssContent,
+                "js": jsContent,
+                "type": "components",
+                "like": {
+                    "isLiked": true,
+                    "likeCount": data.likes.length
+                },
+                "saved": {
+                    "isSaved": true,
+                    "savedCount": data.saves.length
+                },
+                "comments": {
+                    "count": data.comments.length,
+                    "commentsList": commentsList
+                },
+                "folder_path": data.folder_path,
+                "folder_name": data.folder_name,
+                "categories": data.categories,
+                "isActive": data.isActive,
+                "title": data.title,
+                "description": data.description,
+                "compId": data.id,
+                "admin": user
             }
-            readContent('script.js', catogriesName, folderName, (jsErr, jsContent) => {
-                if (jsErr) {
-                    return callback(jsErr);
-                }
-                // #TODO handle this likes and saved with the real data 
-                const dataObject = {
-                    "post_details": {
-                        "html": htmlContent,
-                        "css": cssContent,
-                        "js": jsContent,
-                        "type" : "components",
-                        "like": {
-                            "isLiked": true,
-                            "likeCount": data.likes.length
-                          },
-                        "saved":{
-                            "isSaved": true,
-                            "savedCount": "100"
-                          },
-                        "comments":{
-                            "count": "10",
-                            "commentsList": [
-                                {
-                                    "comment":"testing comments",
-                                    "user": "Moovendhan",
-                                    "avatar": "testing",
-                                    "date": "testing"
-                                },
-                                {
-                                    "comment":"testing comments two",
-                                    "user": "Agricreations",
-                                    "avatar": "testing",
-                                    "date": "testing"
-                                }
-                            ]
-                        },
-                        "folder_path": data.folder_path,
-                        "folder_name": data.folder_name,
-                        "catogries": data.categories,
-                        "isActive": data.isActive,
-                        "title": data.title,
-                        "description": data.description,
-                        "compId": data.id,
-                        "admin": user
-                    }
-                };
-                callback(null, dataObject);
-            });
-        });
-    });
+        };
+        callback(null, dataObject);
+    } catch (error) {
+        callback(error); // Pass error to the callback
+    }
 }
+
 
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
 async function getLatestFiles (catogries,page, callback) {
