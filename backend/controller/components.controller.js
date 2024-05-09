@@ -5,6 +5,8 @@ const UserComponents = require('../models/components.model');
 const GitHubUser = require('../models/user.model');
 const baseFolderPath = '../';
 
+
+
 //TODO readContent('index.html', "buttons" , "moovendhan", (change this directory name into dynamically)
 
 //read file content 
@@ -294,6 +296,21 @@ const unSavedComponents = async (req, res)=>{
       }
 }
 
+//add comments
+const addComments = async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const userId = req.body.userId;
+        const commentBody = req.body.comment;
+        const post = await UserComponents.findById(postId);
+        post.comments.push({ comment: commentBody, user: userId });
+        await post.save();
+        return res.success({ message: 'Comment added successfully', response: post });
+    } catch (error) {
+        return res.internalerr({ message: error.message });
+    }
+}
+
 
 const isDirectoryCheck = async (filePath) => {
     try {
@@ -342,5 +359,6 @@ module.exports = {
     addLikesToComponents,
     removeLikeToComponents,
     saveComponents,
-    unSavedComponents
+    unSavedComponents,
+    addComments
 };
