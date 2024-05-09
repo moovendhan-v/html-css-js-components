@@ -43,8 +43,18 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
         const htmlContent = await readContentAsync('index.html', categoriesName, folderName);
         const cssContent = await readContentAsync('style.css', categoriesName, folderName);
         const jsContent = await readContentAsync('script.js', categoriesName, folderName);
+        const post = await UserComponents.findById(data._id);
+        // const post = await UserComponents.findOne({ folder_name: data.folder_name });
 
-        const commentsList = await Promise.all(data.comments.map(comment => getUserInfoByIdForComments(comment.user)));
+        const commentsListWithUserInfo = await Promise.all(data.comments.map(async comment => {
+            const userInfo = await getUserInfoByIdForComments(comment.user);
+            return {
+                comment: comment.comment,
+                user: userInfo.name,
+                avatar: userInfo.avatar_url,
+                date: comment.date
+            };
+        }));
 
         const dataObject = {
             "post_details": {
@@ -53,16 +63,16 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
                 "js": jsContent,
                 "type": "components",
                 "like": {
-                    "isLiked": true,
+                    "isLiked": post.likes.includes(user._id)? true : false,
                     "likeCount": data.likes.length
                 },
                 "saved": {
-                    "isSaved": true,
+                    "isSaved":  post.saves.includes(user._id)? true : false,
                     "savedCount": data.saves.length
                 },
                 "comments": {
                     "count": data.comments.length,
-                    "commentsList": commentsList
+                    "commentsList": commentsListWithUserInfo
                 },
                 "folder_path": data.folder_path,
                 "folder_name": data.folder_name,
