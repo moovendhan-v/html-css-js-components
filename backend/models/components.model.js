@@ -16,7 +16,7 @@ const userComponentsDetails = new Schema({
     upload_time: { type: Date, required: true },
     updated_time: { type: Date, required: true },
     folder_path: { type: String, required: true },
-    folder_name: { type: String, required: true },
+    folder_name: { type: String, required: true, unique: true },
     categories: { type: String, required: true },
     isActive: { type: Boolean, required: true },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'GitHubUser' }],
