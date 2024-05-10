@@ -19,7 +19,7 @@ export const RenderComponents: React.FC<RenderComponentsType> = ({ components, t
               components.map((component: ComponentData, index: number) => (
                   <div className="transition duration-1000 ease-in-out relative" key={index}>
                       <Link
-                          to={`/${component.catogries}/${component.folder_name}`}
+                          to={`/${component.categories}/${component.folder_name}`}
                       >
                           <div>
                               <OutputsOfComponents componentsDetails={component} type={type} />

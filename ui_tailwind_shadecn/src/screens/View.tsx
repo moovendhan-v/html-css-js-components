@@ -12,7 +12,7 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Layers, Menu, Search, Blinds } from "lucide-react";
+import { CircleUser, Layers, Menu, Search } from "lucide-react";
 import { LeftArrow, Like, Liked, Bookmarks, BookmarkSaved, Github, Comment, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
@@ -30,6 +30,8 @@ import { useViewComponentStore } from "@/store/store";
 import { Comments } from "@/components/custom_ui/Comments"
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
+import {getEnvVariable} from '@/utils/load.utils';
+
 // import { SelectValue } from "@/components/ui/select"
 
 export function View() {
@@ -44,6 +46,8 @@ export function View() {
   };
 
   const { categorie = "", title = "" } = useParams<componentParamType>();
+
+  const baseUri = getEnvVariable('BASE_URI');
 
   const defaultCategorie = categorie === null ? "all" : categorie;
   const defaultTitle = title === null ? "error" : title;
@@ -91,7 +95,7 @@ export function View() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
+console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
 
   return (
     <>
@@ -244,7 +248,7 @@ export function View() {
                         <div className="relative">
                           <div className="absolute p-4 right-0 top-0">
                           </div>
-                          <OutputViewComponents html={viewCompoentsStore.html} css={viewCompoentsStore.css} js={viewCompoentsStore.js} />
+                          <OutputViewComponents html={viewCompoentsStore?.html} css={viewCompoentsStore?.css} js={viewCompoentsStore?.js} />
                         </div>
                       </ResizablePanel>
                       <ResizableHandle className="px-1" withHandle />
@@ -299,7 +303,7 @@ export function View() {
                               useViewComponentStore.setState((state) => ({
                                 viewComponents: {
                                   ...state.viewComponents,
-                                  js: value,
+                                  js: value, 
                                 },
                               }));
                             }} />}
@@ -315,49 +319,49 @@ export function View() {
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                           <Avatar>
-                            <AvatarImage src={viewCompoentsStore.admin.avatar_url} />
+                            <AvatarImage src={viewCompoentsStore?.admin?.avatar_url} />
                             <AvatarFallback>Profile</AvatarFallback>
                           </Avatar>
                           <Link to={``}>
-                            <span className="ml-3 text-xl">{viewCompoentsStore.admin.name}</span>
+                            <span className="ml-3 text-xl">{viewCompoentsStore?.admin?.name}</span>
                           </Link>
                         </a>
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
 
                             <div className="flex p-2">
-                                <Blinds />
-                                <span>{viewCompoentsStore.views.count}</span>
+                                {/* <Blinds /> */}
+                                <span>{viewCompoentsStore?.views?.count}</span>
                             </div>
 
                           {viewCompoentsStore.like.isLiked ?
                             <><div className="flex p-2">
                               <Liked />
-                              <span>{viewCompoentsStore.like.likeCount}</span>
+                              <span>{viewCompoentsStore?.like?.likeCount}</span>
                             </div></>
                             : <><div className="flex p-2">
                               <Like />
-                              <span>{viewCompoentsStore.like.likeCount}</span>
+                              <span>{viewCompoentsStore?.like?.likeCount}</span>
                             </div></>}
 
                           <div className="flex p-2">
                             <Comment />
-                            <span>{viewCompoentsStore.comments.count} </span>
+                            <span>{viewCompoentsStore?.comments?.count} </span>
                           </div>
 
 
                           {viewCompoentsStore.saved.isSaved ?
                             <><div className="flex p-2">
                               <BookmarkSaved />
-                              <span>{viewCompoentsStore.saved.savedCount}</span>
+                              <span>{viewCompoentsStore?.saved?.savedCount}</span>
                             </div></>
                             : <><div className="flex p-2">
                               <Bookmarks />
-                              <span>{viewCompoentsStore.saved.savedCount}</span>
+                              <span>{viewCompoentsStore?.saved?.savedCount}</span>
                             </div></>}
 
                         </nav>
 
-                        <Comments comments={viewCompoentsStore.comments.commentsList} />
+                        <Comments comments={viewCompoentsStore?.comments?.commentsList} />
                       </div>
                     </header>
 
