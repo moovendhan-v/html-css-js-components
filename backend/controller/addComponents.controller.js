@@ -1,5 +1,5 @@
 const UserComponents = require('../models/components.model');
-const { jsonStatus, jsonStatusError, jsonStatusSuccess } = require('../operations/errorhandlingOperations');
+const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
 const { createFiles } = require('../operations/fileOperations');
 
 // this base path is must be refer from app.js files
@@ -25,16 +25,16 @@ const addNewComponents = async (req, res) => {
         createFiles(basePath, categories, folder_name, { html:html, css:css, js:js }, async (err) => {
             if (err) {
                 console.error('Error creating files:', err);
-                res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Not inserted Please contact admin plase visit contact us page : ${err}` }));
+                res.error({message: `Data Not inserted Please contact admin plase visit contact us page : ${err}`})
                 return;
             } else {
                 console.log('Files created successfully.'); 
                 try {
                     await newComponents.save();
-                    res.send(jsonStatusSuccess({ errorStatus: false, statusCode: "201", message: 'Components has been updated Please wait for approval thank you for your contributons' }));
+                    res.success({message: "Components has been updated Please wait for approval thank you for your contributons"})
                 } catch (error) {
                     console.error('Error saving new components:', error);
-                    res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Insert fails Please contact admin please visit contact us page : ${error}` }));
+                    res.error({message: `Data Insert fails Please contact admin please visit contact us page : ${error}`})
                 }   
             } 
         });        
@@ -44,7 +44,7 @@ const addNewComponents = async (req, res) => {
 
     } catch (error) {
         console.error('Error adding new components:', error);
-        res.send(jsonStatusError({ errorStatus: true, statusCode: "400", message: `Data Insert fails : ${error}` }));
+        res.error({message: `Data Insert fails : ${error}`})
     }
 }
 

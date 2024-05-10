@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
+const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
@@ -10,7 +10,7 @@ const authanticateJwtToken = (req,res,next)=>{
   console.log(req.headers);
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.send(jsonStatusError({message: "Unauthorised", statusCode: 401}))
+    return res.send(sendJSONError({message: "Unauthorised", statusCode: 401}))
   }
 
   const token = authHeader.split(' ')[1];
@@ -21,7 +21,7 @@ const authanticateJwtToken = (req,res,next)=>{
       next();  
   } catch (err) {
       // Token verification failed
-      return res.send(jsonStatusError({message: err, statusCode: 401}))
+      return res.send(sendJSONError({message: err, statusCode: 401}))
   }
 }
 

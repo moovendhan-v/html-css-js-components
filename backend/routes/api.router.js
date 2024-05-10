@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const apiRouter = Router();
 const { getAllCompDetailsFromDatabases, getComponentsBySearch } = require('../controller/components.controller');
-const {jsonStatus, jsonStatusError, jsonStatusSuccess} = require('../operations/errorhandlingOperations');
+const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
 
 
 apiRouter.get('/all', (req, res) => {
@@ -9,9 +9,9 @@ apiRouter.get('/all', (req, res) => {
     getAllCompDetailsFromDatabases({categories:categories, search:"buttons"}, (err, files) => {
         // Handle the data
         if (err) {
-            return res.send(jsonStatusError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
+            return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
         }
-        res.send(jsonStatusSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
+        res.send(sendJSONSuccess({ errorStatus: false, message: `${categories} latest components`, response: files, count: files.length }));
     });
 });
 

@@ -8,7 +8,7 @@ const connectDB = require('./config/db')
 const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
-
+const {customResponsesMiddleware} = require('./middleware/customResponse')
 
 // json webtokens 
 const jwt = require('jsonwebtoken')
@@ -40,6 +40,8 @@ const {authRouter} = require('./routes/github-oauth.router')
 const {CreateComponentsRouter} = require('./routes/addComponents.router')
 const {userProfileRouter} = require('./routes/userProfile.router')
 const {apiRouter} = require('./routes/api.router')
+
+app.use(customResponsesMiddleware);
 
 const baseFolderPath = '../'; //one step back
 const folderPath = path.join(baseFolderPath, 'project', 'project_datas', 'buttons');
