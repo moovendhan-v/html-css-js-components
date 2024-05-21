@@ -7,7 +7,25 @@ const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/erro
 const {getUserInformationsByName} = require('../controller/userProfile.controller');
 const { response } = require('express');
 
+const redis = require('redis');
+
+const redisClient = redis.createClient({
+  socket: {
+    host: '172.28.0.3',
+    port: 6379 // Default Redis port, change if different
+  }
+});
+redisClient.on('error', err => console.log('Redis Client Error', err));
+
+redisClient.connect().then(() => {
+  console.log('Connected to Redis');
+  // You can perform Redis operations here
+}).catch(err => {
+  console.error('Failed to connect to Redis', err);
+});
+
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
 
 async function exchangeGitHubCodeForToken(code) {
@@ -49,7 +67,7 @@ async function getUserInformationsFromGitApi(githubAccessToken) {
     console.error('Error fetching GitHub user data:', error);
     throw error;
   }
-}
+} 
 
 const getUserInfoFromGit = async (req, res) => {
   const data = req.body;
@@ -80,12 +98,12 @@ const signup_or_login_with_git = async (req,res)=>{
 
   // it will create a new account if account not already existis or creates a new account
 
-  const { code } = req.body;
+  // const { code } = req.query;
   try {
     // #TODO Upadate a auth token where authanticated by user 
-    const githubAccessToken = await exchangeGitHubCodeForToken(code);
+    // const githubAccessToken = await exchangeGitHubCodeForToken(code);
 
-    const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
+    const userInformations = await getUserInformationsFromGitApi("");
 
     //get user profile info with github oauth 
     const gitUserId = userInformations.id;
@@ -95,11 +113,15 @@ const signup_or_login_with_git = async (req,res)=>{
       if (!existingUser) {
         const githubUser = new GitHubUser(userInformations);
         await githubUser.save();
+        const refreshToken = generateRefreshToken({userId: existingUser._id, userName: existingUser.name});
+        await redisClient.set(`refreshToken:${existingUser._id}`, refreshToken);
+        // await redisClient.set(refreshToken, user.id.toString(), { EX: 7 * 24 * 60 * 60 });
         const response ={ 
-          "token": createTokens({userId: githubUser.id, userName: githubUser.name}),
+          "token": generateAccessToken({userId: githubUser._id, userName: githubUser.name}),
           "user": githubUser,
           "components": []
         }
+        res.cookie('refreshToken', refreshToken, { httpOnly: true});
         return res.success({message: `New Account created ${githubUser.name}`, response: response })
       }
 
@@ -107,7 +129,10 @@ const signup_or_login_with_git = async (req,res)=>{
       if (error) {
           return res.status(500).send(`Internal Server Error ${error}`);
       } else {
-        userProfileWithComponents['token'] = createTokens({userId: existingUser.id, userName: existingUser.name});
+        userProfileWithComponents['token'] = generateAccessToken({userId: existingUser._id, userName: existingUser.name});
+        userProfileWithComponents['refreshToken'] = generateRefreshToken({userId: existingUser._id, userName: existingUser.name});
+        res.cookie('refreshToken', userProfileWithComponents['refreshToken'], { httpOnly: true});
+        await redisClient.set(`refreshToken:${existingUser._id}`, userProfileWithComponents['refreshToken']);
         return res.success({message: `Welcome Back ${existingUser.name}`,response: await userProfileWithComponents })
       }
   });
@@ -119,18 +144,54 @@ const signup_or_login_with_git = async (req,res)=>{
   }
 }
 
-const createTokens = (tokenProperties)=>{
+const generateAccessToken = (tokenProperties)=>{
    // Assume user is authenticated via GitHub and obtain user info
   //  const { userId, username } = req.body;
 
    // Create JWT token
-   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1h' });
+   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1m' });
  
    // Set HTTPOnly cookie with JWT token
   //  res.cookie('jwt', token, { httpOnly: true, secure: true });
  
    return token;
 }
+
+const generateRefreshToken = (tokenProperties) => {
+  return jwt.sign({ tokenProperties }, REFRESH_TOKEN, { expiresIn: '2d' });
+};
+
+// const refreshToken = async (req, res, redisClient) => {
+//   const { refreshToken } = req.cookies;
+//   if (!refreshToken) {
+//     return res.sendStatus(401);
+//   }
+
+//   try {
+//     const userId = await redisClient.get(refreshToken);
+//     if (!userId) {
+//       return res.sendStatus(403);
+//     }
+
+//     const gitUserId = userInformations.id;
+//     const existingUser = await GitHubUser.findOne({ id: gitUserId });
+
+//     const user = users.find(u => u.id.toString() === userId);
+//     if (!user) {
+//       return res.sendStatus(403);
+//     }
+
+//     const newAccessToken = generateAccessToken(user);
+//     const newRefreshToken = generateRefreshToken();
+//     // await redisClient.set(newRefreshToken, user.id.toString(), { EX: 7 * 24 * 60 * 60 });
+//     // await redisClient.del(refreshToken);
+
+//     res.cookie('refreshToken', newRefreshToken, { httpOnly: true, secure: true });
+//     res.json({ accessToken: newAccessToken });
+//   } catch (err) {
+//     res.sendStatus(500).json({ message: 'Internal Server Error' });
+//   }
+// };
 
 const validateToken = (req,res)=>{
     // Retrieve JWT token from cookie
@@ -155,5 +216,5 @@ const validateToken = (req,res)=>{
 }
 
 
-module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, createTokens, validateToken, signup_or_login_with_git};
+module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, generateAccessToken,generateRefreshToken, validateToken, signup_or_login_with_git};
 

@@ -9,6 +9,24 @@ const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
 const {customResponsesMiddleware} = require('./middleware/customResponse')
+const redis = require('redis');
+const cookieParser = require('cookie-parser');
+
+const redisClient = redis.createClient({
+  socket: {
+    host: '172.28.0.3',
+    port: 6379 // Default Redis port, change if different
+  }
+});
+redisClient.on('error', err => console.log('Redis Client Error', err));
+
+redisClient.connect().then(() => {
+  console.log('Connected to Redis');
+  // You can perform Redis operations here
+}).catch(err => {
+  console.error('Failed to connect to Redis', err);
+});
+
 
 // json webtokens 
 const jwt = require('jsonwebtoken')
@@ -28,8 +46,14 @@ const { readFileContent } = require('./operations/fileOperations'); //file opera
 //importing express js
 const app = express();
 const port = 4000;
-app.use(cors());
+app.use(cors({
+  origin: '*', // Allow requests from any origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow all HTTP methods
+  allowedHeaders: '*', // Allow all headers
+  credentials: true // Allow cookies to be sent
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 // app.use(bodyParser.json());
 
