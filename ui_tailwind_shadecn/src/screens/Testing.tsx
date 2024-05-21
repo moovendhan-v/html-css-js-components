@@ -58,7 +58,9 @@ const [value, setValue] = React.useState("")
 
   return (
     <>
-≥
+
+
+
 
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

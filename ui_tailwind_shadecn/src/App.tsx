@@ -14,41 +14,13 @@ import SettingsDisplayPage from '@/screens/settings/display/page'
 import SettingsLayout from '@/screens/settings/layout'
 import AboutUs from '@/screens/AboutUs';
 import { Login } from '@/screens/Auth/Login';
-import { useEffect } from 'react';
-import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
-import { Profile } from './screens/Profile/Profile';
+// import { useEffect } from 'react';
+// import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
+import { UserProfile } from './screens/Profile/userProfile';
 import { CreateComponents } from './screens/CreateComponents/CreateComponents';
 
 
 function App() {
-   const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
-  useEffect(() => {
-    if(code){
-      fetch('http://localhost:4000/auth/github-oauth', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ code }),
-      })
-        .then(response => response.json())
-        .then(data => {
-          if(data.error == false){
-            useLoginStore.setState({isLogin: true});
-          }
-          window.localStorage.setItem('githubOAuthState', data.response.user);
-          window.localStorage.setItem('user', data.response.user.id);
-          window.localStorage.setItem('token', data.response.token);
-          useLoginStore.setState({isLogin: true});
-          useLoginUserInfo.setState(data.response.user)
-        })
-        .catch(error => {
-          console.error('GitHub authentication error:', error);
-        });
-    }
-  }, [code])
 
   return (
     <>
@@ -72,7 +44,8 @@ function App() {
           <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage />} />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile/:userName" element={<UserProfile />} />
           <Route path="/create" element={<CreateComponents />} />
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}

@@ -1,12 +1,13 @@
 // components data that we are getting. for components
 
+import { User } from "./User.types";
+
 export interface Comment {
   avatar: string;
   user: string;
   comment: string;
   date: string;
 }
-
 
 export interface ComponentData {
       html: string;
@@ -34,17 +35,5 @@ export interface ComponentData {
           count: number;
           commentsList: [Comment];
       };
-      admin: {
-          _id: string;
-          login: string;
-          avatar_url: string;
-          url: string;
-          html_url: string;
-          company: string;
-          location: string;
-          name: string;
-          blog: string;
-          bio: string;
-          twitter_username: string | null;
-      };
+      admin: User
 }

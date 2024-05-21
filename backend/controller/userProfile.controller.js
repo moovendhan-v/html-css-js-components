@@ -3,6 +3,7 @@ const GitHubUser = require('../models/user.model');
 const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
 const { readFilesInformations, readContent } = require('../controller/components.controller');
 
+
 const getUserProfileInformations = async (req, res) => {
     try {
         const user_id = req.body.user_id;
@@ -108,9 +109,11 @@ const getUserInformationsByName = async (userName, callback) => {
 
 const getprofileinfoprotect = async (req, res) => {
     try {
-        const user_id = req.user.user.user_id;
-        console.log(req.user);
+        const user_id = req.user.tokenProperties.userId;
         // Find user information using user_id
+        console.log(`usersresponse ${JSON.stringify(req.user)}`)
+
+        console.log(`userid ${JSON.stringify(req.user.tokenProperties.userId)}`)
         const existingUser = await GitHubUser.findOne({ _id: user_id });
         if (!existingUser) {
             return res.status(404).send('User not found');
@@ -124,7 +127,6 @@ const getprofileinfoprotect = async (req, res) => {
             const categories = component.categories;
             const data = component;
             const user = existingUser;
-            console.log(`Component ${component}`);
 
             return new Promise((resolve, reject) => {
                 readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
