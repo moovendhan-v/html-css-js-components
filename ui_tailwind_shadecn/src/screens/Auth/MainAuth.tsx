@@ -1,8 +1,12 @@
 import { MovingButton } from "@/components/ui/moving-border"
 import { Checkbox } from "@/components/ui/checkbox"
-import {HandleLogin} from '@/hooks/handle_login.hooks';
+import  {Logins, HandleLogin} from '@/hooks/handle_login.hooks';
+// import { useLoginStore, useLoginUserInfo } from "@/store/Auth";
+
 
 export const MainAuth = ()=>{
+    // const user = useLoginStore((state) => state.isLogin);
+    // const userInfo = useLoginUserInfo((state) => state);
     return(
         <>
         <div className="flex items-center justify-center py-12">
@@ -31,6 +35,7 @@ export const MainAuth = ()=>{
                             >
                                 Signup With Github
                             </MovingButton>
+                            <Logins />
                         </div>
                     </div>
                 </div>

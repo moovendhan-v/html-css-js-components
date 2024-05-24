@@ -47,6 +47,9 @@ services:
     restart: always
     ports:
       - "8080:8080"
+    networks:
+      my_network:
+        ipv4_address: 172.28.0.5
 
   # postgres:
   #   image: postgres:latest
@@ -91,6 +94,7 @@ volumes:
 
 networks:
   my_network:
+    driver: bridge
     ipam:
       driver: default
       config:

@@ -26,6 +26,7 @@ redisClient.connect().then(() => {
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+const UI_BASE_URI = process.env.UI_BASE_URI;
 const TOKEN_EXPIRE_TIMEOUT = process.env.TOKEN_EXPIRE_TIMEOUT;
 
 async function exchangeGitHubCodeForToken(code) {
@@ -98,12 +99,14 @@ const signup_or_login_with_git = async (req,res)=>{
 
   // it will create a new account if account not already existis or creates a new account
 
-  // const { code } = req.query;
+  const { code } = req.query;
   try {
     // #TODO Upadate a auth token where authanticated by user 
-    // const githubAccessToken = await exchangeGitHubCodeForToken(code);
+    const githubAccessToken = await exchangeGitHubCodeForToken(code);
 
-    const userInformations = await getUserInformationsFromGitApi("");
+
+    console.log(userInformations)
+    const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
 
     //get user profile info with github oauth 
     const gitUserId = userInformations.id;
@@ -113,16 +116,20 @@ const signup_or_login_with_git = async (req,res)=>{
       if (!existingUser) {
         const githubUser = new GitHubUser(userInformations);
         await githubUser.save();
+        const authToken = generateAccessToken({userId: githubUser._id, userName: githubUser.name})
         const refreshToken = generateRefreshToken({userId: existingUser._id, userName: existingUser.name});
         await redisClient.set(`refreshToken:${existingUser._id}`, refreshToken);
         // await redisClient.set(refreshToken, user.id.toString(), { EX: 7 * 24 * 60 * 60 });
         const response ={ 
-          "token": generateAccessToken({userId: githubUser._id, userName: githubUser.name}),
+          "token": authToken,
           "user": githubUser,
           "components": []
         }
-        res.cookie('refreshToken', refreshToken, { httpOnly: true});
-        return res.success({message: `New Account created ${githubUser.name}`, response: response })
+        res.cookie('access_token', clientToken, { httpOnly: false, secure: true });
+        res.cookie('refresh_token', refresh_token, { httpOnly: true, secure: true });
+    
+        return res.redirect(`${UI_BASE_URI}/Login`);
+        // return res.success({message: `New Account created ${githubUser.name}`, response: response })
       }
 
     getUserInformationsByName(existingUser.name, async (error, userProfileWithComponents) => {
@@ -132,15 +139,21 @@ const signup_or_login_with_git = async (req,res)=>{
         userProfileWithComponents['token'] = generateAccessToken({userId: existingUser._id, userName: existingUser.name});
         userProfileWithComponents['refreshToken'] = generateRefreshToken({userId: existingUser._id, userName: existingUser.name});
         res.cookie('refreshToken', userProfileWithComponents['refreshToken'], { httpOnly: true});
+
+        res.cookie('authToken', userProfileWithComponents['token'], { httpOnly: false, sameSite: 'strict', path: '/' });
+        res.cookie('refreshToken', userProfileWithComponents['refreshToken'], { httpOnly: true, sameSite: 'strict', path: '/' });
+
         await redisClient.set(`refreshToken:${existingUser._id}`, userProfileWithComponents['refreshToken']);
-        return res.success({message: `Welcome Back ${existingUser.name}`,response: await userProfileWithComponents })
+
+        return res.redirect(`${UI_BASE_URI}/Login`);
+        // return res.success({message: `Welcome Back ${existingUser.name}`,response: await userProfileWithComponents })
       }
   });
     // req.session.githubAccessToken = await githubAccessToken;
 
   } catch (error) {
     console.error('Error during GitHub OAuth:', error);
-    res.status(500).json({ success: false, error: error });
+    res.status(500).json({ success: false, error: `Unknown error happens` });
   }
 }
 
@@ -149,7 +162,7 @@ const generateAccessToken = (tokenProperties)=>{
   //  const { userId, username } = req.body;
 
    // Create JWT token
-   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1m' });
+   const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1h' });
  
    // Set HTTPOnly cookie with JWT token
   //  res.cookie('jwt', token, { httpOnly: true, secure: true });

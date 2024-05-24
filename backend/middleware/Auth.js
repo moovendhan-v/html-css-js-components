@@ -85,6 +85,7 @@ const authanticateJwtToken = async (req, res, next) => {
         await redisClient.set(`refreshToken:${userId}`, newRefreshToken);
     
         // Set the new tokens in the response
+        res.cookie('authToken', newAccessToken, { httpOnly: false, sameSite: 'strict', path: '/' });
         res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'strict', path: '/' });
         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
         // Pass the new access token to the next middleware
