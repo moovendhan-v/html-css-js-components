@@ -22,21 +22,11 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
-// import { fetchCategories } from '@/api/components/categories';
-// import { useCategoriesStore } from '@/store/store';
+
+import { useLoginStore } from "@/store/Auth";
+const userInfo = useLoginStore.getState()
 
 export function Dashboard() {
-
-    // useEffect(()=>{
-    //     fetchCategories();
-    // },[])
-
-    // const categries = useCategoriesStore((state) => state.categories);
-    // const Categories = () => {
-    //     const allCategories: { title: string }[] = categries.map((value) => ({ title: value }));
-    //     return allCategories;
-    // };
-    
 
     const [searchQuery, setSearchQuery] = useState('');
     

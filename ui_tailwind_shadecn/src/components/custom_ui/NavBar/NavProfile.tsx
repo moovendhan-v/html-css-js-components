@@ -13,20 +13,22 @@ import {
     CircleUser
 } from "lucide-react"
 import { Button } from "../../ui/button"
-import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
+import { useLoginStore } from "@/store/Auth"
 import { Link } from "react-router-dom"
 
+const userInfo = useLoginStore.getState();
+console.log(JSON.stringify(userInfo))
+
 export const NavProfile = ()=>{
-    const user = useLoginStore((state) => state.isLogin);
-    const userInfo = useLoginUserInfo((state) => state);
+
     return(
         <>
            <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">
-                                {user? <> 
+                                {userInfo.isLoggedIn? <> 
                                     <Avatar>
-                                            <AvatarImage src={userInfo.avatar_url || "Please login"} />
+                                            <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
                                             <AvatarFallback>Profile</AvatarFallback>
                                     </Avatar>
                                  </>:<CircleUser className="h-5 w-5" />}
@@ -37,10 +39,10 @@ export const NavProfile = ()=>{
                             <DropdownMenuLabel>Info</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             {
-                                user ?
+                                userInfo.isLoggedIn ?
                                     <DropdownMenuItem>
                                         <Link to={`/profile`}>
-                                            {userInfo.name}
+                                            {userInfo?.user?.name}
                                         </Link>
                                     </DropdownMenuItem>
                                 : <></>
@@ -52,8 +54,8 @@ export const NavProfile = ()=>{
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>
-                                <Link to={`/${user ? "Logout" : "Login"}`}>
-                                    {user ? "Logout" : "Login"}
+                                <Link to={`/${userInfo.isLoggedIn ? "Logout" : "Login"}`}>
+                                    {userInfo.isLoggedIn ? "Logout" : "Login"}
                                 </Link>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
