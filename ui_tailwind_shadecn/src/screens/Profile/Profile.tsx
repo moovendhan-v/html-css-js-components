@@ -37,14 +37,12 @@ import { MainAuth } from "@/screens/Auth/MainAuth";
 // import { ComponentType } from "@/enums/iframEnums"
 // import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 
+import { useLoginStore } from "@/store/Auth"
+
+const userInfo = useLoginStore.getState();
 
 export function Profile() {
 
-  
-
-    // const user = useLoginStore((state) => state.isLogin);
-    const user = true;
-    // const userInfo = useLoginUserInfo((state) => state);
 
     type componentsParamType = {
         catogries?: string;
@@ -60,7 +58,6 @@ export function Profile() {
 
     return (
         <>
-
             <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[220px_1fr]">
                 <div className="hidden md:block">
                     <div className="fixed h-full">
@@ -99,7 +96,7 @@ export function Profile() {
                         </div>
                     </div>
                 </div>
-                {user ?
+                {userInfo.isLoggedIn ?
                     <>
                         <div className="flex flex-col px-4">
                             <header className="flex h-14 items-center gap-4  lg:h-[60px] ">
@@ -176,14 +173,14 @@ export function Profile() {
                                     <div className="container px-5 py-5 mx-auto">
                                         <div className="flex items-center mx-auto border-b pb-10 mb-2 sm:flex-row flex-col">
                                             <div className="sm:w-72 sm:h-72 h-20 w-20 sm:mr-10 inline-flex items-center justify-center rounded-full text-indigo-400  flex-shrink-0">
-                                                <img src="https://avatars.githubusercontent.com/u/96030910?v=4" alt="" />
+                                                <img src={userInfo?.user?.avatar_url || ""} alt="" />
                                             </div>
                                             <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
 
                                                <div className="flex justify-between items-center">
                                                         <div>
                                                             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                                                                Moovendhan
+                                                                {userInfo.user?.name}
                                                             </h1>
                                                         </div>
                                                         <div >
@@ -213,30 +210,29 @@ export function Profile() {
                                                     company
                                                 </h2>
                                                 <blockquote className="my-6 border-l-2 pl-6 italic">
-                                                    "After all," he said, "everyone enjoys a good joke, so it's only fair that
-                                                    they should pay for the privilege."
+                                                        {userInfo.user?.bio} 
                                                 </blockquote>
                                                 <div className="flex">
                                                     <div className="px-2">
-                                                        <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                            @Company name
+                                                        <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                            {userInfo.user?.company} 
                                                         </code>
                                                         </Link>
                                                     </div>
                                                     <div className="px-2">
-                                                        <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                            @github url
+                                                        <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                            {userInfo.user?.location || ""}
                                                         </code>
                                                         </Link>
                                                     </div>
                                                     <div className="px-2">
-                                                        <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                            @gWEbsite uri
+                                                        <Link to={userInfo.user?.blog || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                            @Website uri
                                                         </code>
                                                         </Link>
                                                     </div>
                                                     <div className="px-2">
-                                                        <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                        <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                                                             @github url
                                                         </code>
                                                         </Link>
@@ -276,9 +272,7 @@ export function Profile() {
 
                             </main>
                         </div>
-
-
-
+                        
                     </>
                     :
                     <MainAuth />

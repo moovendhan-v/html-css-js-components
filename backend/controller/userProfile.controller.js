@@ -30,7 +30,8 @@ const getUserProfileInformations = async (req, res) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(),
+                             // Convert Mongoose document to object
                             component_details: fileInfo 
                         });
                     }
@@ -80,7 +81,7 @@ const getUserInformationsByName = async (userName, callback) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(), 
                             component_details: fileInfo 
                         });
                     }
@@ -134,7 +135,7 @@ const getprofileinfoprotect = async (req, res) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(), // Convert Mongoose document to object
                             component_details: fileInfo 
                         });
                     }

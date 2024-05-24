@@ -20,6 +20,7 @@ import { UserProfile } from './screens/Profile/userProfile';
 import { CreateComponents } from './screens/CreateComponents/CreateComponents';
 import LoginSuccess from './screens/Others/LoginSuccess';
 import LoginFailure from './screens/Others/LoginFailure';
+import { Profile } from './screens/Profile/Profile';
 // import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/success" element={<LoginSuccess />} />
           <Route path="/faild" element={<LoginFailure />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:userName" element={<UserProfile />} />
           <Route path="/create" element={<CreateComponents />} />
 
