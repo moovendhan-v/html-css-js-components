@@ -74,6 +74,7 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
                     "count": data.comments.length,
                     "commentsList": commentsListWithUserInfo
                 },
+                "tags": data.tags,
                 "folder_path": data.folder_path,
                 "folder_name": data.folder_name,
                 "categories": data.categories,
