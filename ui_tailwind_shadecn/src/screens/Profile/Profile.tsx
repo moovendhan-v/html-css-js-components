@@ -15,14 +15,21 @@ import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-
+// import { Label } from "@/components/ui/label"
+import {
+    Tabs,
+    TabsContent,
+    TabsList,
+    TabsTrigger,
+} from "@/components/ui/tabs"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
-import { Logo } from "@/components/custom_ui/Svg"
+import { Logo, LogoPlain } from "@/components/custom_ui/Svg"
 import { useCategoriesStore } from "@/store/store"
 import { useEffect } from "react"
 import { fetchCategories } from "@/api/components/categories"
@@ -38,6 +45,8 @@ import { MainAuth } from "@/screens/Auth/MainAuth";
 // import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 
 import { useLoginStore } from "@/store/Auth"
+import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
+import { ComponentType } from "@/enums/iframEnums"
 
 const userInfo = useLoginStore.getState();
 
@@ -177,48 +186,48 @@ export function Profile() {
                                             </div>
                                             <div className="flex-grow sm:text-left text-center mt-6 sm:mt-0">
 
-                                               <div className="flex justify-between items-center">
-                                                        <div>
-                                                            <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                                                                {userInfo.user?.name}
-                                                            </h1>
-                                                        </div>
-                                                        <div >
+                                                <div className="flex justify-between items-center">
+                                                    <div>
+                                                        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+                                                            {userInfo.user?.name}
+                                                        </h1>
+                                                    </div>
+                                                    <div >
                                                         <div className="flex">
-                                                                <Link to={"/"}>
-                                                                    <div className="px-2 cursor-pointer">
+                                                            <Link to={"/"}>
+                                                                <div className="px-2 cursor-pointer">
                                                                     <Twitter />
-                                                                    </div>
-                                                                </Link>
+                                                                </div>
+                                                            </Link>
 
-                                                                <Link to={"/"}>
-                                                                    <div className="px-2 cursor-pointer">
+                                                            <Link to={"/"}>
+                                                                <div className="px-2 cursor-pointer">
                                                                     <Instagram />
-                                                                    </div>
-                                                                </Link>
+                                                                </div>
+                                                            </Link>
 
-                                                                <Link to={"/"}>
-                                                                    <div className="px-2 cursor-pointer">
+                                                            <Link to={"/"}>
+                                                                <div className="px-2 cursor-pointer">
                                                                     <LinkedIn />
-                                                                    </div>
-                                                                </Link>
-                                                            </div>
+                                                                </div>
+                                                            </Link>
                                                         </div>
-                                               </div>
+                                                    </div>
+                                                </div>
 
                                                 <h2 className="text-white text-lg title-font font-medium mb-2">
-                                                    company
+                                                {userInfo.user?.company}
                                                 </h2>
                                                 <blockquote className="my-6 border-l-2 pl-6 italic">
-                                                        {userInfo.user?.bio} 
+                                                    {userInfo.user?.bio}
                                                 </blockquote>
                                                 <div className="flex">
-                                                    <div className="px-2">
+                                                    {/* <div className="px-2">
                                                         <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                            {userInfo.user?.company} 
+                                                            {userInfo.user?.company}
                                                         </code>
                                                         </Link>
-                                                    </div>
+                                                    </div> */}
                                                     <div className="px-2">
                                                         <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                                                             {userInfo.user?.location || ""}
@@ -241,38 +250,138 @@ export function Profile() {
                                             </div>
                                         </div>
 
-                                        <div className="flex py-3">
-                                                <Button className="bg-theme  hover:text-white">
-                                                    My Components
-                                                </Button>
-                                                <Button className="bg-theme hover:text-white">
-                                                    In Review
-                                                </Button>
-                                                <Button className="bg-theme hover:text-white">
-                                                    Rejected
-                                                </Button>
-                                                <Button className="bg-theme hover:text-white">
-                                                    In Draft
-                                                </Button>
-                                                <Button className="bg-theme hover:text-white">
-                                                    Liked
-                                                </Button>
-                                                <Button className="bg-theme hover:text-white">
-                                                    Saved
-                                                </Button>
-                                        </div>
-                                        {/* <RenderComponents components={components} type={ComponentType.COMPONENTS}/> */}
+                                        <Tabs defaultValue="components" className="w-[100%]">
+                                            <TabsList className="grid w-full grid-cols-6">
+                                                <TabsTrigger value="components"><LogoPlain width={15} height={15}/> My Components</TabsTrigger>
+                                                <TabsTrigger value="review">In Review</TabsTrigger>
+                                                <TabsTrigger value="draft">In Draft</TabsTrigger>
+                                                <TabsTrigger value="rejected">Rejected</TabsTrigger>
+                                                <TabsTrigger value="liked">Liked</TabsTrigger>
+                                                <TabsTrigger value="saved">Saved</TabsTrigger>
+                                            </TabsList>
+                                            <TabsContent value="components">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>All Components</CardTitle>
+                                                        <CardDescription>
+                                                            List of all components that posted
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <RenderComponents components={userInfo?.components} type={ComponentType.COMPONENTS} />
+                                                        </div>
+                                                    </CardContent>
+                                                    {/* <CardFooter>
+                                                        <Button>Save changes</Button>
+                                                    </CardFooter> */}
+                                                </Card>
+                                            </TabsContent>
+                                            <TabsContent value="review">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>In Review</CardTitle>
+                                                        <CardDescription>
+                                                            Please wait for the approval
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                       
+                                                    </CardContent>
+                                                    <CardFooter>
+                                                        {/* <Button>Save password</Button> */}
+                                                    </CardFooter>
+                                                </Card>
+                                            </TabsContent>
+                                            <TabsContent value="draft">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>Draft</CardTitle>
+                                                        <CardDescription>
+                                                            My draft
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                       
+                                                    </CardContent>
+                                                    <CardFooter>
+                                                        {/* <Button>Save password</Button> */}
+                                                    </CardFooter>
+                                                </Card>
+                                            </TabsContent>
+                                            <TabsContent value="rejected">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>Rejected</CardTitle>
+                                                        <CardDescription>
+                                                            Please review and send for approval
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                       
+                                                    </CardContent>
+                                                    <CardFooter>
+                                                        {/* <Button>Save password</Button> */}
+                                                    </CardFooter>
+                                                </Card>
+                                            </TabsContent>
+                                            <TabsContent value="liked">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>Liked</CardTitle>
+                                                        <CardDescription>
+                                                            My Liked
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                       
+                                                    </CardContent>
+                                                    <CardFooter>
+                                                        {/* <Button>Save password</Button> */}
+                                                    </CardFooter>
+                                                </Card>
+                                            </TabsContent>
+                                            <TabsContent value="Saved">
+                                                <Card>
+                                                    <CardHeader>
+                                                        <CardTitle>Saved</CardTitle>
+                                                        <CardDescription>
+                                                            My Saves
+                                                        </CardDescription>
+                                                    </CardHeader>
+                                                    <CardContent className="space-y-2">
+                                                       
+                                                    </CardContent>
+                                                    <CardFooter>
+                                                        {/* <Button>Save password</Button> */}
+                                                    </CardFooter>
+                                                </Card>
+                                            </TabsContent>
+                                        </Tabs>
+
+                                        {/* <div className="flex py-3">
+                                            <Button className="bg-transperent hover:text-white">
+                                                Rejected
+                                            </Button>
+                                            <Button className="bg-transperent hover:text-white">
+                                                In Draft
+                                            </Button>
+                                            <Button className="bg-transperent hover:text-white">
+                                                Liked
+                                            </Button>
+                                            <Button className="bg-transperent hover:text-white">
+                                                Saved
+                                            </Button>
+                                        </div> */}
+                                       
                                     </div>
                                 </section>
 
-
-
                                 {/* <ParallaxScroll images={images} /> */}
-
 
                             </main>
                         </div>
-                        
+
                     </>
                     :
                     <MainAuth />

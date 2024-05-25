@@ -91,6 +91,7 @@ export const useViewComponentStore = create<ViewComponentStore>(() => ({
         admin: {
             _id: "",
             login: "",
+            email: "",
             avatar_url: "",
             url: "",
             html_url: "",

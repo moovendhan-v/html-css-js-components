@@ -5,7 +5,7 @@ import OutputsOfComponents from "../OutputComponents"
 import { CardSkeleton } from "../skeleton/CardSkeleton"
 
 interface RenderComponentsType {
-  components: ComponentData[];
+  components: ComponentData[] | null;
   type? : ComponentType;
   skeletonCount? : number;
 }
@@ -15,8 +15,8 @@ export const RenderComponents: React.FC<RenderComponentsType> = ({ components, t
 
   return (
       <>
-          {components.length > 0 ? (
-              components.map((component: ComponentData, index: number) => (
+          {components?.length ?? 0 > 0 ? (
+              components?.map((component: ComponentData, index: number) => (
                   <div className="transition duration-1000 ease-in-out relative" key={index}>
                       <Link
                           to={`/${component.categories}/${component.folder_name}`}
