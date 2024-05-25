@@ -23,8 +23,8 @@ import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
 
-import { useLoginStore } from "@/store/Auth";
-const userInfo = useLoginStore.getState()
+// import { useLoginStore } from "@/store/Auth";
+// const userInfo = useLoginStore.getState()
 
 export function Dashboard() {
 
