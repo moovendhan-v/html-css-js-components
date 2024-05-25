@@ -30,7 +30,7 @@ import { useViewComponentStore } from "@/store/store";
 import { Comments } from "@/components/custom_ui/Comments"
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
-import {getEnvVariable} from '@/utils/load.utils';
+// import {getEnvVariable} from '@/utils/load.utils';
 
 // import { SelectValue } from "@/components/ui/select"
 
@@ -47,7 +47,7 @@ export function View() {
 
   const { categorie = "", title = "" } = useParams<componentParamType>();
 
-  const baseUri = getEnvVariable('BASE_URI');
+  // const baseUri = getEnvVariable('BASE_URI');
 
   const defaultCategorie = categorie === null ? "all" : categorie;
   const defaultTitle = title === null ? "error" : title;
