@@ -41,7 +41,7 @@ export function Components() {
 
   type componentsParamType = {
     catogries?: string;
-  };
+  }; 
 
   const { catogries } = useParams<componentsParamType>();
   const query = useQueryString("search");

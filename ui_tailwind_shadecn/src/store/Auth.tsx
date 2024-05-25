@@ -1,11 +1,15 @@
+import {ComponentData} from '@/types/ComponentData.type'
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+// import { ProfileDetails } from '@/types/ComponentStore.type'
 
 interface LoginStore {
   user: LoginUserInfoStore | null;
   isLoading: boolean;
   isLoggedIn: boolean;
   error: string | null;
+  // profileDetails: ProfileDetails;
+  components: ComponentData[] | null;
   authToken: string | null;
   login: (token: string) => Promise<void>;
   logout: () => void;
@@ -27,6 +31,14 @@ interface LoginUserInfoStore {
   twitter_username: string | null;
 }
 
+export interface ComponentDetails {
+  post_details: ComponentData;
+}
+
+export interface ComponentDatas {
+  component_details: ComponentDetails;
+}
+
 export const useLoginStore = create<LoginStore>()(
   persist(
     (set) => ({
@@ -35,6 +47,7 @@ export const useLoginStore = create<LoginStore>()(
       isLoading: false,
       error: null,
       authToken: null,
+      components: null,
       login: async (token) => {
         try {
           set({ isLoading: true, error: null });
@@ -53,10 +66,14 @@ export const useLoginStore = create<LoginStore>()(
 
           const data = await response.json();
           console.log(data);
-          const { user } = data.response;
+          const { user, components } = data.response;
 
           if (user) {
-            set({ user, isLoading: false, isLoggedIn: true, error: null, authToken:token });
+            const processedComponents: ComponentData[] | null = components ? components.map((component: ComponentDatas) => {
+              return component.component_details.post_details;
+            }) : null;
+
+            set({ user, isLoading: false, isLoggedIn: true, error: null, authToken:token, components: processedComponents });
             console.log(`Setting isLoggedIn to `);
           } else {
             set({ error: 'User data not found', isLoading: false });
@@ -76,7 +93,7 @@ export const useLoginStore = create<LoginStore>()(
     {
       name: 'auth-store',
       getStorage: () => localStorage,
-      partialize: (state) => ({ user: state.user, isLoggedIn: state.isLoggedIn, isLoading: state.isLoading, error: state.error, authToken: state.authToken}),
+      partialize: (state) => ({ user: state.user, isLoggedIn: state.isLoggedIn, isLoading: state.isLoading, error: state.error, authToken: state.authToken, components: state.components}),
     } 
   )
 );
@@ -97,3 +114,4 @@ export const useLoginUserInfo = create<LoginUserInfoStore>(() => ({
   twitter_username: null,
   __v: 0,
 }));
+

@@ -34,6 +34,17 @@ export type ComponentsStore = {
     search: ComponentData[];
 };
 
+export type ProfileDetails = {
+    isLoading: boolean | null;
+    error: string | null;
+    components: ComponentData[] | null;
+    inReview: ComponentData[] | null;
+    rejected: ComponentData[] | null;
+    inDraft: ComponentData[] | null;
+    liked: ComponentData[] | null;
+    saved: ComponentData[] | null;
+}
+
 export type ComponentStore ={
     html: string;
     css : string;

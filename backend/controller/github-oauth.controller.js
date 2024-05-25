@@ -104,8 +104,6 @@ const signup_or_login_with_git = async (req,res)=>{
     // #TODO Upadate a auth token where authanticated by user 
     const githubAccessToken = await exchangeGitHubCodeForToken(code);
 
-
-    console.log(userInformations)
     const userInformations = await getUserInformationsFromGitApi(githubAccessToken);
 
     //get user profile info with github oauth 
