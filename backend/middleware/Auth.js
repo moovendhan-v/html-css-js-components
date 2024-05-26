@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
+const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
 require('dotenv').config();
-const {generateAccessToken, generateRefreshToken} = require('../controller/github-oauth.controller')
+const { generateAccessToken, generateRefreshToken } = require('../controller/github-oauth.controller')
 
 const redis = require('redis');
 
@@ -51,6 +51,7 @@ const authanticateJwtToken = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
+    req.user.isAuthorized = true;
     console.log("token executed")
     next();
   } catch (err) {
@@ -69,7 +70,7 @@ const authanticateJwtToken = async (req, res, next) => {
         const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
         const checkTokenInRedis = isTokenInCache(decodedRefreshToken.tokenProperties.userId)
         console.log(`checkTokenInRedis ${await checkTokenInRedis}`)
-        if(!await checkTokenInRedis){
+        if (!await checkTokenInRedis) {
           return res.status(401).json({ message: "Unauthorized  no refresh tokeins in reids" });
         }
         // Verify the refresh token
@@ -83,13 +84,14 @@ const authanticateJwtToken = async (req, res, next) => {
         const userId = decodedRefreshToken.tokenProperties.userId; // Assuming you have a userId in the tokenProperties
         removeTokenFromCache(refreshToken)
         await redisClient.set(`refreshToken:${userId}`, newRefreshToken);
-    
+
         // Set the new tokens in the response
         res.cookie('authToken', newAccessToken, { httpOnly: false, sameSite: 'strict', path: '/' });
         res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'strict', path: '/' });
         res.setHeader('Authorization', `Bearer ${newAccessToken}`);
         // Pass the new access token to the next middleware
         req.user = jwt.verify(newAccessToken, JWT_SECRET);
+        req.user.isAuthorized = true;
         next();
       } catch (err) {
         // Refresh token verification failed
@@ -102,6 +104,30 @@ const authanticateJwtToken = async (req, res, next) => {
   }
 };
 
+const authenticatePublicApi = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  req.user = {};
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    req.user.isAuthorized = false;
+    return next();
+  }
 
+  const token = authHeader.split(' ')[1];
+  console.log(JWT_SECRET)
 
-module.exports = {authanticateJwtToken}
+  jwt.verify(token, JWT_SECRET, (err, payload) => {
+    if (err) {
+      return res.status(401).json({ message: err.message });
+    }
+
+    // Append user data to the request object
+    
+    req.user = payload;
+    req.user.isAuthorized = true;
+    console.log("requser", res.user)
+    next();
+  });
+};
+
+const verifyPublicApi =
+  module.exports = { authanticateJwtToken, authenticatePublicApi }
