@@ -10,7 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
+import { DropdownMenuTrigger, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
 import { CircleUser, Layers, Menu, Search } from "lucide-react";
 import { LeftArrow, Like, Liked, Bookmarks, BookmarkSaved, Github, Comment, LogoPlain } from "@/components/custom_ui/Svg";
@@ -95,7 +95,7 @@ export function View() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
+  console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
 
   return (
     <>
@@ -125,7 +125,7 @@ console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
               Star On Github
             </MovingButton>
           </div>
-          
+
           <div className="mr-3">
             <Button>
               <Layers className="mr-2 h-4 w-4" /> Create New One
@@ -149,9 +149,9 @@ console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
           <div className="grid min-h-screen w-full md:grid-cols-[180px_1fr] lg:grid-cols-[200px_1fr]">
             <div className="">
               <div className={` sticky top-0`}>
-                 
-                  <CategriesSlider categories={categries}  />
-                  
+
+                <CategriesSlider categories={categries} />
+
               </div>
             </div>
             <div className="flex flex-col">
@@ -227,18 +227,16 @@ console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button variant="secondary" size="icon" className="rounded-full">
-                              <CircleUser className="h-5 w-5" />
+                              {viewCompoentsStore.admin.avatar_url ?
+                                <Avatar>
+                                  <AvatarImage src={viewCompoentsStore?.admin?.avatar_url} />
+                                  <AvatarFallback>Profile</AvatarFallback>
+                                </Avatar> :
+                                <CircleUser className="h-5 w-5" />
+                              }
                               <span className="sr-only">Toggle user menu</span>
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
-                          </DropdownMenuContent>
                         </DropdownMenu>
                       </header>
 
@@ -303,7 +301,7 @@ console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
                               useViewComponentStore.setState((state) => ({
                                 viewComponents: {
                                   ...state.viewComponents,
-                                  js: value, 
+                                  js: value,
                                 },
                               }));
                             }} />}
@@ -318,20 +316,23 @@ console.log(`viewCompoentsStore${JSON.stringify(viewCompoentsStore)}`)
                     <header className=" bg-gray-900 body-font">
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-                          <Avatar>
-                            <AvatarImage src={viewCompoentsStore?.admin?.avatar_url} />
-                            <AvatarFallback>Profile</AvatarFallback>
-                          </Avatar>
+                          {viewCompoentsStore.admin.avatar_url ?
+                            <Avatar>
+                              <AvatarImage src={viewCompoentsStore?.admin?.avatar_url} />
+                              <AvatarFallback>Profile</AvatarFallback>
+                            </Avatar> :
+                            <CircleUser className="h-5 w-5" />
+                          }
                           <Link to={``}>
                             <span className="ml-3 text-xl">{viewCompoentsStore?.admin?.name}</span>
                           </Link>
                         </a>
                         <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
 
-                            <div className="flex p-2">
-                                {/* <Blinds /> */}
-                                <span>{viewCompoentsStore?.views?.count}</span>
-                            </div>
+                          <div className="flex p-2">
+                            {/* <Blinds /> */}
+                            <span>{viewCompoentsStore?.views?.count}</span>
+                          </div>
 
                           {viewCompoentsStore.like.isLiked ?
                             <><div className="flex p-2">

@@ -202,26 +202,52 @@ const getComponentsBySearch = (req,res)=>{
 }
 
 //Bring a particular components
-const getParticularComponent = async (req,res)=>{
-  const {category, title} = req.params;
-  try {
-    const data = await UserComponents.findOne({ folder_name: title, categories: category });
-    if(!data){
-        return res.error({message: 'Components not avaialble'})
+const getParticularComponent = async (req, res) => {
+    const { category, title } = req.params;
+  
+    // Check if req.user and tokenProperties are available
+    const isAuthorized = req.user?.isAuthorized || false;
+    console.log(req.user?.isAuthorized)
+  
+    try {
+      const data = await UserComponents.findOne({ folder_name: title, categories: category });
+      
+      if (!data) {
+        return res.status(404).json({ success: false, message: 'Component not available' });
+      }
+  
+      const user = await GitHubUser.findOne(
+        { user_id: data.user_id.$oid },
+        {
+          _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1,
+          location: 1, name: 1, blog: 1, bio: 1, twitter_username: 1
+        }
+      );
+  
+      if (!user) {
+        return res.status(500).json({ success: false, message: 'Failed to fetch component details. Please contact admin. Visit the contact us page for more details.' });
+      }
+  
+      const response = await readFilesInformations(data.categories, data.folder_name, { data, user }, (err, result) => {
+        // Set isAdmin based on user_id match and availability of loggedInUser
+        result.post_details.isAdmin = false;
+        if(isAuthorized){
+            const tokenProperties = req.user?.tokenProperties;
+            if(tokenProperties?.userId == user._id){
+                result.post_details.isAdmin = true
+            }
+        }
+        if (err) {
+          return res.status(500).send(err);
+        }
+        res.status(200).json({ success: true, response: result });
+      });
+  
+    } catch (error) {
+      res.status(500).send({ success: false, message: error.message });
     }
-    const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
-        {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
-        );
-    if(!user){
-        return res.error({message: 'Fails in fetching components details Please contact admin Please visit contactus page for more details'})
-    }
-    const response = await readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-        err ? res.send(err):res.success({response:result})
-    });
-  } catch (error) {
-    res.send(error)
-  }
-}
+  };
+  
 
 //components like 
 const addLikesToComponents = async (req,res)=>{

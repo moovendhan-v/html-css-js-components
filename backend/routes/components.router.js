@@ -2,6 +2,7 @@ const { Router } = require('express')
 const componentsRouter = Router()
 const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList, addLikesToComponents, removeLikeToComponents, saveComponents, unSavedComponents, addComments} = require('../controller/components.controller');
 const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
+const {authenticatePublicApi} = require('../middleware/Auth')
 
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);
@@ -38,7 +39,7 @@ componentsRouter.post('/:postId/unsave', unSavedComponents)
 
 componentsRouter.post('/:postId/addcomments', addComments)
 
-componentsRouter.get('/:category/:title',getParticularComponent);
+componentsRouter.get('/:category/:title',authenticatePublicApi, getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 

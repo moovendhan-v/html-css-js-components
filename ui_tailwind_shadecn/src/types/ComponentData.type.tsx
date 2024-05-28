@@ -35,5 +35,6 @@ export interface ComponentData {
           count: number;
           commentsList: [Comment];
       };
-      admin: User
+      admin: User,
+      isAdmin: boolean;
 }
