@@ -29,10 +29,14 @@ import { fetchCategories } from "@/api/components/categories"
 import { fetchUserProfile } from "@/api/profile/userProfile"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
-import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
+import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile";
+import { UserProfile } from '@/types/ViewProfile.type';
+import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
+import { ComponentType } from "@/enums/iframEnums"
 
 export function UserProfile() {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState<UserProfile>();
+    console.log(user);
     console.log(user)
 
     type userProfileType = {
@@ -40,12 +44,32 @@ export function UserProfile() {
     }
 
     const { userName = "" } = useParams<userProfileType>();
-    setUser(fetchUserProfile(userName));
     const categries = useCategoriesStore((state) => state.categories);
 
     useEffect(() => {
         fetchCategories();
     }, [])
+
+    useEffect(() => {
+        if (userName) {
+          const fetchData = async () => {
+            try {
+              const userProfile = await fetchUserProfile(userName);
+              if (userProfile !== null) {
+                console.log(userProfile);
+                setUser(userProfile);
+              } else {
+                // Handle the case where userProfile is null
+              }
+            } catch (error) {
+              // Handle errors
+              console.error('Error fetching profile:', error);
+            }
+          };
+          fetchData();
+        }
+      }, [userName]);
+      
 
     return (
         <>
@@ -164,7 +188,7 @@ export function UserProfile() {
                                             <div className="flex justify-between items-center">
                                                 <div>
                                                     <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-                                                        Moovendhan
+                                                        {user?.user.name}
                                                     </h1>
                                                 </div>
                                                 <div >
@@ -191,60 +215,41 @@ export function UserProfile() {
                                             </div>
 
                                             <h2 className="text-white text-lg title-font font-medium mb-2">
-                                                company
+                                                {user?.user.company}
                                             </h2>
                                             <blockquote className="my-6 border-l-2 pl-6 italic">
-                                                "After all," he said, "everyone enjoys a good joke, so it's only fair that
-                                                they should pay for the privilege."
+                                                {user?.user.bio}
                                             </blockquote>
                                             <div className="flex">
                                                 <div className="px-2">
                                                     <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                        @Company name
+                                                        {user?.user.company}
                                                     </code>
                                                     </Link>
                                                 </div>
                                                 <div className="px-2">
-                                                    <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                    <Link to={user?.user.url ?? "/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                                                         @github url
                                                     </code>
                                                     </Link>
                                                 </div>
                                                 <div className="px-2">
-                                                    <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+                                                    <Link to={user?.user.blog ?? "/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                                                         @gWEbsite uri
                                                     </code>
                                                     </Link>
                                                 </div>
-                                                <div className="px-2">
-                                                    <Link to={"/"}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                        @github url
-                                                    </code>
-                                                    </Link>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="flex py-3">
-                                        <Button className="bg-theme  hover:text-white">
-                                            My Components
-                                        </Button>
-                                        <Button className="bg-theme hover:text-white">
-                                            In Review
-                                        </Button>
-                                        <Button className="bg-theme hover:text-white">
-                                            Rejected
-                                        </Button>
-                                        <Button className="bg-theme hover:text-white">
-                                            In Draft
-                                        </Button>
-                                        <Button className="bg-theme hover:text-white">
-                                            Liked
-                                        </Button>
-                                        <Button className="bg-theme hover:text-white">
-                                            Saved
-                                        </Button>
+                                    <div className="flex py-3 ">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[100%]">
+                                            {user && user.components && (
+                                                <RenderComponents components={user.components} type={ComponentType.COMPONENTS} />
+                                            )}
+                                        </div>
                                     </div>
                                     {/* <RenderComponents components={components} type={ComponentType.COMPONENTS}/> */}
                                 </div>

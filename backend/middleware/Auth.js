@@ -113,20 +113,44 @@ const authenticatePublicApi = (req, res, next) => {
   }
 
   const token = authHeader.split(' ')[1];
-  console.log(JWT_SECRET)
 
   jwt.verify(token, JWT_SECRET, (err, payload) => {
-    if (err) {
-      return res.status(401).json({ message: err.message });
+    if (!err) {
+      // Append user data to the request object
+      req.user = payload;
+      req.user.isAuthorized = true;
+      console.log("requser", res.user)
     }
-
-    // Append user data to the request object
-    
-    req.user = payload;
-    req.user.isAuthorized = true;
-    console.log("requser", res.user)
     next();
   });
+};
+
+const giveNewToken = async (refreshToken, req, res, next) => {
+  try {
+    const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+    const userId = decodedRefreshToken.tokenProperties.userId;
+
+    const isTokenInCache = await checkTokenInCache(userId);
+    if (!isTokenInCache) {
+      return res.status(401).json({ message: "Unauthorized: no refresh token in cache" });
+    }
+
+    const newAccessToken = generateAccessToken(decodedRefreshToken.tokenProperties);
+    const newRefreshToken = generateRefreshToken(decodedRefreshToken.tokenProperties);
+
+    await redisClient.set(`refreshToken:${userId}`, newRefreshToken);
+
+    res.cookie('authToken', newAccessToken, { httpOnly: true, sameSite: 'strict', path: '/' });
+    res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'strict', path: '/' });
+    res.setHeader('Authorization', `Bearer ${newAccessToken}`);
+
+    req.user = jwt.verify(newAccessToken, JWT_SECRET);
+    req.user.isAuthorized = true;
+    next();
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ message: `Unauthorized: ${err.message}` });
+  }
 };
 
 const verifyPublicApi =

@@ -164,13 +164,17 @@ const getprofileinfoprotect = async (req, res) => {
 
 const getUserInformationsByNameFromDb = async (req, res) => {
     const userName = req.body.user_name;
-    console.log(req)
+    console.log("---")
     try {
         getUserInformationsByName(userName, (error, userProfileWithComponents) => {
             if (error) {
                 return res.status(500).send(`Internal Server Error ${error}`);
             } else {
-                res.send(sendJSONSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents }));
+                userProfileWithComponents.users = req?.user;
+                res.send(sendJSONSuccess({ 
+                    errorStatus: false,
+                    message: 'User data received successfully',
+                    response: userProfileWithComponents}));
             }
         });
     } catch (error) {

@@ -6,6 +6,6 @@ const {authenticatePublicApi} = require('../middleware/Auth')
 
 userProfileRouter.post('/getuserprofileinfo', getUserProfileInformations);
 userProfileRouter.get('/getprofileinfoprotect', authanticateJwtToken, getprofileinfoprotect );
-userProfileRouter.post('/getprofileinfo', authenticatePublicApi, getUserInformationsByNameFromDb);
+userProfileRouter.post('/getprofileinfo', getUserInformationsByNameFromDb);
 
 module.exports = {userProfileRouter};
