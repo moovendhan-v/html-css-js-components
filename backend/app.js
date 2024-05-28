@@ -9,6 +9,7 @@ const path = require('path'); //path
 const session = require('express-session');
 require('dotenv').config();
 const {customResponsesMiddleware} = require('./middleware/customResponse')
+// const {authenticatePublicApi, authanticateJwtToken} = require('./middleware/Auth')
 const redis = require('redis');
 const cookieParser = require('cookie-parser');
 
@@ -66,6 +67,7 @@ const {userProfileRouter} = require('./routes/userProfile.router')
 const {apiRouter} = require('./routes/api.router')
 
 app.use(customResponsesMiddleware);
+// app.use(authenticatePublicApi, authanticateJwtToken);
 
 const baseFolderPath = '../'; //one step back
 const folderPath = path.join(baseFolderPath, 'project', 'project_datas', 'buttons');

@@ -164,6 +164,7 @@ const getprofileinfoprotect = async (req, res) => {
 
 const getUserInformationsByNameFromDb = async (req, res) => {
     const userName = req.body.user_name;
+    console.log(req)
     try {
         getUserInformationsByName(userName, (error, userProfileWithComponents) => {
             if (error) {
