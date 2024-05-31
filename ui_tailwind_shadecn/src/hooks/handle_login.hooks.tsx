@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useLoginStore } from "@/store/Auth";
 import { useNavigate } from 'react-router-dom';
 // import { toast } from "sonner";
-const userInfo = useLoginStore.getState()
+const userInfo = useLoginStore.getState();
 
 export const HandleLogin = () => {
     const clientId = '5871c78bb36c12b03eb3';

@@ -48,22 +48,21 @@ import { useLoginStore } from "@/store/Auth"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 import { ComponentType } from "@/enums/iframEnums"
 
-const userInfo = useLoginStore.getState();
 
 export function Profile() {
-
 
     type componentsParamType = {
         catogries?: string;
     };
 
+    const userInfo = useLoginStore.getState();
     const { catogries } = useParams<componentsParamType>();
     const categries = useCategoriesStore((state) => state.categories);
 
     useEffect(() => {
         fetchCategories();
         fetchComponentsStore(catogries ?? '');
-    }, [catogries])
+    }, [catogries, userInfo])
 
     return (
         <>
