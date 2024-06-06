@@ -207,7 +207,6 @@ const getParticularComponent = async (req, res) => {
   
     // Check if req.user and tokenProperties are available
     const isAuthorized = req.user?.isAuthorized || false;
-    console.log(req.user?.isAuthorized)
   
     try {
       const data = await UserComponents.findOne({ folder_name: title, categories: category });
