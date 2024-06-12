@@ -42,6 +42,7 @@ import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { useLoginStore } from "@/store/Auth"
+import { ProfileForm } from "@/components/custom_ui/forms/ComponentsSubmitFrom"
 
 // import { SelectValue } from "@/components/ui/select"
 
@@ -336,13 +337,13 @@ export function CreateComponents() {
                             <DrawerTitle>Additional informations</DrawerTitle>
                             <DrawerDescription>Please fill additional informations.</DrawerDescription>
                           </DrawerHeader>
-
-                          <DrawerFooter>
+                              <ProfileForm />
+                          {/* <DrawerFooter>
                             <Button>Submit</Button>
                             <DrawerClose asChild>
                               <Button variant="outline">Cancel</Button>
                             </DrawerClose>
-                          </DrawerFooter>
+                          </DrawerFooter> */}
                         </div>
                       </DrawerContent>
                     </Drawer>
