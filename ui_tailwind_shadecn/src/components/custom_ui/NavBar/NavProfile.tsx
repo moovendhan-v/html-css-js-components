@@ -25,9 +25,9 @@ export const NavProfile = ()=>{
         <>
            <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
+                            <Button variant="secondary" size="icon" className="rounded-full border-4 border-sky-500">
                                 {userInfo.isLoggedIn? <> 
-                                    <Avatar>
+                                    <Avatar className="border-2 border-sky-400">
                                             <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
                                             <AvatarFallback>Profile</AvatarFallback>
                                     </Avatar>

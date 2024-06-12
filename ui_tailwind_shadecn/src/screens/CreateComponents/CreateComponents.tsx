@@ -5,6 +5,17 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { Button } from "@/components/ui/button"
@@ -12,7 +23,7 @@ import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
 import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Layers, Menu, Search } from "lucide-react";
+import { CircleUser, Menu, Search } from "lucide-react";
 import { LeftArrow, Github, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
@@ -29,6 +40,9 @@ import { CommandDialogDemo } from "@/components/ui/commandMenu";
 import { useViewComponentStore } from "@/store/store";
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
+import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
+import { useLoginStore } from "@/store/Auth"
+
 // import { SelectValue } from "@/components/ui/select"
 
 export function CreateComponents() {
@@ -41,6 +55,8 @@ export function CreateComponents() {
     categorie: string;
     title: string;
   };
+
+  const userInfo = useLoginStore.getState();
 
   const { categorie = "", title = "" } = useParams<componentParamType>();
 
@@ -120,21 +136,16 @@ export function CreateComponents() {
               Star On Github
             </MovingButton>
           </div>
-          
-          <div className="mr-3">
-            <Button>
-              <Layers className="mr-2 h-4 w-4" /> Create New One
-            </Button>
-          </div>
 
+          {/*         
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"
             className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
           >
             <span>Signup</span>
-          </HoverBorderGradient>
-
+          </HoverBorderGradient> */}
+          <NavProfile />
         </div>
       </header>
       {componentDetails === null ? (
@@ -144,9 +155,9 @@ export function CreateComponents() {
           <div className="grid min-h-screen w-full md:grid-cols-[180px_1fr] lg:grid-cols-[200px_1fr]">
             <div className="">
               <div className={` sticky top-0`}>
-                 
-                  <CategriesSlider categories={categries}  />
-                  
+
+                <CategriesSlider categories={categries} />
+
               </div>
             </div>
             <div className="flex flex-col">
@@ -217,24 +228,8 @@ export function CreateComponents() {
                           </SheetContent>
 
                         </Sheet>
-                        <div className="w-full flex-1">
-                        </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="secondary" size="icon" className="rounded-full">
-                              <CircleUser className="h-5 w-5" />
-                              <span className="sr-only">Toggle user menu</span>
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Settings</DropdownMenuItem>
-                            <DropdownMenuItem>Support</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+          
+
                       </header>
 
                     </div>
@@ -314,15 +309,43 @@ export function CreateComponents() {
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                           <Avatar>
-                            <AvatarImage src={viewCompoentsStore.admin.avatar_url} />
+                          <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
                             <AvatarFallback>Profile</AvatarFallback>
                           </Avatar>
                           <Link to={``}>
-                            <span className="ml-3 text-xl">Moovendhan</span>
+                            <span className="ml-3 text-xl">{userInfo?.user?.name}</span>
                           </Link>
                         </a>
                       </div>
                     </header>
+
+                    <Drawer>
+                      <DrawerTrigger asChild>
+                        <HoverBorderGradient
+                          containerClassName="rounded-full"
+                          as="button"
+                          className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+                        >
+                          <span>Contribute Components</span>
+
+                        </HoverBorderGradient>
+                      </DrawerTrigger>
+                      <DrawerContent>
+                        <div className="mx-auto w-full max-w-sm">
+                          <DrawerHeader>
+                            <DrawerTitle>Additional informations</DrawerTitle>
+                            <DrawerDescription>Please fill additional informations.</DrawerDescription>
+                          </DrawerHeader>
+
+                          <DrawerFooter>
+                            <Button>Submit</Button>
+                            <DrawerClose asChild>
+                              <Button variant="outline">Cancel</Button>
+                            </DrawerClose>
+                          </DrawerFooter>
+                        </div>
+                      </DrawerContent>
+                    </Drawer>
 
                   </main>
                 </div>

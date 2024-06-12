@@ -21,6 +21,7 @@ import { CreateComponents } from './screens/CreateComponents/CreateComponents';
 import LoginSuccess from './screens/Others/LoginSuccess';
 import LoginFailure from './screens/Others/LoginFailure';
 import { Profile } from './screens/Profile/Profile';
+import  Blogs  from './screens/Blog/Blogs';
 // import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
           <Route path="/:catogries" element={<Components />} />
           <Route path="/:categorie/:title" element={<View />} />
           <Route path="/setting" element={<SettingsProfilePage />} />
-
+          <Route path="/blogs" element={<Blogs />} />
           <Route path="/view" element={<View />} />
           <Route path="/settings/" element={<SettingsLayout children={<SettingsProfilePage />} />} />
           <Route path="/settings/profile" element={<SettingsLayout children={<SettingsProfilePage />} />} />

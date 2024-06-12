@@ -29,11 +29,11 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex space-x-4">
-                                            
-                                            <Avatar>
-                                        <AvatarImage src="https://github.com/shadcn.png" />
-                                        <AvatarFallback>CN</AvatarFallback>
-                                        </Avatar>
+
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
 
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
@@ -45,7 +45,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -57,10 +57,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -71,7 +71,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -83,10 +83,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -97,36 +97,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-
-                        </ul>
-                        <ul className="space-y-8">
-                            <li className="text-sm leading-6">
-                                <div className="relative group">
-                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
-                                    <a href="https://www.agricreations.com" className="cursor-pointer">
-                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
-                                            <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold text-white">
-                                                        Agricreations
-                                                    </h3>
-                                                    <p className="text-gray-500 text-md">
-                                                        web engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -138,10 +109,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -152,85 +123,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li className="text-sm leading-6">
-                                <div className="relative group">
-                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
-                                    <a href="https://www.agricreations.com" className="cursor-pointer">
-                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
-                                            <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold text-white">
-                                                        Agricreations
-                                                    </h3>
-                                                    <p className="text-gray-500 text-md">
-                                                        web engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li className="text-sm leading-6">
-                                <div className="relative group">
-                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
-                                    <a href="https://www.agricreations.com" className="cursor-pointer">
-                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
-                                            <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold text-white">
-                                                        Agricreations
-                                                    </h3>
-                                                    <p className="text-gray-500 text-md">
-                                                        web engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
-                                            </p>
-                                        </div>
-                                    </a>
-                                </div>
-                            </li>
-                            <li className="text-sm leading-6">
-                                <div className="relative group">
-                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
-                                    <a href="https://www.agricreations.com" className="cursor-pointer">
-                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
-                                            <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
-                                                <div>
-                                                    <h3 className="text-lg font-semibold text-white">
-                                                        Agricreations
-                                                    </h3>
-                                                    <p className="text-gray-500 text-md">
-                                                        web engineer
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -244,10 +137,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -258,7 +151,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -270,10 +163,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -284,7 +177,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am \ing on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -296,10 +189,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -310,7 +203,7 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a userProfile two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -322,10 +215,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -336,7 +229,35 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am awo years to working on YouTube.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul className="space-y-8">
+                            <li className="text-sm leading-6">
+                                <div className="relative group">
+                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
+                                    <a href="https://www.agricreations.com" className="cursor-pointer">
+                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
+                                            <div className="flex items-center space-x-4">
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-white">
+                                                        Agricreations
+                                                    </h3>
+                                                    <p className="text-gray-500 text-md">
+                                                        web engineer
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p className="leading-normal text-gray-300 text-md">
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -348,10 +269,10 @@ export const TestimonialGrid = () => {
                                     <a href="https://www.agricreations.com" className="cursor-pointer">
                                         <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
                                             <div className="flex items-center space-x-4">
-                                               <Avatar>
-                                                <AvatarImage src="https://github.com/shadcn.png" />
-                                                <AvatarFallback>CN</AvatarFallback>
-                                            </Avatar>
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
                                                 <div>
                                                     <h3 className="text-lg font-semibold text-white">
                                                         Agricreations
@@ -362,7 +283,59 @@ export const TestimonialGrid = () => {
                                                 </div>
                                             </div>
                                             <p className="leading-normal text-gray-300 text-md">
-                                                Awesome
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li className="text-sm leading-6">
+                                <div className="relative group">
+                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
+                                    <a href="https://www.agricreations.com" className="cursor-pointer">
+                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
+                                            <div className="flex items-center space-x-4">
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-white">
+                                                        Agricreations
+                                                    </h3>
+                                                    <p className="text-gray-500 text-md">
+                                                        web engineer
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p className="leading-normal text-gray-300 text-md">
+                                                Hi, I am a pring on YouTube.
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </li>
+                            <li className="text-sm leading-6">
+                                <div className="relative group">
+                                    <div className="absolute transition rounded-lg opacity-25 -inset-1  blur duration-400 "></div>
+                                    <a href="https://www.agricreations.com" className="cursor-pointer">
+                                        <div className="relative p-6 space-y-6 leading-none rounded-lg ring-1 bg-theme ring-gray-900/5">
+                                            <div className="flex items-center space-x-4">
+                                                <Avatar>
+                                                    <AvatarImage src="https://github.com/shadcn.png" />
+                                                    <AvatarFallback>CN</AvatarFallback>
+                                                </Avatar>
+                                                <div>
+                                                    <h3 className="text-lg font-semibold text-white">
+                                                        Agricreations
+                                                    </h3>
+                                                    <p className="text-gray-500 text-md">
+                                                        web engineer
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <p className="leading-normal text-gray-300 text-md">
+                                                Hi, I am a professional web developer. I have been actively engaged in writing articles for a blog. Additionally, I possess a keen interest in multimedia and have dedicated the past two years to working on YouTube.
                                             </p>
                                         </div>
                                     </a>
@@ -372,7 +345,6 @@ export const TestimonialGrid = () => {
                     </div>
                 </div>
             </section>
-
         </>
     )
 }

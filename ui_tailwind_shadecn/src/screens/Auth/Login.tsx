@@ -1,4 +1,3 @@
-
 import MainNav from "@/components/custom_ui/NavBar/MainNav"
 import { useLocation } from 'react-router-dom';
 import { useEffect } from "react";
