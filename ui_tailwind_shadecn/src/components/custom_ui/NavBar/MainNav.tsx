@@ -1,4 +1,4 @@
-import { Moon, Sun } from "lucide-react"
+import { Layers, Moon, Sun } from "lucide-react"
 import { useTheme } from "@/components/theme-provider"
 
 import {
@@ -41,7 +41,7 @@ export default function MainNav() {
     const { setTheme } = useTheme()
     // const user = useLoginStore((state) => state.isLogin);
     // const userInfo = useLoginUserInfo((state) => state);
-    
+
 
     return (
         <>
@@ -158,6 +158,11 @@ export default function MainNav() {
                             />
                         </div>
                     </form>
+                    <Link to={"/create"}>
+                        <Button>
+                            <Layers className="mr-2 h-4 w-4" /> Create New One
+                        </Button>
+                    </Link>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" size="icon">
@@ -178,8 +183,7 @@ export default function MainNav() {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                 
-                 <NavProfile />
+                    <NavProfile />
                 </div>
             </header>
         </>

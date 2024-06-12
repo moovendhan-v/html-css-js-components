@@ -1,5 +1,6 @@
 
 import {
+    Layers,
     Menu,
     Search,
 } from "lucide-react"
@@ -170,13 +171,18 @@ export function Profile() {
                                         </div>
                                     </form>
                                 </div>
+                                <div className="mr-3">
+                                <Link to={"/create"}>
+                                <Button>
+                                        <Layers className="mr-2 h-4 w-4" /> Create New One
+                                    </Button>
+                                 </Link>
+
+                                    
+                                </div>
                                 <NavProfile />
                             </header>
                             <main className="flex flex-1 flex-col gap-4 lg:gap-6 ">
-
-
-
-
                                 <section className="text-gray-400  body-font">
                                     <div className="container px-5 py-5 mx-auto">
                                         <div className="flex items-center mx-auto border-b pb-10 mb-2 sm:flex-row flex-col">
@@ -215,7 +221,7 @@ export function Profile() {
                                                 </div>
 
                                                 <h2 className="text-white text-lg title-font font-medium mb-2">
-                                                {userInfo.user?.company}
+                                                    {userInfo.user?.company}
                                                 </h2>
                                                 <blockquote className="my-6 border-l-2 pl-6 italic">
                                                     {userInfo.user?.bio}
@@ -251,7 +257,7 @@ export function Profile() {
 
                                         <Tabs defaultValue="components" className="w-[100%]">
                                             <TabsList className="grid w-full grid-cols-6">
-                                                <TabsTrigger value="components"><LogoPlain width={15} height={15}/> My Components</TabsTrigger>
+                                                <TabsTrigger value="components"><LogoPlain width={15} height={15} /> My Components</TabsTrigger>
                                                 <TabsTrigger value="review">In Review</TabsTrigger>
                                                 <TabsTrigger value="draft">In Draft</TabsTrigger>
                                                 <TabsTrigger value="rejected">Rejected</TabsTrigger>
@@ -285,7 +291,7 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-                                                       
+
                                                     </CardContent>
                                                     <CardFooter>
                                                         {/* <Button>Save password</Button> */}
@@ -301,7 +307,7 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-                                                       
+
                                                     </CardContent>
                                                     <CardFooter>
                                                         {/* <Button>Save password</Button> */}
@@ -317,7 +323,7 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-                                                       
+
                                                     </CardContent>
                                                     <CardFooter>
                                                         {/* <Button>Save password</Button> */}
@@ -333,7 +339,7 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-                                                       
+
                                                     </CardContent>
                                                     <CardFooter>
                                                         {/* <Button>Save password</Button> */}
@@ -349,7 +355,7 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-                                                       
+
                                                     </CardContent>
                                                     <CardFooter>
                                                         {/* <Button>Save password</Button> */}
@@ -372,7 +378,7 @@ export function Profile() {
                                                 Saved
                                             </Button>
                                         </div> */}
-                                       
+
                                     </div>
                                 </section>
 
