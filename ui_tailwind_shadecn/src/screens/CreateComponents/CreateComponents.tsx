@@ -6,24 +6,24 @@ import {
 } from "@/components/ui/resizable"
 
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { LeftArrow, Github, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
@@ -111,6 +111,9 @@ export function CreateComponents() {
 
   return (
     <>
+
+
+
       <div className="fixed bottom-0 right-0 p-2 bg-secondary"><CommandDialogDemo /></div>
 
       <header className="body-font">
@@ -229,7 +232,7 @@ export function CreateComponents() {
                           </SheetContent>
 
                         </Sheet>
-          
+
 
                       </header>
 
@@ -310,7 +313,7 @@ export function CreateComponents() {
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                           <Avatar>
-                          <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
+                            <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
                             <AvatarFallback>Profile</AvatarFallback>
                           </Avatar>
                           <Link to={``}>
@@ -319,9 +322,8 @@ export function CreateComponents() {
                         </a>
                       </div>
                     </header>
-
-                    <Drawer>
-                      <DrawerTrigger asChild>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
                         <HoverBorderGradient
                           containerClassName="rounded-full"
                           as="button"
@@ -330,23 +332,20 @@ export function CreateComponents() {
                           <span>Contribute Components</span>
 
                         </HoverBorderGradient>
-                      </DrawerTrigger>
-                      <DrawerContent>
-                        <div className="mx-auto w-full max-w-sm">
-                          <DrawerHeader>
-                            <DrawerTitle>Additional informations</DrawerTitle>
-                            <DrawerDescription>Please fill additional informations.</DrawerDescription>
-                          </DrawerHeader>
-                              <ProfileForm />
-                          {/* <DrawerFooter>
-                            <Button>Submit</Button>
-                            <DrawerClose asChild>
-                              <Button variant="outline">Cancel</Button>
-                            </DrawerClose>
-                          </DrawerFooter> */}
-                        </div>
-                      </DrawerContent>
-                    </Drawer>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                          You were contributing this to open source, so please be concise about that. Do not get this from any other code to open source it, as it may violate our terms and conditions.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction>Contribute My Component</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
 
                   </main>
                 </div>
