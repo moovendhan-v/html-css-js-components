@@ -1,13 +1,13 @@
-const UserComponents = require('../models/components.model');
-const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
-const { createFiles } = require('../operations/fileOperations');
+import {UserComponents} from '../models/components.model.js';
+import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
+import {createFiles} from '../operations/fileOperations.js';
 
 // this base path is must be refer from app.js files
 const basePath = '../project/project_datas/';
 
-const addNewComponents = async (req, res) => {
+const addNewComponents = async ({body}, res) => {
     try {
-        const { user_id, title,description, tags, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = req.body;
+        const { user_id, title,description, tags, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = body;
         const newComponents = new UserComponents({
             user_id,
             title,
@@ -22,7 +22,7 @@ const addNewComponents = async (req, res) => {
         });
        
         // Call createFiles function to create files
-        createFiles(basePath, categories, folder_name, { html:html, css:css, js:js }, async (err) => {
+        createFiles(basePath, categories, folder_name, { html, css, js }, async (err) => {
             if (err) {
                 console.error('Error creating files:', err);
                 res.error({message: `Data Not inserted Please contact admin plase visit contact us page : ${err}`})
@@ -48,4 +48,6 @@ const addNewComponents = async (req, res) => {
     }
 }
 
-module.exports = { addNewComponents };
+export { addNewComponents };
+
+ 

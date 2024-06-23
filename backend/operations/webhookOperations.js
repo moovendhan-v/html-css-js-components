@@ -1,5 +1,6 @@
-const axios = require('axios');
-require('dotenv').config();
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const DiscordWebhooks = {
   alert: 'DISCORD_ALERT' // Storing the environment variable name as a string
@@ -14,18 +15,18 @@ function sendDiscordWebhookMessage(content, uri) {
   }
 
   const payload = {
-    content: content,
+    content,
   };
 
   axios.post(discordUriToSend, payload)
-    .then(response => {
-      console.log('Webhook message sent successfully:', response.data);
+    .then(({data}) => {
+      console.log('Webhook message sent successfully:', data);
     })
-    .catch(error => {
-      console.error('Error sending webhook message:', error.message);
+    .catch(({message}) => {
+      console.error('Error sending webhook message:', message);
     });
 }
 
-module.exports = {
+export  {
   sendDiscordWebhookMessage,
 };

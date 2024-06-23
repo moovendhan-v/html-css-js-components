@@ -1,10 +1,10 @@
-const fs = require('fs').promises;
-const path = require('path');
-const { readFileContent } = require('../operations/fileOperations');
-const UserComponents = require('../models/components.model');
-const GitHubUser = require('../models/user.model');
+import {promises as fs} from 'fs';
+import path from 'path';
+import {readFileContent} from '../operations/fileOperations.js';
+import {UserComponents} from '../models/components.model.js';
+import {GitHubUser} from '../models/user.model.js';
 const baseFolderPath = '../';
-const util = require('util');
+import util from 'util';
 
 const getUserInfoByIdForComments = async (uid) => {
     try {
@@ -187,12 +187,12 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 };
 
 //filter components by seach
-const getComponentsBySearch = (req,res)=>{
-    const { categories = "search", search } = req.query;
+const getComponentsBySearch = ({query}, res) => {
+    const { categories = "search", search } = query;
     if(!search){
         return res.error({message: "Please add search query"})
     }
-    getAllCompDetailsFromDatabases({ categories: categories, search: search }, (err, files) => {
+    getAllCompDetailsFromDatabases({ categories, search }, (err, files) => {
         // Handle the data
         if (err) {
             return res.error({message: err});
@@ -214,7 +214,6 @@ const getParticularComponent = async (req, res) => {
       if (!data) {
         return res.status(404).json({ success: false, message: 'Component not available' });
       }
-  
       const user = await GitHubUser.findOne(
         { user_id: data.user_id.$oid },
         {
@@ -246,13 +245,13 @@ const getParticularComponent = async (req, res) => {
       res.status(500).send({ success: false, message: error.message });
     }
   };
-  
+
 
 //components like 
-const addLikesToComponents = async (req,res)=>{
+const addLikesToComponents = async ({params, body}, res) => {
     try {
-        const postId = req.params.postId;
-        const userId = req.body.userId; 
+        const postId = params.postId;
+        const userId = body.userId; 
         const post = await UserComponents.findById(postId);
         console.log(post)
         // Check if the user has already liked the post
@@ -270,10 +269,10 @@ const addLikesToComponents = async (req,res)=>{
 }
 
 //components dislike
-const removeLikeToComponents = async (req, res)=>{
+const removeLikeToComponents = async ({params, body}, res) => {
     try {
-        const postId = req.params.postId;
-        const userId = req.body.userId; 
+        const postId = params.postId;
+        const userId = body.userId; 
         const post = await UserComponents.findById(postId);
         // Check if the user has already liked the post
         const index = post.likes.indexOf(userId);
@@ -291,11 +290,11 @@ const removeLikeToComponents = async (req, res)=>{
 }
 
 //components saves
-const saveComponents = async (req,res)=>{
+const saveComponents = async ({params, body}, res) => {
     try {
         console.log("running")
-        const postId = req.params.postId;
-        const userId = req.body.userId; 
+        const postId = params.postId;
+        const userId = body.userId; 
         const post = await UserComponents.findById(postId);
         console.log(post)
         if (post.saves.includes(userId)) {
@@ -312,10 +311,10 @@ const saveComponents = async (req,res)=>{
 }
 
 //components unsave
-const unSavedComponents = async (req, res)=>{
+const unSavedComponents = async ({params, body}, res) => {
     try {
-        const postId = req.params.postId;
-        const userId = req.body.userId; 
+        const postId = params.postId;
+        const userId = body.userId; 
         const post = await UserComponents.findById(postId);
         // Check if the user has already liked the post
         const index = post.saves.indexOf(userId);
@@ -333,11 +332,11 @@ const unSavedComponents = async (req, res)=>{
 }
 
 //add comments
-const addComments = async (req, res) => {
+const addComments = async ({params, body}, res) => {
     try {
-        const postId = req.params.postId;
-        const userId = req.body.userId;
-        const commentBody = req.body.comment;
+        const postId = params.postId;
+        const userId = body.userId;
+        const commentBody = body.comment;
         const post = await UserComponents.findById(postId);
         post.comments.push({ comment: commentBody, user: userId });
         await post.save();
@@ -381,17 +380,14 @@ const getCategoriesList = async (req, res) => {
     }
 };
 
-module.exports = { getCategoriesList };
-
-
-module.exports = {
+export {
+    getCategoriesList,
     getLatestFiles,
     readFilesInformations,
     readContent,
     getAllCompDetailsFromDatabases,
     getComponentsBySearch,
     getParticularComponent,
-    getCategoriesList,
     addLikesToComponents,
     removeLikeToComponents,
     saveComponents,

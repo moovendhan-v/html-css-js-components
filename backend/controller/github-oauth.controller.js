@@ -1,13 +1,14 @@
 // authRouter.js
-const axios = require('axios');
-const GitHubUser = require('../models/user.model');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
-const {getUserInformationsByName} = require('../controller/userProfile.controller');
-const { response } = require('express');
+import axios from 'axios';
 
-const redis = require('redis');
+import {GitHubUser} from '../models/user.model.js';
+import dotenv from 'dotenv';
+dotenv.config();
+import jwt from 'jsonwebtoken';
+import {sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
+import {getUserInformationsByName} from '../controller/userProfile.controller.js';
+import {response} from 'express';
+import redis from 'redis';
 
 const redisClient = redis.createClient({
   socket: {
@@ -36,7 +37,7 @@ async function exchangeGitHubCodeForToken(code) {
   const params = `?client_id=${client_id}&client_secret=${client_secret}&code=${code}`;
   try {
     const response = await axios.post(
-      'https://github.com/login/oauth/access_token' + params,
+      `https://github.com/login/oauth/access_token${params}`,
       null,
       {
         headers: {
@@ -68,10 +69,10 @@ async function getUserInformationsFromGitApi(githubAccessToken) {
     console.error('Error fetching GitHub user data:', error);
     throw error;
   }
-} 
+}
 
-const getUserInfoFromGit = async (req, res) => {
-  const data = req.body;
+const getUserInfoFromGit = async ({body}, res) => {
+  const data = body;
 
   if (data) {
     try {
@@ -95,11 +96,11 @@ const getUserInfoFromGit = async (req, res) => {
   }
 };
 
-const signup_or_login_with_git = async (req,res)=>{
+const signup_or_login_with_git = async ({query}, res) => {
 
   // it will create a new account if account not already existis or creates a new account
 
-  const { code } = req.query;
+  const { code } = query;
   try {
     // #TODO Upadate a auth token where authanticated by user 
     const githubAccessToken = await exchangeGitHubCodeForToken(code);
@@ -168,9 +169,7 @@ const generateAccessToken = (tokenProperties)=>{
    return token;
 }
 
-const generateRefreshToken = (tokenProperties) => {
-  return jwt.sign({ tokenProperties }, REFRESH_TOKEN, { expiresIn: '2d' });
-};
+const generateRefreshToken = tokenProperties => jwt.sign({ tokenProperties }, REFRESH_TOKEN, { expiresIn: '2d' });
 
 // const refreshToken = async (req, res, redisClient) => {
 //   const { refreshToken } = req.cookies;
@@ -204,10 +203,10 @@ const generateRefreshToken = (tokenProperties) => {
 //   }
 // };
 
-const validateToken = (req,res)=>{
+const validateToken = ({body}, res) => {
     // Retrieve JWT token from cookie
   // const token = req.cookies.jwt;
-  const { token } = req.body;
+  const { token } = body;
 
   if (!token) {
       return res.status(401).json({ message: 'Unauthorized' });
@@ -227,5 +226,5 @@ const validateToken = (req,res)=>{
 }
 
 
-module.exports = { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, generateAccessToken,generateRefreshToken, validateToken, signup_or_login_with_git};
+export { exchangeGitHubCodeForToken , getUserInformationsFromGitApi, getUserInfoFromGit, generateAccessToken,generateRefreshToken, validateToken, signup_or_login_with_git};
 

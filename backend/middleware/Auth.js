@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
-require('dotenv').config();
-const { generateAccessToken, generateRefreshToken } = require('../controller/github-oauth.controller')
-
-const redis = require('redis');
+import jwt from 'jsonwebtoken';
+import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
+import dotenv from 'dotenv';
+dotenv.config();
+import {generateAccessToken, generateRefreshToken} from '../controller/github-oauth.controller.js';
+import redis from 'redis';
 
 const redisClient = redis.createClient({
   socket: {
@@ -70,7 +70,7 @@ const authanticateJwtToken = async (req, res, next) => {
         const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
         const checkTokenInRedis = isTokenInCache(decodedRefreshToken.tokenProperties.userId)
         console.log(`checkTokenInRedis ${await checkTokenInRedis}`)
-        if (!await checkTokenInRedis) {
+        if (!(await checkTokenInRedis)) {
           return res.status(401).json({ message: "Unauthorized  no refresh tokeins in reids" });
         }
         // Verify the refresh token
@@ -108,6 +108,8 @@ const authenticatePublicApi = async (req, res, next) => {
 
   const refreshToken = req.cookies.refreshToken;
   const authHeader = req.headers['authorization'];
+  console.log("cookiesss")
+  console.log(req.cookies);
 
   req.user = {};
 
@@ -165,4 +167,4 @@ const authenticatePublicApi = async (req, res, next) => {
 
 
 
-  module.exports = { authanticateJwtToken, authenticatePublicApi }
+export { authanticateJwtToken, authenticatePublicApi };

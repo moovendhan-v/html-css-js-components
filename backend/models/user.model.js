@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const githubUserSchema = new Schema({
@@ -21,6 +21,8 @@ const githubUserSchema = new Schema({
     telegram : { type: String},
 });
 
+
+
 const GitHubUser = mongoose.model('GitHubUser', githubUserSchema);
 
-module.exports = GitHubUser
+export {GitHubUser};

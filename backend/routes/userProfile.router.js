@@ -1,11 +1,18 @@
-const { Router } = require('express')
+import {Router} from 'express';
 const userProfileRouter = Router()
-const {getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect} = require('../controller/userProfile.controller');
-const {authanticateJwtToken} = require('../middleware/Auth')
-const {authenticatePublicApi} = require('../middleware/Auth')
+
+import {
+  getUserProfileInformations,
+  getUserInformationsByName,
+  getUserInformationsByNameFromDb,
+  getprofileinfoprotect,
+} from '../controller/userProfile.controller.js';
+
+import {authanticateJwtToken} from '../middleware/Auth.js';
+import {authenticatePublicApi} from '../middleware/Auth.js';
 
 userProfileRouter.post('/getuserprofileinfo', getUserProfileInformations);
 userProfileRouter.get('/getprofileinfoprotect', authanticateJwtToken, getprofileinfoprotect );
 userProfileRouter.post('/getprofileinfo', getUserInformationsByNameFromDb);
 
-module.exports = {userProfileRouter};
+export {userProfileRouter};

@@ -4,6 +4,6 @@ const homePageController = (req, res) => {
 }
 
 
-module.exports = {
+export {
     homePageController,
-}
+};

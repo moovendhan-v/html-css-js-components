@@ -1,9 +1,9 @@
-const { Router } = require('express')
+import {Router} from 'express';
 const CreateComponentsRouter = Router()
-const {addNewComponents} = require('../controller/addComponents.controller');
+import {addNewComponents} from '../controller/addComponents.controller.js';
 
 
 // componentsRouter.get('/:test', getComponentsDetails);
 CreateComponentsRouter.post('/createnewcomponents', addNewComponents);
 
-module.exports = {CreateComponentsRouter}
+export {CreateComponentsRouter};
