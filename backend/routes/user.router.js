@@ -1,5 +1,5 @@
-const express = require('express');
-const passport = require('passport');
+import express from 'express';
+import passport from 'passport';
 const userRouter = express.Router();
 
 
@@ -13,9 +13,7 @@ userRouter.post('/register', (req, res, next) => {
         return res.redirect('/dashboard');
       });
     })
-    .catch((error) => {
-      return next(error);
-    });
+    .catch(error => next(error));
 });
-module.exports = userRouter;
+export {userRouter};
  

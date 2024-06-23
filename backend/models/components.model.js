@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const commentSchema = {
@@ -27,4 +27,4 @@ const userComponentsDetails = new Schema({
 
 const UserComponents = mongoose.model('UserComponents', userComponentsDetails);
 
-module.exports = UserComponents
+export {UserComponents};

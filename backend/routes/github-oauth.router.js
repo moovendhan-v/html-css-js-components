@@ -1,10 +1,21 @@
 // authRouter.js
-const express = require('express');
-const axios = require('axios');
-const { exchangeGitHubCodeForToken, getUserInfoFromGit, getUserInformationsFromGitApi, createTokens, validateToken, signup_or_login_with_git } = require('../controller/github-oauth.controller');
+import express from 'express';
+
+import axios from 'axios';
+
+import {
+  exchangeGitHubCodeForToken,
+  getUserInfoFromGit,
+  getUserInformationsFromGitApi,
+  generateAccessToken,
+  validateToken,
+  signup_or_login_with_git,
+} from '../controller/github-oauth.controller.js';
+
 const authRouter = express.Router();
-require('dotenv').config();
-const GitHubUser = require('../models/user.model');
+import dotenv from 'dotenv';
+dotenv.config();
+import {GitHubUser} from '../models/user.model.js';
 
 authRouter.get('/', (req, res) => {
   res.send('welcome to git')
@@ -13,10 +24,11 @@ authRouter.get('/', (req, res) => {
 authRouter.post('/getUserInfoFromGit', getUserInfoFromGit);
 
 // #TODO upgrade this with proper session 
-authRouter.post('/github-oauth', signup_or_login_with_git);
+authRouter.get('/github-oauth', signup_or_login_with_git);
 
-authRouter.post('/github', createTokens )
+authRouter.post('/github', generateAccessToken )
 
 authRouter.post('/github-validate', validateToken )
 
-module.exports = { authRouter };
+
+export { authRouter };

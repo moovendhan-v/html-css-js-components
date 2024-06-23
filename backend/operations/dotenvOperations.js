@@ -1,9 +1,7 @@
-const path = require('path');
+import path from 'path';
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 
-const getEnvFileInfo = (secret) => {
-    return process.env[secret];
-};
+const getEnvFileInfo = secret => process.env[secret];
 
-module.exports = {getEnvFileInfo}
+export {getEnvFileInfo};

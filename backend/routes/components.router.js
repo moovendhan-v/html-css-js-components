@@ -1,15 +1,29 @@
-const { Router } = require('express')
+import {Router} from 'express';
 const componentsRouter = Router()
-const {getComponentsDetails , getLatestFiles, getAllCompDetailsFromDatabases, getComponentsBySearch, getParticularComponent, getCategoriesList, addLikesToComponents, removeLikeToComponents, saveComponents, unSavedComponents, addComments} = require('../controller/components.controller');
-const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
+
+import {
+  getLatestFiles,
+  getAllCompDetailsFromDatabases,
+  getComponentsBySearch,
+  getParticularComponent,
+  getCategoriesList,
+  addLikesToComponents,
+  removeLikeToComponents,
+  saveComponents,
+  unSavedComponents,
+  addComments,
+} from '../controller/components.controller.js';
+
+import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
+import {authenticatePublicApi} from '../middleware/Auth.js';
 
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);
 
-componentsRouter.get('/latest', (req, res) => {
-    const { category, page } = req.query;
+componentsRouter.get('/latest', ({query}, res) => {
+    const { category, page } = query;
     if (category == "all") {
-      getAllCompDetailsFromDatabases({categories:category, page: page}, (err, files)=>{
+      getAllCompDetailsFromDatabases({categories:category, page}, (err, files)=>{
         //hadle the data
         if(err){
           return res.send(sendJSONError({ errorStatus : true, statusCode : "500", message : 'Internal server error', response : null,}));
@@ -38,10 +52,10 @@ componentsRouter.post('/:postId/unsave', unSavedComponents)
 
 componentsRouter.post('/:postId/addcomments', addComments)
 
-componentsRouter.get('/:category/:title',getParticularComponent);
+componentsRouter.get('/:category/:title',authenticatePublicApi, getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 
 componentsRouter.get('/get-cateogries', getCategoriesList)
 
-module.exports = {componentsRouter}
+export {componentsRouter};

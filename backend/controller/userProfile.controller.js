@@ -1,11 +1,12 @@
-const UserComponents = require('../models/components.model');
-const GitHubUser = require('../models/user.model');
-const { sendStatus, sendJSONError, sendJSONSuccess } = require('../operations/errorhandlingOperations');
-const { readFilesInformations, readContent } = require('../controller/components.controller');
+import {UserComponents} from '../models/components.model.js';
+import {GitHubUser} from '../models/user.model.js';
+import {sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
+import {readFilesInformations, readContent} from '../controller/components.controller.js';
 
-const getUserProfileInformations = async (req, res) => {
+
+const getUserProfileInformations = async ({body}, res) => {
     try {
-        const user_id = req.body.user_id;
+        const user_id = body.user_id;
         // Find user information using user_id
         const existingUser = await GitHubUser.findOne(
             { _id: user_id },
@@ -29,7 +30,8 @@ const getUserProfileInformations = async (req, res) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(),
+                             // Convert Mongoose document to object
                             component_details: fileInfo 
                         });
                     }
@@ -79,7 +81,7 @@ const getUserInformationsByName = async (userName, callback) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(), 
                             component_details: fileInfo 
                         });
                     }
@@ -106,11 +108,13 @@ const getUserInformationsByName = async (userName, callback) => {
     }
 };
 
-const getprofileinfoprotect = async (req, res) => {
+const getprofileinfoprotect = async ({user}, res) => {
     try {
-        const user_id = req.user.user.user_id;
-        console.log(req.user);
+        const user_id = user.tokenProperties.userId;
         // Find user information using user_id
+        console.log(`usersresponse ${JSON.stringify(user)}`)
+
+        console.log(`userid ${JSON.stringify(user.tokenProperties.userId)}`)
         const existingUser = await GitHubUser.findOne({ _id: user_id });
         if (!existingUser) {
             return res.status(404).send('User not found');
@@ -124,7 +128,6 @@ const getprofileinfoprotect = async (req, res) => {
             const categories = component.categories;
             const data = component;
             const user = existingUser;
-            console.log(`Component ${component}`);
 
             return new Promise((resolve, reject) => {
                 readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
@@ -132,7 +135,7 @@ const getprofileinfoprotect = async (req, res) => {
                         reject(err);
                     } else {
                         resolve({
-                            ...component.toObject(), // Convert Mongoose document to object
+                            // ...component.toObject(), // Convert Mongoose document to object
                             component_details: fileInfo 
                         });
                     }
@@ -159,14 +162,19 @@ const getprofileinfoprotect = async (req, res) => {
     }
 }
 
-const getUserInformationsByNameFromDb = async (req, res) => {
-    const userName = req.body.user_name;
+const getUserInformationsByNameFromDb = async ({body, user}, res) => {
+    const userName = body.user_name;
+    console.log("---")
     try {
         getUserInformationsByName(userName, (error, userProfileWithComponents) => {
             if (error) {
                 return res.status(500).send(`Internal Server Error ${error}`);
             } else {
-                res.send(sendJSONSuccess({ errorStatus: false, message: 'User data received successfully', response: userProfileWithComponents }));
+                userProfileWithComponents.users = req?.user;
+                res.send(sendJSONSuccess({ 
+                    errorStatus: false,
+                    message: 'User data received successfully',
+                    response: userProfileWithComponents}));
             }
         });
     } catch (error) {
@@ -176,4 +184,4 @@ const getUserInformationsByNameFromDb = async (req, res) => {
 };
 
 
-module.exports = { getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect };
+export { getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect };
