@@ -1,8 +1,8 @@
-import {promises as fs} from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
-import {readFileContent} from '../operations/fileOperations.js';
-import {UserComponents} from '../models/components.model.js';
-import {GitHubUser} from '../models/user.model.js';
+import { readFileContent } from '../operations/fileOperations.js';
+import { UserComponents } from '../models/components.model.js';
+import { GitHubUser } from '../models/user.model.js';
 const baseFolderPath = '../';
 import util from 'util';
 
@@ -12,8 +12,8 @@ const getUserInfoByIdForComments = async (uid) => {
         // Find user information using user_id
         const existingUser = await GitHubUser.findOne(
             { _id: user_id },
-            {login:1, avatar_url:1, name: 1});
-       return existingUser
+            { login: 1, avatar_url: 1, name: 1 });
+        return existingUser
     } catch (error) {
         // Handle errors
         console.error('Error in getUserProfileInformations:', error);
@@ -63,11 +63,11 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
                 "js": jsContent,
                 "type": "components",
                 "like": {
-                    "isLiked": post.likes.includes(user._id)? true : false,
+                    "isLiked": post.likes.includes(user._id) ? true : false,
                     "likeCount": data.likes.length
                 },
                 "saved": {
-                    "isSaved":  post.saves.includes(user._id)? true : false,
+                    "isSaved": post.saves.includes(user._id) ? true : false,
                     "savedCount": data.saves.length
                 },
                 "comments": {
@@ -94,48 +94,48 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
 
 
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
-async function getLatestFiles (catogries,page, callback) {
+async function getLatestFiles(catogries, page, callback) {
     const catComponentsDetails = [];
-        page = page ?? 1;
-        const skip = (page-1)*10;
+    page = page ?? 1;
+    const skip = (page - 1) * 10;
     // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
 
-         userComponents = await UserComponents.aggregate([
-            {
-                $match: {
-                    $or: [
-                        { 'categories': { $regex: catogries, $options: 'i' } }
-                    ]
-                }
-            },
-            {$skip: skip},
-            {$limit: 12}
-        ]);
-        await Promise.all(userComponents.map(async (data) => {
-            try {
-                const user = await GitHubUser.findOne({ user_id: data.user_id.$oid }, {_id: 0, login: 1});
-                const datas = await new Promise((resolve, reject) => {
-                    readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
-                        if (err) {
-                            reject(err);
-                        } else {
-                            resolve(result);
-                        }
-                    });
-                });
-                catComponentsDetails.push(datas);
-            } catch (err) {
-                throw err;
+    userComponents = await UserComponents.aggregate([
+        {
+            $match: {
+                $or: [
+                    { 'categories': { $regex: catogries, $options: 'i' } }
+                ]
             }
-        }));
-        callback(null, catComponentsDetails);
+        },
+        { $skip: skip },
+        { $limit: 12 }
+    ]);
+    await Promise.all(userComponents.map(async (data) => {
+        try {
+            const user = await GitHubUser.findOne({ user_id: data.user_id.$oid }, { _id: 0, login: 1 });
+            const datas = await new Promise((resolve, reject) => {
+                readFilesInformations(data.categories, data.folder_name, { data, user }, (err, result) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            });
+            catComponentsDetails.push(datas);
+        } catch (err) {
+            throw err;
+        }
+    }));
+    callback(null, catComponentsDetails);
 }
 
 //get all components and search funcitons
-const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery , page: pageNo}, callback) => {
+const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery, page: pageNo }, callback) => {
     const allComponentsDetails = [];
     pageNo = pageNo ?? 1;
-    const skip = (pageNo-1)*10;
+    const skip = (pageNo - 1) * 10;
     try {
         let userComponents;
         if (categories === "all") {
@@ -153,8 +153,8 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
                         ]
                     }
                 },
-                {$skip: skip},
-                {$limit: 12}
+                { $skip: skip },
+                { $limit: 12 }
             ]);
         } else {
             return callback("Invalid category", null);
@@ -163,10 +163,10 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
         await Promise.all(userComponents.map(async (data) => {
             try {
                 const user = await GitHubUser.findOne({ user_id: data.user_id.$oid },
-                    {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, name: 1, blog: 1, bio:1, twitter_username:1}
-                    );
+                    { _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1, location: 1, name: 1, blog: 1, bio: 1, twitter_username: 1 }
+                );
                 const datas = await new Promise((resolve, reject) => {
-                    readFilesInformations(data.categories, data.folder_name,{data, user}, (err, result) => {
+                    readFilesInformations(data.categories, data.folder_name, { data, user }, (err, result) => {
                         if (err) {
                             reject(err);
                         } else {
@@ -187,152 +187,152 @@ const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery 
 };
 
 //filter components by seach
-const getComponentsBySearch = ({query}, res) => {
+const getComponentsBySearch = ({ query }, res) => {
     const { categories = "search", search } = query;
-    if(!search){
-        return res.error({message: "Please add search query"})
+    if (!search) {
+        return res.error({ message: "Please add search query" })
     }
     getAllCompDetailsFromDatabases({ categories, search }, (err, files) => {
         // Handle the data
         if (err) {
-            return res.error({message: err});
+            return res.error({ message: err });
         }
-        return res.success({message:`${categories} latest components`, response:files, count: files.length})
+        return res.success({ message: `${categories} latest components`, response: files, count: files.length })
     });
 }
 
 //Bring a particular components
 const getParticularComponent = async (req, res) => {
     const { category, title } = req.params;
-  
+    console.log('active:', await GitHubUser.findByUserByName('Moovendhan'));
     // Check if req.user and tokenProperties are available
     const isAuthorized = req.user?.isAuthorized || false;
-  
+
     try {
-      const data = await UserComponents.findOne({ folder_name: title, categories: category });
-      
-      if (!data) {
-        return res.status(404).json({ success: false, message: 'Component not available' });
-      }
-      const user = await GitHubUser.findOne(
-        { user_id: data.user_id.$oid },
-        {
-          _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1,
-          location: 1, name: 1, blog: 1, bio: 1, twitter_username: 1
+        const data = await UserComponents.findOne({ folder_name: title, categories: category });
+
+        if (!data) {
+            return res.status(404).json({ success: false, message: 'Component not available' });
         }
-      );
-  
-      if (!user) {
-        return res.status(500).json({ success: false, message: 'Failed to fetch component details. Please contact admin. Visit the contact us page for more details.' });
-      }
-  
-      const response = await readFilesInformations(data.categories, data.folder_name, { data, user }, (err, result) => {
-        // Set isAdmin based on user_id match and availability of loggedInUser
-        result.post_details.isAdmin = false;
-        if(isAuthorized){
-            const tokenProperties = req.user?.tokenProperties;
-            if(tokenProperties?.userId == user._id){
-                result.post_details.isAdmin = true
+        const user = await GitHubUser.findOne(
+            { user_id: data.user_id.$oid },
+            {
+                _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1,
+                location: 1, name: 1, blog: 1, bio: 1, twitter_username: 1
             }
+        );
+
+        if (!user) {
+            return res.status(500).json({ success: false, message: 'Failed to fetch component details. Please contact admin. Visit the contact us page for more details.' });
         }
-        if (err) {
-          return res.status(500).send(err);
-        }
-        res.status(200).json({ success: true, response: result });
-      });
-  
+
+        const response = await readFilesInformations(data.categories, data.folder_name, { data, user }, (err, result) => {
+            // Set isAdmin based on user_id match and availability of loggedInUser
+            result.post_details.isAdmin = false;
+            if (isAuthorized) {
+                const tokenProperties = req.user?.tokenProperties;
+                if (tokenProperties?.userId == user._id) {
+                    result.post_details.isAdmin = true
+                }
+            }
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.status(200).json({ success: true, response: result });
+        });
+
     } catch (error) {
-      res.status(500).send({ success: false, message: error.message });
+        res.status(500).send({ success: false, message: error.message });
     }
-  };
+};
 
 
 //components like 
-const addLikesToComponents = async ({params, body}, res) => {
+const addLikesToComponents = async ({ params, body }, res) => {
     try {
         const postId = params.postId;
-        const userId = body.userId; 
+        const userId = body.userId;
         const post = await UserComponents.findById(postId);
         console.log(post)
         // Check if the user has already liked the post
         if (post.likes.includes(userId)) {
-            return res.badreq({message: "user already liked"});
+            return res.badreq({ message: "user already liked" });
         }
-    
+
         post.likes.push(userId);
         await post.save();
-        return res.success({message : 'Post liked', response : post});
-      } catch (error) {
-        return res.internalerr({message:error.message})
-      }
+        return res.success({ message: 'Post liked', response: post });
+    } catch (error) {
+        return res.internalerr({ message: error.message })
+    }
 
 }
 
 //components dislike
-const removeLikeToComponents = async ({params, body}, res) => {
+const removeLikeToComponents = async ({ params, body }, res) => {
     try {
         const postId = params.postId;
-        const userId = body.userId; 
+        const userId = body.userId;
         const post = await UserComponents.findById(postId);
         // Check if the user has already liked the post
         const index = post.likes.indexOf(userId);
         if (index === -1) {
             // return res.status(400);
-            return res.badreq({message: "user not liked"});
+            return res.badreq({ message: "user not liked" });
         }
-     
+
         post.likes.splice(index, 1); // Remove user ID from likes array
         await post.save();
         return res.json(post);
-      } catch (error) {
-        return res.internalerr({message:error.message})
-      }
+    } catch (error) {
+        return res.internalerr({ message: error.message })
+    }
 }
 
 //components saves
-const saveComponents = async ({params, body}, res) => {
+const saveComponents = async ({ params, body }, res) => {
     try {
         console.log("running")
         const postId = params.postId;
-        const userId = body.userId; 
+        const userId = body.userId;
         const post = await UserComponents.findById(postId);
         console.log(post)
         if (post.saves.includes(userId)) {
-            return res.badreq({message: "components already saved"});
+            return res.badreq({ message: "components already saved" });
         }
-    
+
         post.saves.push(userId);
         await post.save();
-        return res.success({message : 'components saved', response : post});
-      } catch (error) {
-        return res.internalerr({message:error.message})
-      }
+        return res.success({ message: 'components saved', response: post });
+    } catch (error) {
+        return res.internalerr({ message: error.message })
+    }
 
 }
 
 //components unsave
-const unSavedComponents = async ({params, body}, res) => {
+const unSavedComponents = async ({ params, body }, res) => {
     try {
         const postId = params.postId;
-        const userId = body.userId; 
+        const userId = body.userId;
         const post = await UserComponents.findById(postId);
         // Check if the user has already liked the post
         const index = post.saves.indexOf(userId);
         if (index === -1) {
             // return res.status(400);
-            return res.badreq({message: "components not saved"});
+            return res.badreq({ message: "components not saved" });
         }
-     
+
         post.saves.splice(index, 1); // Remove user ID from likes array
         await post.save();
         return res.json(post);
-      } catch (error) {
-        return res.internalerr({message:error.message})
-      }
+    } catch (error) {
+        return res.internalerr({ message: error.message })
+    }
 }
 
 //add comments
-const addComments = async ({params, body}, res) => {
+const addComments = async ({ params, body }, res) => {
     try {
         const postId = params.postId;
         const userId = body.userId;
@@ -358,7 +358,7 @@ const isDirectoryCheck = async (filePath) => {
 };
 
 const getCategoriesList = async (req, res) => {
-    const baseFolderPath = '../'; 
+    const baseFolderPath = '../';
     const folderPath = path.join(baseFolderPath, 'project', 'project_datas');
     console.log(folderPath);
     try {
@@ -376,7 +376,7 @@ const getCategoriesList = async (req, res) => {
         res.json({ directories });
     } catch (error) {
         console.error('Error while reading directory:', error);
-        res.status(500).json({ error: 'Error reading directory' , message : error});
+        res.status(500).json({ error: 'Error reading directory', message: error });
     }
 };
 
