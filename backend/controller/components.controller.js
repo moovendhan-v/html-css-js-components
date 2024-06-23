@@ -204,7 +204,7 @@ const getComponentsBySearch = ({ query }, res) => {
 //Bring a particular components
 const getParticularComponent = async (req, res) => {
     const { category, title } = req.params;
-    console.log('active:', await GitHubUser.findByUserByName('Moovendhan'));
+    // console.log('active:', await UserComponents.getpPopularComponents(8));
     // Check if req.user and tokenProperties are available
     const isAuthorized = req.user?.isAuthorized || false;
 
