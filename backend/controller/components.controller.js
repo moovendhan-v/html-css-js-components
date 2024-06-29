@@ -100,7 +100,7 @@ async function getLatestFiles(catogries, page, callback) {
     const skip = (page - 1) * 10;
     // const folderPaths = path.join("../", 'project', 'project_datas', catogries);
 
-    userComponents = await UserComponents.aggregate([
+    const userComponents = await UserComponents.aggregate([
         {
             $match: {
                 $or: [
@@ -111,6 +111,7 @@ async function getLatestFiles(catogries, page, callback) {
         { $skip: skip },
         { $limit: 12 }
     ]);
+    console.log(userComponents)
     await Promise.all(userComponents.map(async (data) => {
         try {
             const user = await GitHubUser.findOne({ user_id: data.user_id.$oid }, { _id: 0, login: 1 });
@@ -203,6 +204,7 @@ const getComponentsBySearch = ({ query }, res) => {
 
 //Bring a particular components
 const getParticularComponent = async (req, res) => {
+    console.log("Cookies:", req.cookies);
     const { category, title } = req.params;
     // console.log('active:', await UserComponents.getpPopularComponents(8));
     // Check if req.user and tokenProperties are available

@@ -20,8 +20,9 @@ import {authenticatePublicApi} from '../middleware/Auth.js';
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);
 
-componentsRouter.get('/latest', ({query}, res) => {
-    const { category, page } = query;
+componentsRouter.get('/latest', (req, res) => {
+    const { category, page } = req.query;
+    console.log("querddy",req.query)
     if (category == "all") {
       getAllCompDetailsFromDatabases({categories:category, page}, (err, files)=>{
         //hadle the data
@@ -52,7 +53,7 @@ componentsRouter.post('/:postId/unsave', unSavedComponents)
 
 componentsRouter.post('/:postId/addcomments', addComments)
 
-componentsRouter.get('/:category/:title',authenticatePublicApi, getParticularComponent);
+componentsRouter.get('/:category/:title',getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 

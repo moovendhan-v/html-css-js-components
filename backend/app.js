@@ -8,24 +8,9 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 import {customResponsesMiddleware} from './middleware/customResponse.js';
+// import {authenticatePublicApi} from './middleware/Auth.js';
 import redis from 'redis';
 import cookieParser from 'cookie-parser';
-
-// Initialize Redis client
-const redisClient = redis.createClient({
-  socket: {
-    host: '172.28.0.3',
-    port: 6379 // Default Redis port, change if different
-  }
-});
-
-redisClient.on('error', err => console.log('Redis Client Error', err));
-
-redisClient.connect().then(() => {
-  console.log('Connected to Redis');
-}).catch(err => {
-  console.error('Failed to connect to Redis', err);
-});
 
 // JWT for authentication
 import jwt from 'jsonwebtoken';
@@ -53,6 +38,7 @@ app.use(cors({
 app.options('*', cors());
 app.use(express.json());
 app.use(customResponsesMiddleware);
+// app.use(authenticatePublicApi);
 
 // Session management
 app.use(
@@ -71,6 +57,7 @@ import {authRouter} from './routes/github-oauth.router.js';
 import {CreateComponentsRouter} from './routes/addComponents.router.js';
 import {userProfileRouter} from './routes/userProfile.router.js';
 import {apiRouter} from './routes/api.router.js';
+import {token} from './routes/jwt.router.js';
 
 // Use routers
 app.use('/', homeRouter);
@@ -79,6 +66,7 @@ app.use('/auth', authRouter);
 app.use('/', CreateComponentsRouter);
 app.use('/profile', userProfileRouter);
 app.use('/api', apiRouter);
+app.use('/token', token)
 
 // Connect to the database
 connectDB();

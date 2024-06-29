@@ -2,45 +2,12 @@ import jwt from 'jsonwebtoken';
 import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import {generateAccessToken, generateRefreshToken} from '../controller/github-oauth.controller.js';
-import redis from 'redis';
-
-const redisClient = redis.createClient({
-  socket: {
-    host: '172.28.0.3',
-    port: 6379 // Default Redis port, change if different
-  }
-});
-redisClient.on('error', err => console.log('Redis Client Error', err));
-
-redisClient.connect().then(() => {
-  console.log('Connected to Redis');
-  // You can perform Redis operations here
-}).catch(err => {
-  console.error('Failed to connect to Redis', err);
-});
+import {generateAccessToken, generateRefreshToken, isTokenInCache, removeTokenFromCache} from '../controller/jwt.controller.js';
+import redisClient from '../config/redis.config.js';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 
-
-const isTokenInCache = async (token) => {
-  try {
-    const cachedToken = await redisClient.get(`refreshToken:${token}`);
-    return !!cachedToken; // Returns true if a token is found, false otherwise
-  } catch (err) {
-    console.error('Error checking token in cache:', err);
-    return false;
-  } 
-};
-
-const removeTokenFromCache = async (userId) => {
-  try {
-    await redisClient.del(`refreshToken:${userId}`);
-  } catch (err) {
-    console.error('Error removing token from cache:', err);
-  }
-};
 
 const authanticateJwtToken = async (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -68,7 +35,7 @@ const authanticateJwtToken = async (req, res, next) => {
       }
       try {
         const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
-        const checkTokenInRedis = isTokenInCache(decodedRefreshToken.tokenProperties.userId)
+        const checkTokenInRedis = isTokenInCache(decodedRefreshToken.tokenProperties)
         console.log(`checkTokenInRedis ${await checkTokenInRedis}`)
         if (!(await checkTokenInRedis)) {
           return res.status(401).json({ message: "Unauthorized  no refresh tokeins in reids" });
@@ -82,7 +49,7 @@ const authanticateJwtToken = async (req, res, next) => {
 
         // Store the new refresh token in Redis
         const userId = decodedRefreshToken.tokenProperties.userId; // Assuming you have a userId in the tokenProperties
-        removeTokenFromCache(refreshToken)
+        removeTokenFromCache(decodedRefreshToken.tokenProperties)
         await redisClient.set(`refreshToken:${userId}`, newRefreshToken);
 
         // Set the new tokens in the response
@@ -108,8 +75,7 @@ const authenticatePublicApi = async (req, res, next) => {
 
   const refreshToken = req.cookies.refreshToken;
   const authHeader = req.headers['authorization'];
-  console.log("cookiesss")
-  console.log(req.cookies);
+
 
   req.user = {};
 
@@ -134,7 +100,7 @@ const authenticatePublicApi = async (req, res, next) => {
  
         console.log("refreshToken", refreshToken);
         const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
-        const isTokenInRedis = await isTokenInCache(decodedRefreshToken.tokenProperties.userId);
+        const isTokenInRedis = await isTokenInCache(decodedRefreshToken.tokenProperties);
         console.log(`checkTokenInRedis ${isTokenInRedis}`);
 
         if (!isTokenInRedis) {
@@ -145,7 +111,7 @@ const authenticatePublicApi = async (req, res, next) => {
         const newRefreshToken = generateRefreshToken(decodedRefreshToken.tokenProperties);
 
         const userId = decodedRefreshToken.tokenProperties.userId;
-        await removeTokenFromCache(refreshToken);
+        await removeTokenFromCache(decodedRefreshToken.tokenProperties);
         await redisClient.set(`refreshToken:${userId}`, newRefreshToken);
         res.cookie('authToken', newAccessToken, { httpOnly: false, sameSite: 'strict', path: '/' });
         res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'strict', path: '/' });
@@ -164,7 +130,6 @@ const authenticatePublicApi = async (req, res, next) => {
     }
   }
 };
-
 
 
 export { authanticateJwtToken, authenticatePublicApi };
