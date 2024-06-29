@@ -8,8 +8,6 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 import {customResponsesMiddleware} from './middleware/customResponse.js';
-import AppError from './utils/AppError.js';
-import logger from './utils/logger.js';
 // import {authenticatePublicApi} from './middleware/Auth.js';
 import redis from 'redis';
 import cookieParser from 'cookie-parser';
@@ -75,5 +73,5 @@ connectDB();
 
 // Start the server
 app.listen(port, () => {
-  logger.info(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://localhost:${port}`);
 });

@@ -1,18 +1,17 @@
-import request from 'request';
-
-// Create a cookie jar
-const jar = request.jar();
-
-var options = {
-  method: 'GET',
-  url: 'http://localhost:4000/components/tabs/moovendhan_amazing_tooltip21',
-  jar: jar, // Include the cookie jar in the request
-  headers: {
-    'Authorization': `Bearer ${authToken}` // Include the Authorization header if needed
+const redis = require('redis');
+const client = redis.createClient({
+  socket: {
+    host: '172.28.0.3',
+    port: 6379 // Default Redis port, change if different
   }
-};
-
-request(options, function (error, response) {
-  if (error) throw new Error(error);
-  console.log(response.body);
 });
+
+client.on('error', err => console.log('Redis Client Error', err));
+
+client.connect().then(() => {
+  console.log('Connected to Redis');
+  // You can perform Redis operations here
+}).catch(err => {
+  console.error('Failed to connect to Redis', err);
+});
+ 
