@@ -10,7 +10,8 @@ export const fetchComponentStore = async (categorie: string , title: string) => 
     try {
         const response = await axios.get(`${baseUri}/components/${categorie}/${title}`, {
             headers: {
-                Authorization: `Bearer ${authToken}`
+                Authorization: `Bearer ${authToken}`,
+                withCredentials: true,
             }
         });
 
