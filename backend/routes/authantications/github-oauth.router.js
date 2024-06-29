@@ -10,12 +10,12 @@ import {
   generateAccessToken,
   validateToken,
   signup_or_login_with_git,
-} from '../controller/github-oauth.controller.js';
+} from '../../controller/authantications/github-oauth.controller.js';
 
 const authRouter = express.Router();
 import dotenv from 'dotenv';
 dotenv.config();
-import {GitHubUser} from '../models/user.model.js';
+import {GitHubUser} from '../../models/user.model.js';
 
 authRouter.get('/', (req, res) => {
   res.send('welcome to git')

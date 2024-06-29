@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import redisClient from '../config/redis.config.js';
-import { GitHubUser } from '../models/user.model.js';
+import redisClient from '../../config/redis.config.js';
+import { GitHubUser } from '../../models/user.model.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;

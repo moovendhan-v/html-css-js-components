@@ -12,10 +12,10 @@ import {
   saveComponents,
   unSavedComponents,
   addComments,
-} from '../controller/components.controller.js';
+} from '../../controller/components/components.controller.js';
 
-import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
-import {authenticatePublicApi} from '../middleware/Auth.js';
+import { sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
+import {authenticatePublicApi} from '../../middleware/Auth.js';
 
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);

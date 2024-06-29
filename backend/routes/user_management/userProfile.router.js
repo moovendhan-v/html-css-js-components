@@ -6,10 +6,10 @@ import {
   getUserInformationsByName,
   getUserInformationsByNameFromDb,
   getprofileinfoprotect,
-} from '../controller/userProfile.controller.js';
+} from '../../controller/user_management/userProfile.controller.js';
 
-import {authanticateJwtToken} from '../middleware/Auth.js';
-import {authenticatePublicApi} from '../middleware/Auth.js';
+import {authanticateJwtToken} from '../../middleware/Auth.js';
+import {authenticatePublicApi} from '../../middleware/Auth.js';
 
 userProfileRouter.post('/getuserprofileinfo', getUserProfileInformations);
 userProfileRouter.get('/getprofileinfoprotect', authanticateJwtToken, getprofileinfoprotect );

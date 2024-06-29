@@ -1,13 +1,13 @@
 // authRouter.js
 import axios from 'axios';
 
-import {GitHubUser} from '../models/user.model.js';
+import {GitHubUser} from '../../models/user.model.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import {sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
-import {getUserInformationsByName} from '../controller/userProfile.controller.js';
-import redisClient from '../config/redis.config.js';
-import {generateAccessToken, generateRefreshToken, validateToken, setRefreshTokensInRedis} from '../controller/jwt.controller.js';
+import {sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
+import {getUserInformationsByName} from '../user_management/userProfile.controller.js';
+import redisClient from '../../config/redis.config.js';
+import {generateAccessToken, generateRefreshToken, validateToken, setRefreshTokensInRedis} from './jwt.controller.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;

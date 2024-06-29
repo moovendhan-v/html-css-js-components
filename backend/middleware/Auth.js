@@ -1,8 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import {generateAccessToken, generateRefreshToken, isTokenInCache, removeTokenFromCache} from '../controller/jwt.controller.js';
+import {generateAccessToken, generateRefreshToken, isTokenInCache, removeTokenFromCache} from '../controller/authantications/jwt.controller.js';
 import redisClient from '../config/redis.config.js';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
