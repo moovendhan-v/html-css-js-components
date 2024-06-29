@@ -39,8 +39,6 @@ const addNewComponents = async ({body}, res) => {
             } 
         });        
 
-        // await newComponents.save();
-        // Send response
 
     } catch (error) {
         console.error('Error adding new components:', error);
