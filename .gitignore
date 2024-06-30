@@ -3,6 +3,7 @@
 ui/node_modules
 backend/node_modules
 backend/.env
+backend/logs
 ui/.pnp
 ui/.pnp.js
 
