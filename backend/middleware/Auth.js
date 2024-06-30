@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
-import {generateAccessToken, generateRefreshToken, isTokenInCache, removeTokenFromCache} from '../controller/authantications/jwt.controller.js';
+import { generateAccessToken, generateRefreshToken, isTokenInCache, removeTokenFromCache } from '../controller/authantications/jwt.controller.js';
 import redisClient from '../config/redis.config.js';
+import AppError from '../utils/AppError.js';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
@@ -96,7 +97,7 @@ const authenticatePublicApi = async (req, res, next) => {
         if (!refreshToken) {
           return res.status(401).json({ message: "Unauthorized: No refresh token provided" });
         }
- 
+
         console.log("refreshToken", refreshToken);
         const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
         const isTokenInRedis = await isTokenInCache(decodedRefreshToken.tokenProperties);
@@ -129,6 +130,25 @@ const authenticatePublicApi = async (req, res, next) => {
     }
   }
 };
+
+
+const protectRoute = async (req, res) => {
+  try {
+    const cookies = req.cookies;
+    const authToken = jwt.verify(cookies.authToken, JWT_SECRET);
+    const refreshToken = jwt.verify(cookies.refreshToken, REFRESH_TOKEN);
+    if (authToken.tokenProperties.userId !== refreshToken.tokenProperties.userId) {
+      res.forbidden();
+    }
+    const isTokenInCache = await isTokenInCache();
+    if (!isTokenInCache) {
+      res.forbidden();
+    }
+    next();
+  } catch (error) {
+    res.badreq();
+  }
+}
 
 
 export { authanticateJwtToken, authenticatePublicApi };

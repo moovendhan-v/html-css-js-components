@@ -5,11 +5,11 @@ import {createFiles} from '../../operations/fileOperations.js';
 // this base path is must be refer from app.js files
 const basePath = '../project/project_datas/';
 
-const addNewComponents = async ({body}, res) => {
+const addNewComponents = async ({body, user}, res) => {
     try {
-        const { user_id, title,description, tags, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = body;
+        const { title,description, tags, upload_time, updated_time, folder_path, folder_name, categories, html, css, js } = body;
         const newComponents = new UserComponents({
-            user_id,
+            user_id : user.userId,
             title,
             description,
             tags,

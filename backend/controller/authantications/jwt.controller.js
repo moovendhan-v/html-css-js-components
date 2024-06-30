@@ -41,8 +41,8 @@ const getNewAccessToken = async (req, res) => {
 
     await removeTokenFromCache(decoded.tokenProperties);
 
-    const newAccessToken = generateAccessToken({ userId: existingUser._id, userName: existingUser.name });
     const newSessionId = uuidv4();
+    const newAccessToken = generateAccessToken({ userId: existingUser._id, userName: existingUser.name, sessionId: newSessionId  });
     const newRefreshToken = generateRefreshToken({ userId: existingUser._id, userName: existingUser.name, sessionId: newSessionId });
 
     res.cookie('authToken', newAccessToken, { httpOnly: false, sameSite: 'strict', path: '/' });
