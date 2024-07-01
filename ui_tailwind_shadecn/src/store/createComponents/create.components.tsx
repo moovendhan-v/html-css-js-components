@@ -45,8 +45,8 @@ interface Admin {
 interface CreateComponents {
     html: string;
     css: string;
-    js: string;
-    categories: string;
+    javascript: string;
+    categories: Array<string>;
     folder_path: string;
     folder_name: string;
     isActive: boolean;
@@ -65,14 +65,14 @@ interface CreateComponentsStore {
     setCreateComponentField: <K extends keyof CreateComponents>(field: K, value: CreateComponents[K]) => void;
 }
 
-export const useViewComponentStore = create<CreateComponentsStore>()(
+export const useCreateComponentsStore = create<CreateComponentsStore>()(
     persist(
         (set) => ({
             createComponents: {
                 html: "",
                 css: "",
-                js: "",
-                categories: "",
+                javascript: "",
+                categories: [],
                 folder_path: "",
                 folder_name: "",
                 isActive: false,
@@ -124,7 +124,7 @@ export const useViewComponentStore = create<CreateComponentsStore>()(
             })),
         }),
         {
-            name: 'view-component-store',
+            name: 'create-new-component-store',
             getStorage: () => sessionStorage,
         }
     )

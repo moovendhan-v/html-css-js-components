@@ -1,4 +1,5 @@
 import redis from 'redis';
+import logger from '../utils/logger.js';
 
 // Initialize Redis client
 const redisClient = redis.createClient({
@@ -11,7 +12,7 @@ const redisClient = redis.createClient({
 redisClient.on('error', err => console.log('Redis Client Error', err));
 
 redisClient.connect().then(() => {
-  console.log('Connected to Redis');
+  logger.info('Redis client connected');
 }).catch(err => {
   console.error('Failed to connect to Redis', err);
 });
