@@ -1,6 +1,13 @@
 import React, { useEffect, useLayoutEffect, useState, createContext, useContext } from 'react';
 import api from '@/api';
 
+// Define the AuthContext type
+interface AuthContextType {
+  token: string | null;
+  setToken: (token: string | null) => void;
+  getToken: () => string | null;
+}
+
 // Create an AuthContext
 const AuthContext = createContext();
 
@@ -27,6 +34,20 @@ const AuthProvider = ({ children }) => {
 
   useLayoutEffect(() => {
     const authInterceptor = api.interceptors.request.use((config) => {
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    });
+
+    return () => {
+      api.interceptors.request.eject(authInterceptor);
+    };
+  }, [token]);
+
+  // Set up request interceptor to add Authorization header
+  useLayoutEffect(() => {
+    const authInterceptor = api.interceptors.request.use((config) => {
       config.headers.Authorization =
         !config._retry && token ? `Bearer ${token}` : config.headers.Authorization;
       return config;
@@ -37,6 +58,7 @@ const AuthProvider = ({ children }) => {
     };
   }, [token]);
 
+  // Set up response interceptor to handle token refresh logic
   useLayoutEffect(() => {
     const refreshInterceptor = api.interceptors.response.use(
       (response) => response,
@@ -69,8 +91,10 @@ const AuthProvider = ({ children }) => {
     };
   }, [token]);
 
+  const getToken = () => token;
+
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={{ token, setToken, getToken }}>
       {children}
     </AuthContext.Provider>
   );
