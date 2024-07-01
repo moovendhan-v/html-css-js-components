@@ -1,6 +1,6 @@
 import {Router} from 'express';
 const apiRouter = Router();
-import {getAllCompDetailsFromDatabases, getComponentsBySearch} from '../controller/components.controller.js';
+import {getAllCompDetailsFromDatabases, getComponentsBySearch} from '../controller/components/components.controller.js';
 import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
 
 

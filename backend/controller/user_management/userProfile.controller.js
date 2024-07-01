@@ -1,7 +1,7 @@
-import {UserComponents} from '../models/components.model.js';
-import {GitHubUser} from '../models/user.model.js';
-import {sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
-import {readFilesInformations, readContent} from '../controller/components.controller.js';
+import {UserComponents} from '../../models/components.model.js';
+import {GitHubUser} from '../../models/user.model.js';
+import {sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
+import {readFilesInformations, readContent} from '../components/components.controller.js';
 
 
 const getUserProfileInformations = async ({body}, res) => {

@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { readFileContent } from '../operations/fileOperations.js';
-import { UserComponents } from '../models/components.model.js';
-import { GitHubUser } from '../models/user.model.js';
+import { readFileContent } from '../../operations/fileOperations.js';
+import { UserComponents } from '../../models/components.model.js';
+import { GitHubUser } from '../../models/user.model.js';
 const baseFolderPath = '../';
 import util from 'util';
 

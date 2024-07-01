@@ -1,27 +1,15 @@
 import express from 'express';
-import axios from 'axios';
-import fs from 'fs'; // File system
 import cors from 'cors';
 import {connectDB} from './config/db.js';
-import path from 'path'; // Path
 import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 import {customResponsesMiddleware} from './middleware/customResponse.js';
+
+import logger from './utils/logger.js';
+
 // import {authenticatePublicApi} from './middleware/Auth.js';
-import redis from 'redis';
 import cookieParser from 'cookie-parser';
-
-// JWT for authentication
-import jwt from 'jsonwebtoken';
-
-// Get configuration file information
-import {getJsonConfigDetails} from './operations/getConfigOperations.js';
-
-const confFile = getJsonConfigDetails();
-
-// Import file operations
-import {readFileContent} from './operations/fileOperations.js';
 
 // Initialize Express app
 const app = express();
@@ -52,12 +40,12 @@ app.use(
 // Importing routers
 import {homeRouter} from './routes/homepage.router.js';
 
-import {componentsRouter} from './routes/components.router.js';
-import {authRouter} from './routes/github-oauth.router.js';
-import {CreateComponentsRouter} from './routes/addComponents.router.js';
-import {userProfileRouter} from './routes/userProfile.router.js';
+import {componentsRouter} from './routes/components/components.router.js';
+import {authRouter} from './routes/authantications/github-oauth.router.js';
+import {CreateComponentsRouter} from './routes/components/addComponents.router.js';
+import {userProfileRouter} from './routes/user_management/userProfile.router.js';
 import {apiRouter} from './routes/api.router.js';
-import {token} from './routes/jwt.router.js';
+import {token} from './routes/authantications/jwt.router.js';
 
 // Use routers
 app.use('/', homeRouter);

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const token = Router();
 
-import { getNewAccessToken } from '../controller/jwt.controller.js';
+import { getNewAccessToken } from '../../controller/authantications/jwt.controller.js';
 
 
 // Define a route to get a new access token
