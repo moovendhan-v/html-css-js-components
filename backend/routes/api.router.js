@@ -1,12 +1,12 @@
-const { Router } = require('express');
+import {Router} from 'express';
 const apiRouter = Router();
-const { getAllCompDetailsFromDatabases, getComponentsBySearch } = require('../controller/components.controller');
-const {sendStatus, sendJSONError, sendJSONSuccess} = require('../operations/errorhandlingOperations');
+import {getAllCompDetailsFromDatabases, getComponentsBySearch} from '../controller/components/components.controller.js';
+import { sendJSONError, sendJSONSuccess} from '../operations/errorhandlingOperations.js';
 
 
 apiRouter.get('/all', (req, res) => {
     const categories = "all";
-    getAllCompDetailsFromDatabases({categories:categories, search:"buttons"}, (err, files) => {
+    getAllCompDetailsFromDatabases({categories, search:"buttons"}, (err, files) => {
         // Handle the data
         if (err) {
             return res.send(sendJSONError({ errorStatus: true, statusCode: "500", message: `${err}`, response: null, }));
@@ -18,4 +18,4 @@ apiRouter.get('/all', (req, res) => {
 apiRouter.get('/searchcomponents', getComponentsBySearch);
 
 
-module.exports = { apiRouter };
+export { apiRouter };

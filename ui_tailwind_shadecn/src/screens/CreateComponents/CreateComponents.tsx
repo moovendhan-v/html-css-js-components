@@ -6,24 +6,24 @@ import {
 } from "@/components/ui/resizable"
 
 import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 import { Button } from "@/components/ui/button"
 import { SheetTrigger, SheetContent, Sheet } from "@/components/ui/sheet"
 import { Input } from "@/components/ui/input"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Link, useParams } from "react-router-dom";
-import { CircleUser, Menu, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { LeftArrow, Github, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
@@ -37,20 +37,21 @@ import { ViewSkeleton } from "@/components/custom_ui/skeleton/ViewSkeleton";
 import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
-import { useViewComponentStore } from "@/store/store";
+import { useCreateComponentsStore } from "@/store/createComponents/create.components";
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { useLoginStore } from "@/store/Auth"
-import { ProfileForm } from "@/components/custom_ui/forms/ComponentsSubmitFrom"
-
+import {ProfileForm} from '@/components/custom_ui/forms/ComponentsSubmitFrom';
 // import { SelectValue } from "@/components/ui/select"
 
 export function CreateComponents() {
 
   const [componentDetails, setComponentDetails] = useState<ComponentStore | null>(null);
-  // #TODO do a api call and stoe in a zustand store 
-  const viewCompoentsStore = useViewComponentStore((state) => state.viewComponents);
+
+  // zustand store 
+  const viewCreateCompoentsStore = useCreateComponentsStore((state: { createComponents: any }) => state.createComponents);
+  const setCreateComponentField = useCreateComponentsStore((state) => state.setCreateComponentField);
 
   type componentParamType = {
     categorie: string;
@@ -89,18 +90,6 @@ export function CreateComponents() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // const footer = document.getElementById('footer');
-      // if (!footer) return;
-
-      // const navbar = document.querySelector('.flex-1') as HTMLElement;
-      // const footerPosition = footer.getBoundingClientRect().top;
-
-      // setIsSticky(window.scrollY > navbar.offsetTop);
-      // if (footerPosition <= window.innerHeight) {
-      //   navbar.style.position = 'relative';
-      // } else {
-      //   navbar.style.position = 'fixed';
-      // }
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -111,6 +100,133 @@ export function CreateComponents() {
 
   return (
     <>
+{/* 
+      <form className="space-y-4">
+        <div>
+          <label htmlFor="html" className="block text-sm font-medium text-gray-700">
+            HTML
+          </label>
+          <Input
+            id="html"
+            value={viewCreateCompoentsStore.html}
+            onChange={e => setCreateComponentField('html', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="css" className="block text-sm font-medium text-gray-700">
+            CSS
+          </label>
+          <Input
+            id="css"
+            value={viewCreateCompoentsStore.css}
+            onChange={e => setCreateComponentField('css', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="javascript" className="block text-sm font-medium text-gray-700">
+            JavaScript
+          </label>
+          <Input
+            id="javascript"
+            value={viewCreateCompoentsStore.javascript}
+            onChange={e => setCreateComponentField('javascript', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="categories" className="block text-sm font-medium text-gray-700">
+            Categories
+          </label>
+          <Input
+            id="categories"
+            value={viewCreateCompoentsStore.categories}
+            onChange={e => setCreateComponentField('categories', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="folder_path" className="block text-sm font-medium text-gray-700">
+            Folder Path
+          </label>
+          <Input
+            id="folder_path"
+            value={viewCreateCompoentsStore.folder_path}
+            onChange={e => setCreateComponentField('folder_path', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="folder_name" className="block text-sm font-medium text-gray-700">
+            Folder Name
+          </label>
+          <Input
+            id="folder_name"
+            value={viewCreateCompoentsStore.folder_name}
+            onChange={e => setCreateComponentField('folder_name', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="isActive" className="block text-sm font-medium text-gray-700">
+            Is Active
+          </label>
+          <Switch
+            id="isActive"
+            checked={viewCreateCompoentsStore.isActive}
+            onCheckedChange={e => setCreateComponentField('isActive', e)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="type" className="block text-sm font-medium text-gray-700">
+            Type
+          </label>
+          <Input
+            id="type"
+            value={viewCreateCompoentsStore.type}
+            onChange={e => setCreateComponentField('type', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            Title
+          </label>
+          <Input
+            id="title"
+            value={viewCreateCompoentsStore.title}
+            onChange={e => setCreateComponentField('title', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <Textarea
+            id="description"
+            value={viewCreateCompoentsStore.description}
+            onChange={e => setCreateComponentField('description', e.target.value)}
+            className="mt-1"
+          />
+        </div>
+
+        <Button type="submit" className="mt-4">
+          Submit
+        </Button>
+      </form> */}
+      <ProfileForm />
       <div className="fixed bottom-0 right-0 p-2 bg-secondary"><CommandDialogDemo /></div>
 
       <header className="body-font">
@@ -138,17 +254,10 @@ export function CreateComponents() {
             </MovingButton>
           </div>
 
-          {/*         
-          <HoverBorderGradient
-            containerClassName="rounded-full"
-            as="button"
-            className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
-          >
-            <span>Signup</span>
-          </HoverBorderGradient> */}
           <NavProfile />
         </div>
       </header>
+
       {componentDetails === null ? (
         <ViewSkeleton />
       ) : (
@@ -170,7 +279,7 @@ export function CreateComponents() {
                       <div className="flex items-center">
                         <span className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"><LeftArrow />  Go Back</span>
                         <h1 className="px-3 md:text-2xl text-1xl font-medium">
-                          {viewCompoentsStore.title}
+                          {viewCreateCompoentsStore.title}
                         </h1>
                       </div>
 
@@ -223,14 +332,9 @@ export function CreateComponents() {
                                   <NavSkeleton />
                                 </>
                               )}
-
                             </nav>
-
                           </SheetContent>
-
                         </Sheet>
-          
-
                       </header>
 
                     </div>
@@ -239,7 +343,7 @@ export function CreateComponents() {
                         <div className="relative">
                           <div className="absolute p-4 right-0 top-0">
                           </div>
-                          <OutputViewComponents html={viewCompoentsStore.html} css={viewCompoentsStore.css} js={viewCompoentsStore.js} />
+                          <OutputViewComponents html={viewCreateCompoentsStore.html} css={viewCreateCompoentsStore.css} js={viewCreateCompoentsStore.js} />
                         </div>
                       </ResizablePanel>
                       <ResizableHandle className="px-1" withHandle />
@@ -271,32 +375,20 @@ export function CreateComponents() {
                             {activeTab === 'html' && (
                               <MonacoEditorComponent
                                 language="html"
-                                value={viewCompoentsStore?.html || ''}
-                                onChange={(value) => {
-                                  useViewComponentStore.setState((state) => ({
-                                    viewComponents: {
-                                      ...state.viewComponents,
-                                      html: value,
-                                    },
-                                  }));
+                                value={viewCreateCompoentsStore?.html || ''}
+                                onChange={(newCode) => {
+                                  setCreateComponentField(activeTab, newCode);
                                 }}
                               />
                             )}
-                            {activeTab === 'css' && <MonacoEditorComponent language="css" value={viewCompoentsStore?.css || ''} onChange={(value) => {
-                              useViewComponentStore.setState((state) => ({
-                                viewComponents: {
-                                  ...state.viewComponents,
-                                  css: value,
-                                },
-                              }));
-                            }} />}
-                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={viewCompoentsStore?.js || ''} onChange={(value) => {
-                              useViewComponentStore.setState((state) => ({
-                                viewComponents: {
-                                  ...state.viewComponents,
-                                  js: value,
-                                },
-                              }));
+                            {activeTab === 'css' && <MonacoEditorComponent
+                              language="css"
+                              value={viewCreateCompoentsStore?.css || ''}
+                              onChange={(newCode) => {
+                                setCreateComponentField(activeTab, newCode);
+                              }} />}
+                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={viewCreateCompoentsStore?.js || ''} onChange={(newCode) => {
+                              setCreateComponentField(activeTab, newCode);
                             }} />}
                           </div>
                         </div>
@@ -310,7 +402,7 @@ export function CreateComponents() {
                       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
                         <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
                           <Avatar>
-                          <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
+                            <AvatarImage src={userInfo?.user?.avatar_url || "Please login"} />
                             <AvatarFallback>Profile</AvatarFallback>
                           </Avatar>
                           <Link to={``}>
@@ -319,9 +411,8 @@ export function CreateComponents() {
                         </a>
                       </div>
                     </header>
-
-                    <Drawer>
-                      <DrawerTrigger asChild>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
                         <HoverBorderGradient
                           containerClassName="rounded-full"
                           as="button"
@@ -330,23 +421,20 @@ export function CreateComponents() {
                           <span>Contribute Components</span>
 
                         </HoverBorderGradient>
-                      </DrawerTrigger>
-                      <DrawerContent>
-                        <div className="mx-auto w-full max-w-sm">
-                          <DrawerHeader>
-                            <DrawerTitle>Additional informations</DrawerTitle>
-                            <DrawerDescription>Please fill additional informations.</DrawerDescription>
-                          </DrawerHeader>
-                              <ProfileForm />
-                          {/* <DrawerFooter>
-                            <Button>Submit</Button>
-                            <DrawerClose asChild>
-                              <Button variant="outline">Cancel</Button>
-                            </DrawerClose>
-                          </DrawerFooter> */}
-                        </div>
-                      </DrawerContent>
-                    </Drawer>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            You were contributing this to open source, so please be concise about that. Do not get this from any other code to open source it, as it may violate our terms and conditions.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction>Contribute My Component</AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
 
                   </main>
                 </div>

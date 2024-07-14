@@ -22,6 +22,7 @@ import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
+import AboutUs  from '@/screens/AboutUs';
 
 // import { useLoginStore } from "@/store/Auth";
 // const userInfo = useLoginStore.getState()
@@ -147,8 +148,8 @@ export function Dashboard() {
                 </div>
 
                
-                <HeroParallax products={Products} />
-
+                {/* <HeroParallax products={Products} /> */}
+                <AboutUs />
                 <Teams />
                 <BlogCard />
                 <Content />
