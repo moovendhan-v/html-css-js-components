@@ -1,15 +1,16 @@
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { ThemeProvider } from "./components/theme-provider.tsx"
-import { Toaster } from "@/components/ui/sonner"
 
+import ReactDOM from 'react-dom';
+import App from './App.tsx';
+import './index.css';
+import { ThemeProvider } from './components/theme-provider.tsx';
+import { Toaster } from '@/components/ui/sonner';
+import AuthProvider from '@/components/AuthProvide.tsx'; // Ensure correct path to AuthProvider
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-    <App />
-    <Toaster />
-  </ThemeProvider>
-)
-
-
+  <AuthProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <App />
+      <Toaster />
+    </ThemeProvider>
+  </AuthProvider>
+);

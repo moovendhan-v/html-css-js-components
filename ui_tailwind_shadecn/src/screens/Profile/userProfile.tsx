@@ -34,7 +34,7 @@ import { UserProfile } from '@/types/ViewProfile.type';
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 import { ComponentType } from "@/enums/iframEnums"
 
-export function UserProfile() {
+export function UserProfiles() {
     const [user, setUser] = useState<UserProfile>();
     console.log(user);
     console.log(user)
