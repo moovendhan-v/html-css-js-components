@@ -16,7 +16,7 @@ import AboutUs from '@/screens/AboutUs';
 import { Login } from '@/screens/Auth/Login';
 // import { useEffect } from 'react';
 // import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
-import { UserProfile } from './screens/Profile/userProfile';
+import { UserProfiles } from './screens/Profile/userProfile';
 import { CreateComponents } from './screens/CreateComponents/CreateComponents';
 import LoginSuccess from './screens/Others/LoginSuccess';
 import LoginFailure from './screens/Others/LoginFailure';
@@ -51,7 +51,7 @@ function App() {
           <Route path="/success" element={<LoginSuccess />} />
           <Route path="/faild" element={<LoginFailure />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/:userName" element={<UserProfile />} />
+          <Route path="/profile/:userName" element={<UserProfiles />} />
           <Route path="/create" element={<CreateComponents />} />
 
           {/* <Route path="/:catogries/:title" element={<ViewComponent />} /> */}
