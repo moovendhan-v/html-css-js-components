@@ -1,7 +1,7 @@
-const { Router } = require('express')
+import {Router} from 'express';
 const homeRouter = Router()
-const {homePageController} = require('../controller/home.controller')
+import {homePageController} from '../controller/home.controller.js';
 
 homeRouter.get('/', homePageController);
 
-module.exports = {homeRouter}
+export {homeRouter};

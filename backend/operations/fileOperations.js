@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 function checkIfFolderExists(folderPath, callback) {
   fs.access(folderPath, fs.constants.F_OK, (err) => {
@@ -74,7 +74,7 @@ function createFiles(basePath, category, folderName, {html, css, js}, callback) 
 
 
 
-module.exports = {
+export {
   readFileContent,
   createFiles,
 };

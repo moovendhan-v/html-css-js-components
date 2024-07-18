@@ -88,6 +88,7 @@ export const useViewComponentStore = create<ViewComponentStore>(() => ({
                 }
             ]
         },
+        isAdmin: false,
         admin: {
             _id: "",
             login: "",

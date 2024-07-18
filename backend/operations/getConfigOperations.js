@@ -1,5 +1,10 @@
-const fs = require('fs');
-const path = require('path'); //path
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+// Determine the directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function getJsonConfigDetails() {
     const filePath = path.join(__dirname, '../../project/config.env.json');
@@ -7,7 +12,7 @@ function getJsonConfigDetails() {
     const config = JSON.parse(configFile);
     return config;
 }
-module.exports = {
-    getJsonConfigDetails,
-}
 
+export {
+    getJsonConfigDetails,
+};
