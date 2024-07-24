@@ -16,7 +16,6 @@ import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { MovingWords } from '@/data/MovingText';
-import { Cateogries } from '@/data/ScroolingAnimations';
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
@@ -34,6 +33,7 @@ export function Dashboard() {
 
     const categoriesJson = categries.map((category) => ({
         title: category,
+        path: `/${category}`
       }));
 
     const handleSearch = () => {
