@@ -15,14 +15,13 @@ import Community from '../components/custom_ui/Community';
 import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import { Products } from '@/data/HeroParallax';
 import { MovingWords } from '@/data/MovingText';
 import { Cateogries } from '@/data/ScroolingAnimations';
-import { HeroParallax } from "@/components/ui/hero-parallax";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
 import { useState} from 'react';
 import AboutUs  from '@/screens/AboutUs';
+import { useCategoriesStore } from '@/store/store';
 
 // import { useLoginStore } from "@/store/Auth";
 // const userInfo = useLoginStore.getState()
@@ -30,7 +29,13 @@ import AboutUs  from '@/screens/AboutUs';
 export function Dashboard() {
 
     const [searchQuery, setSearchQuery] = useState('');
-    
+
+    const categries = useCategoriesStore((state) => state.categories);
+
+    const categoriesJson = categries.map((category) => ({
+        title: category,
+      }));
+
     const handleSearch = () => {
         const newUrl = `/search?search=${encodeURIComponent(searchQuery)}`;
         window.location.href = newUrl;
@@ -131,17 +136,17 @@ export function Dashboard() {
 
                 <div className="h-[20rem] first-letter: rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden my-5 ">
                     <InfiniteMovingCards
-                        items={Cateogries}
+                        items={categoriesJson}
                         direction="right"
                         speed="slow"
                     />
                     <InfiniteMovingCards
-                        items={Cateogries}
+                        items={categoriesJson}
                         direction="left"
                         speed="slow"
                     />
                     <InfiniteMovingCards
-                        items={Cateogries}
+                        items={categoriesJson}
                         direction="right"
                         speed="slow"
                     />
