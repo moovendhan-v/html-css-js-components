@@ -27,8 +27,6 @@ import { Menu, Search } from "lucide-react";
 import { LeftArrow, Github, LogoPlain } from "@/components/custom_ui/Svg";
 import MonacoEditorComponent from "@/components/custom_ui/code_editor/CodeEditor";
 import { useState } from "react";
-import { useCategoriesStore } from '@/store/store';
-import { fetchCategories } from '@/api/components/categories';
 import { useEffect } from "react";
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton";
 import { fetchComponentStore } from '@/api/components/component';
@@ -43,6 +41,7 @@ import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { useLoginStore } from "@/store/Auth"
 import {ProfileForm} from '@/components/custom_ui/forms/ComponentsSubmitFrom';
+import { useCategories } from '@/hooks/useCategories';
 // import { SelectValue } from "@/components/ui/select"
 
 export function CreateComponents() {
@@ -79,12 +78,11 @@ export function CreateComponents() {
 
   const [activeTab, setActiveTab] = useState('html');
 
-  const categries = useCategoriesStore((state) => state.categories);
+  const categries = useCategories();
 
 
   useEffect(() => {
     // this function is calling from api folder it will automatically update to the store 
-    fetchCategories();
     fetchComponentDetails();
   }, [])
 

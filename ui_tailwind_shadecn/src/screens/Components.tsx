@@ -1,6 +1,5 @@
 
 import {
-
   Menu,
   Search,
 } from "lucide-react"
@@ -20,11 +19,10 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
 import { ComponentType } from "@/enums/iframEnums"
-import { useCategoriesStore, useComponentsStore } from "@/store/store"
+import { useComponentsStore } from "@/store/store"
 // import {useLoginStore , useLoginUserInfo} from "@/store/Auth"
 import {ComponentsStore, } from '@/types/ComponentStore.type'
 import { useEffect } from "react"
-import { fetchCategories } from "@/api/components/categories"
 import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
@@ -34,6 +32,7 @@ import { RenderComponents } from "@/components/custom_ui/components/RenderCompon
 import {useQueryString} from "@/hooks/query_string_hooks";
 import { fetchComponentsBySearch } from "@/api/components/searchComponents"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
+import { useCategories } from '@/hooks/useCategories';
 
 // import { json } from "stream/consumers"
 
@@ -47,14 +46,13 @@ export function Components() {
   const query = useQueryString("search");
 
   // this categries getting from a zustand store 
-  const categries = useCategoriesStore((state) => state.categories);
+  const categries = useCategories();
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
   
   // const user = useLoginStore((state)=> state.isLogin);
   // const userInfo = useLoginUserInfo((state)=> state)
 
   useEffect(() => {
-    fetchCategories();
     if(catogries == 'search'){
         fetchComponentsBySearch(query ?? '');
       return

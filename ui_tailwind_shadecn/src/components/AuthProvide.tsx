@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
-import { useEffect, useLayoutEffect, useState, createContext, useContext } from 'react';
-import api from '@/api';
+import React, { useEffect, useLayoutEffect, useState, createContext, useContext, ReactNode } from 'react';
+import api from '@/api'
 
 // Define the AuthContext type
 interface AuthContextType {
@@ -11,27 +9,48 @@ interface AuthContextType {
 }
 
 // Create an AuthContext
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Create a custom hook to use the AuthContext
 export const useAuth = () => {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
 
-const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+// Define the AuthProvider props type
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+// const baseUri = getEnvVariable('BASE_URI');
+
+// const api = axios.create({
+//   baseURL: baseUri, // Replace with your API base URL
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   withCredentials: true,
+//   // You can also add other configuration options here
+// });
+
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchMe = async () => {
+    const fetchToken = async () => {
       try {
-        const response = await api.get('/api/me');
+        const response = await api.get('/token/auth-token');
+        console.log("response", response)
         setToken(response.data.accessTokens);
       } catch (error) {
         setToken(null);
       }
     };
 
-    fetchMe();
+    fetchToken();
   }, []);
 
   useLayoutEffect(() => {
@@ -39,6 +58,7 @@ const AuthProvider = ({ children }) => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+      // alert(token)
       return config;
     });
 
@@ -47,20 +67,6 @@ const AuthProvider = ({ children }) => {
     };
   }, [token]);
 
-  // Set up request interceptor to add Authorization header
-  useLayoutEffect(() => {
-    const authInterceptor = api.interceptors.request.use((config) => {
-      config.headers.Authorization =
-        !config._retry && token ? `Bearer ${token}` : config.headers.Authorization;
-      return config;
-    });
-
-    return () => {
-      api.interceptors.request.eject(authInterceptor);
-    };
-  }, [token]);
-
-  // Set up response interceptor to handle token refresh logic
   useLayoutEffect(() => {
     const refreshInterceptor = api.interceptors.response.use(
       (response) => response,
@@ -103,3 +109,4 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+// export { api };

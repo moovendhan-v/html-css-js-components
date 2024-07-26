@@ -23,9 +23,7 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/custom_ui/Svg"
-import { useCategoriesStore } from "@/store/store"
 import { useEffect, useState } from "react"
-import { fetchCategories } from "@/api/components/categories"
 import { fetchUserProfile } from "@/api/profile/userProfile"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
@@ -33,6 +31,7 @@ import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile";
 import { UserProfile } from '@/types/ViewProfile.type';
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 import { ComponentType } from "@/enums/iframEnums"
+import { useCategories } from '@/hooks/useCategories';
 
 export function UserProfiles() {
     const [user, setUser] = useState<UserProfile>();
@@ -44,11 +43,7 @@ export function UserProfiles() {
     }
 
     const { userName = "" } = useParams<userProfileType>();
-    const categries = useCategoriesStore((state) => state.categories);
-
-    useEffect(() => {
-        fetchCategories();
-    }, [])
+    const categries = useCategories();
 
     useEffect(() => {
         if (userName) {

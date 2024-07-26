@@ -1,6 +1,6 @@
 import './App.css'
 import '../app/globals.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Dashboard } from './screens/Home';
 import Testing from './screens/Testing';
 import { Components } from './screens/Components';
@@ -22,14 +22,21 @@ import LoginSuccess from './screens/Others/LoginSuccess';
 import LoginFailure from './screens/Others/LoginFailure';
 import { Profile } from './screens/Profile/Profile';
 import  Blogs  from './screens/Blog/Blogs';
+import { useEffect } from 'react';
 // import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 function App() {
-
   return (
     <>
-
       <Router>
+      <ScrollToTop />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/testing" element={<Testing />} />
@@ -76,7 +83,6 @@ function App() {
 
         </Routes>
       </Router>
-
     </>
   )
 }

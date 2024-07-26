@@ -31,9 +31,8 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
 import { Logo, LogoPlain } from "@/components/custom_ui/Svg"
-import { useCategoriesStore } from "@/store/store"
 import { useEffect } from "react"
-import { fetchCategories } from "@/api/components/categories"
+import { useCategories } from '@/hooks/useCategories';
 import { fetchComponentsStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
@@ -58,10 +57,9 @@ export function Profile() {
 
     const userInfo = useLoginStore.getState();
     const { catogries } = useParams<componentsParamType>();
-    const categries = useCategoriesStore((state) => state.categories);
-
+    const categries = useCategories();
+    
     useEffect(() => {
-        fetchCategories();
         fetchComponentsStore(catogries ?? '');
     }, [catogries, userInfo])
 

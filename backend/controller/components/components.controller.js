@@ -374,7 +374,7 @@ const getCategoriesList = async (req, res) => {
                 directories.push(file);
             }
         }
-        console.log(directories);
+        console.log(req);
         res.json({ directories });
     } catch (error) {
         console.error('Error while reading directory:', error);

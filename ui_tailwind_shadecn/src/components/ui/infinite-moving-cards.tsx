@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export const InfiniteMovingCards = ({
   items,
@@ -10,6 +11,7 @@ export const InfiniteMovingCards = ({
 }: {
   items: {
     title: string;
+    path: string; // path for routing
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -87,9 +89,9 @@ export const InfiniteMovingCards = ({
             key={idx}
           >
              <div className="flex justify-center">
-             <a className="text-sm leading-[1.6]font-normal">
-                    {item.title}
-              </a>
+             <Link to={item.path} className="text-sm leading-[1.6] font-normal">
+                {item.title}
+              </Link>
              </div>
           </li>
         ))}
