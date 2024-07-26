@@ -18,29 +18,31 @@ import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { MovingWords } from '@/data/MovingText';
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
-import { useState} from 'react';
-import AboutUs  from '@/screens/AboutUs';
-import { useCategoriesStore } from '@/store/store';
+import { useState } from 'react';
+import AboutUs from '@/screens/AboutUs';
+import { useCategories } from '@/hooks/useCategories';
+
 
 // import { useLoginStore } from "@/store/Auth";
 // const userInfo = useLoginStore.getState()
+
 
 export function Dashboard() {
 
     const [searchQuery, setSearchQuery] = useState('');
 
-    const categries = useCategoriesStore((state) => state.categories);
+    const categries = useCategories();
 
     const categoriesJson = categries.map((category) => ({
         title: category,
         path: `/${category}`
-      }));
+    }));
 
     const handleSearch = () => {
         const newUrl = `/search?search=${encodeURIComponent(searchQuery)}`;
         window.location.href = newUrl;
     };
-      
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             handleSearch();
@@ -51,10 +53,10 @@ export function Dashboard() {
         setSearchQuery(event.target.value);
     };
 
-      
+
     return (
         <div className="flex min-h-screen w-full flex-col font-primary">
-           < MainNav/>
+            < MainNav />
             <main>
                 <div className="py-6">
                     <h1 className="scroll-m-20 text-6xl font-semibold tracking-tight lg:text-6xl text-center leading-10 font-stretch-150 font-opsz-28 font-GRAD-525.3399658203125">
@@ -84,7 +86,7 @@ export function Dashboard() {
                                 placeholder="Explore all ui Components"
                             />
 
-                            <button  onClick={handleSearch} className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
+                            <button onClick={handleSearch} className="absolute px-6 inset-y-0 flex right-0 items-center hover:text-primary animate-pulse">
                                 <SearchIcon />  <span className="px-1">Search</span>
                             </button>
 
@@ -129,7 +131,7 @@ export function Dashboard() {
                     <Button >
                         <LogoPlain /> Explore All Components
                     </Button>
-                </div> 
+                </div>
 
 
                 <div className="h-[20rem] first-letter: rounded-md flex flex-col antialiased items-center justify-center relative overflow-hidden my-5 ">
@@ -150,7 +152,7 @@ export function Dashboard() {
                     />
                 </div>
 
-               
+
                 {/* <HeroParallax products={Products} /> */}
                 <AboutUs />
                 <Teams />

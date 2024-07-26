@@ -2,16 +2,26 @@ import { ComponentsStore, ViewComponentStore, } from '@/types/ComponentStore.typ
 import { CategoriesStore } from '@/types/CategoriesStore.type'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
+import { fetchCategories } from '@/api/components/categories'
 
 
 // Create the store with zustand
 export const useCategoriesStore = create<CategoriesStore>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             categories: [],
             addCategories: (newCategories) => set((state) => ({
                 categories: [...state.categories, ...newCategories],
             })),
+            fetchCategoriesIfNeeded: async () => {
+                const categories = get().categories;
+
+                // If categories are already populated, return them
+                if (categories.length === 0) {
+                    await fetchCategories();
+                }
+                return get().categories;
+            },
         }),
         {
             name: 'catogries-store',

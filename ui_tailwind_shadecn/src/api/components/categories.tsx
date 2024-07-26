@@ -1,4 +1,5 @@
 import { useCategoriesStore } from '@/store/store';
+import api from '@/api'; // Import the axios instance
 
 export const fetchCategories = async () => {
     try {
@@ -9,12 +10,11 @@ export const fetchCategories = async () => {
             return categories;
         }
 
-        const response = await fetch('http://localhost:4000/components/get-cateogries');
-        if (!response.ok) {
-            throw new Error('Failed to fetch categories');
-        }
-        const data = await response.json();
-        const { directories } = data;
+        // Use axios to fetch the categories
+        const response = await api.get('/components/get-cateogries');
+        
+        const { directories } = response.data;
+        // alert(directories)
 
         // Add categories to the store
         useCategoriesStore.getState().addCategories(directories);
