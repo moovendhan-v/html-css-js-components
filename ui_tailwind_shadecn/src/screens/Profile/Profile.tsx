@@ -33,7 +33,7 @@ import { Link } from "react-router-dom"
 import { Logo, LogoPlain } from "@/components/custom_ui/Svg"
 import { useEffect } from "react"
 import { useCategories } from '@/hooks/useCategories';
-import { fetchComponentsStore } from "@/api/components/components"
+import { useFetchComponentStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
@@ -60,7 +60,7 @@ export function Profile() {
     const categries = useCategories();
     
     useEffect(() => {
-        fetchComponentsStore(catogries ?? '');
+        useFetchComponentStore(catogries ?? '');
     }, [catogries, userInfo])
 
     return (

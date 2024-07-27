@@ -1,14 +1,16 @@
-import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { useLoginStore } from "@/store/Auth";
 import { useNavigate } from 'react-router-dom';
+import { getEnvVariable } from '@/utils/load.utils';
+const baseUri = getEnvVariable('BASE_URI');
 // import { toast } from "sonner";
+import { useAuth } from '@/components/AuthProvide';
 const userInfo = useLoginStore.getState();
 console.log(userInfo)
 
 export const HandleLogin = () => {
     const clientId = '5871c78bb36c12b03eb3';
-    const redirectUri = 'http://localhost:4000/auth/github-oauth';
+    const redirectUri = `${baseUri}/auth/github-oauth`;
     const scope = 'user';
     const githubOAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`;
     window.location.href = githubOAuthUrl
@@ -21,21 +23,21 @@ const fetchUserData = async (token: string) => {
 };
 
 export const Logins: React.FC = () => {
+
   const navigate = useNavigate();
+  const { token } = useAuth();
+
   useEffect(() => {
-    const githubToken = Cookies.get('authToken');
 
-    if (githubToken) {
-      fetchUserData(githubToken).then(() => {
-        console.log('GitHub Token:', githubToken);
-
+    if (token) {
+      fetchUserData(token).then(() => {
+        console.log('Auth Token:', token);
         if (userInfo.isLoggedIn) {
           navigate('/profile');
         }
-
       });
     }
-  }, [userInfo, navigate]);
+  }, [navigate, token]);
 
 
   return (
