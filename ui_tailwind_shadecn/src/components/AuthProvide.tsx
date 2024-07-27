@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState, createContext, useContext, ReactNode } from 'react';
-import api from '@/api'
+import api from '@/api';
 
 // Define the AuthContext type
 interface AuthContextType {
@@ -25,16 +25,11 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// const baseUri = getEnvVariable('BASE_URI');
-
-// const api = axios.create({
-//   baseURL: baseUri, // Replace with your API base URL
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   withCredentials: true,
-//   // You can also add other configuration options here
-// });
+// Utility function to check if user is logged in
+const isUserLoggedIn = (): boolean => {
+  // TODO: handle the login properly
+  return true;
+};
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
@@ -42,10 +37,15 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        const response = await api.get('/token/auth-token');
-        console.log("response", response)
-        setToken(response.data.accessTokens);
+        if (isUserLoggedIn()) {
+          const response = await api.get('/token/auth-token');
+          console.log(response.data.response.authToken)
+          const fetchedToken = response.data.response.authToken;
+          setToken(fetchedToken);
+
+        }
       } catch (error) {
+        console.error('Failed to fetch token:', error);
         setToken(null);
       }
     };
@@ -53,49 +53,20 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     fetchToken();
   }, []);
 
+  console.log('Token fetched and set:', token);
+
   useLayoutEffect(() => {
     const authInterceptor = api.interceptors.request.use((config) => {
       if (token) {
+        console.log(token)
         config.headers.Authorization = `Bearer ${token}`;
+        console.log('Token set in header:', token);
       }
-      // alert(token)
       return config;
     });
 
     return () => {
       api.interceptors.request.eject(authInterceptor);
-    };
-  }, [token]);
-
-  useLayoutEffect(() => {
-    const refreshInterceptor = api.interceptors.response.use(
-      (response) => response,
-      async (error) => {
-        const originalRequest = error.config;
-
-        if (
-          error.response.status === 403 &&
-          error.response.data.message === 'Unauthorized' &&
-          !originalRequest._retry
-        ) {
-          originalRequest._retry = true;
-          try {
-            const response = await api.get('/api/refreshToken');
-            setToken(response.data.accessTokens);
-
-            originalRequest.headers.Authorization = `Bearer ${response.data.accessTokens}`;
-            return api(originalRequest);
-          } catch (error) {
-            setToken(null);
-            return Promise.reject(error);
-          }
-        }
-        return Promise.reject(error);
-      }
-    );
-
-    return () => {
-      api.interceptors.response.eject(refreshInterceptor);
     };
   }, [token]);
 
@@ -109,4 +80,3 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 };
 
 export default AuthProvider;
-// export { api };
