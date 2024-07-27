@@ -4,6 +4,7 @@ import { useLoginStore } from "@/store/Auth";
 import { useNavigate } from 'react-router-dom';
 // import { toast } from "sonner";
 const userInfo = useLoginStore.getState();
+console.log(userInfo)
 
 export const HandleLogin = () => {
     const clientId = '5871c78bb36c12b03eb3';
@@ -23,23 +24,11 @@ export const Logins: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     const githubToken = Cookies.get('authToken');
-    console.log('GitHub Token:', githubToken);
 
     if (githubToken) {
       fetchUserData(githubToken).then(() => {
-        // Redirect to profile if login is successful
-                // toast.success("Login success", {
-        //   description: "Enjoy the ui world",
-        //   position: 'bottom-right',
-        //   classNames:{
-        //     error: "bg-theme"
-        //   },
-        //   action: {
-        //     label: "close",
-        //     onClick: () => console.log("Undo"),
-        //   },
-          
-        // })
+        console.log('GitHub Token:', githubToken);
+
         if (userInfo.isLoggedIn) {
           navigate('/profile');
         }

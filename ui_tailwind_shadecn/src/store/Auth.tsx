@@ -1,6 +1,7 @@
 import {ComponentData} from '@/types/ComponentData.type'
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import api from '@/api'; // Import the axios instance
 // import { ProfileDetails } from '@/types/ComponentStore.type'
 
 interface LoginStore {
@@ -50,53 +51,61 @@ export const useLoginStore = create<LoginStore>()(
       components: null,
       login: async (token) => {
         try {
+          console.log('Token:', token);
           set({ isLoading: true, error: null });
-          console.log()
-          const response = await fetch('http://localhost:4000/profile/getprofileinfoprotect', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          });
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch user data');
-          }
+          // Set the Authorization header directly before making the request
+          api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
-          const data = await response.json();
-          console.log(data);
-          const { user, components } = data.response;
+          const response = await api.get('/profile/getprofileinfoprotect');
+          console.log('Response:', response);
+          const { user, components } = response.data.response;
+          console.log(user)
+          console.log(components)
 
           if (user) {
-            const processedComponents: ComponentData[] | null = components ? components.map((component: ComponentDatas) => {
-              return component.component_details.post_details;
-            }) : null;
+            const processedComponents: ComponentData[] | null = components
+              ? components.map((component: ComponentDatas) => component.component_details.post_details)
+              : null;
 
-            set({ user, isLoading: false, isLoggedIn: true, error: null, authToken:token, components: processedComponents });
-            console.log(`Setting isLoggedIn to `);
+            set({
+              user,
+              isLoading: false,
+              isLoggedIn: true,
+              error: null,
+              authToken: token,
+              components: processedComponents,
+            });
           } else {
             set({ error: 'User data not found', isLoading: false });
           }
         } catch (error: unknown) {
-          if (error instanceof Error) {
-            set({ error: error.message, isLoading: false });
-          } else {
-            set({ error: 'An unknown error occurred', isLoading: false });
-          }
+          console.error('Error:', error);
+          set({ 
+            error: error instanceof Error ? error.message : 'An unknown error occurred', 
+            isLoading: false 
+          });
         }
       },
       logout: () => {
-        set({ user: null, isLoggedIn: false });
+        set({ user: null, isLoggedIn: false, authToken: null, components: null });
       },
     }),
     {
       name: 'auth-store',
       getStorage: () => localStorage,
-      partialize: (state) => ({ user: state.user, isLoggedIn: state.isLoggedIn, isLoading: state.isLoading, error: state.error, authToken: state.authToken, components: state.components}),
-    } 
+      partialize: (state) => ({
+        user: state.user,
+        isLoggedIn: state.isLoggedIn,
+        isLoading: state.isLoading,
+        error: state.error,
+        authToken: state.authToken,
+        components: state.components,
+      }),
+    }
   )
 );
+
 
 export const useLoginUserInfo = create<LoginUserInfoStore>(() => ({
   _id: "",
