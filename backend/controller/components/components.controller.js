@@ -48,11 +48,12 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
 
         const commentsListWithUserInfo = await Promise.all(data.comments.map(async comment => {
             const userInfo = await getUserInfoByIdForComments(comment.user);
+            console.log('userInfo', userInfo)
             return {
-                comment: comment.comment,
-                user: userInfo.name,
-                avatar: userInfo.avatar_url,
-                date: comment.date
+                comment: comment?.comment,
+                user: userInfo?.name,
+                avatar: userInfo?.avatar_url,
+                date: comment?.date
             };
         }));
 
