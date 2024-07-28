@@ -99,7 +99,7 @@ export function CreateComponents() {
   return (
     <>
    
-      <ProfileForm />
+      {/* <ProfileForm /> */}
       <div className="fixed bottom-0 right-0 p-2 bg-secondary"><CommandDialogDemo /></div>
 
       <header className="body-font">
@@ -147,8 +147,8 @@ export function CreateComponents() {
               <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6">
                 <div className="flex min-h-screen w-full flex-col">
                   <main className="flex flex-1 flex-col gap-4 md:gap-4 ">
-                    <div className="flex justify-between items-center">
 
+                    <div className="flex justify-between items-center">
                       <div className="flex items-center">
                         <span className="inline-flex items-center bg-gray-800 border-0 py-1 px-3 focus:outline-none hover:bg-gray-700 rounded text-base mt-4 md:mt-0"><LeftArrow />  Go Back</span>
                         <h1 className="px-3 md:text-2xl text-1xl font-medium">
@@ -156,20 +156,53 @@ export function CreateComponents() {
                         </h1>
                       </div>
 
-                      <div className="w-full flex-1">
-                        <form>
+                      <div className="w-full flex-1 flex justify-between">
 
+                        <form>
                           <div className="relative">
                             <div className="relative">
                               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                               <Input
                                 type="search"
                                 placeholder="Search Components..."
-                                className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
+                                className="w-full appearance-none bg-background pl-8 shadow-none md:w-3/3 lg:w-5/3"
                               />
                             </div>
                           </div>
                         </form>
+
+                        <div className="flex justify-between items-center">
+                            <ProfileForm />
+
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <HoverBorderGradient
+                                  containerClassName="rounded-full"
+                                  as="button"
+                                  className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
+                                >
+                                  <span>Submit Components</span>
+
+                                </HoverBorderGradient>
+                              </AlertDialogTrigger>
+
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    You were contributing this to open source, so please be concise about that. Do not get this from any other code to open source it, as it may violate our terms and conditions.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction>Contribute My Component</AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+
+                            </AlertDialog>
+                        </div>
+                       
+
                       </div>
 
                       <header className="flex h-14 items-center gap-4 px-4 lg:h-[60px] lg:px-6">
@@ -211,6 +244,7 @@ export function CreateComponents() {
                       </header>
 
                     </div>
+
                     <ResizablePanelGroup direction="horizontal">
                       <ResizablePanel>
                         <div className="relative">
@@ -284,30 +318,7 @@ export function CreateComponents() {
                         </a>
                       </div>
                     </header>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <HoverBorderGradient
-                          containerClassName="rounded-full"
-                          as="button"
-                          className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
-                        >
-                          <span>Contribute Components</span>
 
-                        </HoverBorderGradient>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                          <AlertDialogDescription>
-                            You were contributing this to open source, so please be concise about that. Do not get this from any other code to open source it, as it may violate our terms and conditions.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction>Contribute My Component</AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
 
                   </main>
                 </div>

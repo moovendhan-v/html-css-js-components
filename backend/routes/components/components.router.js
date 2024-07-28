@@ -12,6 +12,7 @@ import {
   saveComponents,
   unSavedComponents,
   addComments,
+  getpPopularComponents,
 } from '../../controller/components/components.controller.js';
 
 import { sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
@@ -57,6 +58,8 @@ componentsRouter.get('/:category/:title',getParticularComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 
-componentsRouter.get('/get-cateogries', getCategoriesList)
+componentsRouter.get('/get-cateogries', getCategoriesList);
+
+componentsRouter.get('/get-popular-components', getpPopularComponents);
 
 export {componentsRouter};
