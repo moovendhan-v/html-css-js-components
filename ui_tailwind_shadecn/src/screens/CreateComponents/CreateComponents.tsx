@@ -294,7 +294,7 @@ export function CreateComponents() {
                               onChange={(newCode) => {
                                 setCreateComponentField(activeTab, newCode);
                               }} />}
-                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={viewCreateCompoentsStore?.js || ''} onChange={(newCode) => {
+                            {activeTab === 'javascript' && <MonacoEditorComponent language="javascript" value={viewCreateCompoentsStore?.javascript || ''} onChange={(newCode) => {
                               setCreateComponentField(activeTab, newCode);
                             }} />}
                           </div>
