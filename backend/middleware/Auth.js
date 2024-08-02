@@ -73,9 +73,10 @@ const authanticateJwtToken = async (req, res, next) => {
 
 const authenticatePublicApi = async (req, res, next) => {
 
+  //TODO: While public auth if the auth token is expired give a new toke
+
   const refreshToken = req.cookies.refreshToken;
   const authHeader = req.headers['authorization'];
-
 
   req.user = {};
 
@@ -88,6 +89,7 @@ const authenticatePublicApi = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);
+    console.log('uwer',payload)
     req.user = payload;
     req.user.isAuthorized = true;
     return next();
@@ -131,10 +133,23 @@ const authenticatePublicApi = async (req, res, next) => {
   }
 };
 
-
+// Middleware to protect routes by verifying auth and refresh tokens.
 const protectRoute = async (req, res) => {
   try {
+
+    const authHeader = req.headers['authorization'];
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: "Unauthorized no tokens avaialbel" });
+    }
+
     const cookies = req.cookies;
+    const tokenHeader = authHeader.split(' ')[1];
+    console.log('cookies', cookies)
+
+    // if (cookies.authToken !== tokenHeader){
+    //   return res.status(401).json({ message: "Unauthorized invalid tokens" });
+    // }
+
     const authToken = jwt.verify(cookies.authToken, JWT_SECRET);
     const refreshToken = jwt.verify(cookies.refreshToken, REFRESH_TOKEN);
     if (authToken.tokenProperties.userId !== refreshToken.tokenProperties.userId) {
@@ -146,9 +161,10 @@ const protectRoute = async (req, res) => {
     }
     next();
   } catch (error) {
+    console.log(error)
     res.badreq();
   }
 }
 
 
-export { authanticateJwtToken, authenticatePublicApi };
+export { authanticateJwtToken, authenticatePublicApi, protectRoute };

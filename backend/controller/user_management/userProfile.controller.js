@@ -110,11 +110,11 @@ const getUserInformationsByName = async (userName, callback) => {
 
 const getprofileinfoprotect = async ({user}, res) => {
     try {
-        const user_id = user.tokenProperties.userId;
+        const user_id = user.userId;
         // Find user information using user_id
         console.log(`usersresponse ${JSON.stringify(user)}`)
 
-        console.log(`userid ${JSON.stringify(user.tokenProperties.userId)}`)
+        console.log(`userid ${JSON.stringify(user.userId)}`)
         const existingUser = await GitHubUser.findOne({ _id: user_id });
         if (!existingUser) {
             return res.status(404).send('User not found');
