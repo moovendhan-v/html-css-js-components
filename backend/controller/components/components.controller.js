@@ -46,13 +46,16 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
         const post = await UserComponents.findById(data._id);
         // const post = await UserComponents.findOne({ folder_name: data.folder_name });
 
+        console.log('htmlContent', htmlContent)
+
         const commentsListWithUserInfo = await Promise.all(data.comments.map(async comment => {
             const userInfo = await getUserInfoByIdForComments(comment.user);
+            console.log('userInfo', userInfo)
             return {
-                comment: comment.comment,
-                user: userInfo.name,
-                avatar: userInfo.avatar_url,
-                date: comment.date
+                comment: comment?.comment,
+                user: userInfo?.name,
+                avatar: userInfo?.avatar_url,
+                date: comment?.date
             };
         }));
 
@@ -85,6 +88,7 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
                 "admin": user
             }
         };
+        console.log('dataObject', dataObject)
         callback(null, dataObject);
     } catch (error) {
         callback(error); // Pass error to the callback
@@ -248,6 +252,40 @@ const getParticularComponent = async (req, res) => {
     }
 };
 
+//Get the popular components
+const getpPopularComponents = async (req, res) => {
+    
+    const isAuthorized = req.user?.isAuthorized || false;
+
+    try {
+        const data =  await UserComponents.getpPopularComponents(8)
+        console.log('data', data)
+
+        if (!data) {
+            return res.status(404).json({ success: false, message: 'Component not available' });
+        }
+
+        const response = await readFilesInformations(data.categories, data.folder_name, { data }, (err, result) => {
+            // Set isAdmin based on user_id match and availability of loggedInUser
+            console.log('result', result)
+            result.post_details.isAdmin = false;
+            if (isAuthorized) {
+                const tokenProperties = req.user?.tokenProperties;
+                if (tokenProperties?.userId == user._id) {
+                    result.post_details.isAdmin = true
+                }
+            }
+            if (err) {
+                return res.status(500).send(err);
+            }
+            res.status(200).json({ error: true, response: result });
+        });
+
+    } catch (error) {
+        res.status(500).send({ error: false, message: error.message });
+    }
+};
+
 
 //components like 
 const addLikesToComponents = async ({ params, body }, res) => {
@@ -394,5 +432,6 @@ export {
     removeLikeToComponents,
     saveComponents,
     unSavedComponents,
-    addComments
+    addComments,
+    getpPopularComponents
 };

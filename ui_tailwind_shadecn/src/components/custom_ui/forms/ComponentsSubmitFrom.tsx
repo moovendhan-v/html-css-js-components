@@ -61,7 +61,7 @@ export function ProfileForm() {
           as="button"
           className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
         >
-          <span>Contribute Components</span>
+          <span>Edit Components</span>
         </HoverBorderGradient>
       </AlertDialogTrigger>
       <AlertDialogContent className="max-w-5xl">

@@ -1,4 +1,3 @@
-import React from "react";
 import ComponentsCard from './ComponentsCard';
 
 const ScrollAnimation = () => {

@@ -23,7 +23,7 @@ import { useComponentsStore } from "@/store/store"
 // import {useLoginStore , useLoginUserInfo} from "@/store/Auth"
 import {ComponentsStore, } from '@/types/ComponentStore.type'
 import { useEffect } from "react"
-import { fetchComponentsStore } from "@/api/components/components"
+import { useFetchComponentStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
 import { Switch } from "@/components/ui/switch"
@@ -57,7 +57,7 @@ export function Components() {
         fetchComponentsBySearch(query ?? '');
       return
     }
-    fetchComponentsStore(catogries ?? '');
+    useFetchComponentStore(catogries ?? '');
   }, [catogries, query])
 
 

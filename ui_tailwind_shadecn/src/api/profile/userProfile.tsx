@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '@/api';
 import { getEnvVariable } from '@/utils/load.utils';
 import { UserProfile } from '@/types/ViewProfile.type';
 import { ComponentDatas } from '@/store/Auth';
@@ -7,7 +7,7 @@ import { ComponentData } from '@/types/ComponentData.type';
 export const fetchUserProfile = async (userName: string): Promise<UserProfile | null> => {
   const baseUri = getEnvVariable('BASE_URI');
   try {
-    const response = await axios.post(`${baseUri}/profile/getprofileinfo`, {
+    const response = await api.post(`${baseUri}/profile/getprofileinfo`, {
       user_name: userName,
     });
 
