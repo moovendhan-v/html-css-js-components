@@ -8,14 +8,14 @@ import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { useCreateComponentsStore } from '@/store/createComponents/create.components';
 
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
+  Select as CnSelect,
   SelectTrigger,
   SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectItem
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 
 const formSchema = Yup.object().shape({
   title: Yup.string().min(5, "Title must be at least 5 characters.").required("Title is required."),
@@ -23,7 +23,7 @@ const formSchema = Yup.object().shape({
   html: Yup.string().min(1, "HTML is required.").required("HTML is required."),
   css: Yup.string().min(1, "CSS is required.").required("CSS is required."),
   javascript: Yup.string().min(1, "JavaScript is required.").required("JavaScript is required."),
-  categories: Yup.string().min(1, "Categories are required.").required("Categories are required."),
+  categories: Yup.array().of(Yup.string().required()).min(1, "Categories are required.").required("Categories are required."),
   tags: Yup.array().of(Yup.string().required()).min(1, "Tags are required.").required("Tags are required."),
   folder_name: Yup.string().min(5, "Folder name must be at least 5 characters.").required("Folder name is required."),
   type: Yup.string().min(1, "Type is required.").required("Type is required."),
@@ -35,14 +35,14 @@ interface FormValues {
   html: string;
   css: string;
   javascript: string;
-  categories: string;
+  categories: string[];
   tags: string[];
   folder_name: string;
   type: string;
 }
 
 const categoriesOptions = [
-  { value: 'category1', label: 'Category 1' },
+  { value: 'category1', label: 'Category 1ss' },
   { value: 'category2', label: 'Category 2' },
   { value: 'category3', label: 'Category 3' },
 ];
@@ -54,58 +54,99 @@ const tagsOptions = [
 ];
 
 const MultiSelectField = ({ field, form, options }: FieldProps & { options: { value: string, label: string }[] }) => {
-  const onChange = (value: string[]) => {
-    form.setFieldValue(field.name, value);
-  };
-
-  return (
-    <Select
-      value={field.value}
-      onValueChange={onChange}
-    >
-      <SelectTrigger className="w-[280px]">
-        <SelectValue placeholder="Select tags" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Tags</SelectLabel>
-          {options.map(option => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-};
-
-const SingleSelectField = ({ field, form, options }: FieldProps & { options: { value: string, label: string }[] }) => {
   const onChange = (value: string) => {
-    form.setFieldValue(field.name, value);
+    const newValue = field.value.includes(value)
+      ? field.value.filter((v: string) => v !== value)
+      : [...field.value, value];
+    form.setFieldValue(field.name, newValue);
   };
 
+  const selectedOptions = options.filter(option => field.value.includes(option.value));
+
   return (
-    <Select
-      value={field.value}
-      onValueChange={onChange}
-    >
-      <SelectTrigger className="w-[280px]">
-        <SelectValue placeholder="Select a category" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Categories</SelectLabel>
-          {options.map(option => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <div>
+      <CnSelect onValueChange={onChange}>
+        <SelectTrigger className="w-full">
+          <SelectValue>
+            {selectedOptions.length > 0 ? (
+              selectedOptions.map(option => (
+                <Badge key={option.value} className="mr-2">{option.label}</Badge>
+              ))
+            ) : (
+              <span>Select options</span>
+            )}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </CnSelect>
+      <input type="hidden" {...field} />
+    </div>
   );
 };
+
+// const MultiSelectField = ({ field, form, options }: FieldProps & { options: { value: string, label: string }[] }) => {
+//   const onChange = (value: string) => {
+//     const newValue = field.value.includes(value)
+//       ? field.value.filter((v: string) => v !== value)
+//       : [...field.value, value];
+//     form.setFieldValue(field.name, newValue);
+//   };
+
+//   const onRemove = (value: string) => {
+//     form.setFieldValue(field.name, field.value.filter((v: string) => v !== value));
+//   };
+
+//   const selectedOptions = options.filter(option => field.value.includes(option.value));
+
+//   return (
+//     <div>
+//       <CnSelect onValueChange={onChange}>
+//         <SelectTrigger className="w-full">
+//           <SelectValue>
+//             {selectedOptions.length > 0 ? (
+//               selectedOptions.map(option => (
+//                 <Badge key={option.value} className="mr-2 flex items-center">
+//                   {option.label}
+//                   <button
+//                     type="button"
+//                     className="ml-2"
+//                     onClick={(e) => {
+//                       e.stopPropagation();  // Stop event from bubbling up
+//                       e.preventDefault();   // Prevent default button behavior
+//                       onRemove(option.value);  // Remove the badge
+//                     }}
+//                   >
+//                     <p>Close</p> {/* Adjusted text */}
+//                   </button>
+//                 </Badge>
+//               ))
+//             ) : (
+//               <span>Select options</span>
+//             )}
+//           </SelectValue>
+//         </SelectTrigger>
+//         <SelectContent>
+//           <SelectGroup>
+//             {options.map((option) => (
+//               <SelectItem key={option.value} value={option.value}>
+//                 {option.label}
+//               </SelectItem>
+//             ))}
+//           </SelectGroup>
+//         </SelectContent>
+//       </CnSelect>
+//       <input type="hidden" {...field} />
+//     </div>
+//   );
+// };
 
 export function ProfileForm() {
   const viewCreateComponentsStore = useCreateComponentsStore((state) => state.createComponents);
@@ -117,7 +158,7 @@ export function ProfileForm() {
     html: viewCreateComponentsStore.html,
     css: viewCreateComponentsStore.css,
     javascript: viewCreateComponentsStore.javascript,
-    categories: "",
+    categories: [], // No default value for categories
     tags: [],
     folder_name: "",
     type: "",
@@ -146,7 +187,7 @@ export function ProfileForm() {
           validationSchema={formSchema}
           onSubmit={onSubmit}
         >
-          {({ handleChange, handleBlur }: { handleChange: any, handleBlur: any, values: FormValues }) => (
+          {({ handleChange, handleBlur, setFieldValue }) => (
             <Form className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormItem label="Title">
                 <Field name="title">
@@ -239,7 +280,7 @@ export function ProfileForm() {
               </FormItem>
 
               <FormItem label="Categories">
-                <Field name="categories" component={SingleSelectField} options={categoriesOptions} />
+                <Field name="categories" component={MultiSelectField} options={categoriesOptions} />
                 <ErrorMessage name="categories" component="p" />
               </FormItem>
 
@@ -248,23 +289,46 @@ export function ProfileForm() {
                 <ErrorMessage name="tags" component="p" />
               </FormItem>
 
-              <AlertDialogFooter>
-                <button type="submit">Submit</button>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-              </AlertDialogFooter>
+              <FormItem label="Type">
+                <Field name="type">
+                  {({ field }: FieldProps<string>) => (
+                    <CnSelect
+                      value={field.value}
+                      onValueChange={(value) => setFieldValue(field.name, value)}
+                      onBlur={field.onBlur}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="type1">Type 1</SelectItem>
+                          <SelectItem value="type2">Type 2</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </CnSelect>
+                  )}
+                </Field>
+                <ErrorMessage name="type" component="p" />
+              </FormItem>
+
+              <button type="submit" className="btn-primary">
+                Submit
+              </button>
             </Form>
           )}
         </Formik>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Close</AlertDialogCancel>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
 }
 
-function FormItem({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label>{label}</label>
-      {children}
-    </div>
-  );
-}
+const FormItem = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <div className="form-item">
+    <label className="form-label">{label}</label>
+    {children}
+  </div>
+);
