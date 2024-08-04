@@ -7,6 +7,7 @@ dotenv.config();
 import { customResponsesMiddleware } from './middleware/customResponse.js';
 import logger from './utils/logger.js';
 import cookieParser from 'cookie-parser';
+import errorHandler from './middleware/ErrorHandler.js';
 
 // Initialize Express app
 const app = express();
@@ -62,6 +63,9 @@ app.use('/token', token);
 
 // Connect to the database
 connectDB();
+
+// error-handling middleware
+app.use(errorHandler);
 
 // Start the server
 app.listen(port, () => {

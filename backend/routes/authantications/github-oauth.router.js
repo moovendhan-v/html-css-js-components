@@ -10,6 +10,7 @@ import {
   generateAccessToken,
   validateToken,
   signup_or_login_with_git,
+  logout,
 } from '../../controller/authantications/github-oauth.controller.js';
 
 const authRouter = express.Router();
@@ -29,6 +30,8 @@ authRouter.get('/github-oauth', signup_or_login_with_git);
 authRouter.post('/github', generateAccessToken )
 
 authRouter.post('/github-validate', validateToken )
+
+authRouter.post('/logout', logout )
 
 
 export { authRouter };
