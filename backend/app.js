@@ -8,6 +8,7 @@ import { customResponsesMiddleware } from './middleware/customResponse.js';
 import logger from './utils/logger.js';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/ErrorHandler.js';
+import requestLogger from './middleware/RequestLogger.js';
 
 // Initialize Express app
 const app = express();
@@ -15,6 +16,7 @@ const port = 4000;
 
 // Middleware setup
 app.use(cookieParser());
+app.use(requestLogger); 
 
 const allowedOrigins = ['http://localhost:5173'];
 

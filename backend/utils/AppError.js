@@ -17,8 +17,6 @@ class AppError extends Error {
 
   async handleReport() {
     if (this.report.type === 'none') return;
-    console.log('details')
-    console.log(this.details)
 
     // if (this.report.type === 'webhook' || this.report.type === 'both') {
     //   await this.sendWebhookMessage();

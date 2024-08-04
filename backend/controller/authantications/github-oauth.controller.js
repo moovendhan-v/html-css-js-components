@@ -158,7 +158,6 @@ const logout = async (req, res, next) => {
     const isTokenInRedisCache = await isTokenInCache(decodedRefreshToken?.tokenProperties);
 
     if (!isTokenInRedisCache) {
-      console.error('Refresh token not found in Redis cache');
       errDetails.other = decodedRefreshToken?.tokenProperties;
       errDetails.info = 'No refresh tokens found in redis cache';
       throw new AppError('In valid refresh tokens', code = 403, details);
