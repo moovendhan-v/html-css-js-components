@@ -46,8 +46,6 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
         const post = await UserComponents.findById(data._id);
         // const post = await UserComponents.findOne({ folder_name: data.folder_name });
 
-        console.log('htmlContent', htmlContent)
-
         const commentsListWithUserInfo = await Promise.all(data.comments.map(async comment => {
             const userInfo = await getUserInfoByIdForComments(comment.user);
             console.log('userInfo', userInfo)
@@ -88,7 +86,6 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
                 "admin": user
             }
         };
-        console.log('dataObject', dataObject)
         callback(null, dataObject);
     } catch (error) {
         callback(error); // Pass error to the callback

@@ -19,7 +19,6 @@ const getNewAccessToken = async (req, res) => {
     }
 
     const decoded = jwt.verify(refreshToken, REFRESH_TOKEN);
-    console.log('Decoded JWT:', decoded);
 
     const isTokenInRedisCache = await isTokenInCache(decoded.tokenProperties);
     console.log('Is token in Redis cache:', isTokenInRedisCache);
