@@ -25,16 +25,16 @@ import {
   AlertDialogAction
 } from '@/components/ui/alert-dialog';
 
-const userInfo = useLoginStore.getState();
-console.log(JSON.stringify(userInfo))
 
 export const NavProfile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const userInfo = useLoginStore.getState();
+  console.log(JSON.stringify(userInfo))
 
   const handleLogoutClick = async () => {
     await HandleLogout();
     setIsDialogOpen(false);
-    window.location.href = '/'; 
+    window.location.href = '/';
   };
 
   const confirmLogout = () => {
@@ -77,7 +77,7 @@ export const NavProfile = () => {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className={userInfo.isLoggedIn ? 'bg-red-600': "bg-blue-700"} >
+          <DropdownMenuItem className={userInfo.isLoggedIn ? 'bg-red-600' : "bg-blue-700"} >
             {userInfo.isLoggedIn ? (
               <h3 onClick={confirmLogout}>
                 Logout
