@@ -23,6 +23,7 @@ import LoginFailure from './screens/Others/LoginFailure';
 import { Profile } from './screens/Profile/Profile';
 import  Blogs  from './screens/Blog/Blogs';
 import { useEffect } from 'react';
+import { Logout } from './screens/Auth/Logout';
 // import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -55,6 +56,7 @@ function App() {
           <Route path="/settings/:menu" element={<SettingsLayout children={<SettingsProfilePage />} />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/success" element={<LoginSuccess />} />
           <Route path="/faild" element={<LoginFailure />} />
           <Route path="/profile" element={<Profile />} />

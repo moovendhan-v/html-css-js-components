@@ -1,12 +1,13 @@
 // authRouter.js
 import axios, { HttpStatusCode } from 'axios';
 import AppError from '../../utils/AppError.js';
+import jwt from 'jsonwebtoken';
 
 import { GitHubUser } from '../../models/user.model.js';
 import dotenv from 'dotenv';
 dotenv.config();
 import { getUserInformationsByName } from '../user_management/userProfile.controller.js';
-import { generateAccessToken, generateRefreshToken, validateToken, setRefreshTokensInRedis, removeTokenFromCache } from './jwt.controller.js';
+import { generateAccessToken, generateRefreshToken, validateToken, isTokenInCache, setRefreshTokensInRedis, removeTokenFromCache } from './jwt.controller.js';
 import { v4 as uuidv4 } from 'uuid';
 
 const JWT_SECRET = process.env.JWT_ACCESS_TOKEN;
@@ -163,7 +164,7 @@ const logout = async (req, res, next) => {
       throw new AppError('In valid refresh tokens', code = 403, details);
     }
 
-    await removeTokenFromCache(decoded.tokenProperties);
+    await removeTokenFromCache(decodedRefreshToken.tokenProperties);
 
     res.success('Successfull logout');
 
