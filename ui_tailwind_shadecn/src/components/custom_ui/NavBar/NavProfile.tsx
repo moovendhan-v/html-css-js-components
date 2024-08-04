@@ -1,18 +1,10 @@
 import React, { useState } from 'react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { HandleLogout } from '@/hooks/handle_logout.hooks';
 import { Link } from 'react-router-dom';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { CircleUser } from "lucide-react"
-import { Button } from "../../ui/button"
-import { useLoginStore } from "@/store/Auth"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CircleUser } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useLoginStore } from "@/store/Auth";
+import { HandleLogout } from '@/hooks/handle_logout.hooks';
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -24,12 +16,20 @@ import {
   AlertDialogCancel,
   AlertDialogAction
 } from '@/components/ui/alert-dialog';
-
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export const NavProfile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const userInfo = useLoginStore.getState();
-  console.log(JSON.stringify(userInfo))
+  console.log(JSON.stringify(userInfo));
 
   const handleLogoutClick = async () => {
     await HandleLogout();
@@ -47,8 +47,8 @@ export const NavProfile = () => {
 
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <Sheet>
+        <SheetTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full border-4 border-sky-500">
             {userInfo.isLoggedIn ? (
               <>
@@ -60,34 +60,45 @@ export const NavProfile = () => {
             ) : <CircleUser className="h-5 w-5" />}
             <span className="sr-only">Toggle user menu</span>
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Info</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {userInfo.isLoggedIn && (
-            <DropdownMenuItem>
-              <Link to={`/profile`}>
-                {userInfo?.user?.name}
-              </Link>
-            </DropdownMenuItem>
-          )}
-          <DropdownMenuItem>
-            <Link to={`/settings`}>
-              Settings
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem className={userInfo.isLoggedIn ? 'bg-red-600' : "bg-blue-700"} >
-            {userInfo.isLoggedIn ? (
-              <h3 onClick={confirmLogout}>
-                Logout
-              </h3>
-            ) : (
-              <Link to="/Login">Login</Link>
+        </SheetTrigger>
+        <SheetContent side="right" className='min-w-[15rem]'>
+          <SheetHeader>
+            <SheetTitle>Profile Menu</SheetTitle>
+          </SheetHeader>
+          <div className="space-y-2 p-4">
+            {userInfo.isLoggedIn && (
+              <div>
+                <Button variant="outline" className="w-full text-blue-500">
+                  <Link to={`/profile`} className="block text-blue-500">
+                    {userInfo?.user?.name}
+                  </Link>
+                </Button>
+              </div>
             )}
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <div>
+              <Button variant="outline" className="w-full text-blue-500">
+                <Link to={`/settings`}>Settings</Link>
+              </Button>
+            </div>
+            <div>
+              <div >
+                {userInfo.isLoggedIn ? (
+                  <Button onClick={confirmLogout} variant="outline" className={`${userInfo.isLoggedIn ? 'text-red-500 hover:text-white hover:bg-red-500' : "bg-blue-700"}  cursor-pointer p-2 rounded w-full`} >
+                    Logout
+                  </Button>
+                ) : (
+                  <Link to="/Login" className="text-white">Login</Link>
+                )}
+              </div>
+            </div>
+          </div>
+          <SheetFooter>
+            <SheetClose asChild>
+              {/* <Button type="button">Close</Button> */}
+            </SheetClose>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
 
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <AlertDialogTrigger asChild>
