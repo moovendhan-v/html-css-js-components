@@ -3,16 +3,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import api from '@/api'; // Import the axios instance
 // import { ProfileDetails } from '@/types/ComponentStore.type'
+// import { useAuth } from '@/components/AuthProvide';
+
 
 interface LoginStore {
   user: LoginUserInfoStore | null;
   isLoading: boolean;
   isLoggedIn: boolean;
   error: string | null;
-  // profileDetails: ProfileDetails;
   components: ComponentData[] | null;
-  authToken: string | null;
-  login: (token: string) => Promise<void>;
+  login: () => Promise<void>;
   logout: () => void;
 }
 
@@ -47,15 +47,11 @@ export const useLoginStore = create<LoginStore>()(
       user: null,
       isLoading: false,
       error: null,
-      authToken: null,
       components: null,
-      login: async (token) => {
+      login: async () => {
         try {
-          console.log('Token:', token);
+                    
           set({ isLoading: true, error: null });
-
-          // Set the Authorization header directly before making the request
-          api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
           const response = await api.get('/profile/getprofileinfoprotect');
           console.log('Response:', response);
@@ -73,7 +69,6 @@ export const useLoginStore = create<LoginStore>()(
               isLoading: false,
               isLoggedIn: true,
               error: null,
-              authToken: token,
               components: processedComponents,
             });
           } else {
@@ -88,7 +83,7 @@ export const useLoginStore = create<LoginStore>()(
         }
       },
       logout: () => {
-        set({ user: null, isLoggedIn: false, authToken: null, components: null });
+        set({ user: null, isLoggedIn: false, components: null });
       },
     }),
     {
@@ -99,7 +94,6 @@ export const useLoginStore = create<LoginStore>()(
         isLoggedIn: state.isLoggedIn,
         isLoading: state.isLoading,
         error: state.error,
-        authToken: state.authToken,
         components: state.components,
       }),
     }

@@ -83,11 +83,15 @@ export const NavProfile = () => {
             <div>
               <div >
                 {userInfo.isLoggedIn ? (
-                  <Button onClick={confirmLogout} variant="outline" className={`${userInfo.isLoggedIn ? 'text-red-500 hover:text-white hover:bg-red-500' : "bg-blue-700"}  cursor-pointer p-2 rounded w-full`} >
+                  <Button onClick={confirmLogout} variant="outline" className={`text-red-500 hover:text-white hover:bg-red-500 cursor-pointer p-2 rounded w-full`} >
                     Logout
                   </Button>
                 ) : (
-                  <Link to="/Login" className="text-white">Login</Link>
+                  <Link to="/Login" className="text-white">
+                    <Button onClick={confirmLogout} variant="outline" className={`bg-blue-700 cursor-pointer p-2 rounded w-full`} >
+                      Login
+                    </Button>
+                  </Link>
                 )}
               </div>
             </div>

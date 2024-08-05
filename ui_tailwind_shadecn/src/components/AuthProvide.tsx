@@ -6,6 +6,7 @@ interface AuthContextType {
   token: string | null;
   setToken: (token: string | null) => void;
   getToken: () => string | null;
+  isLoggedIn: boolean;
 }
 
 // Create an AuthContext
@@ -25,28 +26,24 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// Utility function to check if user is logged in
-const isUserLoggedIn = (): boolean => {
-  // TODO: handle the login properly
-  return true;
-};
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchToken = async () => {
       try {
-        if (isUserLoggedIn()) {
-          const response = await api.get('/token/auth-token');
-          console.log(response.data.response.authToken)
-          const fetchedToken = response.data.response.authToken;
-          setToken(fetchedToken);
-
-        }
+        const response = await api.get('/token/auth-token');
+        console.log(response.data.response.authToken);
+        const fetchedToken = response.data.response.authToken;
+        setToken(fetchedToken);
+        setIsLoggedIn(true);
+        console.log(isLoggedIn);
       } catch (error) {
         console.error('Failed to fetch token:', error);
         setToken(null);
+        setIsLoggedIn(false);
       }
     };
 
@@ -73,7 +70,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const getToken = () => token;
 
   return (
-    <AuthContext.Provider value={{ token, setToken, getToken }}>
+    <AuthContext.Provider value={{ token, setToken, getToken, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

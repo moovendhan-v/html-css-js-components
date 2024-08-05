@@ -17,21 +17,21 @@ export const HandleLogin = () => {
 };
 
 
-const fetchUserData = async (token: string) => {
-  const user = await useLoginStore.getState().login(token)
+const fetchUserData = async () => {
+  const user = await useLoginStore.getState().login()
   return user;
 };
 
 export const Logins: React.FC = () => {
 
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { token, isLoggedIn } = useAuth();
+  console.log(isLoggedIn);
 
   useEffect(() => {
 
     if (token) {
-      fetchUserData(token).then(() => {
-        console.log('Auth Token:', token);
+      fetchUserData().then(() => {
         if (userInfo.isLoggedIn) {
           navigate('/profile');
         }
