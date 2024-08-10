@@ -139,21 +139,24 @@ const logout = async (req, res, next) => {
     functionName: logout.name,
     apiPath: req.originalUrl,
   };
+  
+  let decodedRefreshToken;
+
   try {
     const cookies = req.cookies;
     const { refreshToken, authToken } = cookies;
 
     if (!refreshToken) {
-      errDetails.info = 'No refresh tokens founded';
+      errDetails.info = 'No refresh tokens found';
       throw new AppError('No refresh token found', code = 403, errDetails);
     }
 
     const decodedJwtSecret = jwt.verify(authToken, JWT_SECRET);
-    const decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN);
+    decodedRefreshToken = jwt.verify(refreshToken, REFRESH_TOKEN); // Assign to the outer variable
 
     if (decodedJwtSecret.sessionId !== decodedRefreshToken.sessionId) {
       errDetails.info = 'Session Id not match for logout';
-      throw new AppError('Unable to logout something went wrong', code, details);
+      throw new AppError('Unable to logout, something went wrong', code, errDetails);
     }
 
     const isTokenInRedisCache = await isTokenInCache(decodedRefreshToken?.tokenProperties);
@@ -161,17 +164,25 @@ const logout = async (req, res, next) => {
     if (!isTokenInRedisCache) {
       errDetails.other = decodedRefreshToken?.tokenProperties;
       errDetails.info = 'No refresh tokens found in redis cache';
-      throw new AppError('In valid refresh tokens', code = 403, details);
+      throw new AppError('Invalid refresh tokens', code = 403, errDetails);
     }
 
     await removeTokenFromCache(decodedRefreshToken.tokenProperties);
-
-    res.success('Successfull logout');
+    res.success('Successful logout');
 
   } catch (error) {
-    next(error);
+    if (decodedRefreshToken) {
+      await removeTokenFromCache(decodedRefreshToken.tokenProperties);
+    }
+
+    if (error.name === 'TokenExpiredError') {
+      res.success('Successful logout');
+    } else {
+      next(error);
+    }
   }
-}
+};
+
 
 
 export { exchangeGitHubCodeForToken, getUserInformationsFromGitApi, getUserInfoFromGit, generateAccessToken, generateRefreshToken, validateToken, signup_or_login_with_git, logout };

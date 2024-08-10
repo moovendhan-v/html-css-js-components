@@ -58,12 +58,17 @@ const getNewAccessToken = async (req, res) => {
 };
 
 const generateAccessToken = (tokenProperties) => {
-  // Create JWT token
-  const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn: '1h' });
+  const tokenExpireTimeout = process.env.TOKEN_EXPIRE_TIMEOUT || '3600'; // Default to 1 hour
+  const expiresIn = `${tokenExpireTimeout}s`;
+  const token = jwt.sign({ tokenProperties }, JWT_SECRET, { expiresIn });
   return token;
 }
 
-const generateRefreshToken = tokenProperties => jwt.sign({ tokenProperties }, REFRESH_TOKEN, { expiresIn: '2d' });
+const generateRefreshToken = (tokenProperties) => {
+  const refreshTokenExpireTimeout = process.env.REFRESH_TOKEN_EXPIRE_TIMEOUT || '604800';
+  const expiresIn = `${refreshTokenExpireTimeout}s`;
+  return jwt.sign({ tokenProperties }, REFRESH_TOKEN, { expiresIn });
+};
 
 const validateToken = ({ body }, res) => {
   // Retrieve JWT token from cookie
@@ -119,7 +124,11 @@ const removeTokenFromCache = async (tokenProperties) => {
 const setRefreshTokensInRedis = async (userId, uuid, refreshToken, tokenProperties) => {
   const tokenKey = `refreshToken:${userId}:${uuid}`;
   const tokenValue = JSON.stringify({ ...tokenProperties, refreshToken });
-  await redisClient.set(tokenKey, tokenValue, 'EX', 60 * 60 * 24 * 2); // 2 days expiration
+  
+  // Get expiration time from environment variables
+  const refreshTokenExpireTimeout = process.env.REFRESH_TOKEN_EXPIRE_TIMEOUT || 60 * 60 * 24 * 7; // Default to 7 days if not set
+  
+  await redisClient.set(tokenKey, tokenValue, 'EX', refreshTokenExpireTimeout); // Set expiration based on env variable
 };
 
 
