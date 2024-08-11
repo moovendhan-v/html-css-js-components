@@ -5,6 +5,8 @@ import {authanticateJwtToken, protectRoute} from '../../middleware/Auth.js';
 
 
 CreateComponentsRouter.post('/createnewcomponents', authanticateJwtToken, addNewComponents);
+
+
 // CreateComponentsRouter.post('/createnewcomponents', authanticateJwtToken, protectRoute, addNewComponents);
 
 

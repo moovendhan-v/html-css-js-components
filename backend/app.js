@@ -9,10 +9,13 @@ import logger from './utils/logger.js';
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/ErrorHandler.js';
 import requestLogger from './middleware/RequestLogger.js';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 // Initialize Express app
 const app = express();
 const port = 4000;
+app.use(helmet());
 
 // Middleware setup
 app.use(cookieParser());
@@ -35,6 +38,18 @@ app.use(cors({
 
 app.use(express.json());
 app.use(customResponsesMiddleware);
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  handler: (req, res) => {
+    res.badreq({
+        code: 429,
+        message: "Too many requests. Please try again later."
+    });
+}
+});
+app.use('/', limiter);
 
 // Session management
 app.use(
