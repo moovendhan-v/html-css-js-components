@@ -371,6 +371,7 @@ const getParticularComponent = async (req, res) => {
     }
 };
 
+// TODO: Limit the comments with the paginations
 const getComponent = async (req, res) => {
     console.log("Cookies:", req.cookies);
     const { category, title } = req.params;
