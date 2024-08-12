@@ -2,9 +2,17 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { readFileContent } from '../../operations/fileOperations.js';
 import { UserComponents } from '../../models/components.model.js';
+import { ComponentStatus } from '../../models/componentsStatus.model.js';
 import { GitHubUser } from '../../models/user.model.js';
 const baseFolderPath = '../';
 import util from 'util';
+
+const COMPONENT_STATUS = Object.freeze({
+    REVIEW: 'IN_REVIEW',
+    DRAFT: 'IN_DRAFT',
+    REJECTED: 'REJECTED',
+    PUBLISHED: 'PUBLISHED'
+});
 
 const getUserInfoByIdForComments = async (uid) => {
     try {
@@ -133,6 +141,121 @@ async function getLatestFiles(catogries, page, callback) {
     callback(null, catComponentsDetails);
 }
 
+const getLatestComponents = async (req, res) => {
+    const { category, page = 1 } = req.query;
+
+    // Validate and sanitize the category parameter
+    if (typeof category !== 'string' || category.trim() === '') {
+        return res.status(400).json({ error: 'Invalid category parameter' });
+    }
+
+    try {
+        const skip = (page - 1) * 10;
+
+        // Aggregate query to fetch components, user info, and comments with user info
+        const ComponentStatusFiltered = await ComponentStatus.aggregate([
+            {
+                $match: {
+                    categories: category.trim(),
+                    component_status: COMPONENT_STATUS.PUBLISHED
+                }
+            },
+            {
+                $lookup: {
+                    from: 'githubusers',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'adminDetails'
+                }
+            },
+            {
+                $unwind: {
+                    path: '$adminDetails',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    "post_details": {
+                        "html": "$html",
+                        "css": "$css",
+                        "js": "$js",
+                        "type": "components",
+                        "like": {
+                            "isLiked": {
+                                $in: ["$adminDetails._id", "$likes"]
+                            },
+                            "likeCount": { $size: "$likes" }
+                        },
+                        "saved": {
+                            "isSaved": {
+                                $in: ["$adminDetails._id", "$saves"]
+                            },
+                            "savedCount": { $size: "$saves" }
+                        },
+                        "comments": {
+                            "count": { $size: "$comments" },
+                            "commentsList": "$comments"
+                        },
+                        "tags": "$tags",
+                        "folder_path": "$folder_path",
+                        "folder_name": "$folder_name",
+                        "categories": "$categories",
+                        "isActive": "$is_active",
+                        "title": "$title",
+                        "description": "$description",
+                        "compId": "$_id",
+                        "admin": "$adminDetails"
+                    }
+                }
+            },
+            { $skip: skip },
+            { $limit: 12 }
+        ]);
+
+        console.log('ComponentStatusFiltered:', ComponentStatusFiltered);
+
+        if (!ComponentStatusFiltered || ComponentStatusFiltered.length === 0) {
+            return res.status(404).json({ error: 'No components found.' });
+        }
+
+        // Map comments to include user information
+        const componentDetails = await Promise.all(ComponentStatusFiltered.map(async (data) => {
+            // Ensure commentsList is an array
+            const commentsList = data?.post_details?.comments?.commentsList || [];
+
+            const commentsListWithUserInfo = await Promise.all(commentsList.map(async comment => {
+                const userInfo = await getUserInfoByIdForComments(comment.user);
+                return {
+                    comment: comment?.comment,
+                    user: userInfo?.name,
+                    avatar: userInfo?.avatar_url,
+                    date: comment?.date
+                };
+            }));
+
+            return {
+                post_details: {
+                    ...data.post_details,
+                    comments: {
+                        count: data.comments.count,
+                        commentsList: commentsListWithUserInfo
+                    }
+                }
+            };
+        }));
+
+        // Return the response
+        return res.status(200).json({ response: componentDetails });
+
+    } catch (err) {
+        console.error('Error during aggregation:', err);
+        return res.status(500).json({ error: 'An error occurred while fetching components' });
+    }
+};
+
+
+
 //get all components and search funcitons
 const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery, page: pageNo }, callback) => {
     const allComponentsDetails = [];
@@ -251,11 +374,11 @@ const getParticularComponent = async (req, res) => {
 
 //Get the popular components
 const getpPopularComponents = async (req, res) => {
-    
+
     const isAuthorized = req.user?.isAuthorized || false;
 
     try {
-        const data =  await UserComponents.getpPopularComponents(8)
+        const data = await UserComponents.getpPopularComponents(8)
         console.log('data', data)
 
         if (!data) {
@@ -430,5 +553,6 @@ export {
     saveComponents,
     unSavedComponents,
     addComments,
-    getpPopularComponents
+    getpPopularComponents,
+    getLatestComponents,
 };

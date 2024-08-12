@@ -2,6 +2,13 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
+// comments schema
+const commentSchema = new Schema({
+    comment: String,
+    user: { type: Schema.Types.ObjectId, ref: 'GitHubUser' },
+    date: { type: Date, default: Date.now }
+});
+
 // Component schema
 const componentStatusSchema = new Schema({
     user_id: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -21,6 +28,9 @@ const componentStatusSchema = new Schema({
     }, 
     categories: { type: String, required: true },
     is_active: { type: Boolean, default: false },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'GitHubUser' }],
+    saves: [{ type: Schema.Types.ObjectId, ref: 'GitHubUser' }],
+    comments: [commentSchema],
 });
 
 // Create the index explicitly in the schema, to check unique 

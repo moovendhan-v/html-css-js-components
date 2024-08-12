@@ -19,7 +19,7 @@ app.use(helmet());
 
 // Middleware setup
 app.use(cookieParser());
-app.use(requestLogger); 
+app.use(requestLogger);
 
 const allowedOrigins = ['http://localhost:5173'];
 
@@ -42,12 +42,15 @@ app.use(customResponsesMiddleware);
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100, // limit each IP to 100 requests per windowMs
+  // store: new RedisStore({
+  //   sendCommand: (...args) => redisClient.call(...args),
+  // }),
   handler: (req, res) => {
     res.badreq({
-        code: 429,
-        message: "Too many requests. Please try again later."
+      code: 429,
+      message: "Too many requests. Please try again later."
     });
-}
+  }
 });
 app.use('/', limiter);
 
