@@ -4,6 +4,7 @@ const componentsRouter = Router()
 import {
   getLatestFiles,
   getAllCompDetailsFromDatabases,
+  getComponent,
   getComponentsBySearch,
   getParticularComponent,
   getCategoriesList,
@@ -18,10 +19,9 @@ import {
 
 import { contributeNewComponents } from '../../controller/components/createComponentStatus.controller.js';
 
-import {authanticateJwtToken, protectRoute} from '../../middleware/Auth.js'; 
+import {authanticateJwtToken, authenticatePublicApi, protectRoute} from '../../middleware/Auth.js'; 
 
 import { sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
-import {authenticatePublicApi} from '../../middleware/Auth.js';
 
 // componentsRouter.get('/:test', getComponentsDetails);
 // app.use('/components', componentsRouter);
@@ -62,7 +62,7 @@ componentsRouter.post('/:postId/addcomments', addComments);
 
 componentsRouter.post('/contribute-new-components', authanticateJwtToken, contributeNewComponents);
 
-componentsRouter.get('/:category/:title',getParticularComponent);
+componentsRouter.get('/:category/:title', getComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
 

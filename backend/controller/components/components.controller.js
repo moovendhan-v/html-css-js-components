@@ -101,7 +101,7 @@ async function readFilesInformations(categoriesName, folderName, { data, user },
 
 }
 
-
+//Descript
 // this is asyncronus taks so that we need to handle this in a asyncronus promise way (get a latest files using a ctogries that available in database)
 async function getLatestFiles(catogries, page, callback) {
     const catComponentsDetails = [];
@@ -254,8 +254,6 @@ const getLatestComponents = async (req, res) => {
     }
 };
 
-
-
 //get all components and search funcitons
 const getAllCompDetailsFromDatabases = async ({ categories, search: searchQuery, page: pageNo }, callback) => {
     const allComponentsDetails = [];
@@ -326,6 +324,7 @@ const getComponentsBySearch = ({ query }, res) => {
     });
 }
 
+//Decript
 //Bring a particular components
 const getParticularComponent = async (req, res) => {
     console.log("Cookies:", req.cookies);
@@ -335,7 +334,7 @@ const getParticularComponent = async (req, res) => {
     const isAuthorized = req.user?.isAuthorized || false;
 
     try {
-        const data = await UserComponents.findOne({ folder_name: title, categories: category });
+        const data = await ComponentStatus.findOne({ folder_name: title, categories: category });
 
         if (!data) {
             return res.status(404).json({ success: false, message: 'Component not available' });
@@ -371,6 +370,105 @@ const getParticularComponent = async (req, res) => {
         res.status(500).send({ success: false, message: error.message });
     }
 };
+
+const getComponent = async (req, res) => {
+    console.log("Cookies:", req.cookies);
+    const { category, title } = req.params;
+    const isAuthorized = req.user?.isAuthorized || false;
+    const userId = req.user?.tokenProperties?.userId;
+    console.log('userId:', userId);
+
+    try {
+        // Aggregate query to fetch component, user info, and comments
+        const components = await ComponentStatus.aggregate([
+            {
+                $match: {
+                    categories: category.trim(),
+                    folder_name: title,
+                    component_status: COMPONENT_STATUS.PUBLISHED
+                }
+            },
+            {
+                $lookup: {
+                    from: 'githubusers',
+                    localField: 'user_id',
+                    foreignField: '_id',
+                    as: 'adminDetails'
+                }
+            },
+            {
+                $unwind: {
+                    path: '$adminDetails',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $addFields: {
+                    "post_details": {
+                        "html": "$html",
+                        "css": "$css",
+                        "js": "$js",
+                        "type": "components",
+                        "like": {
+                            "isLiked": {
+                                $in: [userId, "$likes"]
+                            },
+                            "likeCount": { $size: "$likes" }
+                        },
+                        "saved": {
+                            "isSaved": {
+                                $in: [userId, "$saves"]
+                            },
+                            "savedCount": { $size: "$saves" }
+                        },
+                        "comments": {
+                            "count": { $size: "$comments" },
+                            "commentsList": "$comments"
+                        },
+                        "tags": "$tags",
+                        "folder_path": "$folder_path",
+                        "folder_name": "$folder_name",
+                        "categories": "$categories",
+                        "isActive": "$is_active",
+                        "title": "$title",
+                        "description": "$description",
+                        "compId": "$_id",
+                        "admin": "$adminDetails",
+                        "isAdmin": {
+                            $cond: { if: { $eq: [userId, "$adminDetails._id"] }, then: true, else: false }
+                        },
+                        isAuthorized: isAuthorized
+                    }
+                }
+            },
+        ]);
+
+        if (!components || components.length === 0) {
+            return res.status(404).json({ error: 'No components found.' });
+        }
+
+        const component = components[0];
+
+        // Map comments to include user information without using Promise.all
+        if (component?.post_details?.comments?.commentsList) {
+            for (const comment of component.post_details.comments.commentsList) {
+                const userInfo = await getUserInfoByIdForComments(comment.user);
+                comment.user = userInfo?.name;
+                comment.avatar = userInfo?.avatar_url;
+                comment.date = comment?.date;
+            }
+        }
+
+        // Return the response
+        return res.status(200).json({ success: true, response: component.post_details });
+
+    } catch (err) {
+        console.error('Error during aggregation:', err);
+        return res.status(500).json({ error: 'An error occurred while fetching components' });
+    }
+};
+
+
 
 //Get the popular components
 const getpPopularComponents = async (req, res) => {
@@ -497,7 +595,7 @@ const addComments = async ({ params, body }, res) => {
         const postId = params.postId;
         const userId = body.userId;
         const commentBody = body.comment;
-        const post = await UserComponents.findById(postId);
+        const post = await ComponentStatus.findById(postId);
         post.comments.push({ comment: commentBody, user: userId });
         await post.save();
         return res.success({ message: 'Comment added successfully', response: post });
@@ -555,4 +653,5 @@ export {
     addComments,
     getpPopularComponents,
     getLatestComponents,
+    getComponent
 };

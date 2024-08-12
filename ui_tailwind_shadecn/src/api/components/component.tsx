@@ -21,7 +21,8 @@ export const fetchComponentStore = async (categorie: string , title: string) => 
         }
 
         const responseData = response.data;
-        const postDetails = responseData.response.post_details;
+        const postDetails = responseData.response;
+        console.log('postDetails', postDetails)
 
         useViewComponentStore.setState({ viewComponents: postDetails });
 
