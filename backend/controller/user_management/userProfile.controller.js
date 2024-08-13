@@ -121,6 +121,7 @@ const getprofileinfoprotect = async (req, res) => {
         }
 
         // Fetch user components and include their details
+        // TODO: Optimise this pipeline to get only required one
         const userComponents = await ComponentStatus.aggregate([
             { $match: { user_id: existingUser._id } },
             {
@@ -135,24 +136,18 @@ const getprofileinfoprotect = async (req, res) => {
                 $unwind: '$component_details'
             },
             {
+                $group: {
+                    _id: '$component_details._id',  // Group by unique identifier
+                    component_details: { $first: '$component_details' }  // Take the first occurrence
+                }
+            },
+            {
                 $addFields: {
                     'component_details.post_details': {
                         html: '$component_details.html',
                         css: '$component_details.css',
                         js: '$component_details.js',
                         type: 'components',
-                        like: {
-                            isLiked: { $in: [existingUser._id, '$component_details.likes'] },
-                            likeCount: { $size: '$component_details.likes' }
-                        },
-                        saved: {
-                            isSaved: { $in: [existingUser._id, '$component_details.saves'] },
-                            savedCount: { $size: '$component_details.saves' }
-                        },
-                        comments: {
-                            count: { $size: '$component_details.comments' },
-                            commentsList: '$component_details.comments'
-                        },
                         tags: '$component_details.tags',
                         folder_path: '$component_details.folder_path',
                         folder_name: '$component_details.folder_name',
@@ -178,6 +173,9 @@ const getprofileinfoprotect = async (req, res) => {
                         }
                     }
                 }
+            },
+            {
+                $unset: 'component_details.comments'  // Explicitly remove the comments field
             },
             {
                 $project: {

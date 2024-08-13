@@ -376,7 +376,7 @@ const getComponent = async (req, res) => {
     console.log("Cookies:", req.cookies);
     const { category, title } = req.params;
     const isAuthorized = req.user?.isAuthorized || false;
-    const userId = req.user?.tokenProperties?.userId;
+    const userId = req.user?.userId;
     console.log('userId:', userId);
 
     try {
@@ -468,7 +468,6 @@ const getComponent = async (req, res) => {
         return res.status(500).json({ error: 'An error occurred while fetching components' });
     }
 };
-
 
 
 //Get the popular components
@@ -605,7 +604,6 @@ const addComments = async ({ params, body }, res) => {
     }
 }
 
-
 const isDirectoryCheck = async (filePath) => {
     try {
         const stats = await fs.stat(filePath);
@@ -639,6 +637,68 @@ const getCategoriesList = async (req, res) => {
     }
 };
 
+
+const getComponentsByStatus = async (req, res) => {
+    const { status } = req.query;
+    const isAuthorized = req.user?.isAuthorized || false;
+    let userId = req.user?.userId;
+
+    console.log('userId:', userId);
+    console.log('isAuthorized:', isAuthorized);
+
+
+    try {
+        // Aggregate query to fetch components with their details
+        const components = await ComponentStatus.aggregate([
+            {
+                $match: {
+                    component_status: status.trim(),
+                    user_id: userId
+                }
+            },
+            {
+                $addFields: {
+                    "post_details": {
+                        "html": "$html",
+                        "css": "$css",
+                        "js": "$js",
+                        "type": "components",
+                        "tags": "$tags",
+                        "folder_path": "$folder_path",  // Ensure this field exists
+                        "folder_name": "$folder_name",
+                        "categories": "$categories",
+                        "isActive": "$is_active",
+                        "title": "$title",
+                        "description": "$description",
+                        "compId": "$_id"
+                    }
+                }
+            },
+            {
+                $project: {
+                    post_details: 1 // Project only post_details field
+                }
+            }
+        ]);
+
+        if (!components || components.length === 0) {
+            return res.status(404).json({ error: 'No components found.' });
+        }
+
+        // Extract and loop through post_details
+        const postDetailsArray = components.map(component => component.post_details);
+
+        // Return the response with only post details
+        return res.status(200).json({ success: true, response: postDetailsArray });
+
+    } catch (err) {
+        console.error('Error during aggregation:', err);
+        return res.status(500).json({ error: 'An error occurred while fetching components' });
+    }
+};
+
+
+
 export {
     getCategoriesList,
     getLatestFiles,
@@ -654,5 +714,6 @@ export {
     addComments,
     getpPopularComponents,
     getLatestComponents,
-    getComponent
+    getComponent,
+    getComponentsByStatus
 };

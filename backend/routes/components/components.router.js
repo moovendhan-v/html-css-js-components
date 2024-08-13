@@ -14,7 +14,8 @@ import {
   unSavedComponents,
   addComments,
   getpPopularComponents,
-  getLatestComponents
+  getLatestComponents,
+  getComponentsByStatus
 } from '../../controller/components/components.controller.js';
 
 import { contributeNewComponents } from '../../controller/components/createComponentStatus.controller.js';
@@ -65,6 +66,8 @@ componentsRouter.post('/contribute-new-components', authanticateJwtToken, contri
 componentsRouter.get('/:category/:title', getComponent);
 
 componentsRouter.get('/searchcomponents', getComponentsBySearch);
+
+componentsRouter.get('/get-components-by-status', authanticateJwtToken, getComponentsByStatus);
 
 componentsRouter.get('/get-cateogries', getCategoriesList);
 
