@@ -29,7 +29,6 @@ import {
 export const NavProfile = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const userInfo = useLoginStore.getState();
-  console.log(JSON.stringify(userInfo));
 
   const handleLogoutClick = async () => {
     await HandleLogout();

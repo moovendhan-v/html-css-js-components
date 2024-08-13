@@ -15,7 +15,7 @@ import rateLimit from 'express-rate-limit';
 // Initialize Express app
 const app = express();
 const port = 4000;
-app.use(helmet());
+// app.use(helmet());
 
 // Middleware setup
 app.use(cookieParser());

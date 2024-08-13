@@ -42,6 +42,8 @@ import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
 import { useLoginStore } from "@/store/Auth"
 import {ProfileForm} from '@/components/custom_ui/forms/ComponentsSubmitFrom';
 import { useCategories } from '@/hooks/useCategories';
+import { postComponent } from "@/api/components/CreateComponents"
+
 // import { SelectValue } from "@/components/ui/select"
 
 export function CreateComponents() {
@@ -95,6 +97,10 @@ export function CreateComponents() {
     };
   }, []);
 
+  const handlComponentsSubmit = () => {
+    // console.log(viewCreateCompoentsStore.getState());
+    // console.log(setCreateComponentField);
+  }
 
   return (
     <>
@@ -177,6 +183,7 @@ export function CreateComponents() {
                             <AlertDialog>
                               <AlertDialogTrigger asChild>
                                 <HoverBorderGradient
+                                  onClick={handlComponentsSubmit}
                                   containerClassName="rounded-full"
                                   as="button"
                                   className="dark:bg-black bg-white text-black dark:text-white flex items-center space-x-2"
@@ -195,7 +202,7 @@ export function CreateComponents() {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                  <AlertDialogAction>Contribute My Component</AlertDialogAction>
+                                  <AlertDialogAction onClick={postComponent}>Contribute My Component</AlertDialogAction>
                                 </AlertDialogFooter>
                               </AlertDialogContent>
 

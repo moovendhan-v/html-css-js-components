@@ -4,6 +4,7 @@ import { createFiles } from '../../operations/fileOperations.js';
 // this base path must be referenced from app.js files
 const basePath = '../project/project_datas/';
 
+//Descripted
 const addNewComponents = async (req, res) => {
     const { body, user } = req;
     console.log('user', user);

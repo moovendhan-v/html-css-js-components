@@ -135,7 +135,7 @@ const signup_or_login_with_git = async ({ query }, res) => {
 const logout = async (req, res, next) => {
   let code = 500;
 
-  
+  let errDetails = {};
   let decodedRefreshToken;
 
   try {
