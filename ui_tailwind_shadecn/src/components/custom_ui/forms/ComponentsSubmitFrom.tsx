@@ -108,14 +108,14 @@ export function ProfileForm() {
   const categories = useCategories();
 
   const initialValues: FormValues = {
-    title: "",
-    description: "",
+    title: viewCreateComponentsStore.title,
+    description: viewCreateComponentsStore.description,
     html: viewCreateComponentsStore.html,
     css: viewCreateComponentsStore.css,
     javascript: viewCreateComponentsStore.javascript,
-    categories: "",
-    tags: [],
-    folder_name: "",
+    categories: viewCreateComponentsStore.categories,
+    tags: viewCreateComponentsStore.tags,
+    folder_name: viewCreateComponentsStore.folder_name,
   };
 
   const onSubmit = (values: FormValues) => {

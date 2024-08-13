@@ -1,6 +1,7 @@
 import { useCreateComponentsStore } from '@/store/createComponents/create.components';
 import api from '@/api'; // Import your axios instance
 // import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { toast } from "sonner"
 
 export interface ComponentData {
     title: string;
@@ -54,10 +55,36 @@ export const postComponent = async (): Promise<void> => {
             }
         });
 
+        // toast.success
+        toast.success("Components created successfully", {
+            description: "Sunday, December 03, 2023 at 9:00 AM",
+            position: 'bottom-right',
+            classNames: {
+                error: "bg-theme"
+            },
+            action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+            },
+
+        })
+
         // Redirect to profile page
         // navigate('/profile'); // Replace '/profile' with the actual path of your profile page
 
     } catch (error) {
         console.error('Error contributing new component:', error);
+        toast.error("Unable to create components", {
+            description: `Error: ${error}`,
+            position: 'bottom-right',
+            classNames: {
+                error: "bg-theme"
+            },
+            action: {
+                label: "Undo",
+                onClick: () => console.log("Undo"),
+            },
+
+        })
     }
 };

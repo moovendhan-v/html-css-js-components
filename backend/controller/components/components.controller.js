@@ -372,7 +372,9 @@ const getParticularComponent = async (req, res) => {
 };
 
 // TODO: Limit the comments with the paginations
+// TODO: Add validations in folder name to get proper reponse
 const getComponent = async (req, res) => {
+
     console.log("Cookies:", req.cookies);
     const { category, title } = req.params;
     const isAuthorized = req.user?.isAuthorized || false;
