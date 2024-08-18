@@ -1,3 +1,7 @@
+import { getEnvVariable } from '@/utils/load.utils';
+const GITHUB_URI = getEnvVariable('GITHUB');
+import { Link } from 'react-router-dom';
+
 const Content = ()=>{
     return(
         <>
@@ -12,10 +16,10 @@ const Content = ()=>{
       </p>
       <div className="flex md:mt-4 mt-6">
         <button className="inline-flex text-white bg-primary border-0 py-1 px-4 focus:outline-none hover:bg-secondary rounded">
-          Contribute
+        <Link target='_blanck' to={`${GITHUB_URI}`}>Star On Github</Link> 
         </button>
         <a className="text-primary inline-flex items-center ml-4">
-          Star On Github
+        <Link target='_blanck' to={`${GITHUB_URI}`}>Star On Github</Link>  
           <svg
             fill="none"
             stroke="currentColor"

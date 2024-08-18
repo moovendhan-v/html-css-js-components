@@ -1,4 +1,12 @@
 
+import { getEnvVariable } from '@/utils/load.utils';
+const YOUTUBER_URI = getEnvVariable('YOUTUBE');
+const DISCORD_URI = getEnvVariable('DISCORD');
+const INSTAGRAM_URI = getEnvVariable('INSTAGRAM');
+const TELEGRAM_URI = getEnvVariable('TELEGRAM');
+const LINKEDIN_URI = getEnvVariable('LINKEDIN');
+
+import { Link } from 'react-router-dom';
 
 const Community = ()=>{
     return(
@@ -48,19 +56,19 @@ const Community = ()=>{
       <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
           <a  href="#">
-            Discord <span aria-hidden="true">→</span>
+          <Link target='_blanck' to={`${DISCORD_URI}`}>Discord</Link> <span aria-hidden="true">→</span>
           </a>
           <a  href="#">
-            Telegram <span aria-hidden="true">→</span>
+          <Link target='_blanck' to={`${TELEGRAM_URI}`}>Telegram</Link>   <span aria-hidden="true">→</span>
           </a>
           <a  href="#">
-            Linkedin <span aria-hidden="true">→</span>
+          <Link target='_blanck' to={`${LINKEDIN_URI}`}>Linkedin</Link>    <span aria-hidden="true">→</span>
           </a>
           <a  href="#">
-            Youtube <span aria-hidden="true">→</span>
+          <Link target='_blanck' to={`${YOUTUBER_URI}`}>Youtube</Link>   <span aria-hidden="true">→</span>
           </a>
           <a  href="#">
-            Instagram <span aria-hidden="true">→</span>
+          <Link target='_blanck' to={`${INSTAGRAM_URI}`}>Instagram</Link>   <span aria-hidden="true">→</span>
           </a>
         </div>
         <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">

@@ -22,10 +22,7 @@ import AboutUs from '@/screens/AboutUs';
 import { useCategories } from '@/hooks/useCategories';
 import { userPopularComponents } from '@/store/components/popular.components';
 import { RenderComponents } from '@/components/custom_ui/components/RenderComponents';
-
-
-// import { useLoginStore } from "@/store/Auth";
-// const userInfo = useLoginStore.getState()
+import { Link } from 'react-router-dom';
 
 
 export function Dashboard() {
@@ -141,19 +138,9 @@ export function Dashboard() {
                         <PopularComponentsView />
                 </div>
 
-                    {/* <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div> */}
-
                 <div className="flex justify-center mt-10 hover:animate-pulse">
                     <Button >
-                        <LogoPlain /> Explore All Components
+                        <LogoPlain /> <Link to={`/all`}>Explore All Components</Link> 
                     </Button>
                 </div>
 
@@ -178,7 +165,7 @@ export function Dashboard() {
 
 
                 {/* <HeroParallax products={Products} /> */}
-                <AboutUs />
+                <AboutUs isHomePage='true' />
                 <Teams />
                 <BlogCard />
                 <Content />

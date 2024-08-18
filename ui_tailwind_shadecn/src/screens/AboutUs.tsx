@@ -1,11 +1,14 @@
 import MainNav from "@/components/custom_ui/NavBar/MainNav"
-import ScroolCardReveal from "@/components/custom_ui/ScroolCardReveal"
-import { TestimonialGrid } from "@/components/custom_ui/grid/TestimonialGrid"
+import { TestimonialGrid } from "@/components/custom_ui/grid/TestimonialGrid";
 
+interface AboutUsProps {
+  isHomePage: string; // Adjust the type according to your data structure
+}
 
-const AboutUs = () => {
+const AboutUs: React.FC<AboutUsProps> = ({ isHomePage }) => {
   return (
     <>
+      {isHomePage ? <></> : < MainNav />}
       {/* < MainNav /> */}
       <div className="relative isolate overflow-hidden bg-gray-900">
         <div
