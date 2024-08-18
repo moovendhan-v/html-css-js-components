@@ -58,7 +58,7 @@ const OutputsOfComponents: React.FC<OutputOfComponentsProps> = ({ componentsDeta
       <a className=" items-center">
         <span className="flex justify-between flex-row pt-1">
           <span className="title-font font-medium">{componentsDetails?.title}</span>
-          <span className="title-font font-thin text-gray-200">{componentsDetails?.admin.name}</span>
+          <span className="title-font font-thin text-gray-200">{componentsDetails?.admin?.name}</span>
         </span>
       </a>
     </>

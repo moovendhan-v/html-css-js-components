@@ -1,4 +1,4 @@
-import { useCreateComponentsStore } from '@/store/createComponents/create.components';
+import { useCreateComponentsStore } from '@/store/components/create.components';
 import api from '@/api'; // Import your axios instance
 // import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { toast } from "sonner"

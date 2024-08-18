@@ -639,9 +639,21 @@ const getCategoriesList = async (req, res) => {
     }
 };
 
+// interface ViewComponent {
+//     html: string;
+//     css: string;
+//     javascript: string;
+//     categories: string[];
+//     folder_path: string;
+//     folder_name: string;
+//     isActive: boolean;
+//     type: string;
+//     title: string;
+//   }
 
 const getComponentsByStatus = async (req, res) => {
     const { status } = req.query;
+    console.log('status', status)
     const isAuthorized = req.user?.isAuthorized || false;
     let userId = req.user?.userId;
 
@@ -654,8 +666,8 @@ const getComponentsByStatus = async (req, res) => {
         const components = await ComponentStatus.aggregate([
             {
                 $match: {
-                    component_status: status.trim(),
-                    user_id: userId
+                    component_status: { $regex: new RegExp(`^${status.trim()}$`, 'i') }, // Case-insensitive match
+                    // user_id: userId
                 }
             },
             {
@@ -671,8 +683,8 @@ const getComponentsByStatus = async (req, res) => {
                         "categories": "$categories",
                         "isActive": "$is_active",
                         "title": "$title",
-                        "description": "$description",
-                        "compId": "$_id"
+                        "description": "$description"
+                        // "compId": "$_id"
                     }
                 }
             },
@@ -683,12 +695,14 @@ const getComponentsByStatus = async (req, res) => {
             }
         ]);
 
+        console.log('components', components)
+
         if (!components || components.length === 0) {
             return res.status(404).json({ error: 'No components found.' });
         }
 
         // Extract and loop through post_details
-        const postDetailsArray = components.map(component => component.post_details);
+        const postDetailsArray = components.map(component => component);
 
         // Return the response with only post details
         return res.status(200).json({ success: true, response: postDetailsArray });

@@ -16,7 +16,6 @@ import {
     Card,
     CardContent,
     CardDescription,
-    CardFooter,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
@@ -47,9 +46,58 @@ import { MainAuth } from "@/screens/Auth/MainAuth";
 import { useLoginStore } from "@/store/Auth"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 import { ComponentType } from "@/enums/iframEnums"
-
+import { useCreateComponentsStore } from '@/store/components/view.components';
 
 export function Profile() {
+
+    interface ComponentsViewProps {
+        status: string;
+    }
+
+    function ComponentsView({ status }: ComponentsViewProps) {
+        const {
+            componentsPending,
+            componentsInReview,
+            componentsRejected,
+            componentsDraft,
+            myComponents,
+            fetchComponentsByStatusIfNeeded,
+        } = useCreateComponentsStore();
+
+        useEffect(() => {
+            fetchComponentsByStatusIfNeeded(status);
+        }, [status, fetchComponentsByStatusIfNeeded]);
+
+        let components = [];
+
+        switch (status) {
+            case 'my_components':
+                components = myComponents;
+                break;
+            case 'pending':
+                components = componentsPending;
+                break;
+            case 'in_review':
+                components = componentsInReview;
+                break;
+            case 'rejected':
+                components = componentsRejected;
+                break;
+            case 'draft':
+                components = componentsDraft;
+                break;
+            default:
+                components = myComponents;
+                break;
+        }
+
+        return (
+            <>
+                <RenderComponents components={components} type={ComponentType.COMPONENTS} />
+            </>
+        );
+    }
+
 
     type componentsParamType = {
         catogries?: string;
@@ -58,7 +106,7 @@ export function Profile() {
     const userInfo = useLoginStore.getState();
     const { catogries } = useParams<componentsParamType>();
     const categries = useCategories();
-    
+
     useEffect(() => {
         useFetchComponentStore(catogries ?? '');
     }, [catogries, userInfo])
@@ -170,13 +218,13 @@ export function Profile() {
                                     </form>
                                 </div>
                                 <div className="mr-3">
-                                <Link to={"/create"}>
-                                <Button>
-                                        <Layers className="mr-2 h-4 w-4" /> Create New One
-                                    </Button>
-                                 </Link>
+                                    <Link to={"/create"}>
+                                        <Button>
+                                            <Layers className="mr-2 h-4 w-4" /> Create New One
+                                        </Button>
+                                    </Link>
 
-                                    
+
                                 </div>
                                 <NavProfile />
                             </header>
@@ -262,24 +310,21 @@ export function Profile() {
                                                 <TabsTrigger value="liked">Liked</TabsTrigger>
                                                 <TabsTrigger value="saved">Saved</TabsTrigger>
                                             </TabsList>
+
                                             <TabsContent value="components">
                                                 <Card>
                                                     <CardHeader>
                                                         <CardTitle>All Components</CardTitle>
-                                                        <CardDescription>
-                                                            List of all components that posted
-                                                        </CardDescription>
+                                                        <CardDescription>List of all components that were posted</CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
                                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                                            <RenderComponents components={userInfo?.components} type={ComponentType.COMPONENTS} />
+                                                            <ComponentsView status="my_components" />
                                                         </div>
                                                     </CardContent>
-                                                    {/* <CardFooter>
-                                                        <Button>Save changes</Button>
-                                                    </CardFooter> */}
                                                 </Card>
                                             </TabsContent>
+
                                             <TabsContent value="review">
                                                 <Card>
                                                     <CardHeader>
@@ -289,11 +334,10 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <ComponentsView status="in_review" />
+                                                        </div>
                                                     </CardContent>
-                                                    <CardFooter>
-                                                        {/* <Button>Save password</Button> */}
-                                                    </CardFooter>
                                                 </Card>
                                             </TabsContent>
                                             <TabsContent value="draft">
@@ -305,11 +349,10 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <ComponentsView status="draft" />
+                                                        </div>
                                                     </CardContent>
-                                                    <CardFooter>
-                                                        {/* <Button>Save password</Button> */}
-                                                    </CardFooter>
                                                 </Card>
                                             </TabsContent>
                                             <TabsContent value="rejected">
@@ -321,11 +364,10 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <ComponentsView status="rejected" />
+                                                        </div>
                                                     </CardContent>
-                                                    <CardFooter>
-                                                        {/* <Button>Save password</Button> */}
-                                                    </CardFooter>
                                                 </Card>
                                             </TabsContent>
                                             <TabsContent value="liked">
@@ -337,11 +379,10 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <ComponentsView status="my_components" />
+                                                        </div>
                                                     </CardContent>
-                                                    <CardFooter>
-                                                        {/* <Button>Save password</Button> */}
-                                                    </CardFooter>
                                                 </Card>
                                             </TabsContent>
                                             <TabsContent value="Saved">
@@ -353,11 +394,10 @@ export function Profile() {
                                                         </CardDescription>
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
-
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            <ComponentsView status="my_components" />
+                                                        </div>
                                                     </CardContent>
-                                                    <CardFooter>
-                                                        {/* <Button>Save password</Button> */}
-                                                    </CardFooter>
                                                 </Card>
                                             </TabsContent>
                                         </Tabs>

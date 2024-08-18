@@ -1,6 +1,6 @@
 import React from 'react';
 import { FieldProps } from 'formik';
-import { useCreateComponentsStore } from '@/store/createComponents/create.components'; // Adjust import path as needed
+import { useCreateComponentsStore } from '@/store/components/create.components'; // Adjust import path as needed
 
 interface Option {
   value: string;

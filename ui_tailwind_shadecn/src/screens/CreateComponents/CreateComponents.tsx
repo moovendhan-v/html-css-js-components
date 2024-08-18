@@ -35,7 +35,7 @@ import { ViewSkeleton } from "@/components/custom_ui/skeleton/ViewSkeleton";
 import { MovingButton } from "@/components/ui/moving-border";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import { CommandDialogDemo } from "@/components/ui/commandMenu";
-import { useCreateComponentsStore } from "@/store/createComponents/create.components";
+import { useCreateComponentsStore } from "@/store/components/create.components";
 import Footer from "@/components/custom_ui/Footer"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"

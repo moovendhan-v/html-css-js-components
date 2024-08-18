@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage, FieldProps } from 'formik';
 import * as Yup from 'yup';
 import { Input } from "@/components/ui/input";
 import { Textarea } from '@/components/ui/textarea';
 import { AlertDialog, AlertDialogCancel, AlertDialogContent, AlertDialogFooter, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
-import { useCreateComponentsStore } from '@/store/createComponents/create.components';
+import { useCreateComponentsStore } from '@/store/components/create.components';
 import { useCategories } from '@/hooks/useCategories';
 
 import {
@@ -103,6 +103,8 @@ const MultiSelectField = ({ field, form, options }: FieldProps & { options: { va
 };
 
 export function ProfileForm() {
+  const [isOpen, setIsOpen] = useState(true); 
+  
   const viewCreateComponentsStore = useCreateComponentsStore((state) => state.createComponents);
   const setCreateComponentField = useCreateComponentsStore((state) => state.setCreateComponentField);
   const categories = useCategories();
@@ -125,7 +127,7 @@ export function ProfileForm() {
   };
 
   return (
-    <AlertDialog>
+<AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogTrigger asChild>
         <HoverBorderGradient
           containerClassName="rounded-full"
