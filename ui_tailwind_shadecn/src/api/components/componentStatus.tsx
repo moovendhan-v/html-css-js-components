@@ -25,7 +25,7 @@ const statusToStateKey: Record<string, keyof CreateComponentsStore> = {
     in_review: 'componentsInReview',
     draft: 'componentsDraft',
     rejected: 'componentsRejected',
-    my_components: 'myComponents',
+    published: 'myComponents',
 };
 
 export const fetchComponentsBySearch = async (status: string | null) => {

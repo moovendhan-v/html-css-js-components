@@ -3,7 +3,7 @@ import AppError from '../../utils/AppError.js';
 
 const COMPONENT_STATUS = Object.freeze({
     REVIEW: 'IN_REVIEW',
-    DRAFT: 'IN_DRAFT',
+    DRAFT: 'DRAFT',
     REJECTED: 'REJECTED',
     PUBLISHED: 'PUBLISHED'
 });

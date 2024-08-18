@@ -11,7 +11,7 @@ interface CreateComponentsStore {
   fetchComponentsByStatusIfNeeded: (status: string) => Promise<void>;
 }
 
-export const useCreateComponentsStore = create<CreateComponentsStore>((set, get) => ({
+export const useCreateComponentsStore = create<CreateComponentsStore>((set) => ({
   componentsPending: [],
   myComponents: [],
   componentsInReview: [],
@@ -25,7 +25,7 @@ export const useCreateComponentsStore = create<CreateComponentsStore>((set, get)
       if (response) {
         set((state) => {
           switch (status) {
-            case 'my_components':
+            case 'published':
                 return { componentsPending: response };
             case 'pending':
               return { componentsPending: response };

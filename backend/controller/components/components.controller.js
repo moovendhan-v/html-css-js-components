@@ -6,6 +6,7 @@ import { ComponentStatus } from '../../models/componentsStatus.model.js';
 import { GitHubUser } from '../../models/user.model.js';
 const baseFolderPath = '../';
 import util from 'util';
+import mongoose from 'mongoose';
 
 const COMPONENT_STATUS = Object.freeze({
     REVIEW: 'IN_REVIEW',
@@ -639,18 +640,6 @@ const getCategoriesList = async (req, res) => {
     }
 };
 
-// interface ViewComponent {
-//     html: string;
-//     css: string;
-//     javascript: string;
-//     categories: string[];
-//     folder_path: string;
-//     folder_name: string;
-//     isActive: boolean;
-//     type: string;
-//     title: string;
-//   }
-
 const getComponentsByStatus = async (req, res) => {
     const { status } = req.query;
     console.log('status', status)
@@ -658,8 +647,12 @@ const getComponentsByStatus = async (req, res) => {
     let userId = req.user?.userId;
 
     console.log('userId:', userId);
-    console.log('isAuthorized:', isAuthorized);
-
+    console.log('isAuthorized:', isAuthorized)
+        ;
+    // Convert userId to ObjectId
+    let userObjectId;
+    userObjectId = new mongoose.Types.ObjectId(userId);
+    console.log(userObjectId)
 
     try {
         // Aggregate query to fetch components with their details
@@ -667,7 +660,7 @@ const getComponentsByStatus = async (req, res) => {
             {
                 $match: {
                     component_status: { $regex: new RegExp(`^${status.trim()}$`, 'i') }, // Case-insensitive match
-                    // user_id: userId
+                    user_id: userObjectId
                 }
             },
             {
@@ -678,13 +671,13 @@ const getComponentsByStatus = async (req, res) => {
                         "js": "$js",
                         "type": "components",
                         "tags": "$tags",
-                        "folder_path": "$folder_path",  // Ensure this field exists
+                        "folder_path": "$folder_path", 
                         "folder_name": "$folder_name",
                         "categories": "$categories",
                         "isActive": "$is_active",
                         "title": "$title",
-                        "description": "$description"
-                        // "compId": "$_id"
+                        "description": "$description",
+                        "compId": "$_id"
                     }
                 }
             },

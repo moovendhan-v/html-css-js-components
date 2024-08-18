@@ -12,6 +12,7 @@ import {
 } from '@/components/custom_ui/Svg'
 
 import { Button } from "@/components/ui/button"
+
 import {
     Card,
     CardContent,
@@ -19,7 +20,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-// import { Label } from "@/components/ui/label"
+
 import {
     Tabs,
     TabsContent,
@@ -29,19 +30,13 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Link } from "react-router-dom"
-import { Logo, LogoPlain } from "@/components/custom_ui/Svg"
+import { Logo } from "@/components/custom_ui/Svg"
 import { useEffect } from "react"
 import { useCategories } from '@/hooks/useCategories';
-import { useFetchComponentStore } from "@/api/components/components"
 import { NavSkeleton } from "@/components/custom_ui/skeleton/NavSkeleton"
 import { useParams } from 'react-router-dom';
 import { NavProfile } from "@/components/custom_ui/NavBar/NavProfile"
-// import { ParallaxScroll } from "@/components/ui/parallax-scrool";
-// import { useLoginStore, useLoginUserInfo } from "@/store/Auth"
 import { MainAuth } from "@/screens/Auth/MainAuth";
-// import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
-// import { ComponentType } from "@/enums/iframEnums"
-// import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 
 import { useLoginStore } from "@/store/Auth"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
@@ -71,7 +66,7 @@ export function Profile() {
         let components = [];
 
         switch (status) {
-            case 'my_components':
+            case 'published':
                 components = myComponents;
                 break;
             case 'pending':
@@ -98,18 +93,14 @@ export function Profile() {
         );
     }
 
-
     type componentsParamType = {
         catogries?: string;
     };
 
     const userInfo = useLoginStore.getState();
     const { catogries } = useParams<componentsParamType>();
-    const categries = useCategories();
 
-    useEffect(() => {
-        useFetchComponentStore(catogries ?? '');
-    }, [catogries, userInfo])
+    const categries = useCategories();
 
     return (
         <>
@@ -273,12 +264,6 @@ export function Profile() {
                                                     {userInfo.user?.bio}
                                                 </blockquote>
                                                 <div className="flex">
-                                                    {/* <div className="px-2">
-                                                        <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
-                                                            {userInfo.user?.company}
-                                                        </code>
-                                                        </Link>
-                                                    </div> */}
                                                     <div className="px-2">
                                                         <Link to={userInfo.user?.html_url || ""}><code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
                                                             {userInfo.user?.location || ""}
@@ -303,7 +288,9 @@ export function Profile() {
 
                                         <Tabs defaultValue="components" className="w-[100%]">
                                             <TabsList className="grid w-full grid-cols-6">
-                                                <TabsTrigger value="components"><LogoPlain width={15} height={15} /> My Components</TabsTrigger>
+                                                <TabsTrigger value="components">
+                                                    {/* <LogoPlain width={15} height={15} /> */}
+                                                    My Components</TabsTrigger>
                                                 <TabsTrigger value="review">In Review</TabsTrigger>
                                                 <TabsTrigger value="draft">In Draft</TabsTrigger>
                                                 <TabsTrigger value="rejected">Rejected</TabsTrigger>
@@ -319,7 +306,7 @@ export function Profile() {
                                                     </CardHeader>
                                                     <CardContent className="space-y-2">
                                                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                                            <ComponentsView status="my_components" />
+                                                            <ComponentsView status="published" />
                                                         </div>
                                                     </CardContent>
                                                 </Card>
@@ -401,27 +388,8 @@ export function Profile() {
                                                 </Card>
                                             </TabsContent>
                                         </Tabs>
-
-                                        {/* <div className="flex py-3">
-                                            <Button className="bg-transperent hover:text-white">
-                                                Rejected
-                                            </Button>
-                                            <Button className="bg-transperent hover:text-white">
-                                                In Draft
-                                            </Button>
-                                            <Button className="bg-transperent hover:text-white">
-                                                Liked
-                                            </Button>
-                                            <Button className="bg-transperent hover:text-white">
-                                                Saved
-                                            </Button>
-                                        </div> */}
-
                                     </div>
                                 </section>
-
-                                {/* <ParallaxScroll images={images} /> */}
-
                             </main>
                         </div>
 
