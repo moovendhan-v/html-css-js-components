@@ -47,6 +47,108 @@ class ComponentStatusClass {
         return this.findOne({ title });
     }
 
+    static async getpPopularComponents(limit = 9) {
+        return this.aggregate([
+            // { $match: { isActive: true } }, // Match active components
+            {
+                $project: {
+                    _id: 1,
+                    title: 1,
+                    html: 1,
+                    css:1,
+                    type: 1,
+                    tags: 1,
+                    folder_path:1,
+                    folder_name:1,
+                    categories:1,
+                    isActive:1,
+                    description:1,
+                    likesCount: { $size: "$likes" },
+                    commentsCount: { $size: "$comments" },
+                    savesCount: { $size: "$saves" },
+                    viewsCount: { $toInt: "$views" }, // Assuming views are stored as integers
+                    updated_time: 1, // Include updated_time field
+                    upload_time: 1 // Include upload_time field
+                }
+            },
+            {
+                $addFields: {
+                            "post_details": {
+                                "html": "$html",
+                                "css": "$css",
+                                "js": "$js",
+                                "type": "components",
+                                "tags": "$tags",
+                                "folder_path": "$folder_path", 
+                                "folder_name": "$folder_name",
+                                "categories": "$categories",
+                                "isActive": "$is_active",
+                                "title": "$title",
+                                "description": "$description",
+                                "compId": "$_id"
+                            },
+                    // Normalize and weight scores
+                    normalizedLikes: {
+                        $cond: {
+                            if: { $eq: [{ $max: "$likesCount" }, 0] },
+                            then: 0,
+                            else: { $divide: ["$likesCount", { $max: "$likesCount" }] }
+                        }
+                    },
+                    normalizedComments: {
+                        $cond: {
+                            if: { $eq: [{ $max: "$commentsCount" }, 0] },
+                            then: 0,
+                            else: { $divide: ["$commentsCount", { $max: "$commentsCount" }] }
+                        }
+                    },
+                    normalizedSaves: {
+                        $cond: {
+                            if: { $eq: [{ $max: "$savesCount" }, 0] },
+                            then: 0,
+                            else: { $divide: ["$savesCount", { $max: "$savesCount" }] }
+                        }
+                    },
+                    normalizedViews: {
+                        $cond: {
+                            if: { $eq: [{ $max: "$viewsCount" }, 0] },
+                            then: 0,
+                            else: { $divide: ["$viewsCount", { $max: "$viewsCount" }] }
+                        }
+                    },
+                    // Apply weights
+                    weightedLikes: { $multiply: ["$normalizedLikes", 3] }, // Weight likes more
+                    weightedComments: { $multiply: ["$normalizedComments", 2] }, // Weight comments less than likes
+                    weightedSaves: "$normalizedSaves", // Weight saves equally with views
+                    weightedViews: "$normalizedViews", // Weight views equally with saves
+
+                    // Calculate total score
+                    totalScore: {
+                        $add: ["$weightedLikes", "$weightedComments", "$weightedSaves", "$weightedViews"]
+                    }
+                }
+            },
+            {
+                $addFields: {
+                    // If all engagement metrics are zero, prioritize by latest update_time or upload_time
+                    latestTime: { $max: ["$updated_time", "$upload_time"] }
+                }
+            },
+            {
+                $project: {
+                    post_details: 1 // Project only post_details field
+                }
+            },
+            {
+                $sort: {
+                    totalScore: -1,
+                    latestTime: -1 // Sort by totalScore descending, and latestTime descending
+                }
+            },
+            { $limit: limit } // Limit to 'limit' results
+        ]);
+    };
+
     static async getComponentDetailsByFolderName(folderName) {
         return this.findOne({ folder_name: folderName });
     }

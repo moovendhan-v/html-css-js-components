@@ -479,28 +479,15 @@ const getpPopularComponents = async (req, res) => {
     const isAuthorized = req.user?.isAuthorized || false;
 
     try {
-        const data = await UserComponents.getpPopularComponents(8)
+        const data = await ComponentStatus.getpPopularComponents(9)
         console.log('data', data)
 
         if (!data) {
             return res.status(404).json({ success: false, message: 'Component not available' });
         }
+        console.log(data);
 
-        const response = await readFilesInformations(data.categories, data.folder_name, { data }, (err, result) => {
-            // Set isAdmin based on user_id match and availability of loggedInUser
-            console.log('result', result)
-            result.post_details.isAdmin = false;
-            if (isAuthorized) {
-                const tokenProperties = req.user?.tokenProperties;
-                if (tokenProperties?.userId == user._id) {
-                    result.post_details.isAdmin = true
-                }
-            }
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.status(200).json({ error: true, response: result });
-        });
+        res.status(200).json({ error: true, response: data });
 
     } catch (error) {
         res.status(500).send({ error: false, message: error.message });
@@ -617,6 +604,7 @@ const isDirectoryCheck = async (filePath) => {
     }
 };
 
+//TODO: Get this from the mongod db insted by folders
 const getCategoriesList = async (req, res) => {
     const baseFolderPath = '../';
     const folderPath = path.join(baseFolderPath, 'project', 'project_datas');

@@ -22,6 +22,7 @@ export const useCreateComponentsStore = create<CreateComponentsStore>((set) => (
   fetchComponentsByStatusIfNeeded: async (status: string) => {
     try {
       const response = await fetchComponentsBySearch(status);
+      console.log(response)
       if (response) {
         set((state) => {
           switch (status) {

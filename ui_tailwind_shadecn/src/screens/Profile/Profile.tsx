@@ -42,6 +42,7 @@ import { useLoginStore } from "@/store/Auth"
 import { RenderComponents } from "@/components/custom_ui/components/RenderComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { useCreateComponentsStore } from '@/store/components/view.components';
+import { ComponentData } from "@/types/ComponentData.type"
 
 export function Profile() {
 
@@ -63,7 +64,7 @@ export function Profile() {
             fetchComponentsByStatusIfNeeded(status);
         }, [status, fetchComponentsByStatusIfNeeded]);
 
-        let components = [];
+        let components: ComponentData[] | null = [];
 
         switch (status) {
             case 'published':

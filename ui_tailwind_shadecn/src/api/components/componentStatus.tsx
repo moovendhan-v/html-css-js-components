@@ -50,7 +50,7 @@ export const fetchComponentsBySearch = async (status: string | null) => {
             }
 
             const { response: responseData } = response.data;
-console.log(responseData)
+            console.log(responseData)
 
             const details: ComponentData[] = responseData.map((item: ResponseItem) => item.post_details);
             console.log('details', details)

@@ -12,15 +12,16 @@ import Extension from '../components/custom_ui/Extensions';
 import Footer from '@/components/custom_ui/Footer';
 import YoutubeContent from '../components/custom_ui/YoutubeContent';
 import Community from '../components/custom_ui/Community';
-import OutputsOfComponents from "@/components/custom_ui/OutputComponents"
 import { ComponentType } from "@/enums/iframEnums"
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { MovingWords } from '@/data/MovingText';
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 import MainNav from "@/components/custom_ui/NavBar/MainNav";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AboutUs from '@/screens/AboutUs';
 import { useCategories } from '@/hooks/useCategories';
+import { userPopularComponents } from '@/store/components/popular.components';
+import { RenderComponents } from '@/components/custom_ui/components/RenderComponents';
 
 
 // import { useLoginStore } from "@/store/Auth";
@@ -28,6 +29,26 @@ import { useCategories } from '@/hooks/useCategories';
 
 
 export function Dashboard() {
+
+    const fetchPopularComponents = userPopularComponents((state) => state.fetchPopularComponents);
+
+    function PopularComponentsView() {
+        const popularComponents = userPopularComponents((state) => state.popularComponents);
+        console.log('popularComponents', popularComponents);
+        return (
+            <>
+                <RenderComponents components={popularComponents} type={ComponentType.COMPONENTS} />
+            </>
+        );
+    }
+
+    useEffect(() => {
+        const loadPopularComponents = async () => {
+          await fetchPopularComponents();
+        };
+    
+        loadPopularComponents();
+      }, [fetchPopularComponents]);
 
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -115,17 +136,20 @@ export function Dashboard() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4">
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
-                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <PopularComponentsView />
                 </div>
+
+                    {/* <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div>
+                    <div ><OutputsOfComponents type={ComponentType.COMPONENTS} /></div> */}
 
                 <div className="flex justify-center mt-10 hover:animate-pulse">
                     <Button >

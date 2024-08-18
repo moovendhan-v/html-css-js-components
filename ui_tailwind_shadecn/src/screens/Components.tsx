@@ -34,7 +34,6 @@ import { fetchComponentsBySearch } from "@/api/components/searchComponents"
 import { CategriesSlider } from "@/components/custom_ui/slider/CategriesSlider"
 import { useCategories } from '@/hooks/useCategories';
 
-// import { json } from "stream/consumers"
 
 export function Components() {
 
@@ -48,6 +47,7 @@ export function Components() {
   // this categries getting from a zustand store 
   const categries = useCategories();
   const components = useComponentsStore((state) => state[catogries as keyof ComponentsStore] ?? 'all');
+  console.log('components',components);
   
   // const user = useLoginStore((state)=> state.isLogin);
   // const userInfo = useLoginUserInfo((state)=> state)

@@ -19,8 +19,8 @@ export type ComponentsStore = {
     cards: ComponentData[];
     toggle: ComponentData[];
     tabs: ComponentData[];
-    input: ComponentData[];
-    modals: ComponentData[];
+    inputs: ComponentData[];
+    models: ComponentData[];
     notification: ComponentData[];
     loader: ComponentData[];
     countdown: ComponentData[];
