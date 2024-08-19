@@ -1,18 +1,19 @@
-import {UserComponents} from '../../models/components.model.js';
-import {GitHubUser} from '../../models/user.model.js';
-import {sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOperations.js';
-import {readFilesInformations, readContent} from '../components/components.controller.js';
+import { UserComponents } from '../../models/components.model.js';
+import { GitHubUser } from '../../models/user.model.js';
+import { sendJSONError, sendJSONSuccess } from '../../operations/errorhandlingOperations.js';
+import { readFilesInformations, readContent } from '../components/components.controller.js';
 import { ComponentStatus } from '../../models/componentsStatus.model.js';
+import mongoose from 'mongoose';
 
-const getUserProfileInformations = async ({body}, res) => {
+const getUserProfileInformations = async ({ body }, res) => {
     try {
         const user_id = body.user_id;
         // Find user information using user_id
         const existingUser = await GitHubUser.findOne(
             { _id: user_id },
-            {login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, email:1, name: 1, blog: 1, bio:1, twitter_username:1});
+            { login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1, location: 1, email: 1, name: 1, blog: 1, bio: 1, twitter_username: 1 });
         if (!existingUser) {
-            return res.notFount({message: "user not found"})
+            return res.notFount({ message: "user not found" })
         }
         // Get userComponents details using user_id 
         const userComponents = await UserComponents.find({ user_id: existingUser._id });
@@ -25,14 +26,14 @@ const getUserProfileInformations = async ({body}, res) => {
             const user = existingUser;
 
             return new Promise((resolve, reject) => {
-                readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
+                readFilesInformations(categories, folderNames, { data, user }, (err, fileInfo) => {
                     if (err) {
                         reject(err);
                     } else {
                         resolve({
                             // ...component.toObject(),
-                             // Convert Mongoose document to object
-                            component_details: fileInfo 
+                            // Convert Mongoose document to object
+                            component_details: fileInfo
                         });
                     }
                 });
@@ -61,8 +62,8 @@ const getUserProfileInformations = async ({body}, res) => {
 const getUserInformationsByName = async (userName, callback) => {
     try {
         // Find user information using user_id
-        const existingUser = await GitHubUser.findOne({ name: userName},
-            {_id:1,login:1, avatar_url:1, url:1, html_url:1, company:1, location:1, email:1, name: 1, blog: 1, bio:1, twitter_username:1});
+        const existingUser = await GitHubUser.findOne({ name: userName },
+            { _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1, location: 1, email: 1, name: 1, blog: 1, bio: 1, twitter_username: 1 });
         if (!existingUser) {
             return callback('User not found', null);
         }
@@ -76,13 +77,13 @@ const getUserInformationsByName = async (userName, callback) => {
             const data = component;
             const user = existingUser;
             return new Promise((resolve, reject) => {
-                readFilesInformations(categories, folderNames,{data, user}, (err, fileInfo) => {
+                readFilesInformations(categories, folderNames, { data, user }, (err, fileInfo) => {
                     if (err) {
                         reject(err);
                     } else {
                         resolve({
                             // ...component.toObject(), 
-                            component_details: fileInfo 
+                            component_details: fileInfo
                         });
                     }
                 });
@@ -207,7 +208,7 @@ const getprofileinfoprotect = async (req, res) => {
 };
 
 
-const getUserInformationsByNameFromDb = async ({body, user}, res) => {
+const getUserInformationsByNameFromDb = async ({ body, user }, res) => {
     const userName = body.user_name;
     console.log("---")
     try {
@@ -216,10 +217,11 @@ const getUserInformationsByNameFromDb = async ({body, user}, res) => {
                 return res.status(500).send(`Internal Server Error ${error}`);
             } else {
                 userProfileWithComponents.users = req?.user;
-                res.send(sendJSONSuccess({ 
+                res.send(sendJSONSuccess({
                     errorStatus: false,
                     message: 'User data received successfully',
-                    response: userProfileWithComponents}));
+                    response: userProfileWithComponents
+                }));
             }
         });
     } catch (error) {
@@ -228,5 +230,109 @@ const getUserInformationsByNameFromDb = async ({body, user}, res) => {
     }
 };
 
+const getLikedComponents = async (req, res) => {
+    try {
+        const userId = req.user?.userId;
 
-export { getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect };
+        if (!userId) {
+            return res.status(400).json({
+                error: true,
+                statusCode: 400,
+                message: 'User ID is required'
+            });
+        }
+
+        // Ensure userId is in valid ObjectId format
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+
+        // Find the user details
+        const existingUser = await GitHubUser.findById(userObjectId, {
+            _id: 1, login: 1, avatar_url: 1, url: 1, html_url: 1, company: 1, location: 1, email: 1, name: 1, blog: 1, bio: 1, twitter_username: 1
+        });
+
+        if (!existingUser) {
+            return res.status(404).json({
+                error: true,
+                statusCode: 404,
+                message: 'User Not Found'
+            });
+        }
+
+        // Retrieve all components liked by the user
+        const likedComponents = await ComponentStatus.aggregate([
+            {
+                $match: {
+                    likes: userObjectId
+                }
+            },
+            {
+                $addFields: {
+                    post_details: {
+                        html: "$html",
+                        css: "$css",
+                        js: "$js",
+                        type: "components",
+                        like: {
+                            isLiked: true,
+                            likeCount: { $size: "$likes" }
+                        },
+                        saved: {
+                            isSaved: { $in: [userObjectId, "$saves"] },
+                            savedCount: { $size: "$saves" }
+                        },
+                        comments: {
+                            count: { $size: "$comments" },
+                            commentsList: "$comments"
+                        },
+                        tags: "$tags",
+                        folder_path: "$folder_path",
+                        folder_name: "$folder_name",
+                        categories: "$categories",
+                        isActive: "$is_active",
+                        title: "$title",
+                        description: "$description",
+                        compId: "$_id",
+                        isAdmin: {
+                            $cond: { if: { $eq: [userObjectId, "$user_id"] }, then: true, else: false }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    post_details: 1
+                }
+            }
+        ]);
+
+        console.log('likedComponents', likedComponents);
+
+        // Construct the response object
+        const userProfileWithComponents = {
+            user: existingUser,
+            components: likedComponents
+        };
+
+        // Send the success response
+        return res.status(200).json({
+            error: false,
+            statusCode: 200,
+            message: 'Liked components retrieved',
+            response: userProfileWithComponents,
+            count: likedComponents.length
+        });
+
+    } catch (error) {
+        // Handle errors
+        console.error('Error in getLikedComponents:', error);
+        return res.status(500).json({
+            error: true,
+            statusCode: 500,
+            message: 'Internal Server Error'
+        });
+    }
+};
+
+
+export { getUserProfileInformations, getUserInformationsByName, getUserInformationsByNameFromDb, getprofileinfoprotect, getLikedComponents };

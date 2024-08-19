@@ -496,11 +496,13 @@ const getpPopularComponents = async (req, res) => {
 
 
 //components like 
-const addLikesToComponents = async ({ params, body }, res) => {
+const addLikesToComponents = async (req, res) => {
     try {
+        const { params, body } = req;
         const postId = params.postId;
-        const userId = body.userId;
-        const post = await UserComponents.findById(postId);
+        const userId = req.user?.userId;
+        console.log('userId', userId)
+        const post = await ComponentStatus.findById(postId);
         console.log(post)
         // Check if the user has already liked the post
         if (post.likes.includes(userId)) {
@@ -517,11 +519,12 @@ const addLikesToComponents = async ({ params, body }, res) => {
 }
 
 //components dislike
-const removeLikeToComponents = async ({ params, body }, res) => {
+const removeLikeToComponents = async (req, res) => {
     try {
+        const { params, body } = req;
         const postId = params.postId;
-        const userId = body.userId;
-        const post = await UserComponents.findById(postId);
+        const userId = req.user?.userId;
+        const post = await ComponentStatus.findById(postId);
         // Check if the user has already liked the post
         const index = post.likes.indexOf(userId);
         if (index === -1) {
@@ -538,12 +541,13 @@ const removeLikeToComponents = async ({ params, body }, res) => {
 }
 
 //components saves
-const saveComponents = async ({ params, body }, res) => {
+const saveComponents = async (req, res) => {
     try {
         console.log("running")
+        const { params, body } = req;
         const postId = params.postId;
-        const userId = body.userId;
-        const post = await UserComponents.findById(postId);
+        const userId = req.user?.userId;
+        const post = await ComponentStatus.findById(postId);
         console.log(post)
         if (post.saves.includes(userId)) {
             return res.badreq({ message: "components already saved" });
@@ -559,11 +563,12 @@ const saveComponents = async ({ params, body }, res) => {
 }
 
 //components unsave
-const unSavedComponents = async ({ params, body }, res) => {
+const unSavedComponents = async (req, res) => {
     try {
+        const { params, body } = req;
         const postId = params.postId;
-        const userId = body.userId;
-        const post = await UserComponents.findById(postId);
+        const userId = req.user?.userId;
+        const post = await ComponentStatus.findById(postId);
         // Check if the user has already liked the post
         const index = post.saves.indexOf(userId);
         if (index === -1) {
@@ -580,10 +585,11 @@ const unSavedComponents = async ({ params, body }, res) => {
 }
 
 //add comments
-const addComments = async ({ params, body }, res) => {
+const addComments = async (req, res) => {
     try {
+        const { params, body } = req;
         const postId = params.postId;
-        const userId = body.userId;
+        const userId = req.user?.userId;
         const commentBody = body.comment;
         const post = await ComponentStatus.findById(postId);
         post.comments.push({ comment: commentBody, user: userId });

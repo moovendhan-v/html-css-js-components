@@ -51,15 +51,15 @@ import { sendJSONError, sendJSONSuccess} from '../../operations/errorhandlingOpe
 
 componentsRouter.get('/latest', getLatestComponents)
 
-componentsRouter.post('/:postId/like', addLikesToComponents);
+componentsRouter.post('/:postId/like', authanticateJwtToken, addLikesToComponents);
 
-componentsRouter.post('/:postId/removelike', removeLikeToComponents);
+componentsRouter.post('/:postId/removelike', authanticateJwtToken, removeLikeToComponents);
 
-componentsRouter.post('/:postId/save', saveComponents);
+componentsRouter.post('/:postId/save', authanticateJwtToken, saveComponents);
 
-componentsRouter.post('/:postId/unsave', unSavedComponents);
+componentsRouter.post('/:postId/unsave', authanticateJwtToken, unSavedComponents);
 
-componentsRouter.post('/:postId/addcomments', addComments);
+componentsRouter.post('/:postId/addcomments', authanticateJwtToken, addComments);
 
 componentsRouter.post('/contribute-new-components', authanticateJwtToken, contributeNewComponents);
 

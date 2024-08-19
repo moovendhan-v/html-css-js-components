@@ -24,7 +24,6 @@ import { userPopularComponents } from '@/store/components/popular.components';
 import { RenderComponents } from '@/components/custom_ui/components/RenderComponents';
 import { Link } from 'react-router-dom';
 
-
 export function Dashboard() {
 
     const fetchPopularComponents = userPopularComponents((state) => state.fetchPopularComponents);
@@ -41,11 +40,11 @@ export function Dashboard() {
 
     useEffect(() => {
         const loadPopularComponents = async () => {
-          await fetchPopularComponents();
+            await fetchPopularComponents();
         };
-    
+
         loadPopularComponents();
-      }, [fetchPopularComponents]);
+    }, [fetchPopularComponents]);
 
     const [searchQuery, setSearchQuery] = useState('');
 
@@ -135,12 +134,12 @@ export function Dashboard() {
 
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <PopularComponentsView />
+                    <PopularComponentsView />
                 </div>
 
                 <div className="flex justify-center mt-10 hover:animate-pulse">
                     <Button >
-                        <LogoPlain /> <Link to={`/all`}>Explore All Components</Link> 
+                        <LogoPlain /> <Link to={`/all`}>Explore All Components</Link>
                     </Button>
                 </div>
 
