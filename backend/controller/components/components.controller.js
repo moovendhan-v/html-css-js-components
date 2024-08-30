@@ -144,6 +144,7 @@ async function getLatestFiles(catogries, page, callback) {
 
 const getLatestComponents = async (req, res) => {
     const { category, page = 1 } = req.query;
+    console.log('category', category)
 
     // Validate and sanitize the category parameter
     if (typeof category !== 'string' || category.trim() === '') {
@@ -157,7 +158,7 @@ const getLatestComponents = async (req, res) => {
         const ComponentStatusFiltered = await ComponentStatus.aggregate([
             {
                 $match: {
-                    categories: category.trim(),
+                    ...(category !== "all" && { categories: category.trim() }),
                     component_status: COMPONENT_STATUS.PUBLISHED
                 }
             },
